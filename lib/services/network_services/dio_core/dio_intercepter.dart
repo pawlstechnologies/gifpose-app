@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:giftpose/app.dart';
+import 'package:giftpose/utils/router/app_routes.dart';
 import 'package:logger/logger.dart';
-import 'package:qost/app.dart';
-import 'package:qost/utils/router/app_routes.dart';
 
 
 class LoggerInterceptor extends Interceptor {
@@ -20,11 +20,11 @@ class LoggerInterceptor extends Interceptor {
     // Handle 401 Unauthorized errors
     if (err.response?.statusCode == 401) {
       debugPrint('status code 401 ==========================================');
-      Navigator.pushNamedAndRemoveUntil(
-        navigatorKey.currentContext!,
-        AppRoutes.signinScreen,
-        (route) => false,
-      );
+      // Navigator.pushNamedAndRemoveUntil(
+      //   navigatorKey.currentContext!,
+      //   AppRoutes.signinScreen,
+      //   (route) => false,
+      // );
     }
     
     // final refreshToken = await _refreshToken();

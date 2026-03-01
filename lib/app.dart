@@ -2,9 +2,14 @@ import 'dart:async';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:giftpose/screens/main_view/viewmodels/base_viewmodel.dart';
+import 'package:giftpose/screens/main_view/viewmodels/connectivit_viewmode.dart';
+import 'package:giftpose/screens/onboarding/views/onboarding_view.dart';
 import 'package:giftpose/services/secure_storage/secure_storage.dart';
 import 'package:giftpose/services/secure_storage/sp_database_manager.dart';
 import 'package:giftpose/utils/locator.dart';
+import 'package:giftpose/utils/router/router.dart';
+import 'package:giftpose/utils/theme/theme.dart';
 
 import 'package:provider/provider.dart';
 
@@ -68,21 +73,21 @@ class _GifteposeAppState extends State<GifteposeApp> {
   ChangeNotifierProvider(
             create: (context) => BaseViewmodel(),
           ),
-          ChangeNotifierProvider(
-            create: (context) => ExploreViewModel(),
-          ),
-             ChangeNotifierProvider(
-            create: (context) => OrdersViewModel(),
-          ),
-            ChangeNotifierProvider(
-              create: (context) => AuthViewModel(),
-            ),
-            ChangeNotifierProvider(
-              create: (context) => ProfileViewModel(),
-            ),
-            ChangeNotifierProvider(
-              create: (context) => WalletViewmodel(),
-            ),
+  //         ChangeNotifierProvider(
+  //           create: (context) => ExploreViewModel(),
+  //         ),
+  //            ChangeNotifierProvider(
+  //           create: (context) => OrdersViewModel(),
+  //         ),
+  //           ChangeNotifierProvider(
+  //             create: (context) => AuthViewModel(),
+  //           ),
+  //           ChangeNotifierProvider(
+  //             create: (context) => ProfileViewModel(),
+  //           ),
+  //           ChangeNotifierProvider(
+  //             create: (context) => WalletViewmodel(),
+  //           ),
       
  
 ],
@@ -93,14 +98,14 @@ class _GifteposeAppState extends State<GifteposeApp> {
         onScaleStart: _handleUserInteraction,
         behavior: HitTestBehavior.deferToChild,
         child: ScreenUtilInit(
-          designSize: const Size(393, 852),
+          designSize: const Size(375, 874),
           minTextAdapt: true,
           splitScreenMode: true,
           builder: (context, child) {
             return AdaptiveTheme(
-              light: QostTheme().lightTheme,
-              dark: QostTheme().darkTheme,
-              initial: AdaptiveThemeMode.dark,
+              light: GiftPoseTheme().lightTheme,
+              dark: GiftPoseTheme().darkTheme,
+              initial: AdaptiveThemeMode.system,
       builder: (ThemeData light, ThemeData dark) {
                 return MaterialApp(
                   title: 'Qost Mobile',
@@ -108,8 +113,8 @@ class _GifteposeAppState extends State<GifteposeApp> {
                   scaffoldMessengerKey: rootScaffoldMessengerKey,
                   navigatorKey: navigatorKey,
               //    theme: light,
-        theme: QostTheme().lightTheme,
-                      darkTheme: QostTheme().darkTheme,
+        theme:GiftPoseTheme().lightTheme,
+                      darkTheme:GiftPoseTheme().darkTheme,
                   builder: (context, child) {
                     return MediaQuery(
                       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),

@@ -1,6 +1,6 @@
 
 
-import 'package:qost/utils/network_data_response.dart';
+import 'package:giftpose/utils/network_data_response.dart';
 
 isApiResponseCompleted(NetworkDataResponse response) {
   return response.status == Status.COMPLETED;

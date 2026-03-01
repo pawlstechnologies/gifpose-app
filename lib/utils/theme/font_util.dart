@@ -1,13 +1,10 @@
-enum FontFamily { sfProDisplay,  coolvetica}
+enum FontFamily { urbanist,  }
 
 String getFontFamily(FontFamily family) {
   switch (family) {
-    case FontFamily.sfProDisplay:
-      return "SfProDisplay";
-        case FontFamily.sfProDisplay:
-              return "SfProDisplay";
-   case FontFamily.coolvetica:
-              return "Coolvetica";
+    case FontFamily.urbanist:
+      return "Urbanist";
+  
     
     
   }

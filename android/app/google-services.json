@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1085086176770",
+    "project_id": "giftpose-bb848",
+    "storage_bucket": "giftpose-bb848.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085086176770:android:d4f87b5f2e512e1677f91b",
+        "android_client_info": {
+          "package_name": "com.example.giftpose"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYVL4a0ygxE62UQXziREpDZY7TxKG3Z3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

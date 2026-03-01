@@ -4,11 +4,11 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:giftpose/app.dart';
+import 'package:giftpose/utils/constants/storage_keys.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:qost/app.dart';
-import 'package:qost/screens/explore/models/products_response_model.dart';
 
-import 'package:qost/utils/constants/storage_keys.dart';
+
 
 class DatabaseService {
   // final EncryptionService _encryptionService = 
@@ -130,36 +130,36 @@ Future boxes() async {
 
 
 
-  Future saveCart(List<Products> value) async {
-    var box = await Hive.box<String>(StorageKeys.cart);
-    List<Map<String, dynamic>> cartJson = value.map((product) => product.toJson()).toList();
-    box.put(StorageKeys.cart, jsonEncode(cartJson));
-  }
-  Future<List<Products>?> getCart() async {
-    try {
-      var box = await Hive.box<String>(StorageKeys.cart);
-      String? cartData = box.get(StorageKeys.cart);
-      if (cartData != null) {
-        List<dynamic> cartJson = jsonDecode(cartData);
-        return cartJson.map((json) => Products.fromJson(json)).toList();
-      }
-      return null;
-    } catch (e) {
-      // Clear corrupted data and return empty list
-      await clearCartData();
-      return [];
-    }
-  }
+  // Future saveCart(List<Products> value) async {
+  //   var box = await Hive.box<String>(StorageKeys.cart);
+  //   List<Map<String, dynamic>> cartJson = value.map((product) => product.toJson()).toList();
+  //   box.put(StorageKeys.cart, jsonEncode(cartJson));
+  // }
+  // Future<List<Products>?> getCart() async {
+  //   try {
+  //     var box = await Hive.box<String>(StorageKeys.cart);
+  //     String? cartData = box.get(StorageKeys.cart);
+  //     if (cartData != null) {
+  //       List<dynamic> cartJson = jsonDecode(cartData);
+  //       return cartJson.map((json) => Products.fromJson(json)).toList();
+  //     }
+  //     return null;
+  //   } catch (e) {
+  //     // Clear corrupted data and return empty list
+  //     await clearCartData();
+  //     return [];
+  //   }
+  // }
   
-  Future<void> clearCartData() async {
-    var box = await Hive.box<String>(StorageKeys.cart);
-    await box.clear();
-  }
-  Future deleteFromCart(String productId) async {
-    List<Products>? currentCart = await getCart();
-    if (currentCart != null) {
-      currentCart.removeWhere((product) => product.id == productId);
-      await saveCart(currentCart);
-    }
-  }
+  // Future<void> clearCartData() async {
+  //   var box = await Hive.box<String>(StorageKeys.cart);
+  //   await box.clear();
+  // }
+  // Future deleteFromCart(String productId) async {
+  //   List<Products>? currentCart = await getCart();
+  //   if (currentCart != null) {
+  //     currentCart.removeWhere((product) => product.id == productId);
+  //     await saveCart(currentCart);
+  //   }
+  // }
 }

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:giftpose/app.dart';
+import 'package:giftpose/firebase_options.dart';
+import 'package:giftpose/utils/locator.dart';
 import 'package:provider/provider.dart';
 
 
@@ -66,17 +68,17 @@ void main() async {
     sound: true,
   );
   
-  // Initialize other services
-  locatorSetUp();
-  final spDataBase = serviceLocator<SpDatabaseManager>();
-  await spDataBase.init();
-  LocalNotificationService.initialize();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  await serviceLocator<DatabaseService>().initializeDb();
-  SpDatabaseManager spDatabaseManager = SpDatabaseManager();
-  await SpDatabaseManager().init();
-  // if (Platform.isIOS) {
-  // }
+  // // Initialize other services
+   locatorSetUp();
+  // final spDataBase = serviceLocator<SpDatabaseManager>();
+  // await spDataBase.init();
+  // LocalNotificationService.initialize();
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // await serviceLocator<DatabaseService>().initializeDb();
+  // SpDatabaseManager spDatabaseManager = SpDatabaseManager();
+  // await SpDatabaseManager().init();
+  // // if (Platform.isIOS) {
+  // // }
   
   String uniqueKey = '';
   bool developerMode = false;

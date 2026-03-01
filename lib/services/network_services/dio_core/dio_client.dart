@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:qost/services/network_services/dio_core/dio_error.dart';
-import 'package:qost/services/network_services/dio_core/dio_intercepter.dart';
-import 'package:qost/services/secure_storage/secure_storage.dart';
-import 'package:qost/utils/constants/storage_keys.dart';
-import 'package:qost/utils/locator.dart';
+import 'package:giftpose/services/network_services/dio_core/dio_error.dart';
+import 'package:giftpose/services/network_services/dio_core/dio_intercepter.dart';
+import 'package:giftpose/services/secure_storage/secure_storage.dart';
+import 'package:giftpose/utils/constants/storage_keys.dart';
+import 'package:giftpose/utils/locator.dart';
+
 
 
 class NetworkProvider{

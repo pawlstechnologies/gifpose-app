@@ -1,3 +1,3 @@
 
 
-enum QostThemeMode { light, dark }
+enum GiftPoseThemeMode { light, dark }

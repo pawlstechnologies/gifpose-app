@@ -1,9 +1,8 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:giftpose/app.dart';
 
-import 'package:qost/app.dart';
-import 'package:qost/screens/onboarding/views/onboarding_screen.dart';
 
 class LocalNotificationService{
   static final FlutterLocalNotificationsPlugin _notificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -19,7 +18,8 @@ class LocalNotificationService{
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
-    _notificationsPlugin.initialize(initializationSettings, onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) async {
+    _notificationsPlugin.initialize(
+      settings:initializationSettings, onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) async {
       final String? payload = notificationResponse.payload;
       if (notificationResponse.payload != null) {
         debugPrint('notification payload: $payload');
@@ -27,7 +27,7 @@ class LocalNotificationService{
 
 
       if (navigatorKey.currentContext != null) {
-        await Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder: (context)=> const OnboardingScreen()));
+        // await Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder: (context)=> const OnboardingScreen()));
       }
 
     });
@@ -56,11 +56,11 @@ class LocalNotificationService{
           )
       );
       await _notificationsPlugin.show(
-          id,
-          message.notification!.title!,
-          message.notification!.body!,
-          notificationDetails,
-          payload: message.data['id'],
+
+     
+              notificationDetails:  notificationDetails,
+          payload: message.data['id'], id: id, title:      message.notification!.title!, body:message.notification!.body!
+   , 
       );
     }on Exception catch (e){
       print(e);
