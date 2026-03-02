@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 
-class QostSwitch extends StatefulWidget {
+class GiftPoseSwitch extends StatefulWidget {
   final bool value;
   final ValueChanged<bool> onChanged;
 
-  const QostSwitch({super.key, required this.value, required this.onChanged});
+  const GiftPoseSwitch({super.key, required this.value, required this.onChanged});
 
   @override
-  _QostSwitchState createState() => _QostSwitchState();
+  _GiftPoseSwitchState createState() => _GiftPoseSwitchState();
 }
 
-class _QostSwitchState extends State<QostSwitch> with SingleTickerProviderStateMixin {
+class _GiftPoseSwitchState extends State<GiftPoseSwitch> with SingleTickerProviderStateMixin {
   AnimationController? _animationController;
 
   @override
@@ -39,8 +39,9 @@ class _QostSwitchState extends State<QostSwitch> with SingleTickerProviderStateM
             widget.value == false ? widget.onChanged(true) : widget.onChanged(false);
           },
           child: Container(
-            width: 58.0,
-            height: 30.0,
+               padding: EdgeInsets.symmetric(horizontal: 5),
+            width: 44.0,
+            height: 24.0,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(24.0), color:  widget.value ?  Theme.of(context).scaffoldBackgroundColor : Colors.transparent,
               border: Border.all(color: widget.value ? Theme.of(context).primaryColor :  Theme.of(context).dividerColor, width: 1),
@@ -49,8 +50,9 @@ class _QostSwitchState extends State<QostSwitch> with SingleTickerProviderStateM
               alignment:
               widget.value ? Alignment.centerRight : Alignment.centerLeft,
               child: Container(
-                width: 27.0,
-                height: 27.0,
+             
+                width: 16.0,
+                height: 16.0,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle, color: widget.value ?Theme.of(context).primaryColor:
               Theme.of(context).dividerColor, border: Border.all(color: widget.value ?  Theme.of(context).primaryColor :  Theme.of(context).dividerColor, )),

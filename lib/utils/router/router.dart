@@ -30,7 +30,7 @@ class Routers {
         routeWidget = const NotificationView();
         break;
             case AppRoutes.settingsPage:
-        routeWidget = const SettingsView();
+        routeWidget =  SettingsView();
         break;
             case AppRoutes.dashboard:
         routeWidget =  DashboardView();

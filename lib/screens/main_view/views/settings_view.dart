@@ -4,10 +4,18 @@ import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/theme/theme.dart';
 import 'package:giftpose/utils/widgets/Giftpose_basescafold.dart';
 import 'package:giftpose/utils/widgets/duration_slider.dart';
+import 'package:giftpose/utils/widgets/giftpose_switch.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
 
-class SettingsView extends StatelessWidget {
-  const SettingsView({super.key});
+class SettingsView extends StatefulWidget {
+  SettingsView({super.key});
+
+  @override
+  State<SettingsView> createState() => _SettingsViewState();
+}
+
+class _SettingsViewState extends State<SettingsView> {
+  bool push = false;
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +137,10 @@ class SettingsView extends StatelessWidget {
               child: Column(
                 children: [
                   ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
                     leading: Assets.icons.location.svg(),
                     title: Text(
                       "Notification Alert Settings",
@@ -143,8 +154,11 @@ class SettingsView extends StatelessWidget {
                   ),
                   Divider(color: Theme.of(context).dividerColor),
                   ListTile(
-                           contentPadding: EdgeInsets.symmetric(horizontal: 16,vertical: 10),
-                           
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
+
                     leading: Assets.icons.dot.svg(),
                     title: Text(
                       "Push Notifications",
@@ -153,11 +167,188 @@ class SettingsView extends StatelessWidget {
                         color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
+                    trailing: GiftPoseSwitch(
+                      value: push,
+                      onChanged: (bool value) {
+                        push = !push;
+                        setState(() {});
+                      },
+                    ),
                   ),
                 ],
               ),
             ),
             YMargin(25),
+
+            Text(
+              "App Settings",
+
+              style: GiftPoseTextStyle.small(
+                color: Theme.of(context).textTheme.bodyMedium?.color,
+              ),
+            ),
+            YMargin(10),
+
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
+                ),
+              ),
+              child: Column(
+                children: [
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
+                    leading: Assets.icons.darkmode.svg(),
+                    title: Text(
+                      "Dark Mode",
+
+                      style: GiftPoseTextStyle.small(
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
+                      ),
+                    ),
+                    trailing: GiftPoseSwitch(
+                      value: push,
+                      onChanged: (bool value) {
+                        push = !push;
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                  Divider(color: Theme.of(context).dividerColor),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Assets.icons.language.svg(),
+                            Text(
+                              "Language",
+
+                              style: GiftPoseTextStyle.small(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge?.color,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        Row(
+                          children: [
+                            Text(
+                              "English",
+
+                              style: GiftPoseTextStyle.small(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge?.color,
+                              ),
+                            ),
+                            XMargin(8),
+                            Assets.icons.foward.svg(),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            YMargin(25),
+            Text(
+              "Support",
+
+              style: GiftPoseTextStyle.small(
+                color: Theme.of(context).textTheme.bodyMedium?.color,
+              ),
+            ),
+            YMargin(10),
+
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
+                ),
+              ),
+              child: Column(
+                children: [
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
+                    leading: Assets.icons.helpcentre.svg(),
+                    title: Text(
+                      "Help Center",
+
+                      style: GiftPoseTextStyle.small(
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
+                      ),
+                    ),
+                    trailing: Assets.icons.foward.svg
+                    ()
+                  ),
+                  Divider(color: Theme.of(context).dividerColor),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Assets.icons.about.svg(),
+                            Text(
+                              "About GiftPose",
+
+                              style: GiftPoseTextStyle.small(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge?.color,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        Row(
+                          children: [
+                            Text(
+                              "v1.0.0",
+
+                              style: GiftPoseTextStyle.small(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge?.color,
+                              ),
+                            ),
+                            XMargin(8),
+                            Assets.icons.foward.svg(),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            YMargin(45),
           ],
         );
       },

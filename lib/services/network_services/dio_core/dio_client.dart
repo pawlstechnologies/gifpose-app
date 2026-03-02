@@ -11,7 +11,7 @@ import 'package:giftpose/utils/locator.dart';
 class NetworkProvider{
   Dio _getDioInstance(){
     var dio = Dio(BaseOptions(
-      baseUrl: "https://dev.getqost.com/api/v1",
+      baseUrl: "https://api.giftpose.com/api/",
       connectTimeout:const Duration(milliseconds: 60000),
       receiveTimeout:const Duration(milliseconds: 60000),
     ));
