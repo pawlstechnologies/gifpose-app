@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:giftpose/screens/main_view/viewmodels/base_viewmodel.dart';
 import 'package:giftpose/screens/main_view/viewmodels/connectivit_viewmode.dart';
+import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
+import 'package:giftpose/screens/onboarding/viewmodels/onboarding_viewmodel.dart';
 import 'package:giftpose/screens/onboarding/views/onboarding_view.dart';
 import 'package:giftpose/services/secure_storage/secure_storage.dart';
 import 'package:giftpose/services/secure_storage/sp_database_manager.dart';
@@ -73,9 +75,14 @@ class _GifteposeAppState extends State<GifteposeApp> {
   ChangeNotifierProvider(
             create: (context) => BaseViewmodel(),
           ),
-  //         ChangeNotifierProvider(
-  //           create: (context) => ExploreViewModel(),
-  //         ),
+          ChangeNotifierProvider(
+            create: (context) => OnboardingViewModel(),
+           ),
+               ChangeNotifierProvider(
+            create: (context) => DashboardViewmodel(),
+           ),
+
+
   //            ChangeNotifierProvider(
   //           create: (context) => OrdersViewModel(),
   //         ),

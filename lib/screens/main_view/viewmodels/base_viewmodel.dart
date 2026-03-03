@@ -28,7 +28,13 @@ class BaseViewmodel extends ChangeNotifier {
       StreamController<Map<String, dynamic>>.broadcast();
 
 
+ BaseViewmodel() {
+    getLocation();
+getDeviceId();
+  
 
+    currentPageIndex = 0;
+  }
 
  List<String> _cart = [];
  List<String> get cart => _cart;
@@ -40,6 +46,15 @@ class BaseViewmodel extends ChangeNotifier {
     _count = value;
     notifyListeners();
   }
+    String? _fcmToken;
+
+  String? get fcmToken => _fcmToken;
+
+  void setFcmToken(String token) {
+    _fcmToken = token;
+    notifyListeners();
+  }
+
 
   String _dailcode = "";
   String get dailcode => _dailcode; 
@@ -175,16 +190,7 @@ set cart(List<String> value) {
 
 
   int currentPageIndex = 0;
-  BaseViewmodel() {
-    // getLocation();
-    // getDeviceId();
-    // checkIfFoldable();
-    // getUserAgent();
-    // useragent()
-    // ;
-  // getCart();
-  //   currentPageIndex = 0;
-  // }
+
     String? firstname;
   String? userName;
   // Future<void> useragent() async {
@@ -261,12 +267,9 @@ set cart(List<String> value) {
   // }
 
  
-  String androidDevicePlatform = "Android";
-  String iosDevicePlatform = "iOS";
-  String? deviceModel;
-  String? deviceVersion;
+
   String? deviceId;
-  String? deviceManufacturer;
+
   String? imel;
 
 // fetch device details
@@ -289,13 +292,7 @@ set cart(List<String> value) {
       print("deviceID: $deviceId");
 
       androidInfo = await deviceInfo.androidInfo;
-      deviceModel = androidInfo.model;
-     
- 
-      String androidID = androidInfo.id;
-      deviceVersion = androidInfo.version.baseOS;
-
-      deviceManufacturer = androidInfo.manufacturer;
+  
     } else if (Platform.isIOS) {
       // await DeviceImei().getDeviceImei().then((value) {
       //   imel = value;
@@ -303,10 +300,9 @@ set cart(List<String> value) {
       iosInfo = await deviceInfo.iosInfo;
 
       deviceId = iosInfo.identifierForVendor;
-      deviceModel = iosInfo.model;
-      deviceVersion = iosInfo.systemVersion;
+      
 
-      deviceManufacturer = "Apple";
+  
     }
   }
 
@@ -314,25 +310,13 @@ set cart(List<String> value) {
   // biometrics
 
 
-  final DatabaseService _databaseService = serviceLocator<DatabaseService>();
 
 
 
 
 
-  Future<void> changeTheDisplayMode(String displayModeSaved) async {
-    _databaseService.saveTheDisplayMode(displayModeSaved);
-    switch (displayModeSaved) {
-      case 'light':
-        _qostThemeMode = GiftPoseThemeMode.light;
-        break;
-      case 'dark':
-        _qostThemeMode =GiftPoseThemeMode.dark;
-        break;
-      default:
-    }
-    notifyListeners();
-  }
+
+  
 
 
   void changeCurrentPageIndex(int destinationIndex) {
@@ -373,8 +357,8 @@ set cart(List<String> value) {
 
 
   
-
+}
  
 
 
-  }}
+  

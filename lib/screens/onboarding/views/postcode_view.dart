@@ -39,51 +39,55 @@ class _PostcodeScreenState extends State<PostcodeScreen>
   final postcodeCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return GiftPoseBaseScaffold(
-      includeHorizontalPadding:true,
-      includeVerticalPadding: false,
-
-      showAppBar: true,
-      hasGradient: false,
-      appBarLeadingWidget: Assets.icons.back.svg(
-        color: GiftPoseColors.background,
-      ),
-      appBarTitleWidget: Text(
-        "Set Location",
-        textAlign: TextAlign.center,
-
-        style: GiftPoseTextStyle.large(fontWeight: FontWeight.w500),
-      ),
-      centerTitle: true,
-
-      builder: (size) {
-        return Column(
-          children: [
-            YMargin(50),
-            GiftPoseTextField(controller: postcodeCtrl, hintText: "Enter your postcode",prefixIcon: Assets.icons.search.svg(),),
-            Assets.images.map.image(height: 282, width: 343),
-
-            YMargin(26),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                "How far are you willing to travel?",
-                textAlign: TextAlign.center,
-
-                style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
-              ),
-            ),
-            YMargin(14),
-            DurationSlider(),
-            YMargin(32),
-
-            GiftPoseButton(title: "Submit", onTap: () {
-              HapticFeedback.selectionClick();
-              Navigator.pushNamed(context, AppRoutes.loaderPage);
-            }),
-          ],
+    return Builder(
+      builder: (context) {
+        return GiftPoseBaseScaffold(
+          includeHorizontalPadding:true,
+          includeVerticalPadding: false,
+        
+          showAppBar: true,
+          hasGradient: false,
+          appBarLeadingWidget: Assets.icons.back.svg(
+            color: GiftPoseColors.background,
+          ),
+          appBarTitleWidget: Text(
+            "Set Location",
+            textAlign: TextAlign.center,
+        
+            style: GiftPoseTextStyle.large(fontWeight: FontWeight.w500),
+          ),
+          centerTitle: true,
+        
+          builder: (size) {
+            return Column(
+              children: [
+                YMargin(50),
+                GiftPoseTextField(controller: postcodeCtrl, hintText: "Enter your postcode",prefixIcon: Assets.icons.search.svg(),),
+                Assets.images.map.image(height: 282, width: 343),
+        
+                YMargin(26),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    "How far are you willing to travel?",
+                    textAlign: TextAlign.center,
+        
+                    style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
+                  ),
+                ),
+                YMargin(14),
+                DurationSlider(),
+                YMargin(32),
+        
+                GiftPoseButton(title: "Submit", onTap: () {
+                  HapticFeedback.selectionClick();
+                  Navigator.pushNamed(context, AppRoutes.loaderPage);
+                }),
+              ],
+            );
+          },
         );
-      },
+      }
     );
   }
 }

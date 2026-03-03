@@ -1,4 +1,8 @@
 import 'package:get_it/get_it.dart';
+import 'package:giftpose/screens/main_view/repo/main_view_repo.dart';
+import 'package:giftpose/screens/main_view/repo/main_view_repo_impl.dart';
+import 'package:giftpose/screens/onboarding/repo/onboarding_repo.dart';
+import 'package:giftpose/screens/onboarding/repo/onboarding_repo_impl.dart';
 import 'package:giftpose/services/database/database_service.dart';
 import 'package:giftpose/services/secure_storage/secure_storage.dart';
 
@@ -16,7 +20,8 @@ Future<void> locatorSetUp() async {
       // .registerLazySingleton(() => BaseViewmodel());
  
 
-  // serviceLocator.registerLazySingleton<SignUpRepo>(() => SignUpImpl());
+  serviceLocator.registerLazySingleton<OnboardingRepo>(() =>OnboardingRepoImpl());
+    serviceLocator.registerLazySingleton<MainViewRepo>(() =>MainViewRepoImpl());
 
     
 }

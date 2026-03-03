@@ -1,116 +1,199 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:giftpose/gen/assets.gen.dart';
-import 'package:giftpose/screens/main_view/views/dashboard_view.dart'
-    show CategoryProducts;
+import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
 import 'package:giftpose/screens/main_view/views/details_page.dart';
+import 'package:giftpose/screens/onboarding/models/fetch_itemsnearme_response.dart';
+import 'package:giftpose/utils/theme/giftpose_colors.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/theme/theme.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
+import 'package:provider/provider.dart';
 
 class ListViewWidget extends StatelessWidget {
-  final List<CategoryProducts> categories;
-
+  final ScrollController? scrollController;
+  final bool hasReachedMax;
+  final bool isLoadingMore;
 
   const ListViewWidget({
     super.key,
-    required this.categories,
-  
+    this.scrollController,
+    required this.hasReachedMax,
+    required this.isLoadingMore,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      physics: BouncingScrollPhysics(),
-      
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical:10,),
-      itemCount: categories.length,
-      itemBuilder: (context, index) {
-        return Padding(
- padding: const EdgeInsets.symmetric( vertical:10,),
-          child: InkWell(
-              onTap: () {
-                                        HapticFeedback.selectionClick();
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder:
-                                                (context) => DetailsPage(
-                                                category: categories[index],
-                                                ),
-                                          ),
-                                        );
-                                      },
-            child: CategoryListItem(category: categories[index])),
+    return Consumer<DashboardViewmodel>(
+      builder: (context, dashVM, child) {
+        final items = dashVM.items;
+        
+        if (items.isEmpty) {
+          return const Center(
+            child: Text('No items available'),
+          );
+        }
+
+        return ListView.separated(
+          controller: scrollController,
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          itemCount: items.length + (hasReachedMax ? 0 : 1),
+          separatorBuilder: (context, index) => const YMargin(12),
+          itemBuilder: (context, index) {
+            // Show loading indicator at the end
+            if (index >= items.length) {
+              return _buildLoadingIndicator();
+            }
+            
+            final data = items[index];
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 0),
+              child: InkWell(
+                onTap: () {
+                  HapticFeedback.selectionClick();
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => DetailsPage(
+                  //       item: data,
+                  //     ),
+                  //   ),
+                  // );
+                },
+                child: CategoryListItem(response: data),
+              ),
+            );
+          },
         );
       },
     );
   }
+
+  Widget _buildLoadingIndicator() {
+    if (!isLoadingMore) return const SizedBox.shrink();
+    
+    return Container(
+      height: 60,
+      alignment: Alignment.center,
+      child: const Center(
+        child: CircularProgressIndicator(
+          color: GiftPoseColors.primaryColor,
+          strokeWidth: 2,
+        ),
+      ),
+    );
+  }
 }
 
-// Individual Grid Item Widget
+// Individual List Item Widget
 class CategoryListItem extends StatelessWidget {
-  final CategoryProducts category;
+  final FetchItemsNearMeData response;
 
-  const CategoryListItem({super.key, required this.category});
+  const CategoryListItem({super.key, required this.response});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.transparent,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Product Image
-         Container(
-  height: 76,
-  width: 125,
-  decoration: BoxDecoration(
-    borderRadius: BorderRadius.circular(12),
-    image: DecorationImage(
-      image: AssetImage(category.icon.path), // Use path directly
-      fit: BoxFit.fitWidth,
-    ),
-  )),
-
-          XMargin(12),
-
-          // Product Info
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Product Name
-                Text(
-                  category.name,
-                  style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
+          ClipRRect(
+            borderRadius: const BorderRadius.horizontal(
+              left: Radius.circular(12),
+            ),
+            child: CachedNetworkImage(
+              imageUrl: response.thumbnail ?? '',
+              height: 100,
+              width: 100,
+              fit: BoxFit.cover,
+              errorWidget: (context, url, error) => Container(
+                height: 100,
+                width: 100,
+                color: Colors.grey.shade200,
+                child: const Icon(Icons.error, color: Colors.grey),
+              ),
+              placeholder: (context, url) => Container(
+                height: 100,
+                width: 100,
+                color: Colors.grey.shade100,
+                child: const Center(
+                  child: CupertinoActivityIndicator(),
                 ),
+              ),
+            ),
+          ),
 
-                     YMargin(4),
-
-                // Location with Icon
-                Row(
-                  children: [
-                   Assets.icons.location.svg(),
-                   XMargin(8),
-                    Text(
-                      category.location,
-                      style: GiftPoseTextStyle.small(
-                        fontWeight: FontWeight.w500,
-                                 color: Theme.of(context).textTheme.bodyMedium?.color
-                      ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Product Name
+                  Text(
+                    response.name ?? 'No name',
+                    style: GiftPoseTextStyle.medium(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
                     ),
-                  ],
-                ),
-              ],
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+
+                  const YMargin(8),
+
+                  // Location with Icon
+                  Row(
+                    children: [
+                      Assets.icons.location.svg(
+                        height: 14,
+                        width: 14,
+                      ),
+                      const XMargin(4),
+                      Expanded(
+                        child: Text(
+                      "United Kingdom",
+                          style: GiftPoseTextStyle.small(
+                            color: Theme.of(context).textTheme.bodyMedium?.color,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const YMargin(8),
+
+         
+               
+                ],
+              ),
+            ),
+          ),
+
+          // Arrow Icon
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Icon(
+              Icons.arrow_forward_ios,
+              size: 16,
+              color: Theme.of(context).textTheme.bodyMedium?.color,
             ),
           ),
         ],
