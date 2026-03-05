@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:giftpose/app.dart';
 import 'package:giftpose/gen/assets.gen.dart';
+import 'package:giftpose/screens/main_view/viewmodels/base_viewmodel.dart';
+import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
+import 'package:giftpose/screens/onboarding/viewmodels/onboarding_viewmodel.dart';
 import 'package:giftpose/utils/router/app_routes.dart';
 import 'package:giftpose/utils/theme/giftpose_colors.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
@@ -39,8 +42,9 @@ class _PostcodeScreenState extends State<PostcodeScreen>
   final postcodeCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) {
+    return Consumer<OnboardingViewModel>(builder: (context, onboardingVM, child) {
+    
+
         return GiftPoseBaseScaffold(
           includeHorizontalPadding:true,
           includeVerticalPadding: false,
@@ -81,7 +85,7 @@ class _PostcodeScreenState extends State<PostcodeScreen>
         
                 GiftPoseButton(title: "Submit", onTap: () {
                   HapticFeedback.selectionClick();
-                  Navigator.pushNamed(context, AppRoutes.loaderPage);
+                 onboardingVM.registerLocation(context: context, postcode: postcodeCtrl.text);
                 }),
               ],
             );

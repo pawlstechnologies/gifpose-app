@@ -15,14 +15,14 @@ class SpDatabaseManager {
     sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  Future<void> saveTimeoutManager({required bool manager}) async {
-    sharedPreferences.setBool(StorageKeys.manager, manager);
-  }
+  // Future<void> saveTimeoutManager({required bool manager}) async {
+  //   sharedPreferences.setBool(StorageKeys.manager, manager);
+  // }
 
-  Future<bool?> getTimeoutManager() async {
-    bool? manager = sharedPreferences.getBool(StorageKeys.manager);
-    return manager ?? false;
-  }
+  // Future<bool?> getTimeoutManager() async {
+  //   bool? manager = sharedPreferences.getBool(StorageKeys.manager);
+  //   return manager ?? false;
+  // }
 
   // Future<void> saveFontSizeOption({required double appFontSize}) async {
   //   sharedPreferences.setDouble(StorageKeys.fontSize, appFontSize);

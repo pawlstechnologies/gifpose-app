@@ -1,71 +1,8 @@
 class StorageKeys {
-  static const biometricEnabled = "biometricEnabled";
+  static const isRegistered = "isRegistereds";
   static const displayMode = "displayMode";
-  static const cart = "cart";
-    static const isLoggedIn = "isLoggedIn";
-  static const getBirthdayStatus = "getBirthdayStatus";
-  static const transferTile = "transferTile";
-  static const fetchWallet = "fetchWallet";
-  static const forgotPassword = "forgotPassword";
-  static const accessToken = "accessToken";
-    static const dP = "df";
-  static const dN = "dN";
-  static const  post = "post";
-    static const defaultToken = "defaultToken";
-  static const customerId = "customerId";
-  static const enaira = "enaira";
-    static const video = "video";
-  static const email = "email";
-  static const bioPin = "bioPin";
-  static const userName = "userName";
-  static const userNameRef = "userNameRef";
-  static const saveUserName = "SaveUserName";
-  static const tripToken = "tripToken";
-  static const testMerchantCode = "PARALLEX";
-  static const liveMerchantCode = "Parralex";
-  static const tripLiveMerchantKey = "JcqxhKctd5dKyoO";
-  static const tripTestMerchantKey = "Jg12i2wZYFglFcb";
-  static const firstName = "firstName";
-  static const hideBalance = "hideBalance";
-  static const encryptedPassword = "encryptedPassword";
-  static const allTransactionHistoryModel = "allTransactionHistoryModel";
-  static const disputeCategory = "disputeCategory";
-  static const accountDashboard = "accountDashboard";
-  static const beneficiaryResponse = "beneficiaryResponse";
-   static const beneficiaryBillsResponse = "beneficiaryBillsResponse";
-  static const rememberMeStatus = "rememberMeStatus";
-  static const fontSize = "fontSize";
-  static const manager = "timeOutManager";
-  static const dashboardAdvert = "dashboardAdvert";
-  static const faq = "faq";
-  static const securityQuestions = "securityQuestions";
-  static const chequeRequestPricing = "chequeRequestPricing";
-  static const activeAccount = "activeAccount";
-  static const userWalletModel = "userWalletModel";
-  static const exchangeRateModel = "exchangeRateModel";
-  static const isBankLinked = "isBankLinked";
-  static const defaultCardModel = "defaultCardModel";
-  static const userBanks = "userBanks";
-  static const encryptedPin = "encryptedPin";
-  static const roiModel = "roiModel";
-  
-  static const togglePin = "togglePin";
-  static const isBiometricEmergencyReset = "isBiometricEmergencyReset";
-  static const hasViewedOnboarding = "hasViewedOnboarding";
-  static const savedBanks = "savedBanks";
-  static const savedCards = "savedCards";
-  static const userHasAccount = "userHasAccount";
-  static const registrationComplete = "registrationComplete";
-  static const muteVideo = "muteVideo";
-  static const branches = "branches";
-  static const allCards = "allCards";
-  static const allVirtualCards = "allVirtualCards";
-  static const userProfile = "userProfile";
-  static const billers = "billers";
-  static const remitaBillers = "billers";
-  static const allBanks = "AllBankList";
-  static const eBillBillersResponseModel = "eBillBillersResponseModel";
-  static const appversion = "2.1";
-  static const token =
-      "eb60a4f1396859bf5efe4140793679ef93d1dd3011a3549ec2750e8ce0990ac3de32a25d9e5fb12c89f3bdc4c7cbc8e9eaa2f17403ff491c9fbf88349b2659b4";
+   static const accessToken= "accessToken";
+
+
+
 }

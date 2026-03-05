@@ -15,7 +15,7 @@ import 'package:giftpose/services/database/database_service.dart';
 import 'package:giftpose/utils/locator.dart';
 import 'package:giftpose/utils/theme/giftpose_theme.dart';
 import 'package:giftpose/utils/theme_tpye.dart';
-import 'package:location/location.dart';
+
 
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -29,9 +29,8 @@ class BaseViewmodel extends ChangeNotifier {
 
 
  BaseViewmodel() {
-    getLocation();
-getDeviceId();
-  
+
+
 
     currentPageIndex = 0;
   }
@@ -268,43 +267,6 @@ set cart(List<String> value) {
 
  
 
-  String? deviceId;
-
-  String? imel;
-
-// fetch device details
-  Future<void> getDeviceId() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    late IosDeviceInfo iosInfo;
-    ClientInformation info = await ClientInformation.fetch();
-    print("deviceNAme${info.deviceName}");
-
-    late AndroidDeviceInfo androidInfo;
-    if (Platform.isAndroid) {
-      // await DeviceImei().getDeviceImei().then((value) {
-      //   imel = "214356743";
-
-      // });
-      print(imel);
-
-      // imel = "21345t5y65";
-      deviceId = info.deviceId;
-      print("deviceID: $deviceId");
-
-      androidInfo = await deviceInfo.androidInfo;
-  
-    } else if (Platform.isIOS) {
-      // await DeviceImei().getDeviceImei().then((value) {
-      //   imel = value;
-      // });
-      iosInfo = await deviceInfo.iosInfo;
-
-      deviceId = iosInfo.identifierForVendor;
-      
-
-  
-    }
-  }
 
   String? selectedNetworkProvider;
   // biometrics
@@ -325,34 +287,34 @@ set cart(List<String> value) {
     notifyListeners();
   }
 
-  //fetch user location
-  Future<void> getLocation() async {
-    Location location = Location();
+  // //fetch user location
+  // Future<void> getLocation() async {
+  //   Location location = Location();
 
-    bool serviceEnabled;
-    PermissionStatus permissionGranted;
-    LocationData locationData;
+  //   bool serviceEnabled;
+  //   PermissionStatus permissionGranted;
+  //   LocationData locationData;
 
-    serviceEnabled = await location.serviceEnabled();
-    if (!serviceEnabled) {
-      serviceEnabled = await location.requestService();
-      if (!serviceEnabled) {
-        return;
-      }
-    }
+  //   serviceEnabled = await location.serviceEnabled();
+  //   if (!serviceEnabled) {
+  //     serviceEnabled = await location.requestService();
+  //     if (!serviceEnabled) {
+  //       return;
+  //     }
+  //   }
 
-    permissionGranted = await location.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
+  //   permissionGranted = await location.hasPermission();
+  //   if (permissionGranted == PermissionStatus.denied) {
+  //     permissionGranted = await location.requestPermission();
+  //     if (permissionGranted != PermissionStatus.granted) {
+  //       return;
+  //     }
+  //   }
 
-    locationData = await location.getLocation();
-    latitude = locationData.latitude;
-    longitude = locationData.longitude;
-  }
+  //   locationData = await location.getLocation();
+  //   latitude = locationData.latitude;
+  //   longitude = locationData.longitude;
+  // }
 
 
 

@@ -5,14 +5,16 @@ import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
 
 class TransportWidgets extends StatelessWidget {
+  final String location;
+  bool? isTappedPublic;
   final Widget icon;
   final bool isTapped;
   final String title;
-  const TransportWidgets({
+ TransportWidgets({
     super.key,
     required this.icon,
     required this.title,
-    required this.isTapped,
+    required this.isTapped, required this.location,  this.isTappedPublic = false,
   });
 
   @override
@@ -38,7 +40,24 @@ class TransportWidgets extends StatelessWidget {
                   : Theme.of(context).textTheme.bodyMedium?.color,
             ),
           ),
-          YMargin(5),
+          YMargin(8),
+          isTappedPublic ==true ?SizedBox.shrink():
+          isTapped?
+           Text(
+            location,
+            textAlign: TextAlign.center,
+
+            maxLines: 2,
+
+            style: GiftPoseTextStyle.small(
+              fontSize: 10,
+              fontWeight: FontWeight.w400,
+              color: isTapped
+                  ? GiftPoseColors.primaryColor
+                  : Theme.of(context).textTheme.bodyMedium?.color,
+            ),
+          ): SizedBox.shrink(),
+
         ],
       ),
     );

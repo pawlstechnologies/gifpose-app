@@ -5,8 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:giftpose/screens/main_view/viewmodels/base_viewmodel.dart';
 import 'package:giftpose/screens/main_view/viewmodels/connectivit_viewmode.dart';
 import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
+import 'package:giftpose/screens/main_view/views/dashboard_view.dart';
 import 'package:giftpose/screens/onboarding/viewmodels/onboarding_viewmodel.dart';
 import 'package:giftpose/screens/onboarding/views/onboarding_view.dart';
+import 'package:giftpose/services/database/database_service.dart';
 import 'package:giftpose/services/secure_storage/secure_storage.dart';
 import 'package:giftpose/services/secure_storage/sp_database_manager.dart';
 import 'package:giftpose/utils/locator.dart';
@@ -30,36 +32,37 @@ class GifteposeApp extends StatefulWidget {
 
 class _GifteposeAppState extends State<GifteposeApp> {
   Timer? _rootTimer;
+  bool isRegistered =false;
 @override
   void initState() {
     // TODO: implement initState
-
+ isRegistered =  serviceLocator<DatabaseService>().getIsRegistered() ?? false;
     super.initState();
   }
   final SecureStorageService secureStorageService =
       serviceLocator<SecureStorageService>();
   final SpDatabaseManager spDatabaseManager = SpDatabaseManager();
 
-  void initializeTimer() async {
-    final manager = await spDatabaseManager.getTimeoutManager() ?? false;
-    _rootTimer?.cancel();
-    _rootTimer = Timer(
-      manager ? const Duration(minutes: 20) : const Duration(days: 100),
-      () {
-        // Handle timeout
-      },
-    );
-  }
+  // void initializeTimer() async {
+  //   final manager = await spDatabaseManager.getTimeoutManager() ?? false;
+  //   _rootTimer?.cancel();
+  //   _rootTimer = Timer(
+  //     manager ? const Duration(minutes: 20) : const Duration(days: 100),
+  //     () {
+  //       // Handle timeout
+  //     },
+  //   );
+  // }
 
-  void _handleUserInteraction([_]) {
-    if (_rootTimer != null && !_rootTimer!.isActive) return;
-    _rootTimer?.cancel();
-    initializeTimer();
-  }
+  // void _handleUserInteraction([_]) {
+  //   if (_rootTimer != null && !_rootTimer!.isActive) return;
+  //   _rootTimer?.cancel();
+  //   initializeTimer();
+  // }
 
-  void updateTimeoutManager() async {
-    await spDatabaseManager.saveTimeoutManager(manager: false);
-  }
+  // void updateTimeoutManager() async {
+  //   await spDatabaseManager.saveTimeoutManager(manager: false);
+  // }
 
   // Future<void> determineTheMode() async {
   //   Future.delayed(const Duration(milliseconds: 500), () {
@@ -100,9 +103,9 @@ class _GifteposeAppState extends State<GifteposeApp> {
 ],
 
       child: GestureDetector(
-        onTap: _handleUserInteraction,
-        onPanDown: _handleUserInteraction,
-        onScaleStart: _handleUserInteraction,
+        // onTap: _handleUserInteraction,
+        // onPanDown: _handleUserInteraction,
+        // onScaleStart: _handleUserInteraction,
         behavior: HitTestBehavior.deferToChild,
         child: ScreenUtilInit(
           designSize: const Size(375, 874),
@@ -137,7 +140,12 @@ class _GifteposeAppState extends State<GifteposeApp> {
                   },
                   onGenerateRoute: (settings) =>
                       Routers.generateRoute(settings, context),
-                  home: const SplashScreen(),
+                  home:
+                  
+                   
+                  isRegistered?
+                   DashboardView():
+                   SplashScreen(),
                 );
               }
             );

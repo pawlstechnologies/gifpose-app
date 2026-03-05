@@ -1,12 +1,15 @@
 import 'dart:developer';
+import 'dart:io';
 
-import 'package:dio/dio.dart';
+import 'package:client_information/client_information.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
+import 'package:giftpose/app.dart';
 import 'package:giftpose/screens/main_view/viewmodels/base_viewmodel.dart';
 import 'package:giftpose/screens/onboarding/models/register_location_request.dart';
 import 'package:giftpose/screens/onboarding/models/register_location_response.dart';
 import 'package:giftpose/screens/onboarding/repo/onboarding_repo.dart';
+import 'package:giftpose/services/database/database_service.dart';
 import 'package:giftpose/utils/locator.dart';
 import 'package:giftpose/utils/network_data_response.dart';
 import 'package:giftpose/utils/router/app_routes.dart' show AppRoutes;
@@ -27,36 +30,7 @@ class OnboardingViewModel extends BaseViewmodel {
   final TextEditingController cityCtrl = TextEditingController();
   String verificationId = "";
 
-  // // Check if user has valid token on app startup
-  // Future<bool> checkTokenAndLoginStatus() async {
-  //   try {
-  //     // Check if user was previously logged in
-  //     final isLoggedIn = databaseService.getIsUserLoggedIn() ?? false;
 
-  //     if (!isLoggedIn) {
-  //       return false;
-  //     }
-
-  //     // Check if token exists in secure storage
-  //     final token = await secureStorageService.read(
-  //       key: StorageKeys.accessToken,
-  //     );
-
-  //     if (token == null || token.isEmpty) {
-  //       // Token doesn't exist, mark as logged out
-  //       await databaseService.saveIsUserLoggedIn(false);
-  //       return false;
-  //     }
-
-  //     // Token exists and user was logged in, assume valid session
-  //     // You can add additional token validation here if needed
-  //     return true;
-  //   } catch (e) {
-  //     // Error occurred, mark as logged out for safety
-  //     await databaseService.saveIsUserLoggedIn(false);
-  //     return false;
-  //   }
-  // }
 
   @override
   void dispose() {
@@ -66,6 +40,7 @@ class OnboardingViewModel extends BaseViewmodel {
     firstNameCtrl.dispose();
     lastNameCtrl.dispose();
     countryCtrl.dispose();
+    countryCodeCtrl.dispose();
     phoneCtrl.dispose();
     cityCtrl.dispose();
     super.dispose();
@@ -82,16 +57,18 @@ class OnboardingViewModel extends BaseViewmodel {
     notifyListeners();
   }
 
-  // final SecureStorageService secureStorageService =
-  //     serviceLocator<SecureStorageService>();
-  // final DatabaseService databaseService = serviceLocator<DatabaseService>();
-  OnboardingRepo onboardingRepo = serviceLocator<OnboardingRepo>();
+  OnboardingViewModel() {
+    getDeviceId();
+  }
 
-  int _miles = 0;
-  int get miles => _miles;
+  final OnboardingRepo onboardingRepo = serviceLocator<OnboardingRepo>();
 
-  set miles(int value) {
-    _miles = value;
+  double _miles = 15.0;
+  double get miles => _miles;
+
+  set miles(double value) {
+    // Ensure miles always stays within a sensible range for the slider
+    _miles = value.clamp(1.0, 50.0);
     notifyListeners();
   }
 
@@ -106,41 +83,77 @@ class OnboardingViewModel extends BaseViewmodel {
   ) {
     _registerLocationResponse = value;
     notifyListeners();
+  }
+final DatabaseService databaseService = serviceLocator<DatabaseService>();
+  Future<void> registerLocation({
+    required BuildContext context,
+    required String postcode,
+  }) async {
+    try {
+      registerLocationResponse = NetworkDataResponse.loading("");
+         await LoaderPage.show(context);
 
-    Future<void> registerLocation({
-      required BuildContext context,
-      required String postcode,
-    }) async {
-      try {
-        registerLocationResponse = NetworkDataResponse.loading("");
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const LoaderPage()),
-        );
 
-        final response = await onboardingRepo.registerLocation(
-          registerLocationRequest: RegisterLocationRequest(
-            postcode: postcode,
-            deviceId: deviceId ?? "",
-            miles: miles,
-          ),
-        );
+      final response = await onboardingRepo.registerLocation(
+        registerLocationRequest: RegisterLocationRequest(
+          postcode: postcode,
+          deviceId: deviceId ?? "",
+          miles: miles,
+        ),
+      );
 
-        registerLocationResponse = NetworkDataResponse.completed(response);
+      registerLocationResponse = NetworkDataResponse.completed(response);
 
-        Navigator.pop(context);
+ if (navigatorKey.currentContext!.mounted) {
+      Navigator.of(navigatorKey.currentContext!, rootNavigator: true).pop(); // Dismiss dialog
+    }
 
-        if (registerLocationResponse.status == true) {
-          Navigator.pushNamed(context, AppRoutes.dashboard);
-        } else {
-          final errorMessage = registerLocationResponse.message;
-          CustomToast.show(context: context, message: errorMessage);
-        }
-      } catch (e) {
-        registerLocationResponse = NetworkDataResponse.error(e.toString());
-
-        CustomToast.show(context: context, message: e.toString());
+      if (registerLocationResponse.data?.status == true) {
+        Navigator.pushNamed(context, AppRoutes.dashboard);
+              await databaseService.saveIsRegistered(true);
+        
+      } else {
+          await databaseService.saveIsRegistered(false);
+        CustomToast.show(context: context, message: registerLocationResponse.data?.message ?? "Something went wrong");
       }
+    } catch (e) {
+      registerLocationResponse = NetworkDataResponse.error(e.toString());
+
+      CustomToast.show(context: context, message: e.toString());
+    }
+  }
+
+  String? deviceId;
+
+  String? imel;
+
+// fetch device details
+  Future<void> getDeviceId() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    late IosDeviceInfo iosInfo;
+    ClientInformation info = await ClientInformation.fetch();
+    log('deviceName ${info.deviceName}');
+    log('deviceId ${info.deviceId}');
+    late AndroidDeviceInfo androidInfo;
+    if (Platform.isAndroid) {
+      // await DeviceImei().getDeviceImei().then((value) {
+      //   imel = "214356743";
+
+      // });
+      print(imel);
+      androidInfo = await deviceInfo.androidInfo;
+      // imel = "21345t5y65";
+      deviceId = info.deviceId;
+      dailcode = androidInfo.id;
+      log('deviceID: $deviceId');
+    } else if (Platform.isIOS) {
+      // await DeviceImei().getDeviceImei().then((value) {
+      //   imel = value;
+      // });
+      iosInfo = await deviceInfo.iosInfo;
+
+      deviceId = iosInfo.identifierForVendor;
+      log('deviceID ios : $deviceId');
     }
   }
 }

@@ -4,15 +4,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:giftpose/gen/assets.gen.dart';
+import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
 import 'package:giftpose/screens/main_view/views/details_page.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_itemsnearme_response.dart';
 import 'package:giftpose/utils/theme/giftpose_colors.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/theme/theme.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
+import 'package:provider/provider.dart';
 
 class CategoryGrid extends StatelessWidget {
   final List<FetchItemsNearMeData> items;
+  final UserLocation userLocation;
   final int crossAxisCount;
   final double childAspectRatio;
   final double spacing;
@@ -23,6 +26,7 @@ class CategoryGrid extends StatelessWidget {
   const CategoryGrid({
     super.key,
     required this.items,
+    required this.userLocation,
     this.crossAxisCount = 2,
     this.childAspectRatio = 0.9,
     this.spacing = 12,
@@ -33,37 +37,49 @@ class CategoryGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      controller: scrollController,
-      physics: const BouncingScrollPhysics(),
-      padding: EdgeInsets.all(spacing),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: crossAxisCount,
-        childAspectRatio: childAspectRatio,
-        crossAxisSpacing: spacing,
-        mainAxisSpacing: spacing,
-      ),
-      itemCount: items.length + (hasReachedMax ? 0 : 1),
-      itemBuilder: (context, index) {
-        // Show loading indicator at the end
-        if (index >= items.length) {
-          return _buildLoadingIndicator();
-        }
-        
-        final data = items[index];
-        return InkWell(
-          onTap: () {
-            HapticFeedback.selectionClick();
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => DetailsPage(item: data),
-            //   ),
-            // );
+   return Consumer<DashboardViewmodel>(
+          builder: (context, vm, child) {
+        return GridView.builder(
+          controller: scrollController,
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.all(spacing),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: crossAxisCount,
+            childAspectRatio: childAspectRatio,
+            crossAxisSpacing: spacing,
+            mainAxisSpacing: spacing,
+          ),
+          itemCount: items.length + (hasReachedMax ? 0 : 1),
+          itemBuilder: (context, index) {
+            // Show loading indicator at the end
+            if (index >= items.length) {
+              return _buildLoadingIndicator();
+            }
+            
+            final data = items[index];
+            return InkWell(
+              onTap: () {
+                HapticFeedback.selectionClick();
+
+                vm.fetchItemsById(id: items[index].id).whenComplete((){
+
+ if(vm.fetchItemsByIdMeResponse.data?.success == true){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailsPage(location: userLocation.city,),
+                    ),
+                  );
+                }
+
+                });
+               
+              },
+              child: CategoryGridItem(response: data, userLocation: userLocation,),
+            );
           },
-          child: CategoryGridItem(response: data),
         );
-      },
+      }
     );
   }
 
@@ -86,8 +102,8 @@ class CategoryGrid extends StatelessWidget {
 // Individual Grid Item Widget
 class CategoryGridItem extends StatelessWidget {
   final FetchItemsNearMeData response;
-
-  const CategoryGridItem({super.key, required this.response});
+  final UserLocation userLocation;
+  const CategoryGridItem({super.key, required this.response, required this.userLocation});
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +173,7 @@ class CategoryGridItem extends StatelessWidget {
                     XMargin(4),
                     Expanded(
                       child: Text(
-                         "United Kingdom",
+                        userLocation.city ?? "United Kingdom",
                         style: GiftPoseTextStyle.small(
                           fontWeight: FontWeight.w500,
                           color: Theme.of(context).textTheme.bodyMedium?.color,

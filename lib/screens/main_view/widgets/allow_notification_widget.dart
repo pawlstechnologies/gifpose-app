@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:giftpose/gen/assets.gen.dart';
+import 'package:giftpose/utils/router/app_routes.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/theme/theme.dart';
 import 'package:giftpose/utils/widgets/giftpose_button.dart';
@@ -31,6 +32,8 @@ class AllowNotificationWidget extends StatelessWidget {
       GiftPoseButton(title: "Accept", onTap: (){
         HapticFeedback.selectionClick();
         Navigator.pop(context);
+        Navigator.pushNamed(context, AppRoutes.notificationsAlert);
+        
       }),
       YMargin(10),
  GiftPoseButton(

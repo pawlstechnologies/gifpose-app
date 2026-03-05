@@ -32,6 +32,8 @@ class GiftPoseColors {
   static const softCardColor = Color(0x3D4A4AF4);
   static const activeBorderColor = Color(0x3D4A4AF4);
   static const inactiveBorderColor = Color(0x144A4AF4);
+    static const yelloColor = Color(0xFFFFFCF5);
+  
   static const dividerColor = Color(0xFFEDEDFE);
   static const borderColor = Color(0xFFE2E2E2);
   static const borderColor2 = Color(0xFFE7E8EB);

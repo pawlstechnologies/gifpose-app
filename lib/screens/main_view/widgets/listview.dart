@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 
 class ListViewWidget extends StatelessWidget {
   final ScrollController? scrollController;
+  final UserLocation userLocation;
   final bool hasReachedMax;
   final bool isLoadingMore;
 
@@ -21,7 +22,7 @@ class ListViewWidget extends StatelessWidget {
     super.key,
     this.scrollController,
     required this.hasReachedMax,
-    required this.isLoadingMore,
+    required this.isLoadingMore, required this.userLocation,
   });
 
   @override
@@ -29,44 +30,49 @@ class ListViewWidget extends StatelessWidget {
     return Consumer<DashboardViewmodel>(
       builder: (context, dashVM, child) {
         final items = dashVM.items;
-        
+
         if (items.isEmpty) {
           return const Center(
             child: Text('No items available'),
           );
         }
 
-        return ListView.separated(
-          controller: scrollController,
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          itemCount: items.length + (hasReachedMax ? 0 : 1),
-          separatorBuilder: (context, index) => const YMargin(12),
-          itemBuilder: (context, index) {
-            // Show loading indicator at the end
-            if (index >= items.length) {
-              return _buildLoadingIndicator();
-            }
-            
-            final data = items[index];
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 0),
-              child: InkWell(
-                onTap: () {
-                  HapticFeedback.selectionClick();
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => DetailsPage(
-                  //       item: data,
-                  //     ),
-                  //   ),
-                  // );
-                },
-                child: CategoryListItem(response: data),
-              ),
+          return Consumer<DashboardViewmodel>(
+          builder: (context, vm, child) {
+            return ListView.separated(
+              controller: scrollController,
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              itemCount: items.length + (hasReachedMax ? 0 : 1),
+              separatorBuilder: (context, index) => const YMargin(12),
+              itemBuilder: (context, index) {
+                // Show loading indicator at the end
+                if (index >= items.length) {
+                  return _buildLoadingIndicator();
+                }
+                
+                final data = items[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 0),
+                  child: InkWell(
+                    onTap: () {
+                      HapticFeedback.selectionClick();
+                       vm.fetchItemsById(id: items[index].id);
+                    if(vm.fetchItemsByIdMeResponse.data?.success == true){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailsPage(location: userLocation.city,),
+                        ),
+                      );
+                    }
+                    },
+                    child: CategoryListItem(response: data, userLocation: userLocation,),
+                        ),
+                );
+              },
             );
-          },
+          }
         );
       },
     );
@@ -91,8 +97,9 @@ class ListViewWidget extends StatelessWidget {
 // Individual List Item Widget
 class CategoryListItem extends StatelessWidget {
   final FetchItemsNearMeData response;
+  final UserLocation userLocation;
 
-  const CategoryListItem({super.key, required this.response});
+  const CategoryListItem({super.key, required this.response, required this.userLocation});
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +174,7 @@ class CategoryListItem extends StatelessWidget {
                       const XMargin(4),
                       Expanded(
                         child: Text(
-                      "United Kingdom",
+                userLocation.city ?? "United Kingdom",
                           style: GiftPoseTextStyle.small(
                             color: Theme.of(context).textTheme.bodyMedium?.color,
                           ),

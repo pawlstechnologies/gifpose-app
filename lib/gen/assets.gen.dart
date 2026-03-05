@@ -17,6 +17,12 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/Line.svg
+  SvgGenImage get line => const SvgGenImage('assets/icons/Line.svg');
+
+  /// File path: assets/icons/Lineh.svg
+  SvgGenImage get lineh => const SvgGenImage('assets/icons/Lineh.svg');
+
   /// File path: assets/icons/about.svg
   SvgGenImage get about => const SvgGenImage('assets/icons/about.svg');
 
@@ -41,6 +47,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/down.svg
   SvgGenImage get down => const SvgGenImage('assets/icons/down.svg');
+
+  /// File path: assets/icons/emptyNot.svg
+  SvgGenImage get emptyNot => const SvgGenImage('assets/icons/emptyNot.svg');
 
   /// File path: assets/icons/foward.svg
   SvgGenImage get foward => const SvgGenImage('assets/icons/foward.svg');
@@ -89,6 +98,9 @@ class $AssetsIconsGen {
   SvgGenImage get settingsicon =>
       const SvgGenImage('assets/icons/settingsicon.svg');
 
+  /// File path: assets/icons/star.svg
+  SvgGenImage get star => const SvgGenImage('assets/icons/star.svg');
+
   /// File path: assets/icons/train.svg
   SvgGenImage get train => const SvgGenImage('assets/icons/train.svg');
 
@@ -99,8 +111,13 @@ class $AssetsIconsGen {
   /// File path: assets/icons/walking.svg
   SvgGenImage get walking => const SvgGenImage('assets/icons/walking.svg');
 
+  /// File path: assets/icons/x.svg
+  SvgGenImage get x => const SvgGenImage('assets/icons/x.svg');
+
   /// List of all assets
   List<dynamic> get values => [
+    line,
+    lineh,
     about,
     allowNotifications,
     back,
@@ -109,6 +126,7 @@ class $AssetsIconsGen {
     darkmode,
     dot,
     down,
+    emptyNot,
     foward,
     grid,
     hamburger,
@@ -123,9 +141,11 @@ class $AssetsIconsGen {
     publicTransport,
     search,
     settingsicon,
+    star,
     train,
     vehicleHire,
     walking,
+    x,
   ];
 }
 
@@ -163,6 +183,9 @@ class $AssetsImagesGen {
   AssetGenImage get splashImage =>
       const AssetGenImage('assets/images/splashImage.png');
 
+  /// File path: assets/images/star.png
+  AssetGenImage get star => const AssetGenImage('assets/images/star.png');
+
   /// File path: assets/images/wave.png
   AssetGenImage get wave => const AssetGenImage('assets/images/wave.png');
 
@@ -178,6 +201,7 @@ class $AssetsImagesGen {
     loader,
     map,
     splashImage,
+    star,
     wave,
   ];
 }

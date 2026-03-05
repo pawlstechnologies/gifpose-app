@@ -216,7 +216,7 @@ class _GiftPoseTextFieldState extends State<GiftPoseTextField> {
                                   ),
                         hintText: widget.hintText ?? widget.fieldName,
                         enabledBorder: outlineInputBorder.copyWith(
-                          borderRadius: BorderRadius.circular(15.r),
+                          borderRadius: BorderRadius.circular(10.r),
                           borderSide: BorderSide(
                             color: widget.borderColor ?? GiftPoseColors.borderColor,
                           ),
@@ -227,21 +227,21 @@ class _GiftPoseTextFieldState extends State<GiftPoseTextField> {
                             fontSize: 14),
                         contentPadding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 16.w),
                         border: outlineInputBorder.copyWith(
-                          borderRadius: BorderRadius.circular(15.r),
+                          borderRadius: BorderRadius.circular(10.r),
                           borderSide: BorderSide(
                             color: widget.borderColor ?? GiftPoseColors.borderColor,
                           ),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.r),
+                          borderRadius: BorderRadius.circular(10.r),
                           borderSide: const BorderSide(color: GiftPoseColors.errorColor),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.r),
+                          borderRadius: BorderRadius.circular(10.r),
                           borderSide: BorderSide(color: GiftPoseColors.errorColor),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.r),
+                          borderRadius: BorderRadius.circular(10.r),
                           borderSide: BorderSide(
                             color: widget.borderColor == Colors.transparent 
                                 ? Colors.transparent 
@@ -263,5 +263,5 @@ class _GiftPoseTextFieldState extends State<GiftPoseTextField> {
 
 final outlineInputBorder = OutlineInputBorder(
   borderSide: const BorderSide(color: GiftPoseColors.borderColor),
-  borderRadius: BorderRadius.circular(15.r),
+  borderRadius: BorderRadius.circular(10.r),
 );

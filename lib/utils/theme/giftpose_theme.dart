@@ -19,6 +19,7 @@ class GiftPoseTheme {
     secondaryHeaderColor: GiftPoseColors.secondaryColor,
     hintColor: GiftPoseColors.hintText,
     scaffoldBackgroundColor: GiftPoseColors.background,
+    
     dividerColor: GiftPoseColors.borderColor,
     textTheme:  TextTheme(
       bodyLarge: TextStyle(color: GiftPoseColors.textColor),

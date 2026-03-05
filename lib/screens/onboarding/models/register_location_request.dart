@@ -11,7 +11,7 @@ String registerLocationRequestToJson(RegisterLocationRequest data) => json.encod
 class RegisterLocationRequest {
     String postcode;
     String deviceId;
-    int miles;
+    double? miles;
 
     RegisterLocationRequest({
         required this.postcode,

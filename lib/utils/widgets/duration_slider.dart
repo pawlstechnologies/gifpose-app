@@ -11,7 +11,7 @@ class DurationSlider extends StatefulWidget {
 }
 
 class _DurationSliderState extends State<DurationSlider> {
-  double _value = 15;
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +32,9 @@ class _DurationSliderState extends State<DurationSlider> {
                 min: 1,
                 max: 50,
                 divisions: 49,
-                value: _value,
+                value: onboardVm.miles,
                 onChanged: (value) {
-                  setState(() {
-                    _value = value;
-                    onboardVm.miles = value.toInt();
-                  });
+                  onboardVm.miles = value;
                 },
               ),
             ),

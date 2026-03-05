@@ -30,12 +30,22 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_onScroll);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<DashboardViewmodel>().fetchItemsNearMe();
+          Future.microtask(() =>
+    context.read<DashboardViewmodel>().getDeviceId()
+  );
+ context.read<DashboardViewmodel>().fetchAlertCategory();
+
+    });
+Future.delayed(const Duration(seconds: 2), () {
+ _scrollController.addListener(_onScroll);
+});
+   
+ 
     
     // Initial data fetch
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<DashboardViewmodel>().fetchItemsNearMe();
-    });
+  
   }
 
   @override
@@ -114,6 +124,7 @@ class _DashboardViewState extends State<DashboardView> {
                               onTap: () {
                                 HapticFeedback.selectionClick();
                                 Navigator.pushNamed(context, AppRoutes.notificationsPage);
+                                viewModel.fetchAlertCategory();
                               },
                               child: Assets.icons.notificationIcon.svg(
                                 color: Theme.of(context).textTheme.bodyLarge?.color,
@@ -146,13 +157,21 @@ class _DashboardViewState extends State<DashboardView> {
                       Assets.icons.location.svg(
                         color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
+                         XMargin(3),
                       Text(
-                        "S1 2AH",
+                        viewModel.fetchItemsNearMeResponse.data?.userLocation.postcode?? "S1 2AH",
                         textAlign: TextAlign.center,
                         style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
                       ),
-                      Assets.icons.down.svg(
-                        color: Theme.of(context).textTheme.bodyLarge?.color,
+                      XMargin(3),
+                      InkWell(
+                        onTap: (){
+                          HapticFeedback.selectionClick();
+                                  Navigator.pushNamed(context, AppRoutes.postcodePage);
+                        },
+                        child: Assets.icons.down.svg(
+                          color: Theme.of(context).textTheme.bodyLarge?.color,
+                        ),
                       ),
                     ],
                   ),
@@ -273,12 +292,13 @@ class _DashboardViewState extends State<DashboardView> {
     if (isList) {
       return ListViewWidget(
         scrollController: _scrollController,
-
+        userLocation: viewModel.fetchItemsNearMeResponse.data!.userLocation,
         hasReachedMax: viewModel.hasReachedMax,
         isLoadingMore: viewModel.isLoadingMore, 
       );
     } else {
       return CategoryGrid(
+        userLocation: viewModel.fetchItemsNearMeResponse.data!.userLocation,
         scrollController: _scrollController,
         items: viewModel.items,
         hasReachedMax: viewModel.hasReachedMax,

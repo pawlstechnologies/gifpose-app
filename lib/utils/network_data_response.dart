@@ -1,13 +1,18 @@
 class NetworkDataResponse<T> {
   late Status status;
   T? data;
-  late String message;
+  String message;
   
-  NetworkDataResponse.idle() : status = Status.IDLE;
+  NetworkDataResponse.idle()
+      : status = Status.IDLE,
+        message = "";
 
   NetworkDataResponse.loading(this.message) : status = Status.LOADING;
 
-  NetworkDataResponse.completed(this.data) : status = Status.COMPLETED;
+  NetworkDataResponse.completed(
+    this.data, {
+    this.message = "",
+  }) : status = Status.COMPLETED;
 
   NetworkDataResponse.error(this.message) : status = Status.ERROR;
 

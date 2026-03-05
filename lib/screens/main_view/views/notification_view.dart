@@ -22,7 +22,7 @@ class _NotificationViewState extends State<NotificationView> {
         bottomAction: Row(
           mainAxisAlignment: MainAxisAlignment.center,
         ),
-        title: "Possible Banks",
+       
         context: context,
         height: MediaQuery.of(context).size.height / 2.6,
         children: [AllowNotificationWidget()],
@@ -60,6 +60,13 @@ class _NotificationViewState extends State<NotificationView> {
 
       builder: (size) {
         return ListView(children: [
+          
+
+
+
+
+
+
         
           ],
         );

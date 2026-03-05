@@ -8,6 +8,7 @@ class AppRoutes {
             static const String dashboard ="dashboard";
   static const String loaderPage = "/loaderPage";
   static const String notificationsPage = "/notificationsPage";
+   static const String notificationsAlert = "/notificationsAlert";
     static const String settingsPage = "/settingsPage";
 
 
