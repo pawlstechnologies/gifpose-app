@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:giftpose/screens/main_view/views/dashboard_view.dart';
 import 'package:giftpose/screens/main_view/views/notification_alert.dart';
 import 'package:giftpose/screens/main_view/views/notification_view.dart';
+import 'package:giftpose/screens/main_view/views/search_page.dart';
 import 'package:giftpose/screens/main_view/views/settings_view.dart';
 import 'package:giftpose/screens/onboarding/views/consent_view.dart';
 import 'package:giftpose/screens/onboarding/views/onboarding_view.dart';
@@ -39,9 +40,9 @@ class Routers {
             case AppRoutes.dashboard:
         routeWidget =  DashboardView();
         break;
-        //      case AppRoutes.loaderPage:
-        // routeWidget = const LoaderPage();
-        // break;
+             case AppRoutes.searchPage:
+        routeWidget = const SearchView();
+        break;
     
                          case AppRoutes.settingsPage:
         routeWidget = SettingsView();

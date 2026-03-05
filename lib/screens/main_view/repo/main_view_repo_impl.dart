@@ -16,6 +16,7 @@ import 'package:giftpose/screens/onboarding/models/fetchitems_byid_response.dart
 import 'package:giftpose/screens/onboarding/models/register_location_response.dart';
 import 'package:giftpose/screens/onboarding/models/search_alert_category_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_predictions_request.dart';
+import 'package:giftpose/screens/onboarding/models/search_response.dart';
 
 import 'package:giftpose/services/network_services/dio_core/dio_client.dart';
 import 'package:giftpose/services/network_services/dio_core/dio_error.dart';
@@ -165,12 +166,44 @@ try {
    
       
       final response = await networkProvider.call(
-        path: ApiRoutes.registerLocation,
+        path: ApiRoutes.alertSearchPredictionList ,
         method: RequestMethod.post,
         body: payload,
       );
       log("search Alert category reponse: ${response?.data}");
      return SearchCategoryPredictionResponse.fromJson(response?.data);
+      } on DioException catch (err) {
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      if (kDebugMode) {
+        print(errorMessage);
+      }
+      throw err.response?.data["message"] ?? errorMessage;
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
+      throw err.toString();
+    }
+  }
+      @override
+  Future<SearchResponse> globalSearch({
+     required String deviceId,
+    required SearchCategoryPredictionRequest  searchCategoryPredictionRequest,
+  })
+ async {
+    try {
+      final payload = jsonEncode(searchCategoryPredictionRequest.toJson());
+      log('search Alert category request: $payload');
+      
+   
+      
+      final response = await networkProvider.call(
+        path: ApiRoutes.globalSearch.replaceAll('{deviceId}', deviceId),
+        method: RequestMethod.post,
+        body: payload,
+      );
+      log("search Alert category reponse: ${response?.data}");
+     return SearchResponse.fromJson(response?.data);
       } on DioException catch (err) {
       final errorMessage = Future.error(ApiError.fromDio(err));
       if (kDebugMode) {

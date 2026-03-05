@@ -8,6 +8,7 @@ import 'package:giftpose/screens/onboarding/models/fetch_itemsnearme_response.da
 import 'package:giftpose/screens/onboarding/models/fetchitems_byid_response.dart';
 import 'package:giftpose/screens/onboarding/models/search_alert_category_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_predictions_request.dart';
+import 'package:giftpose/screens/onboarding/models/search_response.dart';
 
 
 abstract class MainViewRepo {
@@ -27,6 +28,9 @@ abstract class MainViewRepo {
  Future<SearchCategoryPredictionResponse> searchAlertPredictions({
     required SearchCategoryPredictionRequest  searchCategoryPredictionRequest,
   });
- 
+  Future<SearchResponse> globalSearch({
+    required String deviceId,
+    required SearchCategoryPredictionRequest  searchCategoryPredictionRequest,
+  });
 
 }

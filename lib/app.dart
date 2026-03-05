@@ -17,12 +17,10 @@ import 'package:giftpose/utils/theme/theme.dart';
 
 import 'package:provider/provider.dart';
 
-
-
-
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
+
 class GifteposeApp extends StatefulWidget {
   const GifteposeApp({super.key});
 
@@ -32,13 +30,14 @@ class GifteposeApp extends StatefulWidget {
 
 class _GifteposeAppState extends State<GifteposeApp> {
   Timer? _rootTimer;
-  bool isRegistered =false;
-@override
+  bool isRegistered = false;
+  @override
   void initState() {
     // TODO: implement initState
- isRegistered =  serviceLocator<DatabaseService>().getIsRegistered() ?? false;
+    isRegistered = serviceLocator<DatabaseService>().getIsRegistered() ?? false;
     super.initState();
   }
+
   final SecureStorageService secureStorageService =
       serviceLocator<SecureStorageService>();
   final SpDatabaseManager spDatabaseManager = SpDatabaseManager();
@@ -74,33 +73,24 @@ class _GifteposeAppState extends State<GifteposeApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-    providers:[
-  ChangeNotifierProvider(
-            create: (context) => BaseViewmodel(),
-          ),
-          ChangeNotifierProvider(
-            create: (context) => OnboardingViewModel(),
-           ),
-               ChangeNotifierProvider(
-            create: (context) => DashboardViewmodel(),
-           ),
+      providers: [
+        ChangeNotifierProvider(create: (context) => BaseViewmodel()),
+        ChangeNotifierProvider(create: (context) => OnboardingViewModel()),
+        ChangeNotifierProvider(create: (context) => DashboardViewmodel()),
 
-
-  //            ChangeNotifierProvider(
-  //           create: (context) => OrdersViewModel(),
-  //         ),
-  //           ChangeNotifierProvider(
-  //             create: (context) => AuthViewModel(),
-  //           ),
-  //           ChangeNotifierProvider(
-  //             create: (context) => ProfileViewModel(),
-  //           ),
-  //           ChangeNotifierProvider(
-  //             create: (context) => WalletViewmodel(),
-  //           ),
-      
- 
-],
+        //            ChangeNotifierProvider(
+        //           create: (context) => OrdersViewModel(),
+        //         ),
+        //           ChangeNotifierProvider(
+        //             create: (context) => AuthViewModel(),
+        //           ),
+        //           ChangeNotifierProvider(
+        //             create: (context) => ProfileViewModel(),
+        //           ),
+        //           ChangeNotifierProvider(
+        //             create: (context) => WalletViewmodel(),
+        //           ),
+      ],
 
       child: GestureDetector(
         // onTap: _handleUserInteraction,
@@ -116,18 +106,20 @@ class _GifteposeAppState extends State<GifteposeApp> {
               light: GiftPoseTheme().lightTheme,
               dark: GiftPoseTheme().darkTheme,
               initial: AdaptiveThemeMode.system,
-      builder: (ThemeData light, ThemeData dark) {
+              builder: (ThemeData light, ThemeData dark) {
                 return MaterialApp(
                   title: 'Qost Mobile',
                   debugShowCheckedModeBanner: false,
                   scaffoldMessengerKey: rootScaffoldMessengerKey,
                   navigatorKey: navigatorKey,
-              //    theme: light,
-        theme:GiftPoseTheme().lightTheme,
-                      darkTheme:GiftPoseTheme().darkTheme,
+                  //    theme: light,
+          theme: light,
+darkTheme: dark,
                   builder: (context, child) {
                     return MediaQuery(
-                      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                      data: MediaQuery.of(
+                        context,
+                      ).copyWith(textScaleFactor: 1.0),
                       child: ChangeNotifierProvider(
                         create: (context) => ConnectivityProvider(context),
                         lazy: false,
@@ -140,14 +132,9 @@ class _GifteposeAppState extends State<GifteposeApp> {
                   },
                   onGenerateRoute: (settings) =>
                       Routers.generateRoute(settings, context),
-                  home:
-                  
-                   
-                  isRegistered?
-                   DashboardView():
-                   SplashScreen(),
+                  home: isRegistered ? DashboardView() : SplashScreen(),
                 );
-              }
+              },
             );
           },
         ),

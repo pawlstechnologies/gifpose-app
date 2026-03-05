@@ -18,7 +18,7 @@ import 'package:giftpose/utils/widgets/webview_screen.dart';
 import 'package:provider/provider.dart';
 
 class DetailsPage extends StatefulWidget {
-  final String location;
+  final String? location;
 
   const DetailsPage({super.key, required this.location});
 
@@ -196,7 +196,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                       ),
                                       XMargin(8),
                                       Text(
-                                        widget.location,
+                                        widget.location??"",
                                         style: GiftPoseTextStyle.small(
                                           fontWeight: FontWeight.w500,
                                         ),

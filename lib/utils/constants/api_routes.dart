@@ -10,6 +10,8 @@ static const searchAlertCategories = "/alerts/search-keywords";
 static const alertCategoriesList = "/categories";
 static const alertSubCategoriesList = "/categories/tree?categoryId={categoryId}";
 static const alertSearchPredictionList = "/categories/search";
+static const globalSearch = "/item/{deviceId}/search";
+
 
 
 

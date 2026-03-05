@@ -18,6 +18,7 @@ class GiftPoseColors {
   // Base colors - used as fallbacks and for static contexts
   static const primaryColor = Color(0xFF3ACD27);
 
+static const greenColor = Color(0xFFCCFDC5);
   static const containerBackground = Color(0xFFF6FFF5);
 
 
