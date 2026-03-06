@@ -6,7 +6,6 @@ import 'dart:math' as math;
 
 import 'dart:async';
 
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:client_information/client_information.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';

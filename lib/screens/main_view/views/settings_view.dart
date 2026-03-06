@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:giftpose/gen/assets.gen.dart';
-import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/theme/theme.dart';
 import 'package:giftpose/utils/widgets/Giftpose_basescafold.dart';
 import 'package:giftpose/utils/widgets/duration_slider.dart';
 import 'package:giftpose/utils/widgets/giftpose_switch.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
-import 'package:provider/provider.dart';
 
 class SettingsView extends StatefulWidget {
   SettingsView({super.key});
@@ -21,344 +19,339 @@ class _SettingsViewState extends State<SettingsView> {
 
   @override
   Widget build(BuildContext context) {
-           return Consumer<DashboardViewmodel>(
-          builder: (context, viewModel, child) {
-        return GiftPoseBaseScaffold(
-          includeHorizontalPadding: true,
-        
-          showAppBar: true,
-          includeVerticalPadding: false,
-          centerTitle: true,
-          appBarLeadingWidget: InkWell(
-            onTap: () {
-              HapticFeedback.selectionClick();
-              Navigator.pop(context);
-            },
-            child: Assets.icons.back.svg(
-              color: Theme.of(context).textTheme.bodyLarge?.color,
+    return GiftPoseBaseScaffold(
+      includeHorizontalPadding: true,
+
+      showAppBar: true,
+      includeVerticalPadding: false,
+      centerTitle: true,
+      appBarLeadingWidget: InkWell(
+        onTap: () {
+          HapticFeedback.selectionClick();
+          Navigator.pop(context);
+        },
+        child: Assets.icons.back.svg(
+          color: Theme.of(context).textTheme.bodyLarge?.color,
+        ),
+      ),
+
+      hasGradient: true,
+      appBarTitleWidget: Text(
+        "Settings",
+        textAlign: TextAlign.center,
+
+        style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
+      ),
+
+      builder: (size) {
+        return ListView(
+          children: [
+            YMargin(31),
+            Text(
+              "Location",
+
+              style: GiftPoseTextStyle.small(
+                color: Theme.of(context).textTheme.bodyMedium?.color,
+              ),
             ),
-          ),
-        
-          hasGradient: true,
-          appBarTitleWidget: Text(
-            "Settings",
-            textAlign: TextAlign.center,
-        
-            style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
-          ),
-        
-          builder: (size) {
-            return ListView(
-              children: [
-                YMargin(31),
-                Text(
-                  "Location",
-        
+            YMargin(10),
+
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
+                ),
+              ),
+              child: ListTile(
+                contentPadding: EdgeInsets.all(16),
+                leading: Assets.icons.location.svg(),
+                title: Text(
+                  "Current Location",
+
                   style: GiftPoseTextStyle.small(
-                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
                   ),
                 ),
-                YMargin(10),
-        
-                Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Theme.of(context).dividerColor,
-                      width: 1,
+                subtitle: Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    "New York",
+
+                    style: GiftPoseTextStyle.small(
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
                     ),
                   ),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(16),
+                ),
+                trailing: Assets.icons.foward.svg(),
+              ),
+            ),
+            YMargin(25),
+
+            Container(
+              padding: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
+                ),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    "How far are you willing to travel?",
+                    textAlign: TextAlign.center,
+
+                    style: GiftPoseTextStyle.medium(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  YMargin(14),
+                  DurationSlider(),
+                ],
+              ),
+            ),
+            YMargin(23),
+            Text(
+              "Notifications",
+
+              style: GiftPoseTextStyle.small(
+                color: Theme.of(context).textTheme.bodyMedium?.color,
+              ),
+            ),
+            YMargin(10),
+
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
+                ),
+              ),
+              child: Column(
+                children: [
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
                     leading: Assets.icons.location.svg(),
                     title: Text(
-                      "Current Location",
-        
+                      "Notification Alert Settings",
+
                       style: GiftPoseTextStyle.small(
                         color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
-                    subtitle: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                  viewModel.fetchItemsNearMeResponse.data?.userLocation.city ??"" ,
-        
-                        style: GiftPoseTextStyle.small(
-                          color: Theme.of(context).textTheme.bodyMedium?.color,
-                        ),
-                      ),
-                    ),
+
                     trailing: Assets.icons.foward.svg(),
                   ),
-                ),
-                YMargin(25),
-        
-                Container(
-                  padding: EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Theme.of(context).dividerColor,
-                      width: 1,
+                  Divider(color: Theme.of(context).dividerColor),
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
+
+                    leading: Assets.icons.dot.svg(),
+                    title: Text(
+                      "Push Notifications",
+
+                      style: GiftPoseTextStyle.small(
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
+                      ),
+                    ),
+                    trailing: GiftPoseSwitch(
+                      value: push,
+                      onChanged: (bool value) {
+                        push = !push;
+                        setState(() {});
+                      },
                     ),
                   ),
-                  child: Column(
-                    children: [
-                      Text(
-                        "How far are you willing to travel?",
-                        textAlign: TextAlign.center,
-        
-                        style: GiftPoseTextStyle.medium(
-                          fontWeight: FontWeight.w500,
-                        ),
+                ],
+              ),
+            ),
+            YMargin(25),
+
+            Text(
+              "App Settings",
+
+              style: GiftPoseTextStyle.small(
+                color: Theme.of(context).textTheme.bodyMedium?.color,
+              ),
+            ),
+            YMargin(10),
+
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
+                ),
+              ),
+              child: Column(
+                children: [
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
+                    leading: Assets.icons.darkmode.svg(),
+                    title: Text(
+                      "Dark Mode",
+
+                      style: GiftPoseTextStyle.small(
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
-                      YMargin(14),
-                      DurationSlider(),
-                    ],
-                  ),
-                ),
-                YMargin(23),
-                Text(
-                  "Notifications",
-        
-                  style: GiftPoseTextStyle.small(
-                    color: Theme.of(context).textTheme.bodyMedium?.color,
-                  ),
-                ),
-                YMargin(10),
-        
-                Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Theme.of(context).dividerColor,
-                      width: 1,
+                    ),
+                    trailing: GiftPoseSwitch(
+                      value: push,
+                      onChanged: (bool value) {
+                        push = !push;
+                        setState(() {});
+                      },
                     ),
                   ),
-                  child: Column(
-                    children: [
-                      ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 10,
-                        ),
-                        leading: Assets.icons.location.svg(),
-                        title: Text(
-                          "Notification Alert Settings",
-        
-                          style: GiftPoseTextStyle.small(
-                            color: Theme.of(context).textTheme.bodyLarge?.color,
-                          ),
-                        ),
-        
-                        trailing: Assets.icons.foward.svg(),
-                      ),
-                      Divider(color: Theme.of(context).dividerColor),
-                      ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 10,
-                        ),
-        
-                        leading: Assets.icons.dot.svg(),
-                        title: Text(
-                          "Push Notifications",
-        
-                          style: GiftPoseTextStyle.small(
-                            color: Theme.of(context).textTheme.bodyLarge?.color,
-                          ),
-                        ),
-                        trailing: GiftPoseSwitch(
-                          value: push,
-                          onChanged: (bool value) {
-                            push = !push;
-                            setState(() {});
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                YMargin(25),
-        
-                Text(
-                  "App Settings",
-        
-                  style: GiftPoseTextStyle.small(
-                    color: Theme.of(context).textTheme.bodyMedium?.color,
-                  ),
-                ),
-                YMargin(10),
-        
-                Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Theme.of(context).dividerColor,
-                      width: 1,
+                  Divider(color: Theme.of(context).dividerColor),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
                     ),
-                  ),
-                  child: Column(
-                    children: [
-                      ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 10,
-                        ),
-                        leading: Assets.icons.darkmode.svg(),
-                        title: Text(
-                          "Dark Mode",
-        
-                          style: GiftPoseTextStyle.small(
-                            color: Theme.of(context).textTheme.bodyLarge?.color,
-                          ),
-                        ),
-                        trailing: GiftPoseSwitch(
-                          value: viewModel.isDarkMode,
-                          onChanged: (bool value) {
-                          viewModel.toggleTheme(context);
-                       
-                          },
-                        ),
-                      ),
-                      Divider(color: Theme.of(context).dividerColor),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 16,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
                           children: [
-                            Row(
-                              children: [
-                                Assets.icons.language.svg(),
-                                XMargin(15),
-                                Text(
-                                  "Language",
-        
-                                  style: GiftPoseTextStyle.small(
-                                    color: Theme.of(
-                                      context,
-                                    ).textTheme.bodyLarge?.color,
-                                  ),
-                                ),
-                              ],
-                            ),
-        
-                            Row(
-                              children: [
-                                Text(
-                                  "English",
-        
-                                  style: GiftPoseTextStyle.small(
-                                    color: Theme.of(
-                                      context,
-                                    ).textTheme.bodyLarge?.color,
-                                  ),
-                                ),
-                                XMargin(8),
-                                Assets.icons.foward.svg(),
-                              ],
+                            Assets.icons.language.svg(),
+                            Text(
+                              "Language",
+
+                              style: GiftPoseTextStyle.small(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge?.color,
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                YMargin(25),
-                Text(
-                  "Support",
-        
-                  style: GiftPoseTextStyle.small(
-                    color: Theme.of(context).textTheme.bodyMedium?.color,
-                  ),
-                ),
-                YMargin(10),
-        
-                Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Theme.of(context).dividerColor,
-                      width: 1,
+
+                        Row(
+                          children: [
+                            Text(
+                              "English",
+
+                              style: GiftPoseTextStyle.small(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge?.color,
+                              ),
+                            ),
+                            XMargin(8),
+                            Assets.icons.foward.svg(),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  child: Column(
-                    children: [
-                      ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 10,
-                        ),
-                        leading: Assets.icons.helpcentre.svg(),
-                        title: Text(
-                          "Help Center",
-        
-                          style: GiftPoseTextStyle.small(
-                            color: Theme.of(context).textTheme.bodyLarge?.color,
-                          ),
-                        ),
-                        trailing: Assets.icons.foward.svg
-                        ()
+                ],
+              ),
+            ),
+            YMargin(25),
+            Text(
+              "Support",
+
+              style: GiftPoseTextStyle.small(
+                color: Theme.of(context).textTheme.bodyMedium?.color,
+              ),
+            ),
+            YMargin(10),
+
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
+                ),
+              ),
+              child: Column(
+                children: [
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
+                    leading: Assets.icons.helpcentre.svg(),
+                    title: Text(
+                      "Help Center",
+
+                      style: GiftPoseTextStyle.small(
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
-                      Divider(color: Theme.of(context).dividerColor),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 16,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    ),
+                    trailing: Assets.icons.foward.svg
+                    ()
+                  ),
+                  Divider(color: Theme.of(context).dividerColor),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
                           children: [
-                            Row(
-                              children: [
-                                Assets.icons.about.svg(),
-                                Text(
-                                  "About GiftPose",
-        
-                                  style: GiftPoseTextStyle.small(
-                                    color: Theme.of(
-                                      context,
-                                    ).textTheme.bodyLarge?.color,
-                                  ),
-                                ),
-                              ],
-                            ),
-        
-                            Row(
-                              children: [
-                                Text(
-                                  "v1.0.0",
-        
-                                  style: GiftPoseTextStyle.small(
-                                    color: Theme.of(
-                                      context,
-                                    ).textTheme.bodyLarge?.color,
-                                  ),
-                                ),
-                                XMargin(8),
-                                Assets.icons.foward.svg(),
-                              ],
+                            Assets.icons.about.svg(),
+                            Text(
+                              "About GiftPose",
+
+                              style: GiftPoseTextStyle.small(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge?.color,
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
+
+                        Row(
+                          children: [
+                            Text(
+                              "v1.0.0",
+
+                              style: GiftPoseTextStyle.small(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge?.color,
+                              ),
+                            ),
+                            XMargin(8),
+                            Assets.icons.foward.svg(),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                YMargin(45),
-              ],
-            );
-          },
+                ],
+              ),
+            ),
+            YMargin(45),
+          ],
         );
-      }
+      },
     );
   }
 }

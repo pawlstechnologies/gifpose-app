@@ -1,4 +1,3 @@
-
 class AppRoutes {
   // ignore: constant_identifier_names
   static const String logIn = "/logIn";
@@ -11,7 +10,6 @@ class AppRoutes {
   static const String notificationsPage = "/notificationsPage";
    static const String notificationsAlert = "/notificationsAlert";
     static const String settingsPage = "/settingsPage";
-     static const String searchPage = "/searchPage";
 
 
         

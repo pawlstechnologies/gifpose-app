@@ -16,8 +16,7 @@ class NotificationView extends StatefulWidget {
 class _NotificationViewState extends State<NotificationView> {
   @override
   void initState() {
-
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       Future.delayed(Duration(seconds: 2), () {});
       MyBottomSheet.showDismissibleBottomSheet(
         bottomAction: Row(
@@ -29,6 +28,7 @@ class _NotificationViewState extends State<NotificationView> {
         children: [AllowNotificationWidget()],
       );
     });
+
     super.initState();
   }
 

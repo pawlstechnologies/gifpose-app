@@ -2,7 +2,6 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:client_information/client_information.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,6 @@ import 'package:giftpose/screens/onboarding/models/fetch_itemsnearme_response.da
 import 'package:giftpose/screens/onboarding/models/fetchitems_byid_response.dart';
 import 'package:giftpose/screens/onboarding/models/search_alert_category_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_predictions_request.dart';
-import 'package:giftpose/screens/onboarding/models/search_response.dart';
 import 'package:giftpose/screens/onboarding/viewmodels/onboarding_viewmodel.dart';
 import 'package:giftpose/utils/locator.dart';
 import 'package:giftpose/utils/network_data_response.dart';
@@ -46,58 +44,18 @@ class DashboardViewmodel extends BaseViewmodel {
   bool _hasReachedMax = false;
   bool _isLoadingMore = false;
 
-
-
- // search Pagination properties
-  int _currentPageSearch = 1;
-  int _totalPagesSearch = 1;
-  bool _hasReachedMaxSearch = false;
-  bool _isLoadingMoreSearch = false;
   // Items list
   List<FetchItemsNearMeData> _items = [];
   List<FetchItemsNearMeData> get items => _items;
-
-    // Items list
-  List<SearchData> _itemsSearch = [];
-  List<SearchData> get itemsSearch=> _itemsSearch;
-
 
   // Getters for pagination state
   bool get hasReachedMax => _hasReachedMax;
   bool get isLoadingMore => _isLoadingMore;
   int get currentPage => _currentPage;
   int get totalPages => _totalPages;
-
-    // Getters for pagination state
-  bool get hasReachedMaxSearch => _hasReachedMaxSearch;
-  bool get isLoadingMoreSearch => _isLoadingMoreSearch;
-  int get currentPageSearch => _currentPageSearch;
-  int get totalPagesSearch => _totalPagesSearch;
   String? deviceId;
 
   String? imel;
-  bool _isDark = false;
-  bool get isDark => _isDark;
-
-bool get isDarkMode {
-  final theme = AdaptiveTheme.of(navigatorKey.currentContext!);
-  return theme.mode == AdaptiveThemeMode.dark;
-}
-
-  void toggleTheme(BuildContext context) {
-    final theme = AdaptiveTheme.of(context);
-
-    if (_isDark) {
-      theme.setLight();
-      _isDark = false;
-    } else {
-      theme.setDark();
-      _isDark = true;
-    }
-
-    notifyListeners();
-  }
-
 
   // fetch device details
   Future<void> getDeviceId() async {
@@ -192,16 +150,6 @@ bool get isDarkMode {
     _isLoadingMore = false;
     _items.clear();
   }
- // Reset search pagination (call this when refreshing or changing filters)
-  void resetPaginationSearch() {
-    _currentPageSearch = 1;
-    _totalPagesSearch = 1;
-    _hasReachedMaxSearch = false;
-    _isLoadingMoreSearch = false;
-    _items.clear();
-  }
-
-
 
   // Main fetch method with pagination
   Future<void> fetchItemsNearMe({bool isLoadMore = false}) async {
@@ -280,89 +228,6 @@ bool get isDarkMode {
       }
     }
   }
-
-
-NetworkDataResponse<SearchResponse> _globalSearchResponse =
-      NetworkDataResponse.idle();
-
-NetworkDataResponse<SearchResponse>get globalSearchResponse=>
-      _globalSearchResponse;
-
-  set globalSearchResponse(
-NetworkDataResponse<SearchResponse> value,
-  ) {
-    _globalSearchResponse = value;
-    notifyListeners();
-  }
-
-  Future<void> search({
-    required BuildContext context,
-bool isLoadMore = false,
-    required List<String> keywords,
-  }) async {
-    try {
-      globalSearchResponse = NetworkDataResponse.loading("");
-
-      // Show loader
-      // await LoaderPage.show(context);
-
-      final response = await mainViewRepo.globalSearch(
-        deviceId: deviceId??"",
-        searchCategoryPredictionRequest: SearchCategoryPredictionRequest(
-          keywords: keywords,
-          
-        ),
-      );
-
-         if (response.success == true) {
-         globalSearchResponse = NetworkDataResponse.completed(response);
-      } else {
-        globalSearchResponse = NetworkDataResponse.error(
-          response.message ?? "Something went wrong",
-        );
-        CustomToast.show(
-          context: navigatorKey.currentContext!,
-          message: response.message ?? "Something went wrong",
-        );
-      }
-
-      // Update total pages from response (adjust based on your API response structure)
-      // Assuming your response has pagination info
-      if (response.page != null) {
-        // _totalPagesSearch = response.totalPages;
-        _currentPageSearch = response.page;
-      } else {}
-
-      // Add new items to existing list
-      if (isLoadMore) {
-        _itemsSearch.addAll(response.data.items ?? []);
-      } else {
-        _itemsSearch = response.data.items ?? [];
-      }
-
-      // Check if we've reached the last page
-      _hasReachedMax =
-          _currentPage >= _totalPages || (response.data?.items.isEmpty ?? true);
-
-      // Update response state
-     globalSearchResponse = NetworkDataResponse.completed(response);
-    } catch (e) {
-      if (isLoadMore) {
-        // Handle load more error silently
-        log('Error loading more items: $e');
-        _isLoadingMore = false;
-        notifyListeners();
-      } else {
-         globalSearchResponse = NetworkDataResponse.error(e.toString());
-      }
-    } finally {
-      if (isLoadMore) {
-        _isLoadingMore = false;
-        notifyListeners();
-      }
-    }
-  }
-
 
   // Method to load next page (called when user scrolls to bottom)
   Future<void> loadNextPage() async {
@@ -455,10 +320,6 @@ bool isLoadMore = false,
 
       if (response.success == true) {
         Navigator.pushNamed(context, AppRoutes.dashboard);
-        
-
-        
-            CustomToast.show(context: context, message: "Notification alert set");
       } else {
         final errorMessage = "Something went wrong";
         CustomToast.show(context: context, message: errorMessage);
@@ -474,23 +335,12 @@ bool isLoadMore = false,
   }
 
   List<String> _selectedKeywords = [];
-List<String> get selectedKeywords => _selectedKeywords;
+  List<String> get selectedKeywords => _selectedKeywords;
 
-void toggleKeyword(String keyword) {
-  if (_selectedKeywords.contains(keyword)) {
-    _selectedKeywords.remove(keyword);
-  } else {
-    _selectedKeywords.add(keyword);
+  set selectedKeywords(List<String> value) {
+    _selectedKeywords = value;
+    notifyListeners();
   }
-  notifyListeners();
-}
-  List<String> _selectedCategory = [];
-List<String> get selectedCategory => _selectedCategory;
-
-void selectedCategoryKeyword(List<String> value) {
- _selectedCategory = value;
-  notifyListeners();
-}
 
   NetworkDataResponse<SearchCategoryPredictionResponse>
   _searchPredictionResponse = NetworkDataResponse.idle();
@@ -514,7 +364,7 @@ void selectedCategoryKeyword(List<String> value) {
       searchPredictionResponse = NetworkDataResponse.loading("");
 
       // Show loader
-      // await LoaderPage.show(context);
+      await LoaderPage.show(context);
 
       final response = await mainViewRepo.searchAlertPredictions(
         searchCategoryPredictionRequest: SearchCategoryPredictionRequest(
@@ -524,12 +374,12 @@ void selectedCategoryKeyword(List<String> value) {
 
       searchPredictionResponse = NetworkDataResponse.completed(response);
 
-      // if (navigatorKey.currentContext!.mounted) {
-      //   Navigator.of(
-      //     navigatorKey.currentContext!,
-      //     rootNavigator: true,
-      //   ).pop(); // Dismiss dialog
-      // }
+      if (navigatorKey.currentContext!.mounted) {
+        Navigator.of(
+          navigatorKey.currentContext!,
+          rootNavigator: true,
+        ).pop(); // Dismiss dialog
+      }
 
       if (response.success == true) {
       } else {

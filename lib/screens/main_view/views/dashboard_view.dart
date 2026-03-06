@@ -2,18 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:giftpose/gen/assets.gen.dart';
-import 'package:giftpose/screens/main_view/views/search_page.dart';
-import 'package:giftpose/screens/main_view/widgets/allow_notification_widget.dart';
 import 'package:giftpose/screens/main_view/widgets/gridview.dart';
 import 'package:giftpose/screens/main_view/widgets/listview.dart';
-import 'package:giftpose/screens/onboarding/views/postcode_view.dart';
 import 'package:giftpose/services/network_services/network_response.dart';
 import 'package:giftpose/utils/router/utils.dart';
 import 'package:giftpose/utils/theme/giftpose_colors.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/theme/theme.dart';
 import 'package:giftpose/utils/widgets/Giftpose_basescafold.dart';
-import 'package:giftpose/utils/widgets/bottom_sheet.dart';
 import 'package:giftpose/utils/widgets/giftpose_textfield.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
 import 'package:provider/provider.dart';
@@ -27,12 +23,9 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
-  final searchCtrl = TextEditingController();
+  final postcodeCtrl = TextEditingController();
   bool isList = false;
   final ScrollController _scrollController = ScrollController();
-OverlayEntry? _overlayEntry;
-  final LayerLink _layerLink = LayerLink();
-  final FocusNode _searchFocus = FocusNode();
 
   @override
   void initState() {
@@ -42,19 +35,7 @@ OverlayEntry? _overlayEntry;
           Future.microtask(() =>
     context.read<DashboardViewmodel>().getDeviceId()
   );
-
-
-      Future.delayed(Duration(seconds: 2), () {});
-      MyBottomSheet.showDismissibleBottomSheet(
-        bottomAction: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-        ),
-       
-        context: context,
-        height: MediaQuery.of(context).size.height / 2.6,
-        children: [AllowNotificationWidget()],
-      );
-
+ context.read<DashboardViewmodel>().fetchAlertCategory();
 
     });
 Future.delayed(const Duration(seconds: 2), () {
@@ -67,77 +48,10 @@ Future.delayed(const Duration(seconds: 2), () {
   
   }
 
-  /// REMOVE OVERLAY
-  void removeOverlay() {
-    _overlayEntry?.remove();
-    _overlayEntry = null;
-  }
-
-  /// SHOW OVERLAY
-  void showOverlay(DashboardViewmodel vm) {
-    removeOverlay();
-
-    _overlayEntry = _createOverlay(vm);
-
-    Overlay.of(context).insert(_overlayEntry!);
-  }
-
-  /// CREATE OVERLAY
-  OverlayEntry _createOverlay(DashboardViewmodel vm) {
-    return OverlayEntry(
-      builder: (context) => Positioned(
-        width: MediaQuery.of(context).size.width - 40,
-        child: CompositedTransformFollower(
-          link: _layerLink,
-          offset: const Offset(0, 55),
-          child: Material(
-            elevation: 6,
-            borderRadius: BorderRadius.circular(12),
-            child: Container(
-              constraints: const BoxConstraints(maxHeight: 250),
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount:
-                    vm.searchPredictionResponse.data?.data.length ?? 0,
-                itemBuilder: (context, index) {
-
-                  final item =
-                      vm.searchPredictionResponse.data?.data[index];
-
-                  return ListTile(
-                    title: Text(item?.name ?? ""),
-                    onTap: () {
-
-                      if (!vm.selectedKeywords.contains(item?.name)) {
-                        vm.toggleKeyword(item?.name ?? "");
-                      }
-                      
-
-                      searchCtrl.text = item?.name ?? "";
-
-                      removeOverlay();
-                    },
-                  );
-                },
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-
   @override
   void dispose() {
     _scrollController.dispose();
-    searchCtrl.dispose();
-        _searchFocus.dispose();
-    removeOverlay();
+    postcodeCtrl.dispose();
     super.dispose();
   }
 
@@ -146,7 +60,6 @@ Future.delayed(const Duration(seconds: 2), () {
       context.read<DashboardViewmodel>().loadNextPage();
     }
   }
-
 
   bool get _isBottom {
     if (!_scrollController.hasClients) return false;
@@ -179,7 +92,6 @@ Future.delayed(const Duration(seconds: 2), () {
                       children: [
                         InkWell(
                           onTap: () {
-                            viewModel.miles = viewModel.fetchItemsNearMeResponse.data?.userLocation.setMile?? 15;
                             HapticFeedback.selectionClick();
                             Navigator.pushNamed(context, AppRoutes.settingsPage);
                           },
@@ -212,7 +124,7 @@ Future.delayed(const Duration(seconds: 2), () {
                               onTap: () {
                                 HapticFeedback.selectionClick();
                                 Navigator.pushNamed(context, AppRoutes.notificationsPage);
-                          
+                                viewModel.fetchAlertCategory();
                               },
                               child: Assets.icons.notificationIcon.svg(
                                 color: Theme.of(context).textTheme.bodyLarge?.color,
@@ -227,27 +139,12 @@ Future.delayed(const Duration(seconds: 2), () {
                   YMargin(24),
 
                   // Search Field
-                Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: CompositedTransformTarget(
-                      link: _layerLink,
-                      child: GiftPoseTextField(
-                        readOnly: true,
-                        onTap: (){
-                   // Navigate to a new screen
-Navigator.push(
-  context,
-  MaterialPageRoute(builder: (context) => SearchView(isList: isList,)),
-);
-                          HapticFeedback.selectionClick();
-                        },
-                        controller: searchCtrl,
-                        focusNode: _searchFocus,
-                        hintText: "Search for items",
-                        prefixIcon: Assets.icons.search.svg(),
-
-                       
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: GiftPoseTextField(
+                      controller: postcodeCtrl,
+                      hintText: "Search for items",
+                      prefixIcon: Assets.icons.search.svg(),
                     ),
                   ),
 
@@ -270,11 +167,7 @@ Navigator.push(
                       InkWell(
                         onTap: (){
                           HapticFeedback.selectionClick();
-                             Navigator.push(
-  context,
-  MaterialPageRoute(builder: (context) => PostcodeScreen(fromDashboard: true,)),
-);
-
+                                  Navigator.pushNamed(context, AppRoutes.postcodePage);
                         },
                         child: Assets.icons.down.svg(
                           color: Theme.of(context).textTheme.bodyLarge?.color,
@@ -299,7 +192,7 @@ Navigator.push(
                         textAlign: TextAlign.center,
                         style: GiftPoseTextStyle.normal(
                           fontSize: 15,
-                          color: GiftPoseColors.textColor,
+                          color: Theme.of(context).textTheme.bodyLarge?.color,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -307,7 +200,7 @@ Navigator.push(
                         "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.",
                         textAlign: TextAlign.justify,
                         style: GiftPoseTextStyle.small(
-                          color:GiftPoseColors.textColor2,
+                          color: Theme.of(context).textTheme.bodyMedium?.color,
                         ),
                       ),
                       trailing: Assets.icons.foward.svg(),
