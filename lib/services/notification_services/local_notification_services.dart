@@ -44,9 +44,9 @@ class LocalNotificationService{
             presentSound: true,
           ),
           android: AndroidNotificationDetails(
-            "ParallexMobile",
-            "ParallexMobile channel",
-            channelDescription: "This is ParallexMobile channel for notification",
+            "GiftPose",
+            "GiftPose channel",
+            channelDescription: "This is GiftPose channel for notification",
             importance: Importance.max,
             priority: Priority.high,
             playSound: true,

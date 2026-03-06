@@ -9,6 +9,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:giftpose/app.dart';
 import 'package:giftpose/firebase_options.dart';
 import 'package:giftpose/services/database/database_service.dart';
+import 'package:giftpose/services/notification_services/local_notification_services.dart';
 import 'package:giftpose/utils/locator.dart';
 import 'package:provider/provider.dart';
 
@@ -75,8 +76,8 @@ void main() async {
     
   // final spDataBase = serviceLocator<SpDatabaseManager>();
   // await spDataBase.init();
-  // LocalNotificationService.initialize();
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  LocalNotificationService.initialize();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   // SpDatabaseManager spDatabaseManager = SpDatabaseManager();
   // await SpDatabaseManager().init();
