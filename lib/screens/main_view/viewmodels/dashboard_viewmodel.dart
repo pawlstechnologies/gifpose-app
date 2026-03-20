@@ -13,12 +13,16 @@ import 'package:giftpose/screens/onboarding/models/alert_sub_category_list_respo
 import 'package:giftpose/screens/onboarding/models/alerts_category_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/create_alerts_request.dart';
 import 'package:giftpose/screens/onboarding/models/create_alerts_response.dart';
+import 'package:giftpose/screens/onboarding/models/fetch_alert_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_itemsnearme_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetchitems_byid_response.dart';
 import 'package:giftpose/screens/onboarding/models/search_alert_category_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_predictions_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_response.dart';
 import 'package:giftpose/screens/onboarding/viewmodels/onboarding_viewmodel.dart';
+import 'package:giftpose/services/database/database_service.dart';
+import 'package:giftpose/services/secure_storage/secure_storage.dart';
+import 'package:giftpose/utils/constants/storage_keys.dart';
 import 'package:giftpose/utils/locator.dart';
 import 'package:giftpose/utils/network_data_response.dart';
 import 'package:giftpose/utils/router/app_routes.dart' show AppRoutes;
@@ -116,7 +120,7 @@ bool get isDarkMode {
       androidInfo = await deviceInfo.androidInfo;
       // imel = "21345t5y65";
       deviceId = info.deviceId;
-      dailcode = androidInfo.id;
+ 
       log('deviceID: $deviceId');
     } else if (Platform.isIOS) {
       // await DeviceImei().getDeviceImei().then((value) {
@@ -200,11 +204,15 @@ bool get isDarkMode {
     _isLoadingMoreSearch = false;
     _items.clear();
   }
-
+  final SecureStorageService secureStorageService =
+      serviceLocator<SecureStorageService>();
 
 
   // Main fetch method with pagination
   Future<void> fetchItemsNearMe({bool isLoadMore = false}) async {
+    String? deviceIdFromDb = await secureStorageService.read(
+      key: StorageKeys.deviceId,
+    );
     // Prevent multiple simultaneous loads
     if (_isLoadingMore) return;
 
@@ -230,7 +238,7 @@ bool get isDarkMode {
       // Make API call with pagination parameters
       final response = await mainViewRepo.fetchItemsNearme(
         page: _currentPage.toString(),
-        deviceID: deviceId ?? "",
+        deviceID:deviceIdFromDb?? deviceId ?? "",
       );
       if (response.success == true) {
         fetchItemsNearMeResponse = NetworkDataResponse.completed(response);
@@ -432,14 +440,14 @@ bool isLoadMore = false,
       createAlertResponse = NetworkDataResponse.loading("");
 
       // Show loader
-      await LoaderPage.show(context);
+      LoaderPage.show(context);
 
       final response = await mainViewRepo.createNotificationAlerts(
         createAlertListRequest: CreateAlertListRequest(
           deviceId: deviceId ?? "",
           categories: categories,
           keywords: keywords,
-          status: status,
+          status:"Active",
           firebaseToken: fcmToken ?? "",
         ),
       );
@@ -614,6 +622,42 @@ void selectOption(int index) {
       fetchAlertSubCategoryResponse = NetworkDataResponse.completed(response);
     } catch (e) {
       fetchAlertSubCategoryResponse = NetworkDataResponse.error(e.toString());
+    }
+  }
+    NetworkDataResponse<FetchAlertListResponse>
+  _fetchAlertListResponse = NetworkDataResponse.idle();
+
+ NetworkDataResponse<FetchAlertListResponse>
+  get fetchAlertListResponse => _fetchAlertListResponse;
+
+  set fetchAlertListResponse(
+  NetworkDataResponse<FetchAlertListResponse> value,
+  ) {
+    _fetchAlertListResponse = value;
+    notifyListeners();
+  }
+
+
+  Future<void> fetchAlertList() async {
+    try {
+        String? deviceIdFromDb = await secureStorageService.read(
+      key: StorageKeys.deviceId,
+    );
+      fetchAlertListResponse = NetworkDataResponse.loading("");
+      // await LoaderPage.show(navigatorKey.currentContext!);
+
+      final response = await mainViewRepo.fetchAlertList (
+        deviceID:deviceIdFromDb?? deviceId ?? "",
+
+      );
+
+      // if (navigatorKey.currentContext!.mounted) {
+      //   Navigator.of(navigatorKey.currentContext!, rootNavigator: true).pop(); // Dismiss dialog
+      // }
+
+     fetchAlertListResponse = NetworkDataResponse.completed(response);
+    } catch (e) {
+      fetchAlertListResponse = NetworkDataResponse.error(e.toString());
     }
   }
 }

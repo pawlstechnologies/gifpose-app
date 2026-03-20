@@ -58,7 +58,7 @@ class ListViewSearchWidget extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 0),
                   child: InkWell(
                     onTap: () {
-                      HapticFeedback.selectionClick();
+                     HapticFeedback.heavyImpact();
                        vm.fetchItemsById(id: items[index].id);
                     if(vm.fetchItemsByIdMeResponse.data?.success == true){
                       Navigator.push(

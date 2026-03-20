@@ -16,19 +16,18 @@ class NotificationView extends StatefulWidget {
 class _NotificationViewState extends State<NotificationView> {
   @override
   void initState() {
+    //   WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //   Future.delayed(Duration(seconds: 2), () {});
+    //   MyBottomSheet.showDismissibleBottomSheet(
+    //     bottomAction: Row(
+    //       mainAxisAlignment: MainAxisAlignment.center,
+    //     ),
 
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-      Future.delayed(Duration(seconds: 2), () {});
-      MyBottomSheet.showDismissibleBottomSheet(
-        bottomAction: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-        ),
-       
-        context: context,
-        height: MediaQuery.of(context).size.height / 2.6,
-        children: [AllowNotificationWidget()],
-      );
-    });
+    //     context: context,
+    //     height: MediaQuery.of(context).size.height / 2.6,
+    //     children: [AllowNotificationWidget()],
+    //   );
+    // });
     super.initState();
   }
 
@@ -42,11 +41,23 @@ class _NotificationViewState extends State<NotificationView> {
       centerTitle: true,
       appBarLeadingWidget: InkWell(
         onTap: () {
-          HapticFeedback.selectionClick();
+          HapticFeedback.heavyImpact();
           Navigator.pop(context);
         },
-        child: Assets.icons.back.svg(
-          color: Theme.of(context).textTheme.bodyLarge?.color,
+        child: Container(
+          width: 200,
+          height: 100,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              20,
+            ), // Adjust the value for more/less rounding
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: Assets.icons.back.svg(
+              color: Theme.of(context).textTheme.bodyLarge?.color,
+            ),
+          ),
         ),
       ),
 

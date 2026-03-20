@@ -59,11 +59,12 @@ class CategoryGrid extends StatelessWidget {
             final data = items[index];
             return InkWell(
               onTap: () {
-                HapticFeedback.selectionClick();
+               HapticFeedback.heavyImpact();
 
                 vm.fetchItemsById(id: items[index].id).whenComplete((){
 
- if(vm.fetchItemsByIdMeResponse.data?.success == true){
+ if(vm.fetchItemsByIdMeResponse.data?.success == true &&  vm.fetchItemsByIdMeResponse.data!.data.imageUrls.isNotEmpty){
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(

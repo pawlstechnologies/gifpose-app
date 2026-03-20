@@ -19,13 +19,17 @@ class GiftPoseColors {
   static const primaryColor = Color(0xFF3ACD27);
 
 static const greenColor = Color(0xFFCCFDC5);
+
   static const containerBackground = Color(0xFFF6FFF5);
+static const dividerColorNew = Color(0x33EC5B13);
 
 
   static const secondaryColor = Color(0xFF7FF270);
   
   static const textColor = Color(0xFF0B051D);
   static const textColor2 = Color(0xFF928F91);
+    static const textColor3 = Color(0xFF575252);
+  
   static const subtitleTextColor = Color(0xFF0B051D);
   static const lightSubtitleTextColor = Color(0xADFFFFFF); // White with 68% opacity
   static const linkColor = Color(0xFF4A4AF4);

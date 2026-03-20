@@ -60,8 +60,8 @@ class FetchItemsNearMeData {
     String id;
     String name;
     String description;
-    String partner;
-    String thumbnail;
+    Partner partner;
+    String? thumbnail;
     int visitCount;
     double distanceInMeters;
     double distanceInMiles;
@@ -81,7 +81,7 @@ class FetchItemsNearMeData {
         id: json["_id"],
         name: json["name"],
         description: json["description"],
-        partner: json["partner"],
+        partner: partnerValues.map[json["partner"]]!,
         thumbnail: json["thumbnail"],
         visitCount: json["visitCount"],
         distanceInMeters: json["distanceInMeters"]?.toDouble(),
@@ -92,13 +92,21 @@ class FetchItemsNearMeData {
         "_id": id,
         "name": name,
         "description": description,
-        "partner": partner,
+        "partner": partnerValues.reverse[partner],
         "thumbnail": thumbnail,
         "visitCount": visitCount,
         "distanceInMeters": distanceInMeters,
         "distanceInMiles": distanceInMiles,
     };
 }
+
+enum Partner {
+    TRASH_NOTHING
+}
+
+final partnerValues = EnumValues({
+    "TrashNothing": Partner.TRASH_NOTHING
+});
 
 class UserLocation {
     String deviceId;
@@ -126,4 +134,16 @@ class UserLocation {
         "city": city,
         "setMile": setMile,
     };
+}
+
+class EnumValues<T> {
+    Map<String, T> map;
+    late Map<T, String> reverseMap;
+
+    EnumValues(this.map);
+
+    Map<T, String> get reverse {
+            reverseMap = map.map((k, v) => MapEntry(v, k));
+            return reverseMap;
+    }
 }

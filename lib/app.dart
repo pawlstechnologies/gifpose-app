@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:giftpose/screens/main_view/viewmodels/base_viewmodel.dart';
@@ -9,6 +11,7 @@ import 'package:giftpose/screens/main_view/views/dashboard_view.dart';
 import 'package:giftpose/screens/onboarding/viewmodels/onboarding_viewmodel.dart';
 import 'package:giftpose/screens/onboarding/views/onboarding_view.dart';
 import 'package:giftpose/services/database/database_service.dart';
+import 'package:giftpose/services/notification_services/local_notification_services.dart';
 import 'package:giftpose/services/secure_storage/secure_storage.dart';
 import 'package:giftpose/services/secure_storage/sp_database_manager.dart';
 import 'package:giftpose/utils/locator.dart';
@@ -34,10 +37,27 @@ class _GifteposeAppState extends State<GifteposeApp> {
   @override
   void initState() {
     // TODO: implement initState
+    testLocalNotification();
     isRegistered = serviceLocator<DatabaseService>().getIsRegistered() ?? false;
+    
     super.initState();
   }
-
+  
+void testLocalNotification() async {
+  // Test local notification
+  if (Platform.isAndroid) {
+  RemoteMessage testMessage = RemoteMessage(
+    notification: RemoteNotification(
+      title: 'Test Notification',
+      body: 'This is a test notification',
+    ),
+    data: {'id': '123', 'screen': 'test'},
+  );
+  
+  LocalNotificationService.displayNotification(testMessage);
+  print('Test notification sent');
+  }
+}
   final SecureStorageService secureStorageService =
       serviceLocator<SecureStorageService>();
   final SpDatabaseManager spDatabaseManager = SpDatabaseManager();

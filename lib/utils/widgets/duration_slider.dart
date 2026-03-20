@@ -4,21 +4,35 @@ import 'package:giftpose/utils/theme/giftpose_colors.dart';
 import 'package:provider/provider.dart';
 
 class DurationSlider extends StatefulWidget {
-  const DurationSlider({super.key});
+  final Function(double)? onChanged;
+
+  const DurationSlider({super.key, this.onChanged});
 
   @override
   State<DurationSlider> createState() => _DurationSliderState();
 }
 
 class _DurationSliderState extends State<DurationSlider> {
-
-
   @override
   Widget build(BuildContext context) {
- return Consumer<OnboardingViewModel>(builder: (context, onboardVm, child) {
+    return Consumer<OnboardingViewModel>(
+      builder: (context, onboardVm, child) {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+
+            /// 🔥 CURRENT MILES DISPLAY
+            Text(
+              "${onboardVm.miles.toStringAsFixed(0)} miles",
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: GiftPoseColors.primaryColor,
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
             SliderTheme(
               data: SliderTheme.of(context).copyWith(
                 trackHeight: 4,
@@ -34,24 +48,25 @@ class _DurationSliderState extends State<DurationSlider> {
                 divisions: 49,
                 value: onboardVm.miles,
                 onChanged: (value) {
-                  onboardVm.miles = value;
+                  onboardVm.updateMiles(value);
+                  widget.onChanged?.call(value);
                 },
               ),
             ),
-        
+
             const SizedBox(height: 8),
-        
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
-                Text("1m", style: TextStyle(color: Colors.grey)),
-                Text("25m", style: TextStyle(color: Colors.grey)),
-                Text("50m", style: TextStyle(color: Colors.grey)),
+                Text("1mi", style: TextStyle(color: Colors.grey)),
+                Text("25mi", style: TextStyle(color: Colors.grey)),
+                Text("50mi", style: TextStyle(color: Colors.grey)),
               ],
             )
           ],
         );
-      }
+      },
     );
   }
 }

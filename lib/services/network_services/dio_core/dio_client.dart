@@ -12,8 +12,8 @@ class NetworkProvider{
   Dio _getDioInstance(){
     var dio = Dio(BaseOptions(
       baseUrl: "https://api.giftpose.com/api/",
-      connectTimeout:const Duration(milliseconds: 60000),
-      receiveTimeout:const Duration(milliseconds: 60000),
+      connectTimeout:const Duration(seconds: 60),
+      receiveTimeout:const Duration(seconds: 60),
     ));
     dio.interceptors.add(LoggerInterceptor());
     dio.interceptors.add(AuthorizationInterceptor());

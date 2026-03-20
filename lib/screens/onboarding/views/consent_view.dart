@@ -64,7 +64,7 @@ class _ConsentScreenState extends State<ConsentScreen>
             GiftPoseButton(
               title: "Give Consent",
               onTap: () {
-                HapticFeedback.selectionClick();
+               HapticFeedback.heavyImpact();
                 Navigator.pushNamed(context, AppRoutes.postcodePage);
 
               },

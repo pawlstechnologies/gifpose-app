@@ -33,14 +33,23 @@ class $AssetsIconsGen {
   /// File path: assets/icons/back.svg
   SvgGenImage get back => const SvgGenImage('assets/icons/back.svg');
 
+  /// File path: assets/icons/calendar.svg
+  SvgGenImage get calendar => const SvgGenImage('assets/icons/calendar.svg');
+
   /// File path: assets/icons/checklist.svg
   SvgGenImage get checklist => const SvgGenImage('assets/icons/checklist.svg');
+
+  /// File path: assets/icons/close.svg
+  SvgGenImage get close => const SvgGenImage('assets/icons/close.svg');
 
   /// File path: assets/icons/cycling.svg
   SvgGenImage get cycling => const SvgGenImage('assets/icons/cycling.svg');
 
   /// File path: assets/icons/darkmode.svg
   SvgGenImage get darkmode => const SvgGenImage('assets/icons/darkmode.svg');
+
+  /// File path: assets/icons/dislike.svg
+  SvgGenImage get dislike => const SvgGenImage('assets/icons/dislike.svg');
 
   /// File path: assets/icons/dot.svg
   SvgGenImage get dot => const SvgGenImage('assets/icons/dot.svg');
@@ -51,6 +60,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/emptyNot.svg
   SvgGenImage get emptyNot => const SvgGenImage('assets/icons/emptyNot.svg');
 
+  /// File path: assets/icons/fb.svg
+  SvgGenImage get fb => const SvgGenImage('assets/icons/fb.svg');
+
   /// File path: assets/icons/foward.svg
   SvgGenImage get foward => const SvgGenImage('assets/icons/foward.svg');
 
@@ -60,12 +72,21 @@ class $AssetsIconsGen {
   /// File path: assets/icons/hamburger.svg
   SvgGenImage get hamburger => const SvgGenImage('assets/icons/hamburger.svg');
 
+  /// File path: assets/icons/heart.svg
+  SvgGenImage get heart => const SvgGenImage('assets/icons/heart.svg');
+
   /// File path: assets/icons/helpcentre.svg
   SvgGenImage get helpcentre =>
       const SvgGenImage('assets/icons/helpcentre.svg');
 
+  /// File path: assets/icons/ig.svg
+  SvgGenImage get ig => const SvgGenImage('assets/icons/ig.svg');
+
   /// File path: assets/icons/language.svg
   SvgGenImage get language => const SvgGenImage('assets/icons/language.svg');
+
+  /// File path: assets/icons/like.svg
+  SvgGenImage get like => const SvgGenImage('assets/icons/like.svg');
 
   /// File path: assets/icons/loader.png
   AssetGenImage get loaderPng => const AssetGenImage('assets/icons/loader.png');
@@ -76,12 +97,21 @@ class $AssetsIconsGen {
   /// File path: assets/icons/location.svg
   SvgGenImage get location => const SvgGenImage('assets/icons/location.svg');
 
+  /// File path: assets/icons/mail.svg
+  SvgGenImage get mail => const SvgGenImage('assets/icons/mail.svg');
+
+  /// File path: assets/icons/mark.svg
+  SvgGenImage get mark => const SvgGenImage('assets/icons/mark.svg');
+
   /// File path: assets/icons/not.svg
   SvgGenImage get not => const SvgGenImage('assets/icons/not.svg');
 
   /// File path: assets/icons/notificationIcon.svg
   SvgGenImage get notificationIcon =>
       const SvgGenImage('assets/icons/notificationIcon.svg');
+
+  /// File path: assets/icons/one.svg
+  SvgGenImage get one => const SvgGenImage('assets/icons/one.svg');
 
   /// File path: assets/icons/privateVehicle.svg
   SvgGenImage get privateVehicle =>
@@ -101,8 +131,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/star.svg
   SvgGenImage get star => const SvgGenImage('assets/icons/star.svg');
 
+  /// File path: assets/icons/three.svg
+  SvgGenImage get three => const SvgGenImage('assets/icons/three.svg');
+
   /// File path: assets/icons/train.svg
   SvgGenImage get train => const SvgGenImage('assets/icons/train.svg');
+
+  /// File path: assets/icons/two.png
+  AssetGenImage get two => const AssetGenImage('assets/icons/two.png');
 
   /// File path: assets/icons/vehicleHire.svg
   SvgGenImage get vehicleHire =>
@@ -121,28 +157,40 @@ class $AssetsIconsGen {
     about,
     allowNotifications,
     back,
+    calendar,
     checklist,
+    close,
     cycling,
     darkmode,
+    dislike,
     dot,
     down,
     emptyNot,
+    fb,
     foward,
     grid,
     hamburger,
+    heart,
     helpcentre,
+    ig,
     language,
+    like,
     loaderPng,
     loaderSvg,
     location,
+    mail,
+    mark,
     not,
     notificationIcon,
+    one,
     privateVehicle,
     publicTransport,
     search,
     settingsicon,
     star,
+    three,
     train,
+    two,
     vehicleHire,
     walking,
     x,
@@ -164,6 +212,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/dash4.png
   AssetGenImage get dash4 => const AssetGenImage('assets/images/dash4.png');
 
+  /// File path: assets/images/divider.png
+  AssetGenImage get divider => const AssetGenImage('assets/images/divider.png');
+
   /// File path: assets/images/images1.png
   AssetGenImage get images1 => const AssetGenImage('assets/images/images1.png');
 
@@ -176,6 +227,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/loader.png
   AssetGenImage get loader => const AssetGenImage('assets/images/loader.png');
 
+  /// File path: assets/images/logo2.png
+  AssetGenImage get logo2 => const AssetGenImage('assets/images/logo2.png');
+
   /// File path: assets/images/map.png
   AssetGenImage get map => const AssetGenImage('assets/images/map.png');
 
@@ -186,22 +240,37 @@ class $AssetsImagesGen {
   /// File path: assets/images/star.png
   AssetGenImage get star => const AssetGenImage('assets/images/star.png');
 
+  /// File path: assets/images/tileone.svg
+  SvgGenImage get tileone => const SvgGenImage('assets/images/tileone.svg');
+
+  /// File path: assets/images/tilethree.png
+  AssetGenImage get tilethree =>
+      const AssetGenImage('assets/images/tilethree.png');
+
+  /// File path: assets/images/tiletwo.png
+  AssetGenImage get tiletwo => const AssetGenImage('assets/images/tiletwo.png');
+
   /// File path: assets/images/wave.png
   AssetGenImage get wave => const AssetGenImage('assets/images/wave.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [
+  List<dynamic> get values => [
     dash1,
     dash2,
     dash3,
     dash4,
+    divider,
     images1,
     images2,
     images3,
     loader,
+    logo2,
     map,
     splashImage,
     star,
+    tileone,
+    tilethree,
+    tiletwo,
     wave,
   ];
 }

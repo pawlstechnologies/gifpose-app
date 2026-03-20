@@ -44,7 +44,7 @@ class TransportWidgets extends StatelessWidget {
           isTappedPublic ==true ?SizedBox.shrink():
           isTapped?
            Text(
-            location,
+            "${location}ins",
             textAlign: TextAlign.center,
 
             maxLines: 2,

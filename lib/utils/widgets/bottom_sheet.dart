@@ -14,8 +14,12 @@ class MyBottomSheet {
   }) {
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(20),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+
+            
+
           ),
         ),
         isScrollControlled: true,
@@ -67,7 +71,7 @@ class MyBottomSheet {
                   bottomAction == null
                       ? const SizedBox.shrink()
                       : const SizedBox(
-                          height: 50,
+                          height: 0,
                         ),
                 ],
               ),

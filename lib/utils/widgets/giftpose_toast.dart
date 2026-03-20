@@ -1,12 +1,13 @@
 // lib/utils/widgets/custom_toast.dart
 import 'package:flutter/material.dart';
+import 'package:giftpose/utils/theme/giftpose_colors.dart';
 
 class CustomToast {
   static void show({
     required BuildContext context,
     required String message,
     Duration duration = const Duration(seconds: 3),
-    Color backgroundColor = Colors.green,
+    Color backgroundColor =Colors.white,
     Color textColor = Colors.white,
     IconData icon = Icons.check_circle,
   }) {
@@ -21,8 +22,8 @@ class CustomToast {
           child: SafeArea(
             child: AnimatedToast(
               message: message,
-              backgroundColor: backgroundColor,
-              textColor: textColor,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              textColor: Theme.of(context).textTheme.bodyLarge?.color??GiftPoseColors.textColor,
               icon: icon,
               duration: duration,
             ),
@@ -105,10 +106,11 @@ class _AnimatedToastState extends State<AnimatedToast>
       child: SlideTransition(
         position: _offsetAnimation,
         child: Container(
+          height: 50,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
             color: widget.backgroundColor,
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
@@ -119,7 +121,8 @@ class _AnimatedToastState extends State<AnimatedToast>
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Icon(
                 widget.icon,

@@ -169,17 +169,30 @@ class _NotificationAlertState extends State<NotificationAlert> {
           centerTitle: true,
           hasGradient: true,
 
-          appBarLeadingWidget: InkWell(
+          appBarLeadingWidget:  InkWell(
             onTap: () {
-              HapticFeedback.selectionClick();
+             HapticFeedback.heavyImpact();
               Navigator.pop(context);
             },
-            child: Assets.icons.back.svg(
-              color: Theme.of(context).textTheme.bodyLarge?.color,
+            child: Container(
+      width: 200,
+  height: 100,
+  decoration: BoxDecoration(
+
+    borderRadius: BorderRadius.circular(20), // Adjust the value for more/less rounding
+  ),
+              child: Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Assets.icons.back.svg(
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
+                ),
+              ),
             ),
           ),
 
-          appBarTitleWidget: Text(
+          appBarTitleWidget:
+
+           Text(
             "Notification Alert",
             style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
           ),
@@ -190,10 +203,12 @@ class _NotificationAlertState extends State<NotificationAlert> {
                 await vm.fetchAlertCategory();
 
                 setState(() {
+
                   filteredCategories =
                       vm.fetchAlertCategoryResponse.data?.data.data ?? [];
                 });
               },
+
 
               color: GiftPoseColors.primaryColor,
 
@@ -210,7 +225,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
                     child: ListTile(
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 17,
-                        vertical: 20,
+                        vertical: 6,
                       ),
 
                       leading: Assets.images.star.image(),
@@ -390,7 +405,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
                     child: GiftPoseButton(
                       title: "Submit",
                       onTap: () {
-                        HapticFeedback.selectionClick();
+                       HapticFeedback.heavyImpact();
 
                         vm.createNotificationAlerts(
                           context: context,
@@ -425,15 +440,15 @@ class _NotificationAlertState extends State<NotificationAlert> {
     return ListView.builder(
       itemCount: categories.length,
       itemBuilder: (context, index) {
-        final options = categories[index];
+        final optionsCat = categories[index];
 
         return GestureDetector(
           onTap: () {
             vm.selectOption(index);
 
-            vm.fetchAlertSubCategory(categoryId: options.id ?? "");
+            vm.fetchAlertSubCategory(categoryId: optionsCat.id ?? "");
 
-            vm.selectedCategory.add(options.name);
+            vm.selectedCategory.add(optionsCat.id);
           },
 
           child: Padding(
@@ -448,7 +463,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
 
                 Expanded(
                   child: Text(
-                    options.name ?? "Category",
+                    optionsCat.name ?? "Category",
                     style: GiftPoseTextStyle.small(
                       color: vm.selectedIndex == index
                           ? GiftPoseColors.primaryColor
@@ -478,9 +493,15 @@ class _NotificationAlertState extends State<NotificationAlert> {
 
     if (subcategories.isEmpty) {
       return Center(
-        child: Text(
-          "No Notification Preference Set Yet",
-          style: GiftPoseTextStyle.small(),
+        child: Column(
+          children: [
+            Assets.icons.emptyNot.svg(),
+            YMargin(5),
+            Text(
+              "No Notification Preference Set Yet",
+              style: GiftPoseTextStyle.small(),
+            ),
+          ],
         ),
       );
     }

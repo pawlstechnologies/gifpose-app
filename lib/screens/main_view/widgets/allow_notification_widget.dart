@@ -35,7 +35,7 @@ class AllowNotificationWidget extends StatelessWidget {
         
           GiftPoseButton(title: "Accept", onTap: (){
                   viewModel.fetchAlertCategory();
-            HapticFeedback.selectionClick();
+           HapticFeedback.heavyImpact();
             Navigator.pop(context);
             Navigator.pushNamed(context, AppRoutes.notificationsAlert);
             
@@ -47,7 +47,7 @@ class AllowNotificationWidget extends StatelessWidget {
           
           title: "Cancel", onTap: (){
           
-            HapticFeedback.selectionClick();
+           HapticFeedback.heavyImpact();
         
             Navigator.pop(context);
         

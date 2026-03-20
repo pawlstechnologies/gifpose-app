@@ -3,6 +3,10 @@ import 'package:giftpose/screens/main_view/views/dashboard_view.dart';
 import 'package:giftpose/screens/main_view/views/notification_alert.dart';
 import 'package:giftpose/screens/main_view/views/notification_view.dart';
 import 'package:giftpose/screens/main_view/views/search_page.dart';
+import 'package:giftpose/screens/main_view/views/settings_page/about_page.dart';
+import 'package:giftpose/screens/main_view/views/settings_page/article_page.dart';
+import 'package:giftpose/screens/main_view/views/settings_page/help_center.dart';
+import 'package:giftpose/screens/main_view/views/settings_page/language_view.dart';
 import 'package:giftpose/screens/main_view/views/settings_view.dart';
 import 'package:giftpose/screens/onboarding/views/consent_view.dart';
 import 'package:giftpose/screens/onboarding/views/onboarding_view.dart';
@@ -24,6 +28,18 @@ class Routers {
         break;
       case AppRoutes.consentPage:
         routeWidget = const ConsentScreen();
+        break;
+         case AppRoutes.aboutPage:
+        routeWidget = const AboutPage();
+        break;
+         case AppRoutes.helpCenter:
+        routeWidget = HelpCenter();
+        break;
+        //    case AppRoutes.articlePage:
+        // routeWidget = ArticlePage();
+        // break;
+          case AppRoutes.languagePage:
+        routeWidget = const LanguageView();
         break;
       case AppRoutes.postcodePage:
         routeWidget = const PostcodeScreen();

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:giftpose/gen/assets.gen.dart';
 import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
+import 'package:giftpose/screens/main_view/views/notification_alert.dart';
+import 'package:giftpose/screens/onboarding/views/postcode_view.dart';
+import 'package:giftpose/utils/router/app_routes.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/theme/theme.dart';
 import 'package:giftpose/utils/widgets/Giftpose_basescafold.dart';
@@ -17,7 +20,7 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  bool push = false;
+  bool push = true;
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +32,24 @@ class _SettingsViewState extends State<SettingsView> {
           showAppBar: true,
           includeVerticalPadding: false,
           centerTitle: true,
-          appBarLeadingWidget: InkWell(
+          appBarLeadingWidget:  InkWell(
             onTap: () {
-              HapticFeedback.selectionClick();
+             HapticFeedback.heavyImpact();
               Navigator.pop(context);
             },
-            child: Assets.icons.back.svg(
-              color: Theme.of(context).textTheme.bodyLarge?.color,
+            child: Container(
+      width: 200,
+  height: 100,
+  decoration: BoxDecoration(
+
+    borderRadius: BorderRadius.circular(20), // Adjust the value for more/less rounding
+  ),
+              child: Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Assets.icons.back.svg(
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
+                ),
+              ),
             ),
           ),
         
@@ -60,63 +74,89 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 YMargin(10),
         
-                Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Theme.of(context).dividerColor,
-                      width: 1,
-                    ),
-                  ),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(16),
-                    leading: Assets.icons.location.svg(),
-                    title: Text(
-                      "Current Location",
-        
-                      style: GiftPoseTextStyle.small(
-                        color: Theme.of(context).textTheme.bodyLarge?.color,
+                InkWell(
+            onTap: () {
+                     HapticFeedback.heavyImpact();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              PostcodeScreen(fromDashboard: true),
+                        ),
+                      );
+                    
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: Theme.of(context).dividerColor,
+                        width: 1,
                       ),
                     ),
-                    subtitle: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                  viewModel.fetchItemsNearMeResponse.data?.userLocation.city ??"" ,
-        
+                    child: ListTile(
+                      contentPadding: EdgeInsets.all(16),
+                      leading: Assets.icons.location.svg(),
+                      title: Text(
+                        "Current Location",
+                          
                         style: GiftPoseTextStyle.small(
-                          color: Theme.of(context).textTheme.bodyMedium?.color,
+                          color: Theme.of(context).textTheme.bodyLarge?.color,
                         ),
                       ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                    viewModel.fetchItemsNearMeResponse.data?.userLocation.city ??"" ,
+                          
+                          style: GiftPoseTextStyle.small(
+                            color: Theme.of(context).textTheme.bodyMedium?.color,
+                          ),
+                        ),
+                      ),
+                      trailing: Assets.icons.foward.svg(),
                     ),
-                    trailing: Assets.icons.foward.svg(),
                   ),
                 ),
                 YMargin(25),
         
-                Container(
-                  padding: EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Theme.of(context).dividerColor,
-                      width: 1,
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        "How far are you willing to travel?",
-                        textAlign: TextAlign.center,
-        
-                        style: GiftPoseTextStyle.medium(
-                          fontWeight: FontWeight.w500,
+           InkWell(
+            onTap: () {
+                     HapticFeedback.heavyImpact();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              PostcodeScreen(fromDashboard: true),
                         ),
+                      );
+                    
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: Theme.of(context).dividerColor,
+                        width: 1,
                       ),
-                      YMargin(14),
-                      DurationSlider(),
-                    ],
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          "How far are you willing to travel?",
+                          textAlign: TextAlign.center,
+                          
+                          style: GiftPoseTextStyle.medium(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        YMargin(14),
+                        DurationSlider(),
+                      ],
+                    ),
                   ),
                 ),
                 YMargin(23),
@@ -140,43 +180,63 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                   child: Column(
                     children: [
-                      ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 10,
+                  InkWell(
+            onTap: () {
+                     HapticFeedback.heavyImpact();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              NotificationAlert(),
                         ),
-                        leading: Assets.icons.location.svg(),
-                        title: Text(
-                          "Notification Alert Settings",
-        
-                          style: GiftPoseTextStyle.small(
-                            color: Theme.of(context).textTheme.bodyLarge?.color,
+                      );
+                    
+                  },
+                        child: ListTile(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 10,
                           ),
+                          leading: Assets.icons.notificationIcon.svg(),
+                          title: Text(
+                            "Notification Alert Settings",
+                                
+                            style: GiftPoseTextStyle.small(
+                              color: Theme.of(context).textTheme.bodyLarge?.color,
+                            ),
+                          ),
+                                
+                          trailing: Assets.icons.foward.svg(),
                         ),
-        
-                        trailing: Assets.icons.foward.svg(),
                       ),
                       Divider(color: Theme.of(context).dividerColor),
-                      ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 10,
-                        ),
-        
-                        leading: Assets.icons.dot.svg(),
-                        title: Text(
-                          "Push Notifications",
-        
-                          style: GiftPoseTextStyle.small(
-                            color: Theme.of(context).textTheme.bodyLarge?.color,
+                      InkWell(
+                        onTap: (){
+              
+           HapticFeedback.heavyImpact();
+
+                        },
+                        child: ListTile(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 10,
                           ),
-                        ),
-                        trailing: GiftPoseSwitch(
-                          value: push,
-                          onChanged: (bool value) {
-                            push = !push;
-                            setState(() {});
-                          },
+                                
+                          leading: Assets.icons.dot.svg(),
+                          title: Text(
+                            "Push Notifications",
+                                
+                            style: GiftPoseTextStyle.small(
+                              color: Theme.of(context).textTheme.bodyLarge?.color,
+                            ),
+                          ),
+                          trailing: GiftPoseSwitch(
+                            value: push,
+                            onChanged: (bool value) {
+                              push = !push;
+                              setState(() {});
+                            },
+                          ),
                         ),
                       ),
                     ],
@@ -231,41 +291,47 @@ class _SettingsViewState extends State<SettingsView> {
                           horizontal: 16,
                           vertical: 16,
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Assets.icons.language.svg(),
-                                XMargin(15),
-                                Text(
-                                  "Language",
-        
-                                  style: GiftPoseTextStyle.small(
-                                    color: Theme.of(
-                                      context,
-                                    ).textTheme.bodyLarge?.color,
+                        child: InkWell(
+                          onTap: (){
+                            HapticFeedback.heavyImpact();
+                            Navigator.pushNamed(context, AppRoutes.languagePage);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Assets.icons.language.svg(),
+                                  XMargin(15),
+                                  Text(
+                                    "Language",
+                                  
+                                    style: GiftPoseTextStyle.small(
+                                      color: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge?.color,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-        
-                            Row(
-                              children: [
-                                Text(
-                                  "English",
-        
-                                  style: GiftPoseTextStyle.small(
-                                    color: Theme.of(
-                                      context,
-                                    ).textTheme.bodyLarge?.color,
+                                ],
+                              ),
+                                  
+                              Row(
+                                children: [
+                                  Text(
+                                    "English",
+                                  
+                                    style: GiftPoseTextStyle.small(
+                                      color: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge?.color,
+                                    ),
                                   ),
-                                ),
-                                XMargin(8),
-                                Assets.icons.foward.svg(),
-                              ],
-                            ),
-                          ],
+                                  XMargin(8),
+                                  Assets.icons.foward.svg(),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -292,21 +358,28 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                   child: Column(
                     children: [
-                      ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 10,
-                        ),
-                        leading: Assets.icons.helpcentre.svg(),
-                        title: Text(
-                          "Help Center",
-        
-                          style: GiftPoseTextStyle.small(
-                            color: Theme.of(context).textTheme.bodyLarge?.color,
+                       InkWell(
+                        onTap: () {
+                              HapticFeedback.heavyImpact();
+                            Navigator.pushNamed(context, AppRoutes.helpCenter);
+                        },
+                      
+                        child: ListTile(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 10,
                           ),
+                          leading: Assets.icons.helpcentre.svg(),
+                          title: Text(
+                            "Help Center",
+                                
+                            style: GiftPoseTextStyle.small(
+                              color: Theme.of(context).textTheme.bodyLarge?.color,
+                            ),
+                          ),
+                          trailing: Assets.icons.foward.svg
+                          ()
                         ),
-                        trailing: Assets.icons.foward.svg
-                        ()
                       ),
                       Divider(color: Theme.of(context).dividerColor),
                       Padding(
@@ -314,46 +387,55 @@ class _SettingsViewState extends State<SettingsView> {
                           horizontal: 16,
                           vertical: 16,
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Assets.icons.about.svg(),
-                                Text(
-                                  "About GiftPose",
-        
-                                  style: GiftPoseTextStyle.small(
-                                    color: Theme.of(
-                                      context,
-                                    ).textTheme.bodyLarge?.color,
+                        child: InkWell( 
+                          onTap: () {
+                            
+                           
+                            HapticFeedback.heavyImpact();
+                            Navigator.pushNamed(context, AppRoutes.aboutPage);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Assets.icons.about.svg(),
+                                  XMargin(15),
+                                  Text(
+                                    "About GiftPose",
+                                  
+                                    style: GiftPoseTextStyle.small(
+                                      color: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge?.color,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-        
-                            Row(
-                              children: [
-                                Text(
-                                  "v1.0.0",
-        
-                                  style: GiftPoseTextStyle.small(
-                                    color: Theme.of(
-                                      context,
-                                    ).textTheme.bodyLarge?.color,
+                                ],
+                              ),
+                                  
+                              Row(
+                                children: [
+                                  Text(
+                                    "v1.0.0",
+                                  
+                                    style: GiftPoseTextStyle.small(
+                                      color: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge?.color,
+                                    ),
                                   ),
-                                ),
-                                XMargin(8),
-                                Assets.icons.foward.svg(),
-                              ],
-                            ),
-                          ],
+                                  XMargin(8),
+                                  Assets.icons.foward.svg(),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                YMargin(45),
+                YMargin(85),
               ],
             );
           },

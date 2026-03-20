@@ -1,71 +1,78 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:giftpose/app.dart';
 
+class LocalNotificationService {
+  static final FlutterLocalNotificationsPlugin _notificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
-class LocalNotificationService{
-  static final FlutterLocalNotificationsPlugin _notificationsPlugin = FlutterLocalNotificationsPlugin();
+  static Future<void> initialize() async {
+    // 1. Define the Android Channel
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+      'GiftPose', 
+      'GiftPose Notifications',
+      description: 'General notifications for GiftPose',
+      importance: Importance.max,
+      playSound: true,
+    );
 
-    static void initialize() async {
-    // final SecureStorageService secureStorageService = serviceLocator<SecureStorageService>();
-    // bool isRegistered = serviceLocator<DatabaseService>().getRegistrationCompleteStatus() ?? false;
-    // String firstname = "";
-    // firstname = (await secureStorageService.read(key: StorageKeys.firstName)) ?? "";
-    AndroidInitializationSettings initializationSettingsAndroid = const AndroidInitializationSettings("@mipmap/ic_launcher");
-    DarwinInitializationSettings initializationSettingsIOS = const DarwinInitializationSettings();
-    InitializationSettings initializationSettings = InitializationSettings(
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings("@mipmap/ic_launcher");
+    
+    const DarwinInitializationSettings initializationSettingsIOS =
+        DarwinInitializationSettings();
+
+    const InitializationSettings initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
-    _notificationsPlugin.initialize(
-      settings:initializationSettings, onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) async {
-      final String? payload = notificationResponse.payload;
-      if (notificationResponse.payload != null) {
-        debugPrint('notification payload: $payload');
-      }
 
+    // 2. Create the channel on the device
+    await _notificationsPlugin
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
 
-      if (navigatorKey.currentContext != null) {
-        // await Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder: (context)=> const OnboardingScreen()));
-      }
-
-    });
+    // 3. Initialize the plugin
+    await _notificationsPlugin.initialize(
+      settings: initializationSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse response) async {
+        final String? payload = response.payload;
+        if (payload != null) {
+          debugPrint('Notification payload: $payload');
+        }
+      },
+    );
   }
 
-  static void displayNotification(RemoteMessage message)async {
-    try{
-      final id = DateTime.now().millisecondsSinceEpoch ~/1000;
+  static void displayNotification(RemoteMessage message) async {
+    try {
+      final int id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
 
-       NotificationDetails notificationDetails = const NotificationDetails(
+      NotificationDetails notificationDetails = const NotificationDetails(
           iOS: DarwinNotificationDetails(
             presentAlert: true,
             presentBadge: true,
             presentSound: true,
           ),
           android: AndroidNotificationDetails(
-            "GiftPose",
+            "GiftPose", // Must match the ID in initialize()
             "GiftPose channel",
-            channelDescription: "This is GiftPose channel for notification",
             importance: Importance.max,
             priority: Priority.high,
             playSound: true,
-            enableVibration: true,
             icon: "@mipmap/ic_launcher",
-            largeIcon: DrawableResourceAndroidBitmap("@mipmap/ic_launcher")
-          )
-      );
+          ));
+
+      // FIXED: Using named parameters correctly
       await _notificationsPlugin.show(
-
-     
-              notificationDetails:  notificationDetails,
-          payload: message.data['id'], id: id, title:      message.notification!.title!, body:message.notification!.body!
-   , 
+        id: id,
+        title: message.notification?.title ?? "No Title",
+        body: message.notification?.body ?? "No Body",
+        notificationDetails: notificationDetails,
+        payload: message.data['id']?.toString(), 
       );
-    }on Exception catch (e){
-      print(e);
+    } catch (e) {
+      debugPrint("Error displaying notification: $e");
     }
-
   }
 }
-

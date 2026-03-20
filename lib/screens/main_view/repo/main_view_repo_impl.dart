@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:developer' as Debugger;
 
 import 'package:flutter/foundation.dart';
 
@@ -11,6 +12,7 @@ import 'package:giftpose/screens/onboarding/models/alert_sub_category_list_respo
 import 'package:giftpose/screens/onboarding/models/alerts_category_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/create_alerts_request.dart';
 import 'package:giftpose/screens/onboarding/models/create_alerts_response.dart';
+import 'package:giftpose/screens/onboarding/models/fetch_alert_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_itemsnearme_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetchitems_byid_response.dart';
 import 'package:giftpose/screens/onboarding/models/register_location_response.dart';
@@ -42,11 +44,12 @@ class MainViewRepoImpl implements MainViewRepo {
    
       
       final response = await networkProvider.call(
-        path: ApiRoutes.registerLocation,
+        path: ApiRoutes.createAlerts,
         method: RequestMethod.post,
         body: payload,
       );
       log("create Alert list reponse: ${response?.data}");
+    
      return CreateAlertListResponse.fromJson(response?.data);
       } on DioException catch (err) {
       final errorMessage = Future.error(ApiError.fromDio(err));
@@ -77,7 +80,37 @@ class MainViewRepoImpl implements MainViewRepo {
    
       );
       log("Fetch items near me reponse: ${response?.data}");
+
+
+   
      return FetchItemsNearMeResponse.fromJson(response?.data);
+      } on DioException catch (err) {
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      if (kDebugMode) {
+        print(errorMessage);
+      }
+      throw err.response?.data["message"] ?? errorMessage;
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
+      throw err.toString();
+    }
+  }
+     Future<FetchAlertListResponse> fetchAlertList({  required String deviceID,})async {
+    try {
+      
+      final response = await networkProvider.call(
+        path: ApiRoutes.fetchAlertLists.replaceAll('{deviceId}', deviceID),
+        method: RequestMethod.get,
+       
+   
+      );
+      log("Fetch alert list: ${response?.data}");
+  
+
+   
+     return FetchAlertListResponse.fromJson(response?.data);
       } on DioException catch (err) {
       final errorMessage = Future.error(ApiError.fromDio(err));
       if (kDebugMode) {

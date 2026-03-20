@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:giftpose/app.dart';
@@ -25,6 +26,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void initState() {
+initFirebase();
     super.initState();
   }
 
@@ -32,6 +34,15 @@ class _SplashScreenState extends State<SplashScreen>
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void initFirebase()async{
+     // Request Permissions
+ await FirebaseMessaging.instance.requestPermission(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
   }
 
   @override
@@ -76,19 +87,11 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
             YMargin(30),
-            Padding(
-             padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit purus sit amet ",
-                textAlign: TextAlign.center,
-                style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500,         color: Theme.of(navigatorKey.currentContext!).textTheme.bodyMedium?.color),
-              ),
-            ),
-              YMargin(18),
+          
             Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
               child: GiftPoseButton(title: "Continue", onTap: (){
-              HapticFeedback.selectionClick();
+             HapticFeedback.heavyImpact();
               Navigator.pushNamed(context,AppRoutes.consentPage);
               }),
             ),

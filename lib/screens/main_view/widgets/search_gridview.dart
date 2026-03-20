@@ -60,7 +60,7 @@ class CategoryGridSearch extends StatelessWidget {
             final data = items[index];
             return InkWell(
               onTap: () {
-                HapticFeedback.selectionClick();
+               HapticFeedback.heavyImpact();
 
                 vm.fetchItemsById(id: items[index].id).whenComplete((){
 

@@ -54,19 +54,25 @@ class ListViewWidget extends StatelessWidget {
                 final data = items[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 0),
-                  child: InkWell(
-                    onTap: () {
-                      HapticFeedback.selectionClick();
-                       vm.fetchItemsById(id: items[index].id);
-                    if(vm.fetchItemsByIdMeResponse.data?.success == true){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DetailsPage(location: userLocation.city,),
-                        ),
-                      );
-                    }
-                    },
+                  child:     InkWell(
+              onTap: () {
+               HapticFeedback.heavyImpact();
+
+                vm.fetchItemsById(id: items[index].id).whenComplete((){
+
+ if(vm.fetchItemsByIdMeResponse.data?.success == true &&  vm.fetchItemsByIdMeResponse.data!.data.imageUrls.isNotEmpty){
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailsPage(location: userLocation.city,),
+                    ),
+                  );
+                }
+
+                });
+               
+              },
                     child: CategoryListItem(response: data, userLocation: userLocation,),
                         ),
                 );

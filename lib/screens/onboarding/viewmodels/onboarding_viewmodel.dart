@@ -10,6 +10,8 @@ import 'package:giftpose/screens/onboarding/models/register_location_request.dar
 import 'package:giftpose/screens/onboarding/models/register_location_response.dart';
 import 'package:giftpose/screens/onboarding/repo/onboarding_repo.dart';
 import 'package:giftpose/services/database/database_service.dart';
+import 'package:giftpose/services/secure_storage/secure_storage.dart' show SecureStorageService;
+import 'package:giftpose/utils/constants/storage_keys.dart';
 import 'package:giftpose/utils/locator.dart';
 import 'package:giftpose/utils/network_data_response.dart';
 import 'package:giftpose/utils/router/app_routes.dart' show AppRoutes;
@@ -60,11 +62,20 @@ class OnboardingViewModel extends BaseViewmodel {
   OnboardingViewModel() {
     getDeviceId();
   }
-
+  final SecureStorageService secureStorageService =
+      serviceLocator<SecureStorageService>();
   final OnboardingRepo onboardingRepo = serviceLocator<OnboardingRepo>();
 
   double _miles = 15.0;
   double get miles => _miles;
+ void updateMiles(double value) {
+    
+    _miles = value;
+    notifyListeners();
+  }
+
+
+
 
   set miles(double value) {
     // Ensure miles always stays within a sensible range for the slider
@@ -86,13 +97,15 @@ class OnboardingViewModel extends BaseViewmodel {
   }
 final DatabaseService databaseService = serviceLocator<DatabaseService>();
   Future<void> registerLocation({
+    required bool isFromDashboard,
     required BuildContext context,
     required String postcode,
   }) async {
     try {
+            log('Register location: 1');
       registerLocationResponse = NetworkDataResponse.loading("");
-         await LoaderPage.show(context);
-
+          LoaderPage.show(context);
+      log('Register location: 2');
 
       final response = await onboardingRepo.registerLocation(
         registerLocationRequest: RegisterLocationRequest(
@@ -101,14 +114,15 @@ final DatabaseService databaseService = serviceLocator<DatabaseService>();
           miles: miles,
         ),
       );
-
+      log('Register location: 3');
       registerLocationResponse = NetworkDataResponse.completed(response);
 
- if (navigatorKey.currentContext!.mounted) {
-      Navigator.of(navigatorKey.currentContext!, rootNavigator: true).pop(); // Dismiss dialog
-    }
+
+      Navigator.pop(context);
+ 
 
       if (registerLocationResponse.data?.status == true) {
+
         Navigator.pushNamed(context, AppRoutes.dashboard);
               await databaseService.saveIsRegistered(true);
         
@@ -117,6 +131,7 @@ final DatabaseService databaseService = serviceLocator<DatabaseService>();
         CustomToast.show(context: context, message: registerLocationResponse.data?.message ?? "Something went wrong");
       }
     } catch (e) {
+            Navigator.pop(context);
       registerLocationResponse = NetworkDataResponse.error(e.toString());
 
       CustomToast.show(context: context, message: e.toString());
@@ -144,7 +159,9 @@ final DatabaseService databaseService = serviceLocator<DatabaseService>();
       androidInfo = await deviceInfo.androidInfo;
       // imel = "21345t5y65";
       deviceId = info.deviceId;
-      dailcode = androidInfo.id;
+           secureStorageService.write(
+       key: StorageKeys.deviceId, value: deviceId);
+
       log('deviceID: $deviceId');
     } else if (Platform.isIOS) {
       // await DeviceImei().getDeviceImei().then((value) {
@@ -153,6 +170,9 @@ final DatabaseService databaseService = serviceLocator<DatabaseService>();
       iosInfo = await deviceInfo.iosInfo;
 
       deviceId = iosInfo.identifierForVendor;
+           secureStorageService.write(
+          key: StorageKeys.deviceId, value: deviceId);
+
       log('deviceID ios : $deviceId');
     }
   }

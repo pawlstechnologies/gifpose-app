@@ -7,7 +7,10 @@ import 'package:giftpose/screens/main_view/widgets/allow_notification_widget.dar
 import 'package:giftpose/screens/main_view/widgets/gridview.dart';
 import 'package:giftpose/screens/main_view/widgets/listview.dart';
 import 'package:giftpose/screens/onboarding/views/postcode_view.dart';
+import 'package:giftpose/services/clipboard_service.dart';
+import 'package:giftpose/services/database/database_service.dart';
 import 'package:giftpose/services/network_services/network_response.dart';
+import 'package:giftpose/utils/locator.dart';
 import 'package:giftpose/utils/router/utils.dart';
 import 'package:giftpose/utils/theme/giftpose_colors.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
@@ -30,41 +33,30 @@ class _DashboardViewState extends State<DashboardView> {
   final searchCtrl = TextEditingController();
   bool isList = false;
   final ScrollController _scrollController = ScrollController();
-OverlayEntry? _overlayEntry;
+  OverlayEntry? _overlayEntry;
   final LayerLink _layerLink = LayerLink();
   final FocusNode _searchFocus = FocusNode();
 
   @override
   void initState() {
     super.initState();
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<DashboardViewmodel>().fetchItemsNearMe();
-          Future.microtask(() =>
-    context.read<DashboardViewmodel>().getDeviceId()
-  );
-
-
-      Future.delayed(Duration(seconds: 2), () {});
-      MyBottomSheet.showDismissibleBottomSheet(
-        bottomAction: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-        ),
-       
-        context: context,
-        height: MediaQuery.of(context).size.height / 2.6,
-        children: [AllowNotificationWidget()],
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.microtask(
+        () => context.read<DashboardViewmodel>().fetchItemsNearMe(),
+      );
+      Future.microtask(() => context.read<DashboardViewmodel>().getDeviceId());
+      Future.microtask(() => context.read<DashboardViewmodel>().getFcmToken());
+      Future.microtask(
+        () => context.read<DashboardViewmodel>().fetchAlertList(),
       );
 
-
+      Future.delayed(Duration(seconds: 2), () {});
     });
-Future.delayed(const Duration(seconds: 2), () {
- _scrollController.addListener(_onScroll);
-});
-   
- 
-    
+    Future.delayed(const Duration(seconds: 2), () {
+      _scrollController.addListener(_onScroll);
+    });
+
     // Initial data fetch
-  
   }
 
   /// REMOVE OVERLAY
@@ -101,21 +93,16 @@ Future.delayed(const Duration(seconds: 2), () {
               ),
               child: ListView.builder(
                 padding: EdgeInsets.zero,
-                itemCount:
-                    vm.searchPredictionResponse.data?.data.length ?? 0,
+                itemCount: vm.searchPredictionResponse.data?.data.length ?? 0,
                 itemBuilder: (context, index) {
-
-                  final item =
-                      vm.searchPredictionResponse.data?.data[index];
+                  final item = vm.searchPredictionResponse.data?.data[index];
 
                   return ListTile(
                     title: Text(item?.name ?? ""),
                     onTap: () {
-
                       if (!vm.selectedKeywords.contains(item?.name)) {
                         vm.toggleKeyword(item?.name ?? "");
                       }
-                      
 
                       searchCtrl.text = item?.name ?? "";
 
@@ -131,12 +118,11 @@ Future.delayed(const Duration(seconds: 2), () {
     );
   }
 
-
   @override
   void dispose() {
     _scrollController.dispose();
     searchCtrl.dispose();
-        _searchFocus.dispose();
+    _searchFocus.dispose();
     removeOverlay();
     super.dispose();
   }
@@ -146,7 +132,6 @@ Future.delayed(const Duration(seconds: 2), () {
       context.read<DashboardViewmodel>().loadNextPage();
     }
   }
-
 
   bool get _isBottom {
     if (!_scrollController.hasClients) return false;
@@ -160,16 +145,18 @@ Future.delayed(const Duration(seconds: 2), () {
     return GiftPoseBaseScaffold(
       showAppBar: false,
       includeHorizontalPadding: false,
+      includeVerticalPadding: true,
       hasGradient: true,
       builder: (size) {
         return Consumer<DashboardViewmodel>(
           builder: (context, viewModel, child) {
+            print(viewModel.fcmToken);
             return RefreshIndicator(
               onRefresh: viewModel.refreshItems,
               color: GiftPoseColors.primaryColor,
               child: Column(
                 children: [
-                  YMargin(25),
+                  YMargin(15),
 
                   // Header
                   Padding(
@@ -179,17 +166,50 @@ Future.delayed(const Duration(seconds: 2), () {
                       children: [
                         InkWell(
                           onTap: () {
-                            viewModel.miles = viewModel.fetchItemsNearMeResponse.data?.userLocation.setMile?? 15;
-                            HapticFeedback.selectionClick();
-                            Navigator.pushNamed(context, AppRoutes.settingsPage);
+                            viewModel.miles =
+                                viewModel
+                                    .fetchItemsNearMeResponse
+                                    .data
+                                    ?.userLocation
+                                    .setMile ??
+                                15;
+                            HapticFeedback.heavyImpact();
+                            Navigator.pushNamed(
+                              context,
+                              AppRoutes.settingsPage,
+                            );
                           },
-                          child: Assets.icons.settingsicon.svg(
-                            color: Theme.of(context).textTheme.bodyLarge?.color,
+                          child: Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                20,
+                              ), // Adjust the value for more/less rounding
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Assets.icons.settingsicon.svg(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge?.color,
+                              ),
+                            ),
                           ),
                         ),
-                        Text(
-                          "All Gifts",
-                          style: GiftPoseTextStyle.large(fontWeight: FontWeight.w500),
+                        GestureDetector(
+                          onTap: () {
+                            copyToClipboard(
+                              context,
+                              viewModel.fcmToken.toString(),
+                            );
+                          },
+                          child: Text(
+                            "All Gifts",
+                            style: GiftPoseTextStyle.large(
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
                         Row(
                           children: [
@@ -201,21 +221,29 @@ Future.delayed(const Duration(seconds: 2), () {
                               },
                               child: !isList
                                   ? Assets.icons.grid.svg(
-                                      color: Theme.of(context).textTheme.bodyLarge?.color,
+                                      color: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge?.color,
                                     )
                                   : Assets.icons.hamburger.svg(
-                                      color: Theme.of(context).textTheme.bodyLarge?.color,
+                                      color: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge?.color,
                                     ),
                             ),
-                            XMargin(32),
+                            XMargin(28),
                             InkWell(
                               onTap: () {
-                                HapticFeedback.selectionClick();
-                                Navigator.pushNamed(context, AppRoutes.notificationsPage);
-                          
+                                HapticFeedback.heavyImpact();
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.notificationsPage,
+                                );
                               },
                               child: Assets.icons.notificationIcon.svg(
-                                color: Theme.of(context).textTheme.bodyLarge?.color,
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge?.color,
                               ),
                             ),
                           ],
@@ -223,30 +251,30 @@ Future.delayed(const Duration(seconds: 2), () {
                       ],
                     ),
                   ),
-                  
+
                   YMargin(24),
 
                   // Search Field
-                Padding(
+                  Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: CompositedTransformTarget(
                       link: _layerLink,
                       child: GiftPoseTextField(
                         readOnly: true,
-                        onTap: (){
-                   // Navigate to a new screen
-Navigator.push(
-  context,
-  MaterialPageRoute(builder: (context) => SearchView(isList: isList,)),
-);
-                          HapticFeedback.selectionClick();
+                        onTap: () {
+                          // Navigate to a new screen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SearchView(isList: isList),
+                            ),
+                          );
+                          HapticFeedback.heavyImpact();
                         },
                         controller: searchCtrl,
                         focusNode: _searchFocus,
                         hintText: "Search for items",
                         prefixIcon: Assets.icons.search.svg(),
-
-                       
                       ),
                     ),
                   ),
@@ -254,70 +282,107 @@ Navigator.push(
                   YMargin(12),
 
                   // Location Row
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Assets.icons.location.svg(
-                        color: Theme.of(context).textTheme.bodyLarge?.color,
-                      ),
-                         XMargin(3),
-                      Text(
-                        viewModel.fetchItemsNearMeResponse.data?.userLocation.postcode?? "S1 2AH",
-                        textAlign: TextAlign.center,
-                        style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
-                      ),
-                      XMargin(3),
-                      InkWell(
-                        onTap: (){
-                          HapticFeedback.selectionClick();
-                             Navigator.push(
-  context,
-  MaterialPageRoute(builder: (context) => PostcodeScreen(fromDashboard: true,)),
-);
-
-                        },
-                        child: Assets.icons.down.svg(
+                  InkWell(
+                    onTap: () {
+                      HapticFeedback.heavyImpact();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              PostcodeScreen(fromDashboard: true),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Assets.icons.location.svg(
                           color: Theme.of(context).textTheme.bodyLarge?.color,
                         ),
-                      ),
-                    ],
+                        XMargin(3),
+                        Text(
+                          viewModel
+                                  .fetchItemsNearMeResponse
+                                  .data
+                                  ?.userLocation
+                                  .postcode ??
+                              "S1 2AH",
+                          textAlign: TextAlign.center,
+                          style: GiftPoseTextStyle.medium(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        XMargin(3),
+                        Assets.icons.down.svg(
+                          color: Theme.of(context).textTheme.bodyLarge?.color,
+                        ),
+                      ],
+                    ),
                   ),
 
                   YMargin(20),
 
-                  // Notification Banner
-                  Container(
-                    color: GiftPoseColors.containerBackground,
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
+                  //    Notification Banner
+                  InkWell(
+                    onTap: () {
+                      viewModel.fetchAlertCategory();
+                      HapticFeedback.heavyImpact();
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.notificationsAlert,
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 17.0,
-                        vertical: 20.0,
+                        vertical: 16.0,
                       ),
-                      leading: Assets.icons.not.svg(),
-                      title: Text(
-                        "Get notified on product of interest",
-                        textAlign: TextAlign.center,
-                        style: GiftPoseTextStyle.normal(
-                          fontSize: 15,
-                          color: GiftPoseColors.textColor,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      color: GiftPoseColors.containerBackground,
+                      child: Row(
+                        children: [
+                          Assets.icons.not.svg(),
+                          const XMargin(12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Get notified on product of interest",
+                                  style: GiftPoseTextStyle.normal(
+                                    fontSize: 15,
+                                    color: GiftPoseColors.textColor3,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                const YMargin(4),
+                                // FIX: Removed nested ListView.builder causing the crash
+                                Text(
+                                  (viewModel
+                                              .fetchAlertListResponse
+                                              .data
+                                              ?.data
+                                              .isEmpty ??
+                                          true)
+                                      ? "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find."
+                                      : "Active: ${viewModel.fetchAlertListResponse.data!.data[0].keywords.join(", ")}", // Changed .toString() to .join(", ")
+                                  style: GiftPoseTextStyle.small(
+                                    fontSize: 10,
+                                    color: GiftPoseColors.textColor2,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Assets.icons.foward.svg(),
+                        ],
                       ),
-                      subtitle: Text(
-                        "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.",
-                        textAlign: TextAlign.justify,
-                        style: GiftPoseTextStyle.small(
-                          color:GiftPoseColors.textColor2,
-                        ),
-                      ),
-                      trailing: Assets.icons.foward.svg(),
                     ),
                   ),
 
                   // Content Area (Grid or List with pagination)
-                  Expanded(
-                    child: _buildContent(viewModel),
-                  ),
+                  Expanded(child: _buildContent(viewModel)),
 
                   YMargin(18),
                 ],
@@ -331,19 +396,16 @@ Navigator.push(
 
   Widget _buildContent(DashboardViewmodel viewModel) {
     // Handle loading state
-    if (isApiResponseLoading(viewModel.fetchItemsNearMeResponse) && 
+    if (isApiResponseLoading(viewModel.fetchItemsNearMeResponse) &&
         viewModel.items.isEmpty) {
       return const Center(
-        child: CircularProgressIndicator(
-          color: GiftPoseColors.primaryColor,
-        ),
+        child: CircularProgressIndicator(color: GiftPoseColors.primaryColor),
       );
     }
 
     // Handle error state
-    if (viewModel.fetchItemsNearMeResponse.status ==false &&
+    if (viewModel.fetchItemsNearMeResponse.status == false &&
         viewModel.items.isEmpty) {
-
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -377,18 +439,12 @@ Navigator.push(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-           
             const YMargin(16),
-            Text(
-              'No items found',
-              style: GiftPoseTextStyle.large(),
-            ),
+            Text('No items found', style: GiftPoseTextStyle.large()),
             const YMargin(8),
             Text(
               'Try adjusting your search or location',
-              style: GiftPoseTextStyle.small(
-                color: Colors.grey,
-              ),
+              style: GiftPoseTextStyle.small(color: Colors.grey),
             ),
           ],
         ),
@@ -401,7 +457,7 @@ Navigator.push(
         scrollController: _scrollController,
         userLocation: viewModel.fetchItemsNearMeResponse.data!.userLocation,
         hasReachedMax: viewModel.hasReachedMax,
-        isLoadingMore: viewModel.isLoadingMore, 
+        isLoadingMore: viewModel.isLoadingMore,
       );
     } else {
       return CategoryGrid(
@@ -417,6 +473,7 @@ Navigator.push(
     }
   }
 }
+
 class CategoryProducts {
   final AssetGenImage icon;
   final String name;

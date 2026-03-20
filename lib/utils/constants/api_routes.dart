@@ -24,9 +24,10 @@ static const globalSearch = "/item/{deviceId}/search";
 
 
 
+
+
 //Base Url
 static const baseUrl = "https://api.giftpose.com/api";
-
 
 
 }

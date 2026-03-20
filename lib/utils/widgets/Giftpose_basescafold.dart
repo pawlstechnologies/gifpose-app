@@ -64,99 +64,94 @@ class GiftPoseBaseScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return false;
-      },
-      child: LayoutBuilder(
-        builder: (context, constraint) {
-          Size constraints = Size(constraint.maxWidth, constraint.maxHeight);
-          return GestureDetector(
-            onTap: () {
-              //unfocus any active TextField
-              FocusScope.of(context).unfocus();
-            },
-            child: Consumer<BaseViewmodel>(
-              builder: (context, baseModelView, child) {
-                return Scaffold(
-                  floatingActionButton: floatingActionButton,
-                  backgroundColor:  Theme.of(context).scaffoldBackgroundColor,
-                  // backgroundColor: backgroundColor ??
-                  //     ((baseModelView.parellexThemeMode ==
-                  //             ParallexThemeMode.light)
-                  //         ? ParallexColors.backgroundColor
-                  //         : (baseModelView.parellexThemeMode ==
-                  //                 ParallexThemeMode.dark)
-                  //             ? ParallexColors.darkModeBackgroundColor
-                  //             : ParallexColors
-                  //                 .nightModeBackgroundColor), //change color
-                  key: scaffoldKey,
-                  drawer: drawer,
-                  endDrawer: endDrawer,
-                  appBar: showAppBar
-                      ? appBar ??
-                          AppBar(
-                            toolbarHeight: 25.h,
-                            elevation: 0,
-                            leadingWidth: 40,
-                            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                            title: appBarTitleWidget,
-                            leading: Padding(
-                              padding: const EdgeInsets.only(left: 15.0,top: 10),
-                              child: appBarLeadingWidget ??
-                                  GestureDetector(
-                                    onTap: () => Navigator.pop(context),
-                                    child: SizedBox(
-                                width: 12,
-                                height: 12,
-                                child: 
-                            SizedBox()
-                              )
-                                  ),
+    return LayoutBuilder(
+      builder: (context, constraint) {
+        Size constraints = Size(constraint.maxWidth, constraint.maxHeight);
+        return GestureDetector(
+          onTap: () {
+            //unfocus any active TextField
+            FocusScope.of(context).unfocus();
+          },
+          child: Consumer<BaseViewmodel>(
+            builder: (context, baseModelView, child) {
+              return Scaffold(
+                floatingActionButton: floatingActionButton,
+                backgroundColor:  Theme.of(context).scaffoldBackgroundColor,
+                // backgroundColor: backgroundColor ??
+                //     ((baseModelView.parellexThemeMode ==
+                //             ParallexThemeMode.light)
+                //         ? ParallexColors.backgroundColor
+                //         : (baseModelView.parellexThemeMode ==
+                //                 ParallexThemeMode.dark)
+                //             ? ParallexColors.darkModeBackgroundColor
+                //             : ParallexColors
+                //                 .nightModeBackgroundColor), //change color
+                key: scaffoldKey,
+                drawer: drawer,
+                endDrawer: endDrawer,
+                appBar: showAppBar
+                    ? appBar ??
+                        AppBar(
+                          toolbarHeight: 60.h,
+                          elevation: 0,
+                          leadingWidth: 69,
+                          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                          title: appBarTitleWidget,
+                          leading: Padding(
+                            padding: const EdgeInsets.only(left: 15.0,top: 10),
+                            child: appBarLeadingWidget ??
+                                GestureDetector(
+                                  onTap: () => Navigator.pop(context),
+                                  child: SizedBox(
+                              width: 12,
+                              height: 12,
+                              child: 
+                          SizedBox()
+                            )
+                                ),
+                          ),
+                          centerTitle: centerTitle ?? false,
+                          
+                          actions: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: appbarTrailingIcon,
                             ),
-                            centerTitle: centerTitle ?? false,
-                            
-                            actions: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: appbarTrailingIcon,
-                              ),
-                            ],
-                          )
-                      : null,
-
-                  bottomNavigationBar: bottomNavBar,
-                  body: Builder(
-                    builder: (_) => Container(
-                      // decoration:  hasGradient == true ? BoxDecoration(
-                      //   gradient: LinearGradient(
-                      //     begin: Alignment.topCenter,
-                      //       end: Alignment.bottomCenter,
-                      //       colors:[
-                      //         const Color(0xffF3F1F8),
-                      //         const Color.fromRGBO(243, 241, 248, 0.82),
-                      //         const Color.fromRGBO(243, 241, 248, 0.82),
-                      //         ParallexColors.secondarycolor.withOpacity(0.3)
-                      //       ]
-                      //   )
-                      // ) : null,
-                      width: constraints.width,
-                      height: constraints.height,
-                      padding: EdgeInsets.only(
-                          left: includeHorizontalPadding ? 18.w : 0.w,
-                          right: includeHorizontalPadding ? 18.w : 0.w,
-                          top: includeVerticalPadding ? 50.h : 0.w),
-                      child: builder(
-                        constraints,
-                      ),
+                          ],
+                        )
+                    : null,
+    
+                bottomNavigationBar: bottomNavBar,
+                body: Builder(
+                  builder: (_) => Container(
+                    // decoration:  hasGradient == true ? BoxDecoration(
+                    //   gradient: LinearGradient(
+                    //     begin: Alignment.topCenter,
+                    //       end: Alignment.bottomCenter,
+                    //       colors:[
+                    //         const Color(0xffF3F1F8),
+                    //         const Color.fromRGBO(243, 241, 248, 0.82),
+                    //         const Color.fromRGBO(243, 241, 248, 0.82),
+                    //         ParallexColors.secondarycolor.withOpacity(0.3)
+                    //       ]
+                    //   )
+                    // ) : null,
+                    width: constraints.width,
+                    height: constraints.height,
+                    padding: EdgeInsets.only(
+                        left: includeHorizontalPadding ? 18.w : 0.w,
+                        right: includeHorizontalPadding ? 18.w : 0.w,
+                        top: includeVerticalPadding ? 50.h : 0.w),
+                    child: builder(
+                      constraints,
                     ),
                   ),
-                );
-              },
-            ),
-          );
-        },
-      ),
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
