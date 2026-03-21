@@ -1,4 +1,3 @@
-
 class AppRoutes {
   // ignore: constant_identifier_names
   static const String logIn = "/logIn";
@@ -11,11 +10,14 @@ class AppRoutes {
   static const String notificationsPage = "/notificationsPage";
    static const String notificationsAlert = "/notificationsAlert";
     static const String settingsPage = "/settingsPage";
-     static const String searchPage = "/searchPage";
 
-    static const String helpCenter = "/helpCenter";
-        static const String aboutPage = "/aboutPage";
-                static const String languagePage = "/languagePage";
-           static const String donorPage = "/donorPage";
-            static const String articlePage = "/articlePage";
+
+   //auth 
+   static const String createAccountPage = "/createAccountPage";
+  static const String siginInPage = "/signInPage";
+   static const String forgotPasswordScreen = "/forgotPasswordScreen";
+    static const String passwordChanged = "/passwordChanged";     
+     static const String resetPasswordScreen = "/resetPasswordScreen";
+    static const String enterOtpScreen = "/enterOtpScreen";   
+    static const String profileScreen = "/profileScreen";  
 }
