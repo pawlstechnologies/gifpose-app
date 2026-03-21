@@ -12,5 +12,12 @@ class AppRoutes {
     static const String settingsPage = "/settingsPage";
 
 
-        
+   //auth 
+   static const String createAccountPage = "/createAccountPage";
+  static const String siginInPage = "/signInPage";
+   static const String forgotPasswordScreen = "/forgotPasswordScreen";
+    static const String passwordChanged = "/passwordChanged";     
+     static const String resetPasswordScreen = "/resetPasswordScreen";
+    static const String enterOtpScreen = "/enterOtpScreen";   
+    static const String profileScreen = "/profileScreen";  
 }

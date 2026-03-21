@@ -76,20 +76,21 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
             YMargin(30),
-            Padding(
-             padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit purus sit amet ",
-                textAlign: TextAlign.center,
-                style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500,         color: Theme.of(navigatorKey.currentContext!).textTheme.bodyMedium?.color),
-              ),
-            ),
-              YMargin(18),
+        
             Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: GiftPoseButton(title: "Continue", onTap: (){
+              child: GiftPoseButton(title: "Sign up", onTap: (){
               HapticFeedback.selectionClick();
-              Navigator.pushNamed(context,AppRoutes.consentPage);
+              Navigator.pushNamed(context,AppRoutes.createAccountPage);
+              }),
+            ),
+            YMargin(20),
+
+                  Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: GiftPoseButton(title: "Log in", onTap: (){
+              HapticFeedback.selectionClick();
+              Navigator.pushNamed(context,AppRoutes.siginInPage);
               }),
             ),
           ],
