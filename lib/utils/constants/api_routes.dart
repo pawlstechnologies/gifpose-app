@@ -10,19 +10,19 @@ static const searchAlertCategories = "/alerts/search-keywords";
 static const alertCategoriesList = "/categories";
 static const alertSubCategoriesList = "/categories/tree?categoryId={categoryId}";
 static const alertSearchPredictionList = "/categories/search";
-static const globalSearch = "/item/{deviceId}/search";
+  static const globalSearch = "/item/{deviceId}/search";
 
 
 
 
 
 
-
-
-
-
-
-
+static const register = "/auth/register";
+static const verifyEmail = "/auth/verify-email";
+static const login = "/auth/login";
+static const resendCode = "/auth/resend-code";
+static const forgotPassword = "/auth/forgot-password";
+static const resetPassword = "/auth/reset-password";
 
 
 

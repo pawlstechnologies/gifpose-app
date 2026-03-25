@@ -11,6 +11,13 @@ class AppRoutes {
    static const String notificationsAlert = "/notificationsAlert";
     static const String settingsPage = "/settingsPage";
 
+     static const String searchPage = "/searchPage";
+
+    static const String helpCenter = "/helpCenter";
+        static const String aboutPage = "/aboutPage";
+                static const String languagePage = "/languagePage";
+           static const String donorPage = "/donorPage";
+            static const String articlePage = "/articlePage";
 
    //auth 
    static const String createAccountPage = "/createAccountPage";

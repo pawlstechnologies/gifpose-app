@@ -227,6 +227,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/loader.png
   AssetGenImage get loader => const AssetGenImage('assets/images/loader.png');
 
+  /// File path: assets/images/logo.png
+  AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
+
   /// File path: assets/images/logo2.png
   AssetGenImage get logo2 => const AssetGenImage('assets/images/logo2.png');
 
@@ -264,6 +267,7 @@ class $AssetsImagesGen {
     images2,
     images3,
     loader,
+    logo,
     logo2,
     map,
     splashImage,

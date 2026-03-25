@@ -9,7 +9,7 @@ ResetPasswordResponse resetPasswordResponseFromJson(String str) => ResetPassword
 String resetPasswordResponseToJson(ResetPasswordResponse data) => json.encode(data.toJson());
 
 class ResetPasswordResponse {
-    int status;
+    String status;
     String message;
 
     ResetPasswordResponse({

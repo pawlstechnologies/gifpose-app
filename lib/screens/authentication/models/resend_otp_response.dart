@@ -9,7 +9,7 @@ ResendOtpResponse resendOtpResponseFromJson(String str) => ResendOtpResponse.fro
 String resendOtpResponseToJson(ResendOtpResponse data) => json.encode(data.toJson());
 
 class ResendOtpResponse {
-  int? status;
+  String status;
     String message;
 
     ResendOtpResponse({
