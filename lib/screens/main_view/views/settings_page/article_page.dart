@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:flutter/services.dart';
 import 'package:giftpose/gen/assets.gen.dart';
 import 'package:giftpose/screens/main_view/widgets/faq_widget.dart';
@@ -36,7 +38,7 @@ class ArticlePage extends StatelessWidget {
             ), // Adjust the value for more/less rounding
           ),
           child: Padding(
-            padding: const EdgeInsets.all(14.0),
+            padding: EdgeInsets.all(14.0),
             child: Assets.icons.back.svg(
               color: Theme.of(context).textTheme.bodyLarge?.color,
             ),
@@ -57,8 +59,7 @@ class ArticlePage extends StatelessWidget {
           shrinkWrap: true,
           children: [
             YMargin(19),
-            Text(
-              "How to donate",
+            Text("How to donate".tr(context),
               textAlign: TextAlign.left,
 
               style: GiftPoseTextStyle.medium(
@@ -70,8 +71,7 @@ class ArticlePage extends StatelessWidget {
             Row(
               children: [
                 Assets.icons.calendar.svg(),
-                Text(
-                  "Last updated: Oct 24, 2023",
+                Text("Last updated: Oct 24, 2023".tr(context),
                   textAlign: TextAlign.left,
 
                   style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
@@ -99,8 +99,7 @@ class ArticlePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Choose a cause",
+                      Text("Choose a cause".tr(context),
                         textAlign: TextAlign.left,
 
                         style: GiftPoseTextStyle.medium(
@@ -109,8 +108,7 @@ class ArticlePage extends StatelessWidget {
                         ),
                       ),
                       YMargin(5),
-                      Text(
-                        "Browse our verified list of charitable organizations. You can filter by category such as education, environment, or health to find a mission that resonates with you.",
+                      Text("Browse our verified list of charitable organizations. You can filter by category such as education, environment, or health to find a mission that resonates with you.".tr(context),
                         textAlign: TextAlign.justify,
 
                         style: GiftPoseTextStyle.medium(
@@ -143,8 +141,7 @@ class ArticlePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Choose a cause",
+                      Text("Choose a cause".tr(context),
                         textAlign: TextAlign.left,
 
                         style: GiftPoseTextStyle.medium(
@@ -153,8 +150,7 @@ class ArticlePage extends StatelessWidget {
                         ),
                       ),
                       YMargin(5),
-                      Text(
-                        "Browse our verified list of charitable organizations. You can filter by category such as education, environment, or health to find a mission that resonates with you.",
+                      Text("Browse our verified list of charitable organizations. You can filter by category such as education, environment, or health to find a mission that resonates with you.".tr(context),
                         textAlign: TextAlign.justify,
 
                         style: GiftPoseTextStyle.medium(
@@ -182,8 +178,7 @@ class ArticlePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Choose a cause",
+                      Text("Choose a cause".tr(context),
                         textAlign: TextAlign.left,
 
                         style: GiftPoseTextStyle.medium(
@@ -192,8 +187,7 @@ class ArticlePage extends StatelessWidget {
                         ),
                       ),
                       YMargin(5),
-                      Text(
-                        "Browse our verified list of charitable organizations. You can filter by category such as education, environment, or health to find a mission that resonates with you.",
+                      Text("Browse our verified list of charitable organizations. You can filter by category such as education, environment, or health to find a mission that resonates with you.".tr(context),
                         textAlign: TextAlign.justify,
 
                         style: GiftPoseTextStyle.medium(
@@ -209,8 +203,7 @@ class ArticlePage extends StatelessWidget {
             YMargin(20),
             Divider(color: GiftPoseColors.dividerColorNew),
             YMargin(32),
-            Text(
-              "Was this article helpful?",
+            Text("Was this article helpful?".tr(context),
               textAlign: TextAlign.center,
 
               style: GiftPoseTextStyle.medium(
@@ -221,7 +214,7 @@ class ArticlePage extends StatelessWidget {
             YMargin(16),
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 60.0),
+              padding: EdgeInsets.symmetric(horizontal: 60.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -235,7 +228,7 @@ class ArticlePage extends StatelessWidget {
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 24,
                         vertical: 12,
                       ),
@@ -247,8 +240,7 @@ class ArticlePage extends StatelessWidget {
                           ),
 
                           XMargin(10),
-                          Text(
-                            "Yes",
+                          Text("Yes".tr(context),
                             textAlign: TextAlign.center,
 
                             style: GiftPoseTextStyle.medium(
@@ -270,7 +262,7 @@ class ArticlePage extends StatelessWidget {
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 24,
                         vertical: 12,
                       ),
@@ -281,8 +273,7 @@ class ArticlePage extends StatelessWidget {
                             color: Theme.of(context).textTheme.bodyLarge?.color,
                           ),
                           XMargin(10),
-                          Text(
-                            "No",
+                          Text("No".tr(context),
                             textAlign: TextAlign.center,
 
                             style: GiftPoseTextStyle.medium(

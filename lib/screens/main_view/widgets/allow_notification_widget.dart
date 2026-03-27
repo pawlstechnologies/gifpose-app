@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:giftpose/gen/assets.gen.dart';
 import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
 import 'package:giftpose/utils/router/app_routes.dart';
@@ -9,7 +11,7 @@ import 'package:giftpose/utils/widgets/spacing.dart';
 import 'package:provider/provider.dart';
 
 class AllowNotificationWidget extends StatelessWidget {
-  const AllowNotificationWidget({super.key});
+  AllowNotificationWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +20,13 @@ class AllowNotificationWidget extends StatelessWidget {
         return Column(
           children: [
               Assets.icons.allowNotifications.svg(),
-              Text(
-            "Allow Notification",
+              Text("Allow Notification".tr(context),
             textAlign: TextAlign.center,
         
             style: GiftPoseTextStyle.normal(fontWeight: FontWeight.w500),
           ),
           YMargin(2),
-        Text(
-            "Get timely updated and never miss out",
+        Text("Get timely updated and never miss out".tr(context),
             textAlign: TextAlign.center,
         
             style: GiftPoseTextStyle.small(),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:flutter/services.dart';
 import 'package:giftpose/gen/assets.gen.dart';
 import 'package:giftpose/screens/main_view/views/settings_page/category_widget_page.dart';
@@ -33,7 +35,7 @@ class HelpCenter extends StatelessWidget {
             ), // Adjust the value for more/less rounding
           ),
           child: Padding(
-            padding: const EdgeInsets.all(14.0),
+            padding: EdgeInsets.all(14.0),
             child: Assets.icons.back.svg(
               color: Theme.of(context).textTheme.bodyLarge?.color,
             ),
@@ -42,8 +44,7 @@ class HelpCenter extends StatelessWidget {
       ),
 
       hasGradient: true, 
-      appBarTitleWidget: Text(
-        "Help Center",
+      appBarTitleWidget: Text("Help Center".tr(context),
         textAlign: TextAlign.center,
 
         style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
@@ -65,8 +66,7 @@ class HelpCenter extends StatelessWidget {
                 children: [
                   YMargin(24),
 
-                  Text(
-                    "How can we help?",
+                  Text("How can we help?".tr(context),
                     textAlign: TextAlign.left,
 
                     style: GiftPoseTextStyle.medium(
@@ -90,8 +90,7 @@ class HelpCenter extends StatelessWidget {
             ),
 
             YMargin(24),
-            Text(
-              "Categories",
+            Text("Categories".tr(context),
 
               style: GiftPoseTextStyle.small(
                 color: Theme.of(context).textTheme.bodyMedium?.color,
@@ -106,7 +105,7 @@ class HelpCenter extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                       CategoryWidgetDetails(title: "Recieving"),
+                       CategoryWidgetDetails(title: "Recieving".tr(context)),
                   ),
                 );
               },
@@ -122,17 +121,15 @@ class HelpCenter extends StatelessWidget {
                 child: ListTile(
                   contentPadding: EdgeInsets.all(16),
                   leading: Assets.icons.location.svg(),
-                  title: Text(
-                    "Recieving",
+                  title: Text("Recieving".tr(context),
 
                     style: GiftPoseTextStyle.small(
                       color: Theme.of(context).textTheme.bodyLarge?.color,
                     ),
                   ),
                   subtitle: Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      "Fundraising and financial gifts",
+                    padding: EdgeInsets.only(top: 8.0),
+                    child: Text("Fundraising and financial gifts".tr(context),
 
                       style: GiftPoseTextStyle.small(
                         color: Theme.of(context).textTheme.bodyMedium?.color,
@@ -168,17 +165,15 @@ class HelpCenter extends StatelessWidget {
                     child: ListTile(
                       contentPadding: EdgeInsets.all(16),
                       leading: Assets.icons.location.svg(),
-                      title: Text(
-                        "Gifting",
+                      title: Text("Gifting".tr(context),
                           
                         style: GiftPoseTextStyle.small(
                           color: Theme.of(context).textTheme.bodyLarge?.color,
                         ),
                       ),
                       subtitle: Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                    "Sending and receiving items",
+                        padding: EdgeInsets.only(top: 8.0),
+                        child: Text("Sending and receiving items".tr(context),
                           
                           style: GiftPoseTextStyle.small(
                             color: Theme.of(context).textTheme.bodyMedium?.color,
@@ -214,17 +209,15 @@ class HelpCenter extends StatelessWidget {
                     child: ListTile(
                       contentPadding: EdgeInsets.all(16),
                       leading: Assets.icons.location.svg(),
-                      title: Text(
-                        "Requesting",
+                      title: Text("Requesting".tr(context),
                           
                         style: GiftPoseTextStyle.small(
                           color: Theme.of(context).textTheme.bodyLarge?.color,
                         ),
                       ),
                       subtitle: Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                    "How to ask for support",
+                        padding: EdgeInsets.only(top: 8.0),
+                        child: Text("How to ask for support".tr(context),
                           
                           style: GiftPoseTextStyle.small(
                             color: Theme.of(context).textTheme.bodyMedium?.color,
@@ -237,8 +230,7 @@ class HelpCenter extends StatelessWidget {
                 ),
                 YMargin(39),
 
-                 Text(
-              "Frequently Asked Questions",
+                 Text("Frequently Asked Questions".tr(context),
 
               style: GiftPoseTextStyle.small(
                 color: Theme.of(context).textTheme.bodyLarge?.color,

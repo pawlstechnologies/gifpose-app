@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,7 +22,7 @@ import 'package:provider/provider.dart';
 class DetailsPage extends StatefulWidget {
   final String? location;
 
-  const DetailsPage({super.key, required this.location});
+  DetailsPage({super.key, required this.location});
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
@@ -61,7 +63,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 ), // Adjust the value for more/less rounding
               ),
               child: Padding(
-                padding: const EdgeInsets.all(14.0),
+                padding: EdgeInsets.all(14.0),
                 child: Assets.icons.back.svg(
                   color: Theme.of(context).textTheme.bodyLarge?.color,
                 ),
@@ -70,8 +72,7 @@ class _DetailsPageState extends State<DetailsPage> {
           ),
 
           hasGradient: true,
-          appBarTitleWidget: Text(
-            "Gift Details",
+          appBarTitleWidget: Text("Gift Details".tr(context),
             textAlign: TextAlign.center,
 
             style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
@@ -99,20 +100,20 @@ class _DetailsPageState extends State<DetailsPage> {
                         width: double.infinity,
                         height: 102.w,
                         color: Colors.grey.shade200,
-                        child: const Icon(Icons.error, color: Colors.grey),
+                        child: Icon(Icons.error, color: Colors.grey),
                       ),
                       placeholder: (context, url) => Container(
                         width: double.infinity,
                         height: 102.w,
                         color: Colors.grey.shade100,
-                        child: const Center(
+                        child: Center(
                           child: CupertinoActivityIndicator(),
                         ),
                       ),
                     ),
                   ),
                   Transform.translate(
-                    offset: const Offset(0, -20),
+                    offset: Offset(0, -20),
                     child: Container(
                       width: width(context),
                       decoration: BoxDecoration(
@@ -126,7 +127,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           YMargin(14),
 
                           Padding(
-                            padding: const EdgeInsets.only(left: 20.0),
+                            padding: EdgeInsets.only(left: 20.0),
                             child: SizedBox(
                               height: 100.w,
                               width: double.infinity,
@@ -176,7 +177,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                                     width: 92.w,
                                                     height: 86.w,
                                                     color: Colors.grey.shade200,
-                                                    child: const Icon(
+                                                    child: Icon(
                                                       Icons.error,
                                                       color: Colors.grey,
                                                     ),
@@ -186,7 +187,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                                     width: 92.w,
                                                     height: 86.w,
                                                     color: Colors.grey.shade100,
-                                                    child: const Center(
+                                                    child: Center(
                                                       child:
                                                           CupertinoActivityIndicator(),
                                                     ),
@@ -203,7 +204,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           ),
                           YMargin(14),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                               horizontal: 20.0,
                             ),
                             child: Text(
@@ -216,7 +217,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           ),
                           YMargin(10),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                               horizontal: 20.0,
                             ),
                             child: Row(
@@ -236,8 +237,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                     ),
                                   ],
                                 ),
-                                Text(
-                                  "${vm.fetchItemsByIdMeResponse.data?.data?.distanceInMiles ?? 0} miles away",
+                                Text("${vm.fetchItemsByIdMeResponse.data?.data?.distanceInMiles ?? 0} miles away".tr(context),
                                   style: GiftPoseTextStyle.small(
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -247,7 +247,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           ),
                           YMargin(25),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                               horizontal: 20.0,
                             ),
                             child: Row(
@@ -447,8 +447,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                             children: [
                                               Assets.icons.train.svg(),
                                               XMargin(5),
-                                              Text(
-                                                "Train: ${vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.publicTransport ?? ""}ins",
+                                              Text("Train:".tr(context) + " ${vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.publicTransport ?? ''} mins",
                                                 textAlign: TextAlign.justify,
 
                                                 style: GiftPoseTextStyle.small(
@@ -464,8 +463,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                             children: [
                                               Assets.icons.train.svg(),
                                               XMargin(5),
-                                              Text(
-                                                "Tram ${vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.publicTransport ?? ""}ins",
+                                              Text("Tram:".tr(context) + " ${vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.publicTransport ?? ''} mins",
                                                 textAlign: TextAlign.justify,
 
                                                 style: GiftPoseTextStyle.small(
@@ -487,8 +485,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                             children: [
                                               Assets.icons.train.svg(),
                                               XMargin(5),
-                                              Text(
-                                                "Underground: ${vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.publicTransport ?? ""}ins",
+                                              Text("Underground:".tr(context) + " ${vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.publicTransport ?? ''} mins",
                                                 textAlign: TextAlign.justify,
 
                                                 style: GiftPoseTextStyle.small(
@@ -503,8 +500,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                             children: [
                                               Assets.icons.train.svg(),
                                               XMargin(5),
-                                              Text(
-                                                "Bus: ${vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.publicTransport ?? ""}ins",
+                                              Text("Bus:".tr(context) + " ${vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.publicTransport ?? ''} mins",
                                                 textAlign: TextAlign.justify,
 
                                                 style: GiftPoseTextStyle.small(
@@ -523,11 +519,10 @@ class _DetailsPageState extends State<DetailsPage> {
                               : SizedBox.shrink(),
                           YMargin(30),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                               horizontal: 20.0,
                             ),
-                            child: Text(
-                              "${vm.fetchItemsByIdMeResponse.data?.data?.description}",
+                            child: Text("${vm.fetchItemsByIdMeResponse.data?.data?.description}".tr(context),
                               textAlign: TextAlign.justify,
 
                               style: GiftPoseTextStyle.small(
@@ -543,7 +538,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           YMargin(18),
                           _isNavigating
                               ? Padding(
-                                  padding: const EdgeInsets.symmetric(
+                                  padding: EdgeInsets.symmetric(
                                     horizontal: 20.0,
                                   ),
                                   child: GiftPoseButton(
@@ -576,7 +571,7 @@ class _DetailsPageState extends State<DetailsPage> {
                               : SizedBox.shrink(),
                           YMargin(24),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                               horizontal: 20.0,
                             ),
                             child: GiftPoseButton(

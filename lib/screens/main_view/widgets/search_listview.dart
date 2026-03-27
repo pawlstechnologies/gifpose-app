@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,8 +36,8 @@ class ListViewSearchWidget extends StatelessWidget {
         final items = dashVM.items;
 
         if (items.isEmpty) {
-          return const Center(
-            child: Text('No items available'),
+          return Center(
+            child: Text('No items available'.tr(context)),
           );
         }
 
@@ -43,10 +45,10 @@ class ListViewSearchWidget extends StatelessWidget {
           builder: (context, vm, child) {
             return ListView.separated(
               controller: scrollController,
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              physics: BouncingScrollPhysics(),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               itemCount: items.length + (hasReachedMax ? 0 : 1),
-              separatorBuilder: (context, index) => const YMargin(12),
+              separatorBuilder: (context, index) => YMargin(12),
               itemBuilder: (context, index) {
                 // Show loading indicator at the end
                 if (index >= items.length) {
@@ -55,7 +57,7 @@ class ListViewSearchWidget extends StatelessWidget {
                 
                 final data = items[index];
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 0),
+                  padding: EdgeInsets.symmetric(vertical: 0),
                   child: InkWell(
                     onTap: () {
                      HapticFeedback.heavyImpact();
@@ -81,12 +83,12 @@ class ListViewSearchWidget extends StatelessWidget {
   }
 
   Widget _buildLoadingIndicator() {
-    if (!isLoadingMore) return const SizedBox.shrink();
+    if (!isLoadingMore) return SizedBox.shrink();
     
     return Container(
       height: 60,
       alignment: Alignment.center,
-      child: const Center(
+      child: Center(
         child: CircularProgressIndicator(
           color: GiftPoseColors.primaryColor,
           strokeWidth: 2,
@@ -101,7 +103,7 @@ class CategoryListItem extends StatelessWidget {
   final FetchItemsNearMeData response;
   final String? userLocation;
 
-  const CategoryListItem({super.key, required this.response, required this.userLocation});
+  CategoryListItem({super.key, required this.response, required this.userLocation});
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +115,7 @@ class CategoryListItem extends StatelessWidget {
           BoxShadow(
             color: Colors.grey.withOpacity(0.1),
             blurRadius: 4,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -122,7 +124,7 @@ class CategoryListItem extends StatelessWidget {
         children: [
           // Product Image
           ClipRRect(
-            borderRadius: const BorderRadius.horizontal(
+            borderRadius: BorderRadius.horizontal(
               left: Radius.circular(12),
             ),
             child: CachedNetworkImage(
@@ -134,13 +136,13 @@ class CategoryListItem extends StatelessWidget {
                 height: 100,
                 width: 100,
                 color: Colors.grey.shade200,
-                child: const Icon(Icons.error, color: Colors.grey),
+                child: Icon(Icons.error, color: Colors.grey),
               ),
               placeholder: (context, url) => Container(
                 height: 100,
                 width: 100,
                 color: Colors.grey.shade100,
-                child: const Center(
+                child: Center(
                   child: CupertinoActivityIndicator(),
                 ),
               ),
@@ -149,7 +151,7 @@ class CategoryListItem extends StatelessWidget {
 
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(12),
+              padding: EdgeInsets.all(12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -164,7 +166,7 @@ class CategoryListItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
 
-                  const YMargin(8),
+                  YMargin(8),
 
                   // Location with Icon
                   Row(
@@ -173,7 +175,7 @@ class CategoryListItem extends StatelessWidget {
                         height: 14,
                         width: 14,
                       ),
-                      const XMargin(4),
+                      XMargin(4),
                       Expanded(
                         child: Text(
                 userLocation ?? "United Kingdom",
@@ -187,7 +189,7 @@ class CategoryListItem extends StatelessWidget {
                     ],
                   ),
 
-                  const YMargin(8),
+                  YMargin(8),
 
          
                
@@ -198,7 +200,7 @@ class CategoryListItem extends StatelessWidget {
 
           // Arrow Icon
           Padding(
-            padding: const EdgeInsets.all(12),
+            padding: EdgeInsets.all(12),
             child: Icon(
               Icons.arrow_forward_ios,
               size: 16,

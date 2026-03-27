@@ -5,7 +5,17 @@ import 'package:client_information/client_information.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:giftpose/app.dart';
+import 'package:giftpose/screens/authentication/models/create_account_request.dart';
 import 'package:giftpose/screens/authentication/models/create_account_response.dart';
+import 'package:giftpose/screens/authentication/models/forgot_password_request.dart';
+import 'package:giftpose/screens/authentication/models/forgot_password_response.dart';
+import 'package:giftpose/screens/authentication/models/resend_otp_request.dart';
+import 'package:giftpose/screens/authentication/models/resend_otp_response.dart';
+import 'package:giftpose/screens/authentication/models/reset_password_request.dart';
+import 'package:giftpose/screens/authentication/models/reset_password_response.dart';
+import 'package:giftpose/screens/authentication/models/sigin_request.dart';
+import 'package:giftpose/screens/authentication/models/signin_response.dart';
+import 'package:giftpose/screens/authentication/repo/authentication_repo.dart';
 import 'package:giftpose/screens/main_view/viewmodels/base_viewmodel.dart';
 import 'package:giftpose/screens/onboarding/models/register_location_request.dart';
 import 'package:giftpose/screens/onboarding/models/register_location_response.dart';
@@ -24,8 +34,10 @@ class AuthenticationViewModel extends BaseViewmodel {
   final emailCtrl = TextEditingController();
   final otpCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
-  final TextEditingController firstNameCtrl = TextEditingController();
-
+  final TextEditingController fullNameCtrl = TextEditingController();
+  final TextEditingController lastNameCtrl = TextEditingController();
+  final TextEditingController usernameCtrl = TextEditingController();
+  final TextEditingController confirmPasswordCtrl = TextEditingController();
   final TextEditingController countryCodeCtrl = TextEditingController(
     text: "+234",
   );
@@ -38,9 +50,9 @@ class AuthenticationViewModel extends BaseViewmodel {
     emailCtrl.dispose();
     otpCtrl.dispose();
     passwordCtrl.dispose();
-    firstNameCtrl.dispose();
-
-
+    fullNameCtrl.dispose();
+    lastNameCtrl.dispose();
+    countryCodeCtrl.dispose();
     phoneCtrl.dispose();
     cityCtrl.dispose();
     super.dispose();
@@ -48,9 +60,9 @@ class AuthenticationViewModel extends BaseViewmodel {
 
   void clearTextControllers() {
     passwordCtrl.clear();
-    firstNameCtrl.clear();
-
-
+    fullNameCtrl.clear();
+    lastNameCtrl.clear();
+    countryCodeCtrl.clear();
     phoneCtrl.clear();
     cityCtrl.clear();
 
@@ -60,10 +72,32 @@ class AuthenticationViewModel extends BaseViewmodel {
   OnboardingViewModel() {
     getDeviceId();
   }
+
+
+  bool _obscureText = true;
+  bool get obscureText => _obscureText;
+  void updateObscureText() {
+    _obscureText = !_obscureText;
+    notifyListeners();
+  }
+
+  bool _obscureText2 = true;
+  bool get obscureText2 => _obscureText2;
+  void updateObscureText2() {
+    _obscureText2 = !_obscureText2;
+    notifyListeners();
+  }
+  double _miles = 15.0;
+  double get miles => _miles;
+  void updateMiles(double value) {
+    _miles = value;
+    notifyListeners();
+  }
+
   final SecureStorageService secureStorageService =
       serviceLocator<SecureStorageService>();
-  final OnboardingRepo onboardingRepo = serviceLocator<OnboardingRepo>();
-
+  final AuthenticationRepo authenticationRepo =
+      serviceLocator<AuthenticationRepo>();
 
   NetworkDataResponse<CreateAccountResponse> _createAccountResponse =
       NetworkDataResponse.idle();
@@ -71,55 +105,222 @@ class AuthenticationViewModel extends BaseViewmodel {
   NetworkDataResponse<CreateAccountResponse> get createAccountResponse =>
       _createAccountResponse;
 
-  set createAccountResponse(
-    NetworkDataResponse<CreateAccountResponse> value,
-  ) {
+  set createAccountResponse(NetworkDataResponse<CreateAccountResponse> value) {
     _createAccountResponse = value;
     notifyListeners();
   }
 
-
-  Future<void> createAccount({
-
-    required BuildContext context,
-    required String postcode,
-  }) async {
+  Future<void> createAccount() async {
     try {
-
       createAccountResponse = NetworkDataResponse.loading("");
-      LoaderPage.show(context);
+      LoaderPage.show(navigatorKey.currentContext!);
 
+      final response = await authenticationRepo.createAccount(
+        createAccountRequest: CreateAccountRequest(
+          email: emailCtrl.text,
+          password: passwordCtrl.text,
+          fullname: fullNameCtrl.text,
+          username: usernameCtrl.text,
+          confirmPassword: confirmPasswordCtrl.text,
 
-      final response = await onboardingRepo.registerLocation(
-        registerLocationRequest: RegisterLocationRequest(
-          postcode: postcode,
           deviceId: deviceId ?? "",
-          miles: miles,
         ),
       );
-      log('Register location: 3');
-      registerLocationResponse = NetworkDataResponse.completed(response);
 
-      Navigator.pop(context);
 
-      if (registerLocationResponse.data?.status == true) {
-        Navigator.pushNamed(context, AppRoutes.dashboard);
-        await databaseService.saveIsRegistered(true);
+      createAccountResponse = NetworkDataResponse.completed(response);
+
+      Navigator.pop(navigatorKey.currentContext!);
+
+      if (createAccountResponse.data?.status == true) {
+        Navigator.pushNamed(navigatorKey.currentContext!, AppRoutes.dashboard);
       } else {
-        await databaseService.saveIsRegistered(false);
         CustomToast.show(
-          context: context,
+          context: navigatorKey.currentContext!,
           message:
-              registerLocationResponse.data?.message ?? "Something went wrong",
+              createAccountResponse.data?.message ?? "Something went wrong",
         );
       }
     } catch (e) {
-      Navigator.pop(context);
-      registerLocationResponse = NetworkDataResponse.error(e.toString());
-
-      CustomToast.show(context: context, message: e.toString());
+      Navigator.pop(navigatorKey.currentContext!);
+createAccountResponse = NetworkDataResponse.error(e.toString());
+      CustomToast.show(context: navigatorKey.currentContext!, message: e.toString());
     }
   }
+
+
+  //signin 
+
+
+  NetworkDataResponse<SignInResponse> _signInResponse =
+      NetworkDataResponse.idle();
+
+  NetworkDataResponse<SignInResponse> get signInResponse =>
+      _signInResponse;
+
+  set signInResponse(NetworkDataResponse<SignInResponse> value) {
+    _signInResponse = value;
+    notifyListeners();
+  }
+
+  Future<void> signIn() async {
+    try {
+      signInResponse = NetworkDataResponse.loading("");
+      LoaderPage.show(navigatorKey.currentContext!);
+
+      final response = await authenticationRepo.signin(signinRequest: SignInRequest(identifier: emailCtrl.text.trim(), password: passwordCtrl.text.trim()) );
+
+     
+      signInResponse = NetworkDataResponse.completed(response);
+
+      Navigator.pop(navigatorKey.currentContext!);
+
+      if (signInResponse.data?.status == true) {
+        Navigator.pushNamed(navigatorKey.currentContext!, AppRoutes.dashboard);
+      } else {
+        CustomToast.show(
+          context: navigatorKey.currentContext!,
+          message:
+              signInResponse.data?.message ?? "Something went wrong",
+        );
+      }
+    } catch (e) {
+      Navigator.pop(navigatorKey.currentContext!);
+      signInResponse = NetworkDataResponse.error(e.toString());
+
+      CustomToast.show(context: navigatorKey.currentContext!, message: e.toString());
+    }
+  }
+
+
+
+  //forgot password
+
+  NetworkDataResponse<ForgotPasswordResponse> _forgotPasswordResponse =
+      NetworkDataResponse.idle();
+
+  NetworkDataResponse<ForgotPasswordResponse> get forgotPasswordResponse =>
+      _forgotPasswordResponse;
+
+  set forgotPasswordResponse(NetworkDataResponse<ForgotPasswordResponse> value) {
+    _forgotPasswordResponse = value;
+    notifyListeners();
+
+  }
+
+  Future<void> forgotPassword() async {
+    try {
+      forgotPasswordResponse = NetworkDataResponse.loading("");
+      LoaderPage.show(navigatorKey.currentContext!);
+
+      final response = await authenticationRepo.forgotPassword(forgotPasswordRequest: ForgotPasswordRequest(email: emailCtrl.text.trim()));
+
+     
+      forgotPasswordResponse = NetworkDataResponse.completed(response);
+
+      Navigator.pop(navigatorKey.currentContext!);
+
+      if (forgotPasswordResponse.data?.status == true) {
+       
+      } else {
+        CustomToast.show(
+          context: navigatorKey.currentContext!,
+          message:
+              forgotPasswordResponse.data?.message ?? "Something went wrong",
+        );
+      }
+    } catch (e) {
+      Navigator.pop(navigatorKey.currentContext!);
+      forgotPasswordResponse = NetworkDataResponse.error(e.toString());
+
+      CustomToast.show(context: navigatorKey.currentContext!, message: e.toString());
+    }
+  }
+
+  //reset password
+
+  NetworkDataResponse<ResetPasswordResponse> _resetPasswordResponse =
+      NetworkDataResponse.idle();
+
+  NetworkDataResponse<ResetPasswordResponse> get resetPasswordResponse =>
+      _resetPasswordResponse;
+
+  set resetPasswordResponse(NetworkDataResponse<ResetPasswordResponse> value) {
+    _resetPasswordResponse = value;
+    notifyListeners();
+  }
+
+  Future<void> resetPassword() async {
+    try {
+      resetPasswordResponse = NetworkDataResponse.loading("");
+      LoaderPage.show(navigatorKey.currentContext!);
+
+      final response = await authenticationRepo.resetPassword(resetPasswordRequest: ResetPasswordRequest(email: emailCtrl.text.trim(), code: otpCtrl.text.trim(), newPassword: passwordCtrl.text.trim(), confirmPassword: confirmPasswordCtrl.text.trim()));
+
+     
+      resetPasswordResponse = NetworkDataResponse.completed(response);
+
+      Navigator.pop(navigatorKey.currentContext!);
+
+      if (resetPasswordResponse.data?.status == true) {
+
+      } else {
+        CustomToast.show(
+          context: navigatorKey.currentContext!,
+          message:
+              resetPasswordResponse.data?.message ?? "Something went wrong",
+        );
+      }
+    } catch (e) {
+      Navigator.pop(navigatorKey.currentContext!);
+      resetPasswordResponse = NetworkDataResponse.error(e.toString());
+
+      CustomToast.show(context: navigatorKey.currentContext!, message: e.toString());
+    }
+  }
+
+ //resend otp
+
+  NetworkDataResponse<ResendOtpResponse> _resendOtpResponse =
+      NetworkDataResponse.idle();
+
+  NetworkDataResponse<ResendOtpResponse> get resendOtpResponse =>
+      _resendOtpResponse;
+
+  set resendOtpResponse(NetworkDataResponse<ResendOtpResponse> value) {
+    _resendOtpResponse = value;
+    notifyListeners();
+  }
+
+  Future<void> resendOtp() async {
+    try {
+      resendOtpResponse = NetworkDataResponse.loading("");
+      LoaderPage.show(navigatorKey.currentContext!);
+
+      final response = await authenticationRepo.resendOtp(resendOtpRequest: ResendOtpRequest(email: emailCtrl.text.trim()));
+
+     
+      resendOtpResponse = NetworkDataResponse.completed(response);
+
+      Navigator.pop(navigatorKey.currentContext!);
+
+      if (resendOtpResponse.data?.status == true) {
+
+      } else {
+        CustomToast.show(
+          context: navigatorKey.currentContext!,
+          message:
+              resendOtpResponse.data?.message ?? "Something went wrong",
+        );
+      }
+    } catch (e) {
+      Navigator.pop(navigatorKey.currentContext!);
+      resendOtpResponse = NetworkDataResponse.error(e.toString());
+
+      CustomToast.show(context: navigatorKey.currentContext!, message: e.toString());
+    }
+  }
+
 
   String? deviceId;
 

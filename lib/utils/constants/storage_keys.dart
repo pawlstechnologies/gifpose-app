@@ -3,6 +3,7 @@ class StorageKeys {
   static const displayMode = "displayMode";
    static const accessToken= "accessToken";
     static const deviceId= "deviceId";
+    static const language = "language";
    
 
 

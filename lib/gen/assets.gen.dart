@@ -30,6 +30,9 @@ class $AssetsIconsGen {
   SvgGenImage get allowNotifications =>
       const SvgGenImage('assets/icons/allowNotifications.svg');
 
+  /// File path: assets/icons/apple.svg
+  SvgGenImage get apple => const SvgGenImage('assets/icons/apple.svg');
+
   /// File path: assets/icons/back.svg
   SvgGenImage get back => const SvgGenImage('assets/icons/back.svg');
 
@@ -60,11 +63,20 @@ class $AssetsIconsGen {
   /// File path: assets/icons/emptyNot.svg
   SvgGenImage get emptyNot => const SvgGenImage('assets/icons/emptyNot.svg');
 
+  /// File path: assets/icons/ex.svg
+  SvgGenImage get ex => const SvgGenImage('assets/icons/ex.svg');
+
+  /// File path: assets/icons/facebook.svg
+  SvgGenImage get facebook => const SvgGenImage('assets/icons/facebook.svg');
+
   /// File path: assets/icons/fb.svg
   SvgGenImage get fb => const SvgGenImage('assets/icons/fb.svg');
 
   /// File path: assets/icons/foward.svg
   SvgGenImage get foward => const SvgGenImage('assets/icons/foward.svg');
+
+  /// File path: assets/icons/google.svg
+  SvgGenImage get google => const SvgGenImage('assets/icons/google.svg');
 
   /// File path: assets/icons/grid.svg
   SvgGenImage get grid => const SvgGenImage('assets/icons/grid.svg');
@@ -156,6 +168,7 @@ class $AssetsIconsGen {
     lineh,
     about,
     allowNotifications,
+    apple,
     back,
     calendar,
     checklist,
@@ -166,8 +179,11 @@ class $AssetsIconsGen {
     dot,
     down,
     emptyNot,
+    ex,
+    facebook,
     fb,
     foward,
+    google,
     grid,
     hamburger,
     heart,

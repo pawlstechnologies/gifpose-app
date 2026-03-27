@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:giftpose/app.dart';
 import 'package:giftpose/gen/assets.gen.dart';
@@ -11,7 +13,7 @@ import 'package:giftpose/utils/widgets/spacing.dart';
 import 'package:provider/provider.dart';
 
 class EnterOtpScreen extends StatefulWidget {
-  const EnterOtpScreen({super.key});
+  EnterOtpScreen({super.key});
 
   @override
   State<EnterOtpScreen> createState() => _EnterOtpScreenState();
@@ -46,14 +48,12 @@ class _EnterOtpScreenState extends State<EnterOtpScreen>
             YMargin(196),
             Assets.icons.checklist.svg(),
             YMargin(30),
-            Text(
-              "GiftPose asks for your consent to use your personal data to:",
+            Text("GiftPose asks for your consent to use your personal data to:".tr(context),
               style: GiftPoseTextStyle.heading1(fontWeight: FontWeight.w500),
             ),
             YMargin(16),
 
-            Text(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit purus sit amet ",
+            Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit purus sit amet ".tr(context),
               textAlign: TextAlign.center,
 
               style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500,color: Theme.of(navigatorKey.currentContext!).textTheme.bodyMedium?.color),

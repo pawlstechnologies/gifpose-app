@@ -1,5 +1,7 @@
 // screens/main_view/views/dashboard_view.dart
 import 'package:flutter/material.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:flutter/services.dart';
 import 'package:giftpose/gen/assets.gen.dart';
 import 'package:giftpose/screens/main_view/views/search_page.dart';
@@ -23,7 +25,7 @@ import 'package:provider/provider.dart';
 import '../viewmodels/dashboard_viewmodel.dart';
 
 class DashboardView extends StatefulWidget {
-  const DashboardView({super.key});
+  DashboardView({super.key});
 
   @override
   State<DashboardView> createState() => _DashboardViewState();
@@ -52,7 +54,7 @@ class _DashboardViewState extends State<DashboardView> {
 
       Future.delayed(Duration(seconds: 2), () {});
     });
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 2), () {
       _scrollController.addListener(_onScroll);
     });
 
@@ -81,12 +83,12 @@ class _DashboardViewState extends State<DashboardView> {
         width: MediaQuery.of(context).size.width - 40,
         child: CompositedTransformFollower(
           link: _layerLink,
-          offset: const Offset(0, 55),
+          offset: Offset(0, 55),
           child: Material(
             elevation: 6,
             borderRadius: BorderRadius.circular(12),
             child: Container(
-              constraints: const BoxConstraints(maxHeight: 250),
+              constraints: BoxConstraints(maxHeight: 250),
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(12),
@@ -160,7 +162,7 @@ class _DashboardViewState extends State<DashboardView> {
 
                   // Header
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -188,7 +190,7 @@ class _DashboardViewState extends State<DashboardView> {
                               ), // Adjust the value for more/less rounding
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.all(12.0),
+                              padding: EdgeInsets.all(12.0),
                               child: Assets.icons.settingsicon.svg(
                                 color: Theme.of(
                                   context,
@@ -204,8 +206,7 @@ class _DashboardViewState extends State<DashboardView> {
                               viewModel.fcmToken.toString(),
                             );
                           },
-                          child: Text(
-                            "All Gifts",
+                          child: Text("All Gifts".tr(context),
                             style: GiftPoseTextStyle.large(
                               fontWeight: FontWeight.w500,
                             ),
@@ -256,7 +257,7 @@ class _DashboardViewState extends State<DashboardView> {
 
                   // Search Field
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     child: CompositedTransformTarget(
                       link: _layerLink,
                       child: GiftPoseTextField(
@@ -333,7 +334,7 @@ class _DashboardViewState extends State<DashboardView> {
                       );
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 17.0,
                         vertical: 16.0,
                       ),
@@ -341,20 +342,19 @@ class _DashboardViewState extends State<DashboardView> {
                       child: Row(
                         children: [
                           Assets.icons.not.svg(),
-                          const XMargin(12),
+                          XMargin(12),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Get notified on product of interest",
+                                Text("Get notified on product of interest".tr(context),
                                   style: GiftPoseTextStyle.normal(
                                     fontSize: 15,
                                     color: GiftPoseColors.textColor3,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
-                                const YMargin(4),
+                                YMargin(4),
                                 // FIX: Removed nested ListView.builder causing the crash
                                 Text(
                                   (viewModel
@@ -364,7 +364,7 @@ class _DashboardViewState extends State<DashboardView> {
                                               .isEmpty ??
                                           true)
                                       ? "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find."
-                                      : "Active: ${viewModel.fetchAlertListResponse.data!.data[0].keywords.join(", ")}", // Changed .toString() to .join(", ")
+                                      : "Active: ${viewModel.fetchAlertListResponse.data!.data[0].keywords.join(", ".tr(context))}", // Changed .toString() to .join(", ")
                                   style: GiftPoseTextStyle.small(
                                     fontSize: 10,
                                     color: GiftPoseColors.textColor2,
@@ -398,7 +398,7 @@ class _DashboardViewState extends State<DashboardView> {
     // Handle loading state
     if (isApiResponseLoading(viewModel.fetchItemsNearMeResponse) &&
         viewModel.items.isEmpty) {
-      return const Center(
+      return Center(
         child: CircularProgressIndicator(color: GiftPoseColors.primaryColor),
       );
     }
@@ -410,14 +410,13 @@ class _DashboardViewState extends State<DashboardView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.error_outline, size: 48, color: Colors.red),
-            const YMargin(16),
-            Text(
-              'Error: ',
+            Icon(Icons.error_outline, size: 48, color: Colors.red),
+            YMargin(16),
+            Text('Error: '.tr(context),
               style: GiftPoseTextStyle.medium(),
               textAlign: TextAlign.center,
             ),
-            const YMargin(16),
+            YMargin(16),
             ElevatedButton(
               onPressed: () => viewModel.refreshItems(),
               style: ElevatedButton.styleFrom(
@@ -426,7 +425,7 @@ class _DashboardViewState extends State<DashboardView> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: const Text('Retry'),
+              child: Text('Retry'.tr(context)),
             ),
           ],
         ),
@@ -439,11 +438,10 @@ class _DashboardViewState extends State<DashboardView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const YMargin(16),
-            Text('No items found', style: GiftPoseTextStyle.large()),
-            const YMargin(8),
-            Text(
-              'Try adjusting your search or location',
+            YMargin(16),
+            Text('No items found'.tr(context), style: GiftPoseTextStyle.large()),
+            YMargin(8),
+            Text('Try adjusting your search or location'.tr(context),
               style: GiftPoseTextStyle.small(color: Colors.grey),
             ),
           ],

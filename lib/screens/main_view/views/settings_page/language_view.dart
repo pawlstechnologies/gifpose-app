@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:flutter/services.dart';
 import 'package:giftpose/gen/assets.gen.dart';
 import 'package:giftpose/utils/theme/giftpose_colors.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/widgets/Giftpose_basescafold.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
-import 'package:giftpose/utils/widgets/giftpose_button.dart'; // Assuming you have this
+import 'package:giftpose/utils/widgets/giftpose_button.dart';
+import 'package:provider/provider.dart';
+import 'package:giftpose/utils/localization_provider.dart';
 
 class LanguageView extends StatefulWidget {
-  const LanguageView({super.key});
+  LanguageView({super.key});
 
   @override
   State<LanguageView> createState() => _LanguageViewState();
@@ -26,7 +30,17 @@ class _LanguageViewState extends State<LanguageView> {
     "Spanish",
   ];
 
-  String selectedLanguage = "English";
+  String? selectedLanguage;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        selectedLanguage = context.read<LanguageProvider>().currentLanguage;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +48,7 @@ class _LanguageViewState extends State<LanguageView> {
       showAppBar: true,
       centerTitle: true,
       includeHorizontalPadding: true,
-      appBarTitleWidget: Text(
-        "Choose your Preferred Language",
+      appBarTitleWidget: Text("Choose your Preferred Language".tr(context),
         style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
       ),
       appBarLeadingWidget:  InkWell(
@@ -51,7 +64,7 @@ class _LanguageViewState extends State<LanguageView> {
     borderRadius: BorderRadius.circular(20), // Adjust the value for more/less rounding
   ),
               child: Padding(
-                padding: const EdgeInsets.all(14.0),
+                padding: EdgeInsets.all(14.0),
                 child: Assets.icons.back.svg(
                   color: Theme.of(context).textTheme.bodyLarge?.color,
                 ),
@@ -61,7 +74,7 @@ class _LanguageViewState extends State<LanguageView> {
       builder: (size) {
         return Column(
           children: [
-            const YMargin(20),
+            YMargin(20),
             
             // The Rounded White Container
             Expanded(
@@ -86,7 +99,7 @@ class _LanguageViewState extends State<LanguageView> {
                     final isSelected = selectedLanguage == lang;
 
                     return ListTile(
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                       title: Text(
                         lang,
                         style: GiftPoseTextStyle.normal(
@@ -108,7 +121,7 @@ class _LanguageViewState extends State<LanguageView> {
                                 child: Container(
                                   height: 12,
                                   width: 12,
-                                  decoration: const BoxDecoration(
+                                  decoration: BoxDecoration(
                                     color: GiftPoseColors.primaryColor,
                                     shape: BoxShape.circle,
                                   ),
@@ -127,21 +140,23 @@ class _LanguageViewState extends State<LanguageView> {
               ),
             ),
 
-            const YMargin(30),
+            YMargin(30),
 
             // Submit Button
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               child: GiftPoseButton(
-                title: "Submit",
+                title: "Submit".tr(context),
                 onTap: () {
-                  // Handle language change logic here
+                  if (selectedLanguage != null) {
+                    context.read<LanguageProvider>().setLanguage(selectedLanguage!);
+                  }
                   Navigator.pop(context);
                 },
               ),
             ),
             
-            const YMargin(20),
+            YMargin(20),
           ],
         );
       },

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:giftpose/screens/authentication/viewmodel/authentication_viewmodel.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:giftpose/app.dart';
 import 'package:giftpose/gen/assets.gen.dart';
@@ -7,71 +10,46 @@ import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/theme/theme.dart';
 import 'package:giftpose/utils/widgets/Giftpose_basescafold.dart';
 import 'package:giftpose/utils/widgets/giftpose_button.dart';
+import 'package:giftpose/utils/widgets/giftpose_textfield.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
 import 'package:provider/provider.dart';
 
-class SigninScreen extends StatefulWidget {
-  const SigninScreen({super.key});
-
-  @override
-  State<SigninScreen> createState() => _SigninScreenState();
-}
-
-class _SigninScreenState extends State<SigninScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-  bool showSecondLogo = false; // 🔁 Toggle for logo
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+class SigininScreen extends StatelessWidget {
+  const SigininScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GiftPoseBaseScaffold(
-      showAppBar: false,
-      hasGradient: true,
-
-      builder: (size) {
-        return Column(
-          children: [
-            YMargin(196),
-            Assets.icons.checklist.svg(),
-            YMargin(30),
-            Text(
-              "GiftPose asks for your consent to use your personal data to:",
-              style: GiftPoseTextStyle.heading1(fontWeight: FontWeight.w500),
-            ),
-            YMargin(16),
-
-            Text(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit purus sit amet ",
-              textAlign: TextAlign.center,
-
-              style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500,color: Theme.of(navigatorKey.currentContext!).textTheme.bodyMedium?.color),
-            ),
-
-            YMargin(18),
-
-            GiftPoseButton(
-              title: "Give Consent",
-              onTap: () {
-                HapticFeedback.selectionClick();
-                Navigator.pushNamed(context, AppRoutes.postcodePage);
-
-              },
-            ),
-          ],
+   return Consumer<AuthenticationViewModel>(
+          builder: (context, vm, child) {
+        return GiftPoseBaseScaffold(
+          showAppBar: false,
+          hasGradient: true,
+        
+          builder: (size) {
+            return Column(
+              children: [
+                 YMargin(40),
+                      Assets.images.logo.image(height: 40, width: 40),
+                      YMargin(26),
+                      Text("Create an Account".tr(context),
+                        style: GiftPoseTextStyle.heading1(fontWeight: FontWeight.w500),
+                      ),
+                      YMargin(26),
+                          
+                           GiftPoseTextField(controller:vm.fullNameCtrl, hintText: "Enter your full name",fieldName: "Full Name",),
+                GiftPoseButton(
+                  title: "Give Consent",
+                  onTap: () {
+                    HapticFeedback.selectionClick();
+                    Navigator.pushNamed(context, AppRoutes.postcodePage);
+        
+                  },
+                ),
+              ],
+            );
+          },
         );
-      },
+      }
     );
   }
 }

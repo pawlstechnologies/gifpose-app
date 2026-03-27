@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:giftpose/screens/main_view/views/settings_page/language_view.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:giftpose/screens/authentication/view/create_account.dart';
 import 'package:giftpose/screens/authentication/view/enter_otp.dart';
 
@@ -26,19 +29,19 @@ class Routers {
 
     switch (settings.name) {
       case AppRoutes.splash:
-        routeWidget = const SplashScreen();
+        routeWidget = SplashScreen();
         break;
       case AppRoutes.consentPage:
-        routeWidget = const ConsentScreen();
+        routeWidget = ConsentScreen();
         break;
       case AppRoutes.postcodePage:
-        routeWidget = const PostcodeScreen();
+        routeWidget = PostcodeScreen();
         break;
             case AppRoutes.notificationsPage:
-        routeWidget = const NotificationView();
+        routeWidget = NotificationView();
         break;
                case AppRoutes.notificationsAlert:
-        routeWidget = const NotificationAlert();
+        routeWidget = NotificationAlert();
         break;
             case AppRoutes.settingsPage:
         routeWidget =  SettingsView();
@@ -47,26 +50,26 @@ class Routers {
         routeWidget =  DashboardView();
         break;
              case AppRoutes.createAccountPage:
-        routeWidget = const CreateAccountScreen();
+        routeWidget = CreateAccountScreen();
         break;
              case AppRoutes.siginInPage:
-        routeWidget = const SigninScreen();
+        routeWidget = SigninScreen();
         break;
              case AppRoutes.forgotPasswordScreen:
-        routeWidget = const ForgotPasswordScreen();
+        routeWidget = ForgotPasswordScreen();
         break;
              case AppRoutes.passwordChanged:
-        routeWidget = const PasswordChangedScreen();
+        routeWidget = PasswordChangedScreen();
         break;
             case AppRoutes.resetPasswordScreen:
-        routeWidget = const ResetPasswordScreen();
+        routeWidget = ResetPasswordScreen();
         break;
             case AppRoutes.enterOtpScreen:
-        routeWidget = const EnterOtpScreen();
+        routeWidget = EnterOtpScreen();
         break;
-        //     case AppRoutes.profileScreen:
-        // routeWidget = const ();
-        // break;
+            case AppRoutes.languagePage:
+        routeWidget = LanguageView();
+        break;
         
     
                          case AppRoutes.settingsPage:
@@ -77,7 +80,7 @@ class Routers {
         return MaterialPageRoute(
           builder: (_) => Scaffold(
             body: Center(
-              child: Text('No route defined for ${settings.name}'),
+              child: Text('No route defined for ${settings.name}'.tr(context)),
             ),
           ),
         );

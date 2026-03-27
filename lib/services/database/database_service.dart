@@ -17,8 +17,9 @@ class DatabaseService {
     await boxes();
   }
 
-  Future boxes() async {
+   Future boxes() async {
    await Hive.openBox<bool>(StorageKeys.isRegistered);
+   await Hive.openBox<String>(StorageKeys.language);
 
 
   }
@@ -70,6 +71,23 @@ class DatabaseService {
     try {
       await isRegisteredBox.clear();
       isRegisteredBox.add(value);
+    } catch (e) {
+      if (kDebugMode) {
+        log(e.toString());
+      }
+    }
+  }
+
+  String? getLanguage() {
+    Box<String> languageBox = Hive.box(StorageKeys.language);
+    return languageBox.values.isNotEmpty ? languageBox.values.first : null;
+  }
+
+  Future saveLanguage(String value) async {
+    Box<String> languageBox = Hive.box(StorageKeys.language);
+    try {
+      await languageBox.clear();
+      languageBox.add(value);
     } catch (e) {
       if (kDebugMode) {
         log(e.toString());

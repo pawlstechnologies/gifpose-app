@@ -4,14 +4,14 @@ import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
 
 class GiftPoseFAQWidget extends StatelessWidget {
-  const GiftPoseFAQWidget({super.key});
+  GiftPoseFAQWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      children: const [
+      children: [
         FAQItem(
           question: "How much does shipping cost for gifts?",
           answer: "Standard shipping is free for all gifts over \$50. For smaller items, a flat fee of \$4.99 applies. Premium gift wrapping is available for an additional \$2.00.",
@@ -38,7 +38,7 @@ class FAQItem extends StatelessWidget {
   final String question;
   final String answer;
 
-  const FAQItem({
+  FAQItem({
     super.key,
     required this.question,
     required this.answer,
@@ -52,7 +52,7 @@ class FAQItem extends StatelessWidget {
       child: Column(
         children: [
           ExpansionTile(
-            tilePadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            tilePadding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             title: Text(
               question,
               style: GiftPoseTextStyle.normal(
@@ -67,7 +67,7 @@ class FAQItem extends StatelessWidget {
             ),
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: Text(
                   answer,
                   textAlign: TextAlign.justify,
@@ -81,7 +81,7 @@ class FAQItem extends StatelessWidget {
             ],
           ),
           // Subtle Divider to match your image
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Divider(height: 1, thickness: 0.5),
           ),

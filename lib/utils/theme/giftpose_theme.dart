@@ -7,7 +7,7 @@ import 'theme.dart';
 class GiftPoseTheme {
   static ThemeData theme() {
     return ThemeData(
-        pageTransitionsTheme: const PageTransitionsTheme(builders: {
+        pageTransitionsTheme: PageTransitionsTheme(builders: {
           TargetPlatform.android: CupertinoPageTransitionsBuilder(),
           TargetPlatform.iOS: CupertinoPageTransitionsBuilder()
         }),
@@ -30,7 +30,7 @@ class GiftPoseTheme {
     cardColor: GiftPoseColors.cardColor,
     // canvasColor:  GiftPoseColors.canvasColor,
     shadowColor: GiftPoseColors.containerBackground,
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
       backgroundColor: GiftPoseColors.background,
       elevation: 0,
       iconTheme: IconThemeData(color: GiftPoseColors.textColor),
@@ -44,14 +44,14 @@ class GiftPoseTheme {
     primaryColor: GiftPoseColors.primaryColor,
       dividerColor: GiftPoseColors.borderColor,
     // scaffoldBackgroundColor: GiftPoseColors.darkmodeBackground,
-    hintColor: const Color(0xFFA1A2AE),
+    hintColor: Color(0xFFA1A2AE),
     
     // cardColor: GiftPoseColors.borderColorDark,
     textTheme: TextTheme(
       bodyLarge: TextStyle(color: GiftPoseColors.lightBodyText),
       bodyMedium: TextStyle(color: GiftPoseColors.lightSubtitleTextColor),
     ),
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
       // backgroundColor: GiftPoseColors.darkmodeBackground,
       elevation: 0,
       iconTheme: IconThemeData(color: GiftPoseColors.lightBodyText),

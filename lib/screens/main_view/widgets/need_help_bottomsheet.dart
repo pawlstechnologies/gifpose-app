@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:giftpose/gen/assets.gen.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/theme/theme.dart';
@@ -23,8 +25,7 @@ class NeedHelpBottomsheet extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox.shrink(),
-            Text(
-              "Contact Support",
+            Text("Contact Support".tr(context),
               textAlign: TextAlign.center,
 
               style: GiftPoseTextStyle.small(
@@ -45,10 +46,9 @@ class NeedHelpBottomsheet extends StatelessWidget {
         Assets.icons.mail.svg(),
         YMargin(18),
 
-        Text(
-          """Have a question about your donation or need
+        Text("""Have a question about your donation or need
 technical help? Send us a message and we'll
-get back to you within 24 hours.""",
+get back to you within 24 hours.""".tr(context),
           textAlign: TextAlign.center,
 
           style: GiftPoseTextStyle.small(
