@@ -66,7 +66,7 @@ class ListViewSearchWidget extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => DetailsPage(location: userLocation,),
+                          builder: (context) => DetailsPage(location: userLocation.toString(),),
                         ),
                       );
                     }
