@@ -250,198 +250,111 @@ class _DetailsPageState extends State<DetailsPage> {
                             padding: EdgeInsets.symmetric(
                               horizontal: 20.0,
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                  
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Column(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        isTappedPrivate = true;
-                                        isTappedCycling = false;
-                                        isTappedPublic = false;
-                                        isTappedVehicle = false;
-                                        isTappedWalking = false;
-                                        setState(() {});
-                                      },
-                                      child: TransportWidgets(
-                                        location:
-                                            vm
-                                                .fetchItemsByIdMeResponse
-                                                .data
-                                                ?.data
-                                                ?.estimatedTravelTime
-                                                ?.carPrivate ??
-                                            "",
-                                        isTapped: isTappedPrivate,
-                                        icon: Assets.icons.privateVehicle.svg(
-                                          color: isTappedPrivate
-                                              ? GiftPoseColors.primaryColor
-                                              : Theme.of(
-                                                  context,
-                                                ).textTheme.bodyMedium?.color,
+                                YMargin(14),
+                  
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 20.0),
+                                  child: SizedBox(
+                                    height: 100.w,
+                                    width: double.infinity,
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        children: List.generate(
+                                          vm
+                                                  .fetchItemsByIdMeResponse
+                                                  .data
+                                                  ?.data
+                                                  ?.imageUrls
+                                                  .length ??
+                                              0,
+                                          (index) {
+                                            final imageUrl =
+                                                vm
+                                                    .fetchItemsByIdMeResponse
+                                                    .data
+                                                    ?.data
+                                                    ?.imageUrls[index] ??
+                                                '';
+                  
+                                            return GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  selectedImageIndex = index;
+                                                });
+                                              },
+                                              child: Padding(
+                                                padding: EdgeInsets.only(right: 15.w),
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(
+                                                    8,
+                                                  ),
+                                                  child: CachedNetworkImage(
+                                                    imageUrl: imageUrl,
+                                                    width: 92.w,
+                                                    height: 86.w,
+                                                    fit: BoxFit.cover,
+                                                    errorWidget:
+                                                        (
+                                                          context,
+                                                          url,
+                                                          error,
+                                                        ) => Container(
+                                                          width: 92.w,
+                                                          height: 86.w,
+                                                          color: Colors.grey.shade200,
+                                                          child: const Icon(
+                                                            Icons.error,
+                                                            color: Colors.grey,
+                                                          ),
+                                                        ),
+                                                    placeholder: (context, url) =>
+                                                        Container(
+                                                          width: 92.w,
+                                                          height: 86.w,
+                                                          color: Colors.grey.shade100,
+                                                          child: const Center(
+                                                            child:
+                                                                CupertinoActivityIndicator(),
+                                                          ),
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
                                         ),
-                                        title: "Private Vehicle",
                                       ),
                                     ),
-                                    YMargin(10),
-                                    // isTappedPrivate
-                                    //     ? Text(
-                                    //           vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.carPrivate ?? "",
-                                    //         textAlign: TextAlign.center,
-
-                                    //         maxLines: 2,
-
-                                    //         style: GiftPoseTextStyle.small(
-                                    //           fontSize: 10,
-                                    //           fontWeight: FontWeight.w400,
-                                    //           color:  GiftPoseColors.primaryColor,
-
-                                    //         ),
-                                    //       )
-                                    //     : SizedBox.shrink(),
-                                  ],
+                                  ),
                                 ),
-                                XMargin(20),
-                                InkWell(
-                                  onTap: () {
-                                    isTappedPrivate = false;
-                                    isTappedCycling = false;
-                                    isTappedPublic = true;
-                                    isTappedVehicle = false;
-                                    setState(() {});
-                                    isTappedWalking = false;
-                                  },
-                                  child: TransportWidgets(
-                                    location:
-                                        vm
-                                            .fetchItemsByIdMeResponse
-                                            .data
-                                            ?.data
-                                            ?.estimatedTravelTime
-                                            ?.publicTransport ??
+                                YMargin(14),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0,
+                                  ),
+                                  child: Text(
+                                    vm.fetchItemsByIdMeResponse.data?.data?.name ??
                                         "",
-                                    isTapped: isTappedPublic,
-                                    isTappedPublic: true,
-                                    icon: Assets.icons.publicTransport.svg(
-                                      color: isTappedPublic
-                                          ? GiftPoseColors.primaryColor
-                                          : Theme.of(
-                                              context,
-                                            ).textTheme.bodyMedium?.color,
+                                    style: GiftPoseTextStyle.heading1(
+                                      fontWeight: FontWeight.w500,
                                     ),
-                                    title: "Public Transport",
                                   ),
                                 ),
-
-                                XMargin(20),
-                                InkWell(
-                                  onTap: () {
-                                    isTappedPrivate = false;
-                                    isTappedCycling = false;
-                                    isTappedPublic = false;
-                                    isTappedVehicle = false;
-                                    isTappedWalking = true;
-                                    setState(() {});
-                                  },
-                                  child: TransportWidgets(
-                                    location:
-                                        vm
-                                            .fetchItemsByIdMeResponse
-                                            .data
-                                            ?.data
-                                            ?.estimatedTravelTime
-                                            ?.walking ??
-                                        "",
-                                    isTapped: isTappedWalking,
-                                    icon: Assets.icons.walking.svg(
-                                      color: isTappedWalking
-                                          ? GiftPoseColors.primaryColor
-                                          : Theme.of(
-                                              context,
-                                            ).textTheme.bodyMedium?.color,
-                                    ),
-                                    title: "Walking",
+                                YMargin(10),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0,
                                   ),
-                                ),
-                                XMargin(20),
-                                InkWell(
-                                  onTap: () {
-                                    isTappedPrivate = false;
-                                    isTappedCycling = true;
-                                    isTappedPublic = false;
-                                    isTappedVehicle = false;
-                                    isTappedWalking = false;
-                                    setState(() {});
-                                  },
-                                  child: TransportWidgets(
-                                    location:
-                                        vm
-                                            .fetchItemsByIdMeResponse
-                                            .data
-                                            ?.data
-                                            ?.estimatedTravelTime
-                                            ?.cycling ??
-                                        "",
-                                    isTapped: isTappedCycling,
-                                    icon: Assets.icons.cycling.svg(
-                                      color: isTappedCycling
-                                          ? GiftPoseColors.primaryColor
-                                          : Theme.of(
-                                              context,
-                                            ).textTheme.bodyMedium?.color,
-                                    ),
-                                    title: "Cycling",
-                                  ),
-                                ),
-                                XMargin(20),
-                                InkWell(
-                                  onTap: () {
-                                    isTappedPrivate = false;
-                                    isTappedCycling = false;
-                                    isTappedPublic = false;
-                                    isTappedVehicle = true;
-                                    isTappedWalking = false;
-                                    setState(() {});
-                                  },
-                                  child: TransportWidgets(
-                                    location:
-                                        vm
-                                            .fetchItemsByIdMeResponse
-                                            .data
-                                            ?.data
-                                            ?.estimatedTravelTime
-                                            ?.carHire ??
-                                        "",
-                                    isTapped: isTappedVehicle,
-                                    icon: Assets.icons.vehicleHire.svg(
-                                      color: isTappedVehicle
-                                          ? GiftPoseColors.primaryColor
-                                          : Theme.of(
-                                              context,
-                                            ).textTheme.bodyMedium?.color,
-                                    ),
-                                    title: "Vehicle Hire",
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          isTappedPublic ? YMargin(20) : SizedBox.shrink(),
-                          isTappedPublic
-                              ? Container(
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: 9,
-                                    horizontal: 17,
-                                  ),
-                                  width: width(context),
-                                  color: GiftPoseColors.containerBackground,
-                                  child: Column(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Row(
                                             children: [
@@ -476,10 +389,25 @@ class _DetailsPageState extends State<DetailsPage> {
                                           ),
                                         ],
                                       ),
-                                      YMargin(20),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                      Text(
+                                        "${vm.fetchItemsByIdMeResponse.data?.data?.distanceInMiles ?? 0} miles away",
+                                        style: GiftPoseTextStyle.small(
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                YMargin(25),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Column(
                                         children: [
                                           Row(
                                             children: [
@@ -509,9 +437,148 @@ class _DetailsPageState extends State<DetailsPage> {
                                                       GiftPoseColors.textColor,
                                                 ),
                                               ),
-                                            ],
+                                              title: "Private Vehicle",
+                                            ),
                                           ),
+                                          YMargin(10),
+                                          // isTappedPrivate
+                                          //     ? Text(
+                                          //           vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.carPrivate ?? "",
+                                          //         textAlign: TextAlign.center,
+                  
+                                          //         maxLines: 2,
+                  
+                                          //         style: GiftPoseTextStyle.small(
+                                          //           fontSize: 10,
+                                          //           fontWeight: FontWeight.w400,
+                                          //           color:  GiftPoseColors.primaryColor,
+                  
+                                          //         ),
+                                          //       )
+                                          //     : SizedBox.shrink(),
                                         ],
+                                      ),
+                                      XMargin(20),
+                                      InkWell(
+                                        onTap: () {
+                                          isTappedPrivate = false;
+                                          isTappedCycling = false;
+                                          isTappedPublic = true;
+                                          isTappedVehicle = false;
+                                          setState(() {});
+                                          isTappedWalking = false;
+                                        },
+                                        child: TransportWidgets(
+                                          location:
+                                              vm
+                                                  .fetchItemsByIdMeResponse
+                                                  .data
+                                                  ?.data
+                                                  ?.estimatedTravelTime
+                                                  ?.publicTransport ??
+                                              "",
+                                          isTapped: isTappedPublic,
+                                          isTappedPublic: true,
+                                          icon: Assets.icons.publicTransport.svg(
+                                            color: isTappedPublic
+                                                ? GiftPoseColors.primaryColor
+                                                : Theme.of(
+                                                    context,
+                                                  ).textTheme.bodyMedium?.color,
+                                          ),
+                                          title: "Public Transport",
+                                        ),
+                                      ),
+                  
+                                      XMargin(20),
+                                      InkWell(
+                                        onTap: () {
+                                          isTappedPrivate = false;
+                                          isTappedCycling = false;
+                                          isTappedPublic = false;
+                                          isTappedVehicle = false;
+                                          isTappedWalking = true;
+                                          setState(() {});
+                                        },
+                                        child: TransportWidgets(
+                                          location:
+                                              vm
+                                                  .fetchItemsByIdMeResponse
+                                                  .data
+                                                  ?.data
+                                                  ?.estimatedTravelTime
+                                                  ?.walking ??
+                                              "",
+                                          isTapped: isTappedWalking,
+                                          icon: Assets.icons.walking.svg(
+                                            color: isTappedWalking
+                                                ? GiftPoseColors.primaryColor
+                                                : Theme.of(
+                                                    context,
+                                                  ).textTheme.bodyMedium?.color,
+                                          ),
+                                          title: "Walking",
+                                        ),
+                                      ),
+                                      XMargin(20),
+                                      InkWell(
+                                        onTap: () {
+                                          isTappedPrivate = false;
+                                          isTappedCycling = true;
+                                          isTappedPublic = false;
+                                          isTappedVehicle = false;
+                                          isTappedWalking = false;
+                                          setState(() {});
+                                        },
+                                        child: TransportWidgets(
+                                          location:
+                                              vm
+                                                  .fetchItemsByIdMeResponse
+                                                  .data
+                                                  ?.data
+                                                  ?.estimatedTravelTime
+                                                  ?.cycling ??
+                                              "",
+                                          isTapped: isTappedCycling,
+                                          icon: Assets.icons.cycling.svg(
+                                            color: isTappedCycling
+                                                ? GiftPoseColors.primaryColor
+                                                : Theme.of(
+                                                    context,
+                                                  ).textTheme.bodyMedium?.color,
+                                          ),
+                                          title: "Cycling",
+                                        ),
+                                      ),
+                                      XMargin(20),
+                                      InkWell(
+                                        onTap: () {
+                                          isTappedPrivate = false;
+                                          isTappedCycling = false;
+                                          isTappedPublic = false;
+                                          isTappedVehicle = true;
+                                          isTappedWalking = false;
+                                          setState(() {});
+                                        },
+                                        child: TransportWidgets(
+                                          location:
+                                              vm
+                                                  .fetchItemsByIdMeResponse
+                                                  .data
+                                                  ?.data
+                                                  ?.estimatedTravelTime
+                                                  ?.carHire ??
+                                              "",
+                                          isTapped: isTappedVehicle,
+                                          icon: Assets.icons.vehicleHire.svg(
+                                            color: isTappedVehicle
+                                                ? GiftPoseColors.primaryColor
+                                                : Theme.of(
+                                                    context,
+                                                  ).textTheme.bodyMedium?.color,
+                                          ),
+                                          title: "Vehicle Hire",
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -542,29 +609,28 @@ class _DetailsPageState extends State<DetailsPage> {
                                     horizontal: 20.0,
                                   ),
                                   child: GiftPoseButton(
-                                    title: !isMarked
-                                        ? "Mark as Taken"
-                                        : "Marked as Taken",
-                                    borderColor: textColor,
-                                    buttonType: GiftPoseButtonType.border,
-                                    prefixIcon: isMarked
-                                        ? Assets.icons.mark.svg()
-                                        : SizedBox.shrink(),
-                                    backgroundColor: !isMarked
-                                        ? Theme.of(
-                                            context,
-                                          ).scaffoldBackgroundColor
-                                        : Theme.of(
-                                            context,
-                                          ).textTheme.bodyMedium?.color,
-                                    fontSize: 14,
+                                    title: "Ask for Gift Item",
                                     textColor: Theme.of(
                                       context,
-                                    ).textTheme.bodyLarge?.color,
+                                    ).scaffoldBackgroundColor,
                                     onTap: () {
                                      HapticFeedback.heavyImpact();
-                                      isMarked = !isMarked;
-                                      setState(() {});
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => WebViewScreen(
+                                            url:
+                                                vm
+                                                    .fetchItemsByIdMeResponse
+                                                    .data
+                                                    ?.data
+                                                    .url ??
+                                                "",
+                                            title: "GiftPose",
+                                          ),
+                                        ),
+                                      );
+                                      setState(() => _isNavigating = true);
                                     },
                                   ),
                                 )
