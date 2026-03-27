@@ -46,7 +46,7 @@ class BaseViewmodel extends ChangeNotifier {
         int retry = 0;
         while (apnsToken == null && retry < 3) {
           debugPrint("Waiting for iOS APNS token...");
-          await Future.delayed(const Duration(seconds: 3));
+          await Future.delayed(Duration(seconds: 3));
           apnsToken = await FirebaseMessaging.instance.getAPNSToken();
           retry++;
         }

@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:giftpose/gen/assets.gen.dart';
 import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
 import 'package:giftpose/screens/main_view/views/notification_alert.dart';
@@ -21,7 +23,7 @@ class SettingsView extends StatefulWidget {
 
 class _SettingsViewState extends State<SettingsView> {
   bool push = true;
-
+ 
   @override
   Widget build(BuildContext context) {
            return Consumer<DashboardViewmodel>(
@@ -45,7 +47,7 @@ class _SettingsViewState extends State<SettingsView> {
     borderRadius: BorderRadius.circular(20), // Adjust the value for more/less rounding
   ),
               child: Padding(
-                padding: const EdgeInsets.all(14.0),
+                padding: EdgeInsets.all(14.0),
                 child: Assets.icons.back.svg(
                   color: Theme.of(context).textTheme.bodyLarge?.color,
                 ),
@@ -54,8 +56,7 @@ class _SettingsViewState extends State<SettingsView> {
           ),
         
           hasGradient: true,
-          appBarTitleWidget: Text(
-            "Settings",
+          appBarTitleWidget: Text("Settings".tr(context),
             textAlign: TextAlign.center,
         
             style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
@@ -65,8 +66,7 @@ class _SettingsViewState extends State<SettingsView> {
             return ListView(
               children: [
                 YMargin(31),
-                Text(
-                  "Location",
+                Text("Location".tr(context),
         
                   style: GiftPoseTextStyle.small(
                     color: Theme.of(context).textTheme.bodyMedium?.color,
@@ -98,15 +98,14 @@ class _SettingsViewState extends State<SettingsView> {
                     child: ListTile(
                       contentPadding: EdgeInsets.all(16),
                       leading: Assets.icons.location.svg(),
-                      title: Text(
-                        "Current Location",
+                      title: Text("Current Location".tr(context),
                           
                         style: GiftPoseTextStyle.small(
                           color: Theme.of(context).textTheme.bodyLarge?.color,
                         ),
                       ),
                       subtitle: Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
+                        padding: EdgeInsets.only(top: 8.0),
                         child: Text(
                     viewModel.fetchItemsNearMeResponse.data?.userLocation.city ??"" ,
                           
@@ -145,8 +144,7 @@ class _SettingsViewState extends State<SettingsView> {
                     ),
                     child: Column(
                       children: [
-                        Text(
-                          "How far are you willing to travel?",
+                        Text("How far are you willing to travel?".tr(context),
                           textAlign: TextAlign.center,
                           
                           style: GiftPoseTextStyle.medium(
@@ -160,8 +158,7 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                 ),
                 YMargin(23),
-                Text(
-                  "Notifications",
+                Text("Notifications".tr(context),
         
                   style: GiftPoseTextStyle.small(
                     color: Theme.of(context).textTheme.bodyMedium?.color,
@@ -198,8 +195,7 @@ class _SettingsViewState extends State<SettingsView> {
                             vertical: 10,
                           ),
                           leading: Assets.icons.notificationIcon.svg(),
-                          title: Text(
-                            "Notification Alert Settings",
+                          title: Text("Notification Alert Settings".tr(context),
                                 
                             style: GiftPoseTextStyle.small(
                               color: Theme.of(context).textTheme.bodyLarge?.color,
@@ -223,8 +219,7 @@ class _SettingsViewState extends State<SettingsView> {
                           ),
                                 
                           leading: Assets.icons.dot.svg(),
-                          title: Text(
-                            "Push Notifications",
+                          title: Text("Push Notifications".tr(context),
                                 
                             style: GiftPoseTextStyle.small(
                               color: Theme.of(context).textTheme.bodyLarge?.color,
@@ -244,8 +239,7 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 YMargin(25),
         
-                Text(
-                  "App Settings",
+                Text("App Settings".tr(context),
         
                   style: GiftPoseTextStyle.small(
                     color: Theme.of(context).textTheme.bodyMedium?.color,
@@ -270,8 +264,7 @@ class _SettingsViewState extends State<SettingsView> {
                           vertical: 10,
                         ),
                         leading: Assets.icons.darkmode.svg(),
-                        title: Text(
-                          "Dark Mode",
+                        title: Text("Dark Mode".tr(context),
         
                           style: GiftPoseTextStyle.small(
                             color: Theme.of(context).textTheme.bodyLarge?.color,
@@ -287,7 +280,7 @@ class _SettingsViewState extends State<SettingsView> {
                       ),
                       Divider(color: Theme.of(context).dividerColor),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
+                        padding: EdgeInsets.symmetric(
                           horizontal: 16,
                           vertical: 16,
                         ),
@@ -303,8 +296,7 @@ class _SettingsViewState extends State<SettingsView> {
                                 children: [
                                   Assets.icons.language.svg(),
                                   XMargin(15),
-                                  Text(
-                                    "Language",
+                                  Text("Language".tr(context),
                                   
                                     style: GiftPoseTextStyle.small(
                                       color: Theme.of(
@@ -317,8 +309,7 @@ class _SettingsViewState extends State<SettingsView> {
                                   
                               Row(
                                 children: [
-                                  Text(
-                                    "English",
+                                  Text("English".tr(context),
                                   
                                     style: GiftPoseTextStyle.small(
                                       color: Theme.of(
@@ -338,8 +329,7 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                 ),
                 YMargin(25),
-                Text(
-                  "Support",
+                Text("Support".tr(context),
         
                   style: GiftPoseTextStyle.small(
                     color: Theme.of(context).textTheme.bodyMedium?.color,
@@ -370,8 +360,7 @@ class _SettingsViewState extends State<SettingsView> {
                             vertical: 10,
                           ),
                           leading: Assets.icons.helpcentre.svg(),
-                          title: Text(
-                            "Help Center",
+                          title: Text("Help Center".tr(context),
                                 
                             style: GiftPoseTextStyle.small(
                               color: Theme.of(context).textTheme.bodyLarge?.color,
@@ -383,7 +372,7 @@ class _SettingsViewState extends State<SettingsView> {
                       ),
                       Divider(color: Theme.of(context).dividerColor),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
+                        padding: EdgeInsets.symmetric(
                           horizontal: 16,
                           vertical: 16,
                         ),
@@ -401,8 +390,7 @@ class _SettingsViewState extends State<SettingsView> {
                                 children: [
                                   Assets.icons.about.svg(),
                                   XMargin(15),
-                                  Text(
-                                    "About GiftPose",
+                                  Text("About GiftPose".tr(context),
                                   
                                     style: GiftPoseTextStyle.small(
                                       color: Theme.of(
@@ -415,8 +403,7 @@ class _SettingsViewState extends State<SettingsView> {
                                   
                               Row(
                                 children: [
-                                  Text(
-                                    "v1.0.0",
+                                  Text("v1.0.0".tr(context),
                                   
                                     style: GiftPoseTextStyle.small(
                                       color: Theme.of(

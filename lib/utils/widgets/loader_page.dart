@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:giftpose/gen/assets.gen.dart';
@@ -6,7 +8,7 @@ import 'package:giftpose/utils/theme/theme.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
 
 class LoaderPage extends StatefulWidget {
-  const LoaderPage({super.key});
+  LoaderPage({super.key});
 
   // Static method to show as full-screen dialog
   static Future<void> show(BuildContext context) {
@@ -15,7 +17,7 @@ class LoaderPage extends StatefulWidget {
       barrierDismissible: false,
       barrierColor: Colors.black, // Full screen overlay
       builder: (BuildContext context) {
-        return const PopScope(
+        return PopScope(
           canPop: false,
           child: LoaderPage(),
         );
@@ -38,7 +40,7 @@ class _LoaderPageState extends State<LoaderPage>
     // Spin animation
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: Duration(seconds: 2),
     )..repeat();
   }
 
@@ -64,9 +66,8 @@ class _LoaderPageState extends State<LoaderPage>
                 height: 80,
               ),
             ),
-            const YMargin(30),
-            Text(
-              "Getting Gifts Closer to you...",
+            YMargin(30),
+            Text("Getting Gifts Closer to you...".tr(context),
               style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
             ),
           ],

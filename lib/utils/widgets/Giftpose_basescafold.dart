@@ -35,7 +35,7 @@ class GiftPoseBaseScaffold extends StatelessWidget {
   final Color appBarColor;
   final bool? centerTitle;
   final bool? hasGradient;
-  const GiftPoseBaseScaffold(
+  GiftPoseBaseScaffold(
       {super.key,
       required this.builder,
       this.floatingActionButton,
@@ -98,7 +98,7 @@ class GiftPoseBaseScaffold extends StatelessWidget {
                           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                           title: appBarTitleWidget,
                           leading: Padding(
-                            padding: const EdgeInsets.only(left: 15.0,top: 10),
+                            padding: EdgeInsets.only(left: 15.0,top: 10),
                             child: appBarLeadingWidget ??
                                 GestureDetector(
                                   onTap: () => Navigator.pop(context),
@@ -114,7 +114,7 @@ class GiftPoseBaseScaffold extends StatelessWidget {
                           
                           actions: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.only(right: 20),
+                              padding: EdgeInsets.only(right: 20),
                               child: appbarTrailingIcon,
                             ),
                           ],
@@ -129,9 +129,9 @@ class GiftPoseBaseScaffold extends StatelessWidget {
                     //     begin: Alignment.topCenter,
                     //       end: Alignment.bottomCenter,
                     //       colors:[
-                    //         const Color(0xffF3F1F8),
-                    //         const Color.fromRGBO(243, 241, 248, 0.82),
-                    //         const Color.fromRGBO(243, 241, 248, 0.82),
+                    //         Color(0xffF3F1F8),
+                    //         Color.fromRGBO(243, 241, 248, 0.82),
+                    //         Color.fromRGBO(243, 241, 248, 0.82),
                     //         ParallexColors.secondarycolor.withOpacity(0.3)
                     //       ]
                     //   )

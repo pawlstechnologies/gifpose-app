@@ -1,4 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:giftpose/app.dart';
@@ -12,7 +14,7 @@ import 'package:giftpose/utils/widgets/spacing.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -26,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void initState() {
-initFirebase();
+    initFirebase();
     super.initState();
   }
 
@@ -36,13 +38,13 @@ initFirebase();
     super.dispose();
   }
 
-  void initFirebase()async{
-     // Request Permissions
- await FirebaseMessaging.instance.requestPermission(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
+  void initFirebase() async {
+    // Request Permissions
+    await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
   }
 
   @override
@@ -58,17 +60,16 @@ initFirebase();
           children: [
             Assets.images.splashImage.image(fit: BoxFit.contain),
 
-
             YMargin(50),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Assets.images.wave.image(height: 42.h,width: 33),
+                  Assets.images.wave.image(height: 42.h, width: 33),
                   XMargin(15),
                   Text(
-                    "Welcome",
+                    "Welcome".tr(context),
                     style: GiftPoseTextStyle.heading1(
                       // The base color that will be gradient-masked
                     ),
@@ -78,22 +79,41 @@ initFirebase();
             ),
             YMargin(30),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                "GiftPose connects you to the gifts you need",
-                    textAlign: TextAlign.center,
-                
+                "GiftPose connects you to the gifts you need".tr(context),
+                textAlign: TextAlign.center,
+
                 style: GiftPoseTextStyle.large(fontWeight: FontWeight.w500),
               ),
             ),
             YMargin(30),
-          
+
             Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: GiftPoseButton(title: "Continue", onTap: (){
-             HapticFeedback.heavyImpact();
-              Navigator.pushNamed(context,AppRoutes.consentPage);
-              }),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: GiftPoseButton(
+                title: "Sign Up",
+                onTap: () {
+                  HapticFeedback.heavyImpact();
+                  Navigator.pushNamed(context, AppRoutes.createAccountPage);
+                },
+              ),
+            ),
+            YMargin(20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              
+              child: GiftPoseButton(
+                buttonType: GiftPoseButtonType.border,
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                textColor:  Theme.of(context).textTheme.bodyLarge?.color,
+                borderColor: Theme.of(context).dividerColor,
+                title: "Log In",
+                onTap: () {
+                  HapticFeedback.heavyImpact();
+                  Navigator.pushNamed(context, AppRoutes.siginInPage);
+                },
+              ),
             ),
           ],
         );

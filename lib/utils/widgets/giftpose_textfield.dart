@@ -110,7 +110,7 @@ class _GiftPoseTextFieldState extends State<GiftPoseTextField> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               widget.fieldName.isEmpty
-                  ? const SizedBox.shrink()
+                  ? SizedBox.shrink()
                   : Padding(
                       padding: EdgeInsets.only(bottom: 10.w, left: 5.w),
                       child:
@@ -181,7 +181,7 @@ class _GiftPoseTextFieldState extends State<GiftPoseTextField> {
                       decoration: InputDecoration(
                         counterText: "",
                         prefixIcon: Padding(
-                          padding: const EdgeInsets.only(left: 14),
+                          padding: EdgeInsets.only(left: 14),
                           child: widget.prefixIcon,
                         ),
                         isCollapsed: true,
@@ -199,7 +199,7 @@ class _GiftPoseTextFieldState extends State<GiftPoseTextField> {
                         ),
                         suffixIcon: widget.obscureText == false
                                 ? Padding(
-                                    padding: const EdgeInsets.only(right: 14),
+                                    padding: EdgeInsets.only(right: 14),
                                     child: widget.suffixIcon)
                                 : GestureDetector(
                                     onTap: () {
@@ -210,7 +210,7 @@ class _GiftPoseTextFieldState extends State<GiftPoseTextField> {
                                       child: Icon(
                                         show ? Icons.visibility : Icons.visibility_off,
                                         size: 22.sp,
-                                        color: const Color.fromARGB(255, 72, 74, 78),
+                                        color: Color.fromARGB(255, 72, 74, 78),
                                       ),
                                     ),
                                   ),
@@ -225,7 +225,7 @@ class _GiftPoseTextFieldState extends State<GiftPoseTextField> {
                             fontWeight: FontWeight.w400,
                             color: Theme.of(context).hintColor,
                             fontSize: 14),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 16.w),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 16.w),
                         border: outlineInputBorder.copyWith(
                           borderRadius: BorderRadius.circular(10.r),
                           borderSide: BorderSide(
@@ -234,7 +234,7 @@ class _GiftPoseTextFieldState extends State<GiftPoseTextField> {
                         ),
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
-                          borderSide: const BorderSide(color: GiftPoseColors.errorColor),
+                          borderSide: BorderSide(color: GiftPoseColors.errorColor),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
@@ -262,6 +262,6 @@ class _GiftPoseTextFieldState extends State<GiftPoseTextField> {
 }
 
 final outlineInputBorder = OutlineInputBorder(
-  borderSide: const BorderSide(color: GiftPoseColors.borderColor),
+  borderSide: BorderSide(color: GiftPoseColors.borderColor),
   borderRadius: BorderRadius.circular(10.r),
 );

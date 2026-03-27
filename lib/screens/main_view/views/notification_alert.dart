@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,7 +17,7 @@ import 'package:giftpose/utils/widgets/spacing.dart';
 import 'package:provider/provider.dart';
 
 class NotificationAlert extends StatefulWidget {
-  const NotificationAlert({super.key});
+  NotificationAlert({super.key});
 
   @override
   State<NotificationAlert> createState() => _NotificationAlertState();
@@ -102,14 +104,14 @@ class _NotificationAlertState extends State<NotificationAlert> {
 
         child: CompositedTransformFollower(
           link: _layerLink,
-          offset: const Offset(0, 55),
+          offset: Offset(0, 55),
 
           child: Material(
             elevation: 6,
             borderRadius: BorderRadius.circular(12),
 
             child: Container(
-              constraints: const BoxConstraints(maxHeight: 250),
+              constraints: BoxConstraints(maxHeight: 250),
 
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
@@ -182,7 +184,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
     borderRadius: BorderRadius.circular(20), // Adjust the value for more/less rounding
   ),
               child: Padding(
-                padding: const EdgeInsets.all(14.0),
+                padding: EdgeInsets.all(14.0),
                 child: Assets.icons.back.svg(
                   color: Theme.of(context).textTheme.bodyLarge?.color,
                 ),
@@ -192,8 +194,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
 
           appBarTitleWidget:
 
-           Text(
-            "Notification Alert",
+           Text("Notification Alert".tr(context),
             style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
           ),
 
@@ -213,25 +214,24 @@ class _NotificationAlertState extends State<NotificationAlert> {
               color: GiftPoseColors.primaryColor,
 
               child: ListView(
-                physics: const AlwaysScrollableScrollPhysics(),
+                physics: AlwaysScrollableScrollPhysics(),
 
                 children: [
-                  const YMargin(14),
+                  YMargin(14),
 
                   /// SMART ASSISTANT
                   Container(
                     color: GiftPoseColors.yelloColor,
 
                     child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
+                      contentPadding: EdgeInsets.symmetric(
                         horizontal: 17,
                         vertical: 6,
                       ),
 
                       leading: Assets.images.star.image(),
 
-                      title: Text(
-                        "Smart Assistant",
+                      title: Text("Smart Assistant".tr(context),
                         style: GiftPoseTextStyle.normal(
                           color: GiftPoseColors.textColor,
                           fontSize: 15,
@@ -239,8 +239,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
                         ),
                       ),
 
-                      subtitle: Text(
-                        "Let our AI assistant notify you with similar items.",
+                      subtitle: Text("Let our AI assistant notify you with similar items.".tr(context),
                         style: GiftPoseTextStyle.small(
                           color: GiftPoseColors.textColor2,
                         ),
@@ -255,11 +254,11 @@ class _NotificationAlertState extends State<NotificationAlert> {
                     ),
                   ),
 
-                  const YMargin(20),
+                  YMargin(20),
 
                   /// SEARCH FIELD
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
 
                     child: CompositedTransformTarget(
                       link: _layerLink,
@@ -298,12 +297,12 @@ class _NotificationAlertState extends State<NotificationAlert> {
                     ),
                   ),
 
-                  const YMargin(20),
+                  YMargin(20),
 
                   /// SELECTED KEYWORDS
                   if (vm.selectedKeywords.isNotEmpty)
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 20),
 
                       child: Wrap(
                         spacing: 8,
@@ -340,7 +339,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
                                     ),
                                   ),
 
-                                  const XMargin(10),
+                                  XMargin(10),
 
                                   Assets.icons.x.svg(height: 20, width: 20),
                                 ],
@@ -351,20 +350,19 @@ class _NotificationAlertState extends State<NotificationAlert> {
                       ),
                     ),
 
-                  const YMargin(20),
+                  YMargin(20),
 
                   /// CATEGORIES TITLE
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
                       children: [
-                        Text(
-                          "Categories",
+                        Text("Categories".tr(context),
                           style: GiftPoseTextStyle.normal(
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        const XMargin(20),
+                        XMargin(20),
                         Assets.icons.line.svg(),
                       ],
                     ),
@@ -372,7 +370,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
 
                   Divider(color: Theme.of(context).dividerColor),
 
-                  const YMargin(20),
+                  YMargin(20),
 
                   /// CATEGORY + SUBCATEGORY PANEL
                   SizedBox(
@@ -398,10 +396,10 @@ class _NotificationAlertState extends State<NotificationAlert> {
                     ),
                   ),
 
-                  const YMargin(20),
+                  YMargin(20),
 
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     child: GiftPoseButton(
                       title: "Submit",
                       onTap: () {
@@ -417,7 +415,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
                     ),
                   ),
 
-                  const YMargin(30),
+                  YMargin(30),
                 ],
               ),
             );
@@ -434,7 +432,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
     bool isLoading,
   ) {
     if (isLoading && categories.isEmpty) {
-      return const Center(child: CircularProgressIndicator());
+      return Center(child: CircularProgressIndicator());
     }
 
     return ListView.builder(
@@ -446,19 +444,19 @@ class _NotificationAlertState extends State<NotificationAlert> {
           onTap: () {
             vm.selectOption(index);
 
-            vm.fetchAlertSubCategory(categoryId: optionsCat.id ?? "");
+            vm.fetchAlertSubCategory(categoryId: optionsCat.id ?? "".tr(context));
 
             vm.selectedCategory.add(optionsCat.id);
           },
 
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
 
             child: Row(
               children: [
                 if (vm.selectedIndex == index) ...[
                   Assets.icons.lineh.svg(color: GiftPoseColors.primaryColor),
-                  const SizedBox(width: 10),
+                  SizedBox(width: 10),
                 ],
 
                 Expanded(
@@ -488,7 +486,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
         vm.fetchAlertSubCategoryResponse.data?.data.subcategories ?? [];
 
     if (isSubCategoryLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return Center(child: CircularProgressIndicator());
     }
 
     if (subcategories.isEmpty) {
@@ -497,8 +495,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
           children: [
             Assets.icons.emptyNot.svg(),
             YMargin(5),
-            Text(
-              "No Notification Preference Set Yet",
+            Text("No Notification Preference Set Yet".tr(context),
               style: GiftPoseTextStyle.small(),
             ),
           ],
@@ -514,7 +511,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
         final contents = options.contents ?? [];
 
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
 
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -527,7 +524,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
                 ),
               ),
 
-              const YMargin(8),
+              YMargin(8),
 
               Wrap(
                 spacing: 8,
@@ -538,7 +535,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
 
                   return GestureDetector(
                     onTap: () {
-                      vm.toggleKeyword(content.name ?? "");
+                      vm.toggleKeyword(content.name ?? "".tr(context));
                     },
 
                     child: Container(

@@ -13,7 +13,7 @@ class MyBottomSheet {
     Widget? bottomAction,
   }) {
     showModalBottomSheet(
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
@@ -29,10 +29,10 @@ class MyBottomSheet {
                 maxHeight: height ?? MediaQuery.of(context).size.height / 1.8,
               ),
               color: Theme.of(context).scaffoldBackgroundColor,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 5),
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 5),
               child: Column(
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     height: 10,
                   ),
                   Container(
@@ -44,16 +44,16 @@ class MyBottomSheet {
                     ),
                   ),
                   title == null
-                      ? const SizedBox.shrink()
-                      : const SizedBox(
+                      ? SizedBox.shrink()
+                      : SizedBox(
                           height: 25,
                         ),
                   title == null
-                      ? const SizedBox.shrink()
+                      ? SizedBox.shrink()
                       : Align(
                           alignment: Alignment.center,
                           child: title.isEmpty
-                              ? const SizedBox.shrink()
+                              ? SizedBox.shrink()
                               : Text(title ?? "",
                                   style: GiftPoseTextStyle.heading1())),
                   SizedBox(
@@ -61,16 +61,16 @@ class MyBottomSheet {
                   ),
                   Expanded(
                     child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
+                      physics: BouncingScrollPhysics(),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: children),
                     ),
                   ),
-                  bottomAction ?? const SizedBox.shrink(),
+                  bottomAction ?? SizedBox.shrink(),
                   bottomAction == null
-                      ? const SizedBox.shrink()
-                      : const SizedBox(
+                      ? SizedBox.shrink()
+                      : SizedBox(
                           height: 0,
                         ),
                 ],
@@ -86,7 +86,7 @@ class MyBottomSheet {
     showModalBottomSheet(
         isDismissible: false,
         enableDrag: false,
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(20),
           ),
@@ -97,15 +97,15 @@ class MyBottomSheet {
               constraints: BoxConstraints(
                 maxHeight: height ?? MediaQuery.of(context).size.height / 1.8,
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
               child: Column(
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     height: 10,
                   ),
                   Expanded(
                     child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
+                      physics: BouncingScrollPhysics(),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: children),
@@ -118,7 +118,7 @@ class MyBottomSheet {
 }
 
 class AnimatedBottomSheet extends StatefulWidget {
-  const AnimatedBottomSheet({required this.screen, super.key});
+  AnimatedBottomSheet({required this.screen, super.key});
   final Widget screen;
   @override
   AnimatedBottomSheetState createState() => AnimatedBottomSheetState();
@@ -132,9 +132,9 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 500),);
+    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500),);
     _animation = Tween<Offset>(
-      begin: const Offset(0, 1),
+      begin: Offset(0, 1),
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _animationController,
@@ -160,7 +160,7 @@ class AnimatedBottomSheetState extends State<AnimatedBottomSheet>
           );
         },
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 500),
+          duration: Duration(milliseconds: 500),
           curve: Curves.easeOut,
           child: widget.screen,
         ));
@@ -178,7 +178,7 @@ class AppBottomSheet{
     final AnimationController transitionAnimationController = AnimationController(
       animationBehavior: AnimationBehavior.preserve,
       vsync: Navigator.of(context),
-      duration: const Duration(milliseconds: 800),
+      duration: Duration(milliseconds: 800),
     );
     await showModalBottomSheet(
       transitionAnimationController: transitionAnimationController,

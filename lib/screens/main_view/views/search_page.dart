@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:giftpose/gen/assets.gen.dart';
 import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
 import 'package:giftpose/screens/main_view/widgets/search_gridview.dart';
@@ -15,7 +17,7 @@ import 'package:provider/provider.dart';
 class SearchView extends StatefulWidget {
   final bool isList;
 
-  const SearchView({super.key, this.isList = false});
+  SearchView({super.key, this.isList = false});
 
   @override
   State<SearchView> createState() => _SearchViewState();
@@ -64,12 +66,12 @@ void initState() {
         child: CompositedTransformFollower(
           link: _layerLink,
           showWhenUnlinked: false,
-          offset: const Offset(0, 55),
+          offset: Offset(0, 55),
           child: Material(
             elevation: 6,
             borderRadius: BorderRadius.circular(12),
             child: Container(
-              constraints: const BoxConstraints(maxHeight: 250),
+              constraints: BoxConstraints(maxHeight: 250),
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(12),
@@ -123,7 +125,7 @@ void initState() {
     borderRadius: BorderRadius.circular(20), // Adjust the value for more/less rounding
   ),
               child: Padding(
-                padding: const EdgeInsets.all(14.0),
+                padding: EdgeInsets.all(14.0),
                 child: Assets.icons.back.svg(
                   color: Theme.of(context).textTheme.bodyLarge?.color,
                 ),
@@ -131,8 +133,7 @@ void initState() {
             ),
           ),
       hasGradient: true,
-      appBarTitleWidget: Text(
-        "Global Search",
+      appBarTitleWidget: Text("Global Search".tr(context),
         textAlign: TextAlign.center,
         style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
       ),
@@ -141,11 +142,11 @@ void initState() {
           builder: (context, viewModel, child) {
             return Column(
               children: [
-                const YMargin(20),
+                YMargin(20),
 
                 // Search Bar Section
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   child: CompositedTransformTarget(
                     link: _layerLink,
                     child: GiftPoseTextField(
@@ -170,7 +171,7 @@ void initState() {
                   ),
                 ),
 
-                const YMargin(20),
+                YMargin(20),
 
                 // Results Section: Expanded makes it take ONLY what's left
                 // between the search bar and the top of the keyboard.
@@ -189,7 +190,7 @@ void initState() {
     // 1. Loading State
     if (isApiResponseLoading(viewModel.globalSearchResponse) &&
         viewModel.itemsSearch.isEmpty) {
-      return const Center(
+      return Center(
         child: CircularProgressIndicator(color: GiftPoseColors.primaryColor),
       );
     }
@@ -201,13 +202,13 @@ void initState() {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.error_outline, size: 48, color: Colors.red),
-            const YMargin(16),
-            Text('Error: Try again', style: GiftPoseTextStyle.medium()),
-            const YMargin(16),
+            Icon(Icons.error_outline, size: 48, color: Colors.red),
+            YMargin(16),
+            Text('Error: Try again'.tr(context), style: GiftPoseTextStyle.medium()),
+            YMargin(16),
             ElevatedButton(
               onPressed: () => viewModel.refreshItems(),
-              child: const Text('Retry'),
+              child: Text('Retry'.tr(context)),
             ),
           ],
         ),
@@ -221,9 +222,9 @@ void initState() {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('No items found', style: GiftPoseTextStyle.large()),
-              const YMargin(8),
-              Text('Try adjusting your search', style: GiftPoseTextStyle.small(color: Colors.grey)),
+              Text('No items found'.tr(context), style: GiftPoseTextStyle.large()),
+              YMargin(8),
+              Text('Try adjusting your search'.tr(context), style: GiftPoseTextStyle.small(color: Colors.grey)),
             ],
           ),
         ),

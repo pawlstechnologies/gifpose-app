@@ -110,7 +110,7 @@ class _GiftPoseMessageTextFieldState extends State<GiftPoseMessageTextField> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               widget.fieldName.isEmpty
-                  ? const SizedBox.shrink()
+                  ? SizedBox.shrink()
                   : Padding(
                       padding: EdgeInsets.only(bottom: 10.w, left: 5.w),
                       child:
@@ -187,7 +187,7 @@ class _GiftPoseMessageTextFieldState extends State<GiftPoseMessageTextField> {
                         decoration: InputDecoration(
                           counterText: "",
                           prefixIcon: Padding(
-                            padding: const EdgeInsets.only(left: 14),
+                            padding: EdgeInsets.only(left: 14),
                             child: widget.prefixIcon,
                           ),
                           isCollapsed: true,
@@ -205,7 +205,7 @@ class _GiftPoseMessageTextFieldState extends State<GiftPoseMessageTextField> {
                           ),
                           suffixIcon: widget.obscureText == false
                                   ? Padding(
-                                      padding: const EdgeInsets.only(right: 14),
+                                      padding: EdgeInsets.only(right: 14),
                                       child: widget.suffixIcon)
                                   : GestureDetector(
                                       onTap: () {
@@ -216,7 +216,7 @@ class _GiftPoseMessageTextFieldState extends State<GiftPoseMessageTextField> {
                                         child: Icon(
                                           show ? Icons.visibility : Icons.visibility_off,
                                           size: 22.sp,
-                                          color: const Color.fromARGB(255, 72, 74, 78),
+                                          color: Color.fromARGB(255, 72, 74, 78),
                                         ),
                                       ),
                                     ),
@@ -240,7 +240,7 @@ class _GiftPoseMessageTextFieldState extends State<GiftPoseMessageTextField> {
                           ),
                           errorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.r),
-                            borderSide: const BorderSide(color: GiftPoseColors.errorColor),
+                            borderSide: BorderSide(color: GiftPoseColors.errorColor),
                           ),
                           focusedErrorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.r),
@@ -269,6 +269,6 @@ class _GiftPoseMessageTextFieldState extends State<GiftPoseMessageTextField> {
 }
 
 final outlineInputBorder = OutlineInputBorder(
-  borderSide: const BorderSide(color: GiftPoseColors.borderColor),
+  borderSide: BorderSide(color: GiftPoseColors.borderColor),
   borderRadius: BorderRadius.circular(10.r),
 );

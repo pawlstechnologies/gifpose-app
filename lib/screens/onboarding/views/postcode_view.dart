@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:giftpose/utils/localization_provider.dart';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,7 +26,7 @@ import 'package:http/http.dart' as http;
 
 class PostcodeScreen extends StatefulWidget {
   final bool fromDashboard;
-  const PostcodeScreen({super.key, this.fromDashboard = false});
+  PostcodeScreen({super.key, this.fromDashboard = false});
 
   @override
   State<PostcodeScreen> createState() => _PostcodeScreenState();
@@ -49,7 +51,7 @@ class _PostcodeScreenState extends State<PostcodeScreen>
     setState(() {
       _circles = {
         Circle(
-          circleId: const CircleId("radius"),
+          circleId: CircleId("radius"),
           center: _selectedLocation!,
           radius: radiusMeters,
           fillColor: GiftPoseColors.primaryColor.withOpacity(0.2),
@@ -96,7 +98,7 @@ class _PostcodeScreenState extends State<PostcodeScreen>
     if (input.isEmpty) return;
 
     try {
-      const apiKey = "AIzaSyD0adDCs8YaUAElLHDL19qc114FeDT5Pl8";
+    var  apiKey = "AIzaSyD0adDCs8YaUAElLHDL19qc114FeDT5Pl8";
 
       final url = Uri.parse(
         'https://maps.googleapis.com/maps/api/geocode/json?address=$input&key=$apiKey',
@@ -122,7 +124,7 @@ class _PostcodeScreenState extends State<PostcodeScreen>
             _selectedLocation = newPosition;
             _markers = {
               Marker(
-                markerId: const MarkerId('searched-location'),
+                markerId: MarkerId('searched-location'),
                 position: newPosition,
               ),
             };
@@ -168,7 +170,7 @@ class _PostcodeScreenState extends State<PostcodeScreen>
 
           _markers = {
             Marker(
-              markerId: const MarkerId('dashboard-location'),
+              markerId: MarkerId('dashboard-location'),
               position: position,
             ),
           };
@@ -208,7 +210,7 @@ class _PostcodeScreenState extends State<PostcodeScreen>
                   ), // Adjust the value for more/less rounding
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: EdgeInsets.all(14.0),
                   child: Assets.icons.back.svg(
                     color: Theme.of(context).textTheme.bodyLarge?.color,
                   ),
@@ -217,8 +219,7 @@ class _PostcodeScreenState extends State<PostcodeScreen>
             )
           : SizedBox.shrink(),
 
-      appBarTitleWidget: Text(
-        "Set Location",
+      appBarTitleWidget: Text("Set Location".tr(context),
         textAlign: TextAlign.center,
 
         style: GiftPoseTextStyle.large(fontWeight: FontWeight.w500),
@@ -237,7 +238,7 @@ class _PostcodeScreenState extends State<PostcodeScreen>
               onChanged: (value) {
                 if (_debounce?.isActive ?? false) _debounce!.cancel();
 
-                _debounce = Timer(const Duration(milliseconds: 600), () {
+                _debounce = Timer(Duration(milliseconds: 600), () {
                   _searchPostcode();
                 });
               },
@@ -261,9 +262,8 @@ class _PostcodeScreenState extends State<PostcodeScreen>
 
             YMargin(26),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                "How far are you willing to travel?",
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text("How far are you willing to travel?".tr(context),
                 textAlign: TextAlign.center,
 
                 style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),

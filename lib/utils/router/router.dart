@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:giftpose/screens/main_view/views/settings_page/language_view.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
+import 'package:giftpose/screens/authentication/view/create_account.dart';
+import 'package:giftpose/screens/authentication/view/enter_otp.dart';
+
+import 'package:giftpose/screens/authentication/view/forgot_password_view.dart';
+import 'package:giftpose/screens/authentication/view/password_changed.dart';
+import 'package:giftpose/screens/authentication/view/reset_password_view.dart';
+import 'package:giftpose/screens/authentication/view/sigin_in_view.dart';
 import 'package:giftpose/screens/main_view/views/dashboard_view.dart';
 import 'package:giftpose/screens/main_view/views/notification_alert.dart';
 import 'package:giftpose/screens/main_view/views/notification_view.dart';
-import 'package:giftpose/screens/main_view/views/search_page.dart';
-import 'package:giftpose/screens/main_view/views/settings_page/about_page.dart';
-import 'package:giftpose/screens/main_view/views/settings_page/article_page.dart';
-import 'package:giftpose/screens/main_view/views/settings_page/help_center.dart';
-import 'package:giftpose/screens/main_view/views/settings_page/language_view.dart';
 import 'package:giftpose/screens/main_view/views/settings_view.dart';
 import 'package:giftpose/screens/onboarding/views/consent_view.dart';
 import 'package:giftpose/screens/onboarding/views/onboarding_view.dart';
@@ -24,31 +29,19 @@ class Routers {
 
     switch (settings.name) {
       case AppRoutes.splash:
-        routeWidget = const SplashScreen();
+        routeWidget = SplashScreen();
         break;
       case AppRoutes.consentPage:
-        routeWidget = const ConsentScreen();
-        break;
-         case AppRoutes.aboutPage:
-        routeWidget = const AboutPage();
-        break;
-         case AppRoutes.helpCenter:
-        routeWidget = HelpCenter();
-        break;
-        //    case AppRoutes.articlePage:
-        // routeWidget = ArticlePage();
-        // break;
-          case AppRoutes.languagePage:
-        routeWidget = const LanguageView();
+        routeWidget = ConsentScreen();
         break;
       case AppRoutes.postcodePage:
-        routeWidget = const PostcodeScreen();
+        routeWidget = PostcodeScreen();
         break;
             case AppRoutes.notificationsPage:
-        routeWidget = const NotificationView();
+        routeWidget = NotificationView();
         break;
                case AppRoutes.notificationsAlert:
-        routeWidget = const NotificationAlert();
+        routeWidget = NotificationAlert();
         break;
             case AppRoutes.settingsPage:
         routeWidget =  SettingsView();
@@ -56,9 +49,28 @@ class Routers {
             case AppRoutes.dashboard:
         routeWidget =  DashboardView();
         break;
-             case AppRoutes.searchPage:
-        routeWidget = const SearchView();
+             case AppRoutes.createAccountPage:
+        routeWidget = CreateAccountScreen();
         break;
+             case AppRoutes.siginInPage:
+        routeWidget = SigninScreen();
+        break;
+             case AppRoutes.forgotPasswordScreen:
+        routeWidget = ForgotPasswordScreen();
+        break;
+             case AppRoutes.passwordChanged:
+        routeWidget = PasswordChangedScreen();
+        break;
+            case AppRoutes.resetPasswordScreen:
+        routeWidget = ResetPasswordScreen();
+        break;
+            case AppRoutes.enterOtpScreen:
+        routeWidget = EnterOtpScreen();
+        break;
+            case AppRoutes.languagePage:
+        routeWidget = LanguageView();
+        break;
+        
     
                          case AppRoutes.settingsPage:
         routeWidget = SettingsView();
@@ -68,7 +80,7 @@ class Routers {
         return MaterialPageRoute(
           builder: (_) => Scaffold(
             body: Center(
-              child: Text('No route defined for ${settings.name}'),
+              child: Text('No route defined for ${settings.name}'.tr(context)),
             ),
           ),
         );
@@ -90,3 +102,5 @@ class Routers {
     );
   }
 }
+
+

@@ -159,7 +159,7 @@ bool get isDarkMode {
 
   DashboardViewmodel() {
     getDeviceId();
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 2), () {
       fetchItemsNearMe();
     });
     fetchAlertCategory();

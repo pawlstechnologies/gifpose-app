@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:giftpose/gen/assets.gen.dart';
 import 'package:giftpose/utils/theme/giftpose_colors.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
@@ -43,8 +45,7 @@ class TransportWidgets extends StatelessWidget {
           YMargin(8),
           isTappedPublic ==true ?SizedBox.shrink():
           isTapped?
-           Text(
-            "${location}ins",
+           Text("${location}ins".tr(context),
             textAlign: TextAlign.center,
 
             maxLines: 2,

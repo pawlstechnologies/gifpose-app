@@ -5,7 +5,7 @@ class GiftPoseSwitch extends StatefulWidget {
   final bool value;
   final ValueChanged<bool> onChanged;
 
-  const GiftPoseSwitch({super.key, required this.value, required this.onChanged});
+  GiftPoseSwitch({super.key, required this.value, required this.onChanged});
 
   @override
   _GiftPoseSwitchState createState() => _GiftPoseSwitchState();
@@ -18,7 +18,7 @@ class _GiftPoseSwitchState extends State<GiftPoseSwitch> with SingleTickerProvid
   void initState() {
     super.initState();
     _animationController =
-        AnimationController(vsync: this, duration: const Duration(milliseconds: 30));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 30));
   }
 
   @override

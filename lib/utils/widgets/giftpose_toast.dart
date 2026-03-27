@@ -47,7 +47,7 @@ class AnimatedToast extends StatefulWidget {
   final IconData icon;
   final Duration duration;
 
-  const AnimatedToast({
+  AnimatedToast({
     super.key,
     required this.message,
     required this.backgroundColor,
@@ -71,11 +71,11 @@ class _AnimatedToastState extends State<AnimatedToast>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: Duration(milliseconds: 300),
     );
 
     _offsetAnimation = Tween<Offset>(
-      begin: const Offset(0, -1),
+      begin: Offset(0, -1),
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _controller,
@@ -107,7 +107,7 @@ class _AnimatedToastState extends State<AnimatedToast>
         position: _offsetAnimation,
         child: Container(
           height: 50,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
             color: widget.backgroundColor,
             borderRadius: BorderRadius.circular(15),
@@ -115,7 +115,7 @@ class _AnimatedToastState extends State<AnimatedToast>
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
                 blurRadius: 8,
-                offset: const Offset(0, 2),
+                offset: Offset(0, 2),
               ),
             ],
           ),
@@ -129,7 +129,7 @@ class _AnimatedToastState extends State<AnimatedToast>
                 color: widget.textColor,
                 size: 20,
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Text(
                 widget.message,
                 style: TextStyle(

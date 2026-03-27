@@ -4,6 +4,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:giftpose/screens/authentication/viewmodel/authentication_viewmodel.dart';
 import 'package:giftpose/screens/main_view/viewmodels/base_viewmodel.dart';
 import 'package:giftpose/screens/main_view/viewmodels/connectivit_viewmode.dart';
 import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
@@ -19,13 +20,14 @@ import 'package:giftpose/utils/router/router.dart';
 import 'package:giftpose/utils/theme/theme.dart';
 
 import 'package:provider/provider.dart';
+import 'package:giftpose/utils/localization_provider.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
 
 class GifteposeApp extends StatefulWidget {
-  const GifteposeApp({super.key});
+  GifteposeApp({super.key});
 
   @override
   State<GifteposeApp> createState() => _GifteposeAppState();
@@ -66,7 +68,7 @@ void testLocalNotification() async {
   //   final manager = await spDatabaseManager.getTimeoutManager() ?? false;
   //   _rootTimer?.cancel();
   //   _rootTimer = Timer(
-  //     manager ? const Duration(minutes: 20) : const Duration(days: 100),
+  //     manager ? Duration(minutes: 20) : Duration(days: 100),
   //     () {
   //       // Handle timeout
   //     },
@@ -84,7 +86,7 @@ void testLocalNotification() async {
   // }
 
   // Future<void> determineTheMode() async {
-  //   Future.delayed(const Duration(milliseconds: 500), () {
+  //   Future.delayed(Duration(milliseconds: 500), () {
   //     final baseVM = Provider.of<BaseViewmodel>(context, listen: false);
   //     baseVM.loadTheCurrentDisplayMode();
   //   });
@@ -97,7 +99,8 @@ void testLocalNotification() async {
         ChangeNotifierProvider(create: (context) => BaseViewmodel()),
         ChangeNotifierProvider(create: (context) => OnboardingViewModel()),
         ChangeNotifierProvider(create: (context) => DashboardViewmodel()),
-
+        ChangeNotifierProvider(create: (context) => LanguageProvider()),
+   ChangeNotifierProvider(create: (context) => AuthenticationViewModel()),
         //            ChangeNotifierProvider(
         //           create: (context) => OrdersViewModel(),
         //         ),
@@ -118,7 +121,7 @@ void testLocalNotification() async {
         // onScaleStart: _handleUserInteraction,
         behavior: HitTestBehavior.deferToChild,
         child: ScreenUtilInit(
-          designSize: const Size(375, 874),
+          designSize: Size(375, 874),
           minTextAdapt: true,
           splitScreenMode: true,
           builder: (context, child) {
@@ -152,7 +155,7 @@ darkTheme: dark,
                   },
                   onGenerateRoute: (settings) =>
                       Routers.generateRoute(settings, context),
-                  home: isRegistered ? DashboardView() : SplashScreen(),
+                  home: isRegistered ? SplashScreen()  : SplashScreen(),
                 );
               },
             );

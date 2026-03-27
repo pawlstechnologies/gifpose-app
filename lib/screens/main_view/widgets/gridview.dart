@@ -23,7 +23,7 @@ class CategoryGrid extends StatelessWidget {
   final bool hasReachedMax;
   final bool isLoadingMore;
 
-  const CategoryGrid({
+  CategoryGrid({
     super.key,
     required this.items,
     required this.userLocation,
@@ -41,7 +41,7 @@ class CategoryGrid extends StatelessWidget {
           builder: (context, vm, child) {
         return GridView.builder(
           controller: scrollController,
-          physics: const BouncingScrollPhysics(),
+          physics: BouncingScrollPhysics(),
           padding: EdgeInsets.all(spacing),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: crossAxisCount,
@@ -85,12 +85,12 @@ class CategoryGrid extends StatelessWidget {
   }
 
   Widget _buildLoadingIndicator() {
-    if (!isLoadingMore) return const SizedBox.shrink();
+    if (!isLoadingMore) return SizedBox.shrink();
     
     return Container(
       height: 100,
       alignment: Alignment.center,
-      child: const Center(
+      child: Center(
         child: CircularProgressIndicator(
           color: GiftPoseColors.primaryColor,
           strokeWidth: 2,
@@ -104,7 +104,7 @@ class CategoryGrid extends StatelessWidget {
 class CategoryGridItem extends StatelessWidget {
   final FetchItemsNearMeData response;
   final UserLocation userLocation;
-  const CategoryGridItem({super.key, required this.response, required this.userLocation});
+  CategoryGridItem({super.key, required this.response, required this.userLocation});
 
   @override
   Widget build(BuildContext context) {
@@ -129,13 +129,13 @@ class CategoryGridItem extends StatelessWidget {
                 width: double.infinity,
                 height: 102.w,
                 color: Colors.grey.shade200,
-                child: const Icon(Icons.error, color: Colors.grey),
+                child: Icon(Icons.error, color: Colors.grey),
               ),
               placeholder: (context, url) => Container(
                 width: double.infinity,
                 height: 102.w,
                 color: Colors.grey.shade100,
-                child: const Center(
+                child: Center(
                   child: CupertinoActivityIndicator(),
                 ),
               ),
@@ -146,7 +146,7 @@ class CategoryGridItem extends StatelessWidget {
 
           // Product Info
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            padding: EdgeInsets.symmetric(horizontal: 4.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,

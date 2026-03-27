@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:giftpose/gen/assets.gen.dart';
 import 'package:giftpose/utils/theme/giftpose_colors.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
@@ -7,7 +9,7 @@ import 'package:giftpose/utils/widgets/Giftpose_basescafold.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
 
 class AboutPage extends StatelessWidget {
-  const AboutPage({super.key});
+  AboutPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class AboutPage extends StatelessWidget {
             ), // Adjust the value for more/less rounding
           ),
           child: Padding(
-            padding: const EdgeInsets.all(14.0),
+            padding: EdgeInsets.all(14.0),
             child: Assets.icons.back.svg(
               color: Theme.of(context).textTheme.bodyLarge?.color,
             ),
@@ -39,8 +41,7 @@ class AboutPage extends StatelessWidget {
       ),
 
       hasGradient: true,
-      appBarTitleWidget: Text(
-        "About Gift Pose",
+      appBarTitleWidget: Text("About Gift Pose".tr(context),
         textAlign: TextAlign.center,
 
         style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
@@ -52,8 +53,7 @@ class AboutPage extends StatelessWidget {
             Assets.images.logo2.image(height: 75, width: 67),
             YMargin(19),
 
-            Text(
-              " GiftPose",
+            Text(" GiftPose".tr(context),
               textAlign: TextAlign.center,
 
               style: GiftPoseTextStyle.medium(
@@ -62,8 +62,7 @@ class AboutPage extends StatelessWidget {
               ),
             ),
 
-            Text(
-              "Version 1.2.0",
+            Text("Version 1.2.0".tr(context),
               textAlign: TextAlign.center,
 
               style: GiftPoseTextStyle.medium(
@@ -72,8 +71,7 @@ class AboutPage extends StatelessWidget {
               ),
             ),
             YMargin(12),
-            Text(
-              "Spreading joy through thoughtful, personalized giving.",
+            Text("Spreading joy through thoughtful, personalized giving.".tr(context),
               textAlign: TextAlign.center,
 
               style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
@@ -91,8 +89,7 @@ class AboutPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Our Mission",
+                  Text("Our Mission".tr(context),
                     textAlign: TextAlign.center,
 
                     style: GiftPoseTextStyle.medium(
@@ -101,12 +98,11 @@ class AboutPage extends StatelessWidget {
                   ),
                   YMargin(12),
 
-                  Text(
-                    """At GiftPose, we believe that the
+                  Text("""At GiftPose, we believe that the
 perfect gift is an expression of
 connection. Our mission is to make
 thoughtful gifting effortless, helping
-you discover meaningful presents thatresonate with the people you care about most.""",
+you discover meaningful presents thatresonate with the people you care about most.""".tr(context),
                     textAlign: TextAlign.justify,
 
                     style: GiftPoseTextStyle.medium(
@@ -120,8 +116,7 @@ you discover meaningful presents thatresonate with the people you care about mos
             ),
  YMargin(12),
 
-              Text(
-                    "Follow Us",
+              Text("Follow Us".tr(context),
                     textAlign: TextAlign.center,
 
                     style: GiftPoseTextStyle.medium(
@@ -140,8 +135,7 @@ you discover meaningful presents thatresonate with the people you care about mos
 
          YMargin(25),
 
-                 Text(
-                    "© 2026 GiftPose Inc. All rights reserved.",
+                 Text("© 2026 GiftPose Inc. All rights reserved.".tr(context),
                     textAlign: TextAlign.center,
 
                     style: GiftPoseTextStyle.medium(

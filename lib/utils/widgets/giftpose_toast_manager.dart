@@ -89,7 +89,7 @@ class _ToastWidget extends StatefulWidget {
   final Duration duration;
   final VoidCallback onDismiss;
 
-  const _ToastWidget({
+  _ToastWidget({
     required this.message,
     required this.backgroundColor,
     required this.icon,
@@ -112,11 +112,11 @@ class _ToastWidgetState extends State<_ToastWidget>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: Duration(milliseconds: 300),
     );
 
     _offsetAnimation = Tween<Offset>(
-      begin: const Offset(0, -1),
+      begin: Offset(0, -1),
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _controller,
@@ -149,7 +149,7 @@ class _ToastWidgetState extends State<_ToastWidget>
         child: GestureDetector(
           onTap: widget.onDismiss,
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
               color: widget.backgroundColor,
               borderRadius: BorderRadius.circular(30),
@@ -157,7 +157,7 @@ class _ToastWidgetState extends State<_ToastWidget>
                 BoxShadow(
                   color: Colors.black.withOpacity(0.1),
                   blurRadius: 8,
-                  offset: const Offset(0, 2),
+                  offset: Offset(0, 2),
                 ),
               ],
             ),
@@ -170,11 +170,11 @@ class _ToastWidgetState extends State<_ToastWidget>
                   color: Colors.white,
                   size: 20,
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     widget.message,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                       fontWeight: FontWeight.w500,

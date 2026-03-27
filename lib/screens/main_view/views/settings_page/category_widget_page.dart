@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:giftpose/utils/localization_provider.dart';
+
 import 'package:flutter/services.dart';
 import 'package:giftpose/gen/assets.gen.dart';
 import 'package:giftpose/screens/main_view/views/settings_page/article_page.dart';
@@ -37,7 +39,7 @@ class CategoryWidgetDetails extends StatelessWidget {
             ), // Adjust the value for more/less rounding
           ),
           child: Padding(
-            padding: const EdgeInsets.all(14.0),
+            padding: EdgeInsets.all(14.0),
             child: Assets.icons.back.svg(
               color: Theme.of(context).textTheme.bodyLarge?.color,
             ),
@@ -59,7 +61,7 @@ class CategoryWidgetDetails extends StatelessWidget {
           children: [
             YMargin(19),
             Container(
-              padding: const EdgeInsets.symmetric(
+              padding: EdgeInsets.symmetric(
                 horizontal: 17.0,
                 vertical: 12.0,
               ),
@@ -68,8 +70,7 @@ class CategoryWidgetDetails extends StatelessWidget {
                 children: [
                   Assets.icons.heart.svg(),
 
-                  Text(
-                    "Learn about fundraising, managing your gifts, and tax documentation.",
+                  Text("Learn about fundraising, managing your gifts, and tax documentation.".tr(context),
                     textAlign: TextAlign.center,
 
                     style: GiftPoseTextStyle.medium(
@@ -92,9 +93,8 @@ class CategoryWidgetDetails extends StatelessWidget {
 
             YMargin(24),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                "Articles",
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text("Articles".tr(context),
 
                 style: GiftPoseTextStyle.small(
                   color: Theme.of(context).textTheme.bodyMedium?.color,
@@ -110,12 +110,12 @@ class CategoryWidgetDetails extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        ArticlePage(title: "Article"),
+                        ArticlePage(title: "Article".tr(context)),
                   ),
                 );
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).scaffoldBackgroundColor,
@@ -128,17 +128,15 @@ class CategoryWidgetDetails extends StatelessWidget {
                   child: ListTile(
                     contentPadding: EdgeInsets.all(16),
                     leading: Assets.icons.location.svg(),
-                    title: Text(
-                      "How to donate",
+                    title: Text("How to donate".tr(context),
 
                       style: GiftPoseTextStyle.small(
                         color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
                     subtitle: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        "Step-by-step guide to making a gift.",
+                      padding: EdgeInsets.only(top: 8.0),
+                      child: Text("Step-by-step guide to making a gift.".tr(context),
 
                         style: GiftPoseTextStyle.small(
                           color: Theme.of(context).textTheme.bodyMedium?.color,
@@ -158,12 +156,12 @@ class CategoryWidgetDetails extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        ArticlePage(title: "Article"),
+                        ArticlePage(title: "Article".tr(context)),
                   ),
                 );
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).scaffoldBackgroundColor,
@@ -176,17 +174,15 @@ class CategoryWidgetDetails extends StatelessWidget {
                   child: ListTile(
                     contentPadding: EdgeInsets.all(16),
                     leading: Assets.icons.location.svg(),
-                    title: Text(
-                      "How to donate",
+                    title: Text("How to donate".tr(context),
 
                       style: GiftPoseTextStyle.small(
                         color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
                     subtitle: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        "Step-by-step guide to making a gift.",
+                      padding: EdgeInsets.only(top: 8.0),
+                      child: Text("Step-by-step guide to making a gift.".tr(context),
 
                         style: GiftPoseTextStyle.small(
                           color: Theme.of(context).textTheme.bodyMedium?.color,
@@ -205,7 +201,7 @@ class CategoryWidgetDetails extends StatelessWidget {
           
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).scaffoldBackgroundColor,
@@ -218,17 +214,15 @@ class CategoryWidgetDetails extends StatelessWidget {
                   child: ListTile(
                     contentPadding: EdgeInsets.all(16),
                     leading: Assets.icons.location.svg(),
-                    title: Text(
-                      "How to donate",
+                    title: Text("How to donate".tr(context),
 
                       style: GiftPoseTextStyle.small(
                         color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
                     subtitle: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        "Step-by-step guide to making a gift.",
+                      padding: EdgeInsets.only(top: 8.0),
+                      child: Text("Step-by-step guide to making a gift.".tr(context),
 
                         style: GiftPoseTextStyle.small(
                           color: Theme.of(context).textTheme.bodyMedium?.color,
@@ -243,7 +237,7 @@ class CategoryWidgetDetails extends StatelessWidget {
             YMargin(25),
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               child: Container(
                 decoration: BoxDecoration(
                   color: GiftPoseColors.greenColor,
@@ -252,8 +246,7 @@ class CategoryWidgetDetails extends StatelessWidget {
                 child: Column(
                   children: [
                          YMargin(24),
-                    Text(
-                      "Still need help?",
+                    Text("Still need help?".tr(context),
 
                       style: GiftPoseTextStyle.small(
                         color: GiftPoseColors.textColor,
@@ -262,9 +255,8 @@ class CategoryWidgetDetails extends StatelessWidget {
                     ),
                     YMargin(4),
                     Padding(
-               padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: Text(
-                        "Our support team is available 24/7 for inquiries.",
+               padding: EdgeInsets.symmetric(horizontal: 25),
+                      child: Text("Our support team is available 24/7 for inquiries.".tr(context),
                         textAlign: TextAlign.center,
                       
                         style: GiftPoseTextStyle.small(
@@ -276,7 +268,7 @@ class CategoryWidgetDetails extends StatelessWidget {
                     YMargin(16),
 
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 20),
          
                       child: GiftPoseButton(title: "Contact Support", onTap: (){
                           //   WidgetsBinding.instance.addPostFrameCallback((_) async {
