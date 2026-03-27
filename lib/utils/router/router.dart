@@ -52,9 +52,7 @@ class Routers {
              case AppRoutes.createAccountPage:
         routeWidget = CreateAccountScreen();
         break;
-             case AppRoutes.siginInPage:
-        routeWidget = SigninScreen();
-        break;
+       
              case AppRoutes.forgotPasswordScreen:
         routeWidget = ForgotPasswordScreen();
         break;
