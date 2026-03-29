@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:giftpose/screens/authentication/repo/authentication_repo.dart';
-import 'package:giftpose/screens/authentication/repo/authentication_repo_impl.dart';
+
 import 'package:giftpose/screens/main_view/repo/main_view_repo.dart';
 import 'package:giftpose/screens/main_view/repo/main_view_repo_impl.dart';
 import 'package:giftpose/screens/onboarding/repo/onboarding_repo.dart';
@@ -25,5 +24,5 @@ Future<void> locatorSetUp() async {
   serviceLocator.registerLazySingleton<OnboardingRepo>(() =>OnboardingRepoImpl());
     serviceLocator.registerLazySingleton<MainViewRepo>(() =>MainViewRepoImpl());
 
-       serviceLocator.registerLazySingleton<AuthenticationRepo>(() =>AuthenticationRepoImpl()); 
+
 }

@@ -150,7 +150,7 @@ class _GiftPoseTextFieldState extends State<GiftPoseTextField> {
                       maxLength: widget.maxLength,
                       onEditingComplete: widget.onEditingComplete,
                       enableInteractiveSelection: widget.enableInteractiveSelection,
-                      cursorHeight: 18.h,
+                      cursorHeight: 15.h,
                       cursorColor: GiftPoseColors.primaryColor,
                       style: GiftPoseTextStyle.medium(
                         color: Theme.of(context).textTheme.bodyMedium!.color,
@@ -224,8 +224,8 @@ class _GiftPoseTextFieldState extends State<GiftPoseTextField> {
                         hintStyle: GiftPoseTextStyle.normal(
                             fontWeight: FontWeight.w400,
                             color: Theme.of(context).hintColor,
-                            fontSize: 14),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 16.w),
+                            fontSize: 13),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 14.w),
                         border: outlineInputBorder.copyWith(
                           borderRadius: BorderRadius.circular(10.r),
                           borderSide: BorderSide(

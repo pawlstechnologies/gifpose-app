@@ -14,7 +14,7 @@ class GiftPoseTextStyle {
   //Title
 
     static TextStyle heading1(
-      {double fontSize = 22,
+      {double fontSize = 20,
       FontFamily fontFamily = FontFamily.urbanist,
       FontWeight fontWeight = FontWeight.bold,
       Color? color}) {
@@ -31,7 +31,7 @@ class GiftPoseTextStyle {
 
 
    static TextStyle large(
-      {double fontSize = 18,
+      {double fontSize = 17,
       FontFamily fontFamily = FontFamily.urbanist,
       FontWeight fontWeight = FontWeight.bold,
       TextDecoration? decoration,
@@ -48,7 +48,7 @@ class GiftPoseTextStyle {
         );
   }
     static TextStyle normal(
-      {double fontSize = 16,
+      {double fontSize = 15,
       FontFamily fontFamily = FontFamily.urbanist,
       FontWeight fontWeight = FontWeight.bold,
       TextDecoration? decoration,
@@ -65,7 +65,7 @@ class GiftPoseTextStyle {
         );
   }
     static TextStyle medium(
-      {double fontSize = 14,
+      {double fontSize = 13,
       FontFamily fontFamily = FontFamily.urbanist,
       FontWeight fontWeight = FontWeight.normal,
            TextDecoration? decoration,

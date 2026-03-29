@@ -233,7 +233,7 @@ class _PostcodeScreenState extends State<PostcodeScreen>
             GiftPoseTextField(
               controller: postcodeCtrl,
 
-              hintText: "Enter your postcode",
+              hintText: "Enter your postcode".tr(context),
               prefixIcon: Assets.icons.search.svg(),
               onChanged: (value) {
                 if (_debounce?.isActive ?? false) _debounce!.cancel();
@@ -285,7 +285,7 @@ class _PostcodeScreenState extends State<PostcodeScreen>
             Consumer<OnboardingViewModel>(
               builder: (context, vm, child) {
                 return GiftPoseButton(
-                  title: "Submit",
+                  title: "Submit".tr(context),
                   onTap: () {
                     HapticFeedback.heavyImpact();
                     vm.registerLocation(

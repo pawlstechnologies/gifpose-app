@@ -1,4 +1,4 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:giftpose/utils/localization_provider.dart';
 
 import 'package:giftpose/gen/assets.gen.dart';
@@ -23,68 +23,66 @@ class SettingsView extends StatefulWidget {
 
 class _SettingsViewState extends State<SettingsView> {
   bool push = true;
- 
+
   @override
   Widget build(BuildContext context) {
-           return Consumer<DashboardViewmodel>(
-          builder: (context, viewModel, child) {
+    return Consumer<DashboardViewmodel>(
+      builder: (context, viewModel, child) {
         return GiftPoseBaseScaffold(
           includeHorizontalPadding: true,
-        
+
           showAppBar: true,
           includeVerticalPadding: false,
           centerTitle: true,
-          appBarLeadingWidget:  InkWell(
+          appBarLeadingWidget: InkWell(
             onTap: () {
-             HapticFeedback.heavyImpact();
+              HapticFeedback.heavyImpact();
               Navigator.pop(context);
             },
             child: Container(
-      width: 200,
-  height: 100,
-  decoration: BoxDecoration(
+              width: 60,
+              height: 40,
 
-    borderRadius: BorderRadius.circular(20), // Adjust the value for more/less rounding
-  ),
               child: Padding(
-                padding: EdgeInsets.all(14.0),
+                padding: const EdgeInsets.all(14.0),
                 child: Assets.icons.back.svg(
                   color: Theme.of(context).textTheme.bodyLarge?.color,
                 ),
               ),
             ),
           ),
-        
+
           hasGradient: true,
-          appBarTitleWidget: Text("Settings".tr(context),
+          appBarTitleWidget: Text(
+            "Settings".tr(context),
             textAlign: TextAlign.center,
-        
+
             style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
           ),
-        
+
           builder: (size) {
             return ListView(
               children: [
                 YMargin(31),
-                Text("Location".tr(context),
-        
+                Text(
+                  "Location".tr(context),
+
                   style: GiftPoseTextStyle.small(
                     color: Theme.of(context).textTheme.bodyMedium?.color,
                   ),
                 ),
                 YMargin(10),
-        
+
                 InkWell(
-            onTap: () {
-                     HapticFeedback.heavyImpact();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              PostcodeScreen(fromDashboard: true),
-                        ),
-                      );
-                    
+                  onTap: () {
+                    HapticFeedback.heavyImpact();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PostcodeScreen(fromDashboard: true),
+                      ),
+                    );
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -96,10 +94,11 @@ class _SettingsViewState extends State<SettingsView> {
                       ),
                     ),
                     child: ListTile(
-                      contentPadding: EdgeInsets.all(16),
+                      contentPadding: EdgeInsets.all(14),
                       leading: Assets.icons.location.svg(),
-                      title: Text("Current Location".tr(context),
-                          
+                      title: Text(
+                        "Current Location".tr(context),
+
                         style: GiftPoseTextStyle.small(
                           color: Theme.of(context).textTheme.bodyLarge?.color,
                         ),
@@ -107,10 +106,17 @@ class _SettingsViewState extends State<SettingsView> {
                       subtitle: Padding(
                         padding: EdgeInsets.only(top: 8.0),
                         child: Text(
-                    viewModel.fetchItemsNearMeResponse.data?.userLocation.city ??"" ,
-                          
+                          viewModel
+                                  .fetchItemsNearMeResponse
+                                  .data
+                                  ?.userLocation
+                                  .city ??
+                              "",
+
                           style: GiftPoseTextStyle.small(
-                            color: Theme.of(context).textTheme.bodyMedium?.color,
+                            color: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium?.color,
                           ),
                         ),
                       ),
@@ -119,18 +125,17 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                 ),
                 YMargin(25),
-        
-           InkWell(
-            onTap: () {
-                     HapticFeedback.heavyImpact();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              PostcodeScreen(fromDashboard: true),
-                        ),
-                      );
-                    
+
+                InkWell(
+                  onTap: () {
+                    HapticFeedback.heavyImpact();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PostcodeScreen(fromDashboard: true),
+                      ),
+                    );
                   },
                   child: Container(
                     padding: EdgeInsets.all(12),
@@ -144,9 +149,10 @@ class _SettingsViewState extends State<SettingsView> {
                     ),
                     child: Column(
                       children: [
-                        Text("How far are you willing to travel?".tr(context),
+                        Text(
+                          "How far are you willing to travel?".tr(context),
                           textAlign: TextAlign.center,
-                          
+
                           style: GiftPoseTextStyle.medium(
                             fontWeight: FontWeight.w500,
                           ),
@@ -158,14 +164,15 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                 ),
                 YMargin(23),
-                Text("Notifications".tr(context),
-        
+                Text(
+                  "Notifications".tr(context),
+
                   style: GiftPoseTextStyle.small(
                     color: Theme.of(context).textTheme.bodyMedium?.color,
                   ),
                 ),
                 YMargin(10),
-        
+
                 Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).scaffoldBackgroundColor,
@@ -177,52 +184,54 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                   child: Column(
                     children: [
-                  InkWell(
-            onTap: () {
-                     HapticFeedback.heavyImpact();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              NotificationAlert(),
-                        ),
-                      );
-                    
-                  },
+                      InkWell(
+                        onTap: () {
+                          HapticFeedback.heavyImpact();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NotificationAlert(),
+                            ),
+                          );
+                        },
                         child: ListTile(
                           contentPadding: EdgeInsets.symmetric(
-                            horizontal: 16,
+                            horizontal: 14,
                             vertical: 10,
                           ),
                           leading: Assets.icons.notificationIcon.svg(),
-                          title: Text("Notification Alert Settings".tr(context),
-                                
+                          title: Text(
+                            "Notification Alert Settings".tr(context),
+
                             style: GiftPoseTextStyle.small(
-                              color: Theme.of(context).textTheme.bodyLarge?.color,
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodyLarge?.color,
                             ),
                           ),
-                                
+
                           trailing: Assets.icons.foward.svg(),
                         ),
                       ),
                       Divider(color: Theme.of(context).dividerColor),
                       InkWell(
-                        onTap: (){
-              
-           HapticFeedback.heavyImpact();
-
+                        onTap: () {
+                          HapticFeedback.heavyImpact();
                         },
                         child: ListTile(
                           contentPadding: EdgeInsets.symmetric(
-                            horizontal: 16,
+                            horizontal: 14,
                             vertical: 10,
                           ),
-                                
+
                           leading: Assets.icons.dot.svg(),
-                          title: Text("Push Notifications".tr(context),
-                                
+                          title: Text(
+                            "Push Notifications".tr(context),
+
                             style: GiftPoseTextStyle.small(
-                              color: Theme.of(context).textTheme.bodyLarge?.color,
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodyLarge?.color,
                             ),
                           ),
                           trailing: GiftPoseSwitch(
@@ -238,15 +247,16 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                 ),
                 YMargin(25),
-        
-                Text("App Settings".tr(context),
-        
+
+                Text(
+                  "App Settings".tr(context),
+
                   style: GiftPoseTextStyle.small(
                     color: Theme.of(context).textTheme.bodyMedium?.color,
                   ),
                 ),
                 YMargin(10),
-        
+
                 Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).scaffoldBackgroundColor,
@@ -264,8 +274,9 @@ class _SettingsViewState extends State<SettingsView> {
                           vertical: 10,
                         ),
                         leading: Assets.icons.darkmode.svg(),
-                        title: Text("Dark Mode".tr(context),
-        
+                        title: Text(
+                          "Dark Mode".tr(context),
+
                           style: GiftPoseTextStyle.small(
                             color: Theme.of(context).textTheme.bodyLarge?.color,
                           ),
@@ -273,21 +284,23 @@ class _SettingsViewState extends State<SettingsView> {
                         trailing: GiftPoseSwitch(
                           value: viewModel.isDarkMode,
                           onChanged: (bool value) {
-                          viewModel.toggleTheme(context);
-                       
+                            viewModel.toggleTheme(context);
                           },
                         ),
                       ),
                       Divider(color: Theme.of(context).dividerColor),
                       Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 16,
+                          horizontal: 14,
+                          vertical: 10,
                         ),
                         child: InkWell(
-                          onTap: (){
+                          onTap: () {
                             HapticFeedback.heavyImpact();
-                            Navigator.pushNamed(context, AppRoutes.languagePage);
+                            Navigator.pushNamed(
+                              context,
+                              AppRoutes.languagePage,
+                            );
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -296,8 +309,9 @@ class _SettingsViewState extends State<SettingsView> {
                                 children: [
                                   Assets.icons.language.svg(),
                                   XMargin(15),
-                                  Text("Language".tr(context),
-                                  
+                                  Text(
+                                    "Language".tr(context),
+
                                     style: GiftPoseTextStyle.small(
                                       color: Theme.of(
                                         context,
@@ -306,11 +320,12 @@ class _SettingsViewState extends State<SettingsView> {
                                   ),
                                 ],
                               ),
-                                  
+
                               Row(
                                 children: [
-                                  Text("English".tr(context),
-                                  
+                                  Text(
+                                    "English".tr(context),
+
                                     style: GiftPoseTextStyle.small(
                                       color: Theme.of(
                                         context,
@@ -329,14 +344,15 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                 ),
                 YMargin(25),
-                Text("Support".tr(context),
-        
+                Text(
+                  "Support".tr(context),
+
                   style: GiftPoseTextStyle.small(
                     color: Theme.of(context).textTheme.bodyMedium?.color,
                   ),
                 ),
                 YMargin(10),
-        
+
                 Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).scaffoldBackgroundColor,
@@ -348,26 +364,28 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                   child: Column(
                     children: [
-                       InkWell(
+                      InkWell(
                         onTap: () {
-                              HapticFeedback.heavyImpact();
-                            Navigator.pushNamed(context, AppRoutes.helpCenter);
+                          HapticFeedback.heavyImpact();
+                          Navigator.pushNamed(context, AppRoutes.helpCenter);
                         },
-                      
+
                         child: ListTile(
                           contentPadding: EdgeInsets.symmetric(
-                            horizontal: 16,
+                            horizontal: 14,
                             vertical: 10,
                           ),
                           leading: Assets.icons.helpcentre.svg(),
-                          title: Text("Help Center".tr(context),
-                                
+                          title: Text(
+                            "Help Center".tr(context),
+
                             style: GiftPoseTextStyle.small(
-                              color: Theme.of(context).textTheme.bodyLarge?.color,
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodyLarge?.color,
                             ),
                           ),
-                          trailing: Assets.icons.foward.svg
-                          ()
+                          trailing: Assets.icons.foward.svg(),
                         ),
                       ),
                       Divider(color: Theme.of(context).dividerColor),
@@ -376,10 +394,8 @@ class _SettingsViewState extends State<SettingsView> {
                           horizontal: 16,
                           vertical: 16,
                         ),
-                        child: InkWell( 
+                        child: InkWell(
                           onTap: () {
-                            
-                           
                             HapticFeedback.heavyImpact();
                             Navigator.pushNamed(context, AppRoutes.aboutPage);
                           },
@@ -390,8 +406,9 @@ class _SettingsViewState extends State<SettingsView> {
                                 children: [
                                   Assets.icons.about.svg(),
                                   XMargin(15),
-                                  Text("About GiftPose".tr(context),
-                                  
+                                  Text(
+                                    "About GiftPose".tr(context),
+
                                     style: GiftPoseTextStyle.small(
                                       color: Theme.of(
                                         context,
@@ -400,11 +417,12 @@ class _SettingsViewState extends State<SettingsView> {
                                   ),
                                 ],
                               ),
-                                  
+
                               Row(
                                 children: [
-                                  Text("v1.0.0".tr(context),
-                                  
+                                  Text(
+                                    "v1.0.0".tr(context),
+
                                     style: GiftPoseTextStyle.small(
                                       color: Theme.of(
                                         context,
@@ -427,7 +445,7 @@ class _SettingsViewState extends State<SettingsView> {
             );
           },
         );
-      }
+      },
     );
   }
 }

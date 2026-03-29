@@ -158,7 +158,7 @@ class _DashboardViewState extends State<DashboardView> {
               color: GiftPoseColors.primaryColor,
               child: Column(
                 children: [
-                  YMargin(15),
+ 
 
                   // Header
                   Padding(
@@ -201,13 +201,13 @@ class _DashboardViewState extends State<DashboardView> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            copyToClipboard(
-                              context,
-                              viewModel.fcmToken.toString(),
-                            );
+                            // copyToClipboard(
+                            //   context,
+                            //   viewModel.fcmToken.toString(),
+                            // );
                           },
                           child: Text("All Gifts".tr(context),
-                            style: GiftPoseTextStyle.large(
+                            style: GiftPoseTextStyle.normal(
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -253,7 +253,7 @@ class _DashboardViewState extends State<DashboardView> {
                     ),
                   ),
 
-                  YMargin(24),
+                  YMargin(10),
 
                   // Search Field
                   Padding(
@@ -276,11 +276,12 @@ class _DashboardViewState extends State<DashboardView> {
                         focusNode: _searchFocus,
                         hintText: "Search for items",
                         prefixIcon: Assets.icons.search.svg(),
+                        textFieldBottomPadding: 15,
                       ),
                     ),
                   ),
 
-                  YMargin(12),
+
 
                   // Location Row
                   InkWell(
@@ -321,7 +322,7 @@ class _DashboardViewState extends State<DashboardView> {
                     ),
                   ),
 
-                  YMargin(20),
+                  YMargin(15),
 
                   //    Notification Banner
                   InkWell(
@@ -349,7 +350,7 @@ class _DashboardViewState extends State<DashboardView> {
                               children: [
                                 Text("Get notified on product of interest".tr(context),
                                   style: GiftPoseTextStyle.normal(
-                                    fontSize: 15,
+                                    fontSize: 13,
                                     color: GiftPoseColors.textColor3,
                                     fontWeight: FontWeight.w400,
                                   ),
@@ -363,8 +364,8 @@ class _DashboardViewState extends State<DashboardView> {
                                               ?.data
                                               .isEmpty ??
                                           true)
-                                      ? "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find."
-                                      : "Active: ${viewModel.fetchAlertListResponse.data!.data[0].keywords.join(", ".tr(context))}", // Changed .toString() to .join(", ")
+                                      ? "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.".tr(context)
+                                      : "Active".tr(context) + ": ${viewModel.fetchAlertListResponse.data!.data[0].keywords.join(", ".tr(context))}", // Changed .toString() to .join(", ")
                                   style: GiftPoseTextStyle.small(
                                     fontSize: 10,
                                     color: GiftPoseColors.textColor2,

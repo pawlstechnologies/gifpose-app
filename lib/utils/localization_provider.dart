@@ -6,6 +6,18 @@ import 'package:giftpose/utils/locator.dart';
 class AppTranslations {
   static Map<String, Map<String, String>> translations = {
     'en': {
+      "Active":"Active",
+      "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.":"You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.",
+         "Tram":"Tram",
+       "Train":"Train",          
+       "Underground":"Underground",
+       "Bus":"Bus",
+       "Cycling":"Cycling",
+       "Walking":"Walking",
+       "Vehicle":"Vehicle",
+       "Public Transport":"Public Transport",
+       "Private Vehicle":"Private Vehicle",
+       "miles away":"miles away",
       "Sign Up":"Sign Up",
       "Do not have an Account?":"Do not have an Account?",
       "Back to Login":"Back to Login",
@@ -111,6 +123,20 @@ class AppTranslations {
       "Gifting": "Gifting",
     },
     'de': {
+          "Active": "Aktiv",
+      "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.":"Sie erhalten derzeit alle Benachrichtigungen. Klicken Sie hier, um Benachrichtigungen NUR für Geschenke zu erhalten, die Sie finden möchten.",
+"Visit Freebies": "Gratis-Angebote ansehen",
+  "Mark as Taken": "Als genommen markieren",
+        "Tram":"Straßenbahn",
+       "Train":"Zug",          
+       "Underground":"U-Bahn",
+       "Bus":"Bus",
+       "Cycling":"Radfahren",
+       "Walking":"Zu Fuß",
+       "Vehicle":"Vehicle",
+       "Public Transport":"Öffentliche Verkehrsmittel",
+       "Private Vehicle":"Privatfahrzeug",
+       "miles away":"Meilen entfernt",
       "Do not have an Account?":"Sie haben kein Konto?",
       "Back to Login":"Zurück zum Login",
       "Reset Password":"Passwort zurücksetzen",
@@ -216,6 +242,20 @@ class AppTranslations {
   "Gifting": "Schenken",
 },
    'zh': {
+"Active": "激活",
+    "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.":"您目前正在接收所有警报。点击仅接收您想查找的礼物的警报。",
+"Visit Freebies": "查看免费物品",
+"Mark as Taken": "标记为已领取",
+     "Tram": "有轨电车",
+"Train": "火车",
+"Underground": "地铁",
+"Bus": "公交车",
+"Cycling": "骑行",
+"Walking": "步行",
+"Vehicle": "车辆",
+"Public Transport": "公共交通",
+"Private Vehicle": "私家车",
+"miles away": "英里外",
           "Do not have an Account?":"您没有账户吗？",
       "Back to Login":"返回登录",
       "Reset Password":"重置密码",
@@ -321,6 +361,20 @@ class AppTranslations {
   "Gifting": "赠送",
 },
    'fr': {
+    "Active": "Actif",
+    "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.":"Vous recevez actuellement toutes les alertes. Cliquez pour recevoir des alertes UNIQUEMENT pour les cadeaux que vous souhaitez trouver.",
+"Visit Freebies": "Voir les cadeaux",
+  "Mark as Taken": "Marquer comme pris",
+   "Tram": "Tramway",
+"Train": "Train",
+"Underground": "Métro",
+"Bus": "Bus",
+"Cycling": "Vélo",
+"Walking": "À pied",
+"Vehicle": "Véhicule",
+"Public Transport": "Transports en commun",
+"Private Vehicle": "Véhicule privé",
+"miles away": "miles de distance",
           "Do not have an Account?":"Vous n'avez pas de compte ?",
       "Back to Login":"Retour à la connexion",
       "Reset Password":"Réinitialiser le mot de passe",
@@ -425,6 +479,22 @@ class AppTranslations {
   "Gifting": "Offrir",
 },
     'it': {
+      "Active": "Attivo",
+      "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.":"Stai attualmente ricevendo tutti gli avvisi. Clicca per ricevere avvisi SOLO per i regali che vuoi trovare.",
+      "Visit Freebies": "Visita Freebies",
+"Mark as Taken": "Segna come preso",
+"Tram": "Tram",
+"Train": "Treno",
+"Underground": "Metropolitana",
+"Bus": "Autobus",
+"Cycling": "Bicicletta",
+"Walking": "A piedi",
+"Vehicle": "Veicolo",
+"Public Transport": "Trasporto pubblico",
+"Private Vehicle": "Veicolo privato",
+"miles away": "miglia di distanza",
+"Visit Freebies": "Visita Freebies",
+"Mark as Taken": "Segna come preso",
             "Do not have an Account?":"Non hai un account?",
       "Back to Login":"Torna al login",
       "Reset Password":"Reimposta password",
@@ -529,6 +599,21 @@ class AppTranslations {
   "Gifting": "Fare regali",
 },
    'es': {
+    "Active": "Activo",
+"You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.":"Actualmente estás recibiendo todas las alertas. Haz clic para recibir alertas SOLO para los regalos que quieras encontrar.",
+  "visit_freebies": "Ver objetos gratis",
+  "mark_as_taken": "Marcar como entregado",
+
+"Tram": "Tranvía",
+"Train": "Tren",
+"Underground": "Metro",
+"Bus": "Autobús",
+"Cycling": "Bicicleta",
+"Walking": "A pie",
+"Vehicle": "Vehículo",
+"Public Transport": "Transporte público",
+"Private Vehicle": "Vehículo privado",
+"miles away": "millas de distancia",
             "Do not have an Account?":"¿No tienes una cuenta?",
       "Back to Login":"Volver al inicio de sesión",
       "Reset Password":"Restablecer contraseña",
@@ -634,6 +719,22 @@ class AppTranslations {
   "Gifting": "Regalar",
 },
     'pt': {
+      "Active": "Ativo",
+      "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.":"Você está recebendo todos os alertas. Clique para receber alertas APENAS para presentes que você deseja encontrar.",
+"Visit Freebies": "Ver itens grátis",
+"Mark as Taken": "Marcar como recolhido",
+"Tram": "Elétrico",
+"Train": "Trem",
+"Underground": "Metrô",
+"Bus": "Ônibus",
+"Cycling": "Bicicleta",
+"Walking": "A pé",
+"Vehicle": "Veículo",
+"Public Transport": "Transporte público",
+"Private Vehicle": "Veículo privado",
+"miles away": "milhas de distância",
+"Visit Freebies": "Ver itens grátis",
+"Mark as Taken": "Marcar como recolhido",
             "Do not have an Account?":"Não tem uma conta?",
       "Back to Login":"Voltar ao login",
       "Reset Password":"Redefinir senha",
@@ -792,3 +893,34 @@ extension TranslateExtension on String {
     return Provider.of<LanguageProvider>(context, listen: true).translate(this);
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
