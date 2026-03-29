@@ -19,7 +19,7 @@ import 'package:giftpose/utils/widgets/webview_screen.dart';
 import 'package:provider/provider.dart';
 
 class DetailsPage extends StatefulWidget {
-  final String? location;
+  final String location;
 
   const DetailsPage({super.key, required this.location});
 
@@ -33,10 +33,6 @@ class _DetailsPageState extends State<DetailsPage> {
   bool isTappedWalking = false;
   bool isTappedCycling = false;
   bool isTappedVehicle = false;
-  bool _isNavigating = false;
-  int selectedImageIndex = 0;
-
-  bool isMarked = false;
   @override
   Widget build(BuildContext context) {
     final textColor = Theme.of(context).dividerColor;
@@ -148,6 +144,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                     child: SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
                                       child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                         children: List.generate(
                                           vm
                                                   .fetchItemsByIdMeResponse
@@ -211,8 +208,16 @@ class _DetailsPageState extends State<DetailsPage> {
                                                             child:
                                                                 CupertinoActivityIndicator(),
                                                           ),
+                                                  placeholder: (context, url) =>
+                                                      Container(
+                                                        width: 92.w,
+                                                        height: 86.w,
+                                                        color: Colors.grey.shade100,
+                                                        child: const Center(
+                                                          child:
+                                                              CupertinoActivityIndicator(),
                                                         ),
-                                                  ),
+                                                      ),
                                                 ),
                                               ),
                                             );
@@ -395,67 +400,67 @@ class _DetailsPageState extends State<DetailsPage> {
                                                     context,
                                                   ).textTheme.bodyMedium?.color,
                                           ),
-                                          title: "Walking",
                                         ),
-                                      ),
-                                      XMargin(20),
-                                      InkWell(
-                                        onTap: () {
-                                          isTappedPrivate = false;
-                                          isTappedCycling = true;
-                                          isTappedPublic = false;
-                                          isTappedVehicle = false;
-                                          isTappedWalking = false;
-                                          setState(() {});
-                                        },
-                                        child: TransportWidgets(
-                                          location:
-                                              vm
-                                                  .fetchItemsByIdMeResponse
-                                                  .data
-                                                  ?.data
-                                                  ?.estimatedTravelTime
-                                                  ?.cycling ??
-                                              "",
-                                          isTapped: isTappedCycling,
-                                          icon: Assets.icons.cycling.svg(
-                                            color: isTappedCycling
-                                                ? GiftPoseColors.primaryColor
-                                                : Theme.of(
-                                                    context,
-                                                  ).textTheme.bodyMedium?.color,
+                  
+                                        XMargin(24),
+                                        InkWell(
+                                          onTap: () {
+                                            isTappedPrivate = false;
+                                            isTappedCycling = false;
+                                            isTappedPublic = false;
+                                            isTappedVehicle = false;
+                                            isTappedWalking = true;
+                                            setState(() {});
+                                          },
+                                          child: TransportWidgets(
+                                            location:
+                                                vm
+                                                    .fetchItemsByIdMeResponse
+                                                    .data
+                                                    ?.data
+                                                    ?.estimatedTravelTime
+                                                    ?.walking ??
+                                                "",
+                                            isTapped: isTappedWalking,
+                                            icon: Assets.icons.walking.svg(
+                                              color: isTappedWalking
+                                                  ? GiftPoseColors.primaryColor
+                                                  : Theme.of(
+                                                      context,
+                                                    ).textTheme.bodyMedium?.color,
+                                            ),
+                                            title: "Walking",
                                           ),
-                                          title: "Cycling",
                                         ),
-                                      ),
-                                      XMargin(20),
-                                      InkWell(
-                                        onTap: () {
-                                          isTappedPrivate = false;
-                                          isTappedCycling = false;
-                                          isTappedPublic = false;
-                                          isTappedVehicle = true;
-                                          isTappedWalking = false;
-                                          setState(() {});
-                                        },
-                                        child: TransportWidgets(
-                                          location:
-                                              vm
-                                                  .fetchItemsByIdMeResponse
-                                                  .data
-                                                  ?.data
-                                                  ?.estimatedTravelTime
-                                                  ?.carHire ??
-                                              "",
-                                          isTapped: isTappedVehicle,
-                                          icon: Assets.icons.vehicleHire.svg(
-                                            color: isTappedVehicle
-                                                ? GiftPoseColors.primaryColor
-                                                : Theme.of(
-                                                    context,
-                                                  ).textTheme.bodyMedium?.color,
+                                        XMargin(24),
+                                        InkWell(
+                                          onTap: () {
+                                            isTappedPrivate = false;
+                                            isTappedCycling = true;
+                                            isTappedPublic = false;
+                                            isTappedVehicle = false;
+                                            isTappedWalking = false;
+                                            setState(() {});
+                                          },
+                                          child: TransportWidgets(
+                                            location:
+                                                vm
+                                                    .fetchItemsByIdMeResponse
+                                                    .data
+                                                    ?.data
+                                                    ?.estimatedTravelTime
+                                                    ?.cycling ??
+                                                "",
+                                            isTapped: isTappedCycling,
+                                            icon: Assets.icons.cycling.svg(
+                                              color: isTappedCycling
+                                                  ? GiftPoseColors.primaryColor
+                                                  : Theme.of(
+                                                      context,
+                                                    ).textTheme.bodyMedium?.color,
+                                            ),
+                                            title: "Cycling",
                                           ),
-                                          title: "Vehicle Hire",
                                         ),
                                       ),
                                     ],

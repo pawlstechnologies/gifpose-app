@@ -6,8 +6,6 @@ import 'package:giftpose/utils/locator.dart';
 class AppTranslations {
   static Map<String, Map<String, String>> translations = {
     'en': {
-      "Active":"Active",
-      "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.":"You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.",
          "Tram":"Tram",
        "Train":"Train",          
        "Underground":"Underground",
@@ -123,8 +121,6 @@ class AppTranslations {
       "Gifting": "Gifting",
     },
     'de': {
-          "Active": "Aktiv",
-      "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.":"Sie erhalten derzeit alle Benachrichtigungen. Klicken Sie hier, um Benachrichtigungen NUR für Geschenke zu erhalten, die Sie finden möchten.",
 "Visit Freebies": "Gratis-Angebote ansehen",
   "Mark as Taken": "Als genommen markieren",
         "Tram":"Straßenbahn",
@@ -242,8 +238,6 @@ class AppTranslations {
   "Gifting": "Schenken",
 },
    'zh': {
-"Active": "激活",
-    "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.":"您目前正在接收所有警报。点击仅接收您想查找的礼物的警报。",
 "Visit Freebies": "查看免费物品",
 "Mark as Taken": "标记为已领取",
      "Tram": "有轨电车",
@@ -361,8 +355,6 @@ class AppTranslations {
   "Gifting": "赠送",
 },
    'fr': {
-    "Active": "Actif",
-    "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.":"Vous recevez actuellement toutes les alertes. Cliquez pour recevoir des alertes UNIQUEMENT pour les cadeaux que vous souhaitez trouver.",
 "Visit Freebies": "Voir les cadeaux",
   "Mark as Taken": "Marquer comme pris",
    "Tram": "Tramway",
@@ -479,8 +471,6 @@ class AppTranslations {
   "Gifting": "Offrir",
 },
     'it': {
-      "Active": "Attivo",
-      "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.":"Stai attualmente ricevendo tutti gli avvisi. Clicca per ricevere avvisi SOLO per i regali che vuoi trovare.",
       "Visit Freebies": "Visita Freebies",
 "Mark as Taken": "Segna come preso",
 "Tram": "Tram",
@@ -599,8 +589,7 @@ class AppTranslations {
   "Gifting": "Fare regali",
 },
    'es': {
-    "Active": "Activo",
-"You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.":"Actualmente estás recibiendo todas las alertas. Haz clic para recibir alertas SOLO para los regalos que quieras encontrar.",
+
   "visit_freebies": "Ver objetos gratis",
   "mark_as_taken": "Marcar como entregado",
 
@@ -719,8 +708,6 @@ class AppTranslations {
   "Gifting": "Regalar",
 },
     'pt': {
-      "Active": "Ativo",
-      "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.":"Você está recebendo todos os alertas. Clique para receber alertas APENAS para presentes que você deseja encontrar.",
 "Visit Freebies": "Ver itens grátis",
 "Mark as Taken": "Marcar como recolhido",
 "Tram": "Elétrico",

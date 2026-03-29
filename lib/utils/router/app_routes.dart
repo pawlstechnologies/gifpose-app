@@ -27,5 +27,6 @@ class AppRoutes {
      static const String resetPasswordScreen = "/resetPasswordScreen";
     static const String enterOtpScreen = "/enterOtpScreen";   
          
+      
     static const String profileScreen = "/profileScreen";  
 }
