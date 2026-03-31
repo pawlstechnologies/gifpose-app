@@ -42,6 +42,8 @@ class AppTranslations {
 - Never wire money (Western Union, etc.)—this is a classic scam red flag.
 - Never share financial details such as bank account numbers, Social Security info, PayPal credentials, or similar.""",
         "First, check that your internet connection is working. If it is, your phone may be low on storage space—try deleting some unused apps, photos, or files to free up room.": "First, check that your internet connection is working. If it is, your phone may be low on storage space—try deleting some unused apps, photos, or files to free up room.",
+                 "Or Sign In with":   "Or Sign In with",
+                 "Already have an account?":"Already have an account?",
          "Tram":"Tram",
        "Train":"Train",          
        "Underground":"Underground",
@@ -207,6 +209,8 @@ You will now only receive alerts related to the keywords you have chosen.""":"Ti
 - Überweisen Sie niemals Geld (Western Union usw.)—dies ist ein klassisches Warnsignal für Betrug.
 - Geben Sie niemals finanzielle Details wie Bankkontonummern, Sozialversicherungsinformationen, PayPal-Anmeldeinformationen oder Ähnliches weiter.""",
         "First, check that your internet connection is working. If it is, your phone may be low on storage space—try deleting some unused apps, photos, or files to free up room.": "Überprüfen Sie zunächst, ob Ihre Internetverbindung funktioniert. Wenn dies der Fall ist, verfügt Ihr Telefon möglicherweise über zu wenig Speicherplatz—versuchen Sie, einige ungenutzte Apps, Fotos oder Dateien zu löschen, um Speicherplatz freizugeben.",
+       "Already have an account?":"Sie haben bereits ein Konto?",
+            "Or Sign In with":   "Oder anmelden mit",
 "Visit Freebies": "Gratis-Angebote ansehen",
   "Mark as Taken": "Als genommen markieren",
         "Tram":"Straßenbahn",
@@ -243,7 +247,7 @@ You will now only receive alerts related to the keywords you have chosen.""":"Ti
 "Password":"Passwort",
 "Enter your confirm password":"Geben Sie Ihr Passwort erneut ein",
 "Confirm Password":"Passwort bestätigen",
-  "Welcome Back": "Willkommen zurück",
+
   "1mi": "1 mi",
   "Yes": "Ja",
   "Choose a cause": "Wählen Sie eine Sache",
@@ -374,6 +378,8 @@ You will now only receive alerts related to the keywords you have chosen.""":"�
 - 绝不进行电汇（西联汇款等）——这是一个典型的诈骗红灯。
 - 绝不泄露财务详细信息，例如银行帐号、社会安全信息、PayPal 凭据或类似信息。""",
         "First, check that your internet connection is working. If it is, your phone may be low on storage space—try deleting some unused apps, photos, or files to free up room.": "首先，检查您的互联网连接是否正常。如果正常，则您的手机存储空间可能不足——请尝试删除一些未使用的应用程序、照片或文件以释放空间。",
+     "Already have an account?":"您已经有账户了吗？",
+       "Or Sign In with":   "或使用以下方式登录",
 "Visit Freebies": "查看免费物品",
 "Mark as Taken": "标记为已领取",
      "Tram": "有轨电车",
@@ -545,6 +551,8 @@ You will now only receive alerts related to the keywords you have chosen.""":"Ap
 - Ne partagez jamais d'informations financières telles que des numéros de compte bancaire, des numéros de sécurité sociale, des identifiants PayPal ou similaires.""",
         "First, check that your internet connection is working. If it is, your phone may be low on storage space—try deleting some unused apps, photos, or files to free up room.": "Tout d'abord, vérifiez que votre connexion Internet fonctionne. Si c'est le cas, votre téléphone manque peut-être d'espace de stockage—essayez de supprimer des applications, photos ou fichiers inutilisés pour libérer de l'espace.",
  
+    "Already have an account?":"Vous avez déjà un compte ?",
+     "Or Sign In with": "Ou se connecter avec",
 "Visit Freebies": "Voir les cadeaux",
   "Mark as Taken": "Marquer comme pris",
    "Tram": "Tramway",
@@ -711,6 +719,8 @@ You will now only receive alerts related to the keywords you have chosen.""": "T
 - Non condividere mai dettagli finanziari come numeri di conto bancario, informazioni sulla previdenza sociale, credenziali PayPal o simili.""",
         "First, check that your internet connection is working. If it is, your phone may be low on storage space—try deleting some unused apps, photos, or files to free up room.": "Innanzitutto, verifica che la tua connessione Internet funzioni. Se funziona, il tuo telefono potrebbe avere poco spazio di archiviazione—prova a eliminare alcune app, foto o file inutilizzati per liberare spazio.",
  
+       "Already have an account?":"Hai già un account?",
+      "Or Sign In with": "Oppure accedi con",
       "Visit Freebies": "Visita Freebies",
 "Mark as Taken": "Segna come preso",
 "Tram": "Tram",
@@ -879,9 +889,10 @@ You will now only receive alerts related to the keywords you have chosen.""": "P
 - Nunca transfira dinheiro (Western Union, etc.) — esta é uma bandeira vermelha clássica de golpe.
 - Nunca compartilhe detalhes financeiros como números de conta bancária, informações de seguridade social, credenciais do PayPal ou similares.""",
         "First, check that your internet connection is working. If it is, your phone may be low on storage space—try deleting some unused apps, photos, or files to free up room.": "Primeiro, verifique se sua conexão com a internet está funcionando. Se estiver, seu telefone pode estar com pouco espaço de armazenamento — tente excluir alguns aplicativos, fotos ou arquivos não utilizados para liberar espaço.",
+"Or Sign In with": "O iniciar sesión con",
   "visit_freebies": "Ver objetos gratis",
   "mark_as_taken": "Marcar como entregado",
-
+ "Already have an account?":"¿Ya tienes una cuenta?",
 "Tram": "Tranvía",
 "Train": "Tren",
 "Underground": "Metro",
@@ -1047,6 +1058,8 @@ You will now only receive alerts related to the keywords you have chosen.""": "T
 - Nunca transfira dinheiro (Western Union, etc.) — esta é uma bandeira vermelha clássica de golpe.
 - Nunca compartilhe detalhes financeiros como números de conta bancária, informações de seguridade social, credenciais do PayPal ou similares.""",
         "First, check that your internet connection is working. If it is, your phone may be low on storage space—try deleting some unused apps, photos, or files to free up room.": "Primeiro, verifique se sua conexão com a internet está funcionando. Se estiver, seu telefone pode estar com pouco espaço de armazenamento — tente excluir alguns aplicativos, fotos ou arquivos não utilizados para liberar espaço.",
+      "Already have an account?":"Já tem uma conta?",
+     "Or Sign In with": "Ou entrar com",
 "Visit Freebies": "Ver itens grátis",
 "Mark as Taken": "Marcar como recolhido",
 "Tram": "Elétrico",

@@ -92,10 +92,26 @@ class _SplashScreenState extends State<SplashScreen>
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: GiftPoseButton(
-                title: "Continue",
+                title: "Sign Up".tr(context),
                 onTap: () {
                   HapticFeedback.heavyImpact();
-                  Navigator.pushNamed(context, AppRoutes.consentPage);
+                  Navigator.pushNamed(context, AppRoutes.createAccountPage);
+                },
+              ),
+            ),
+            YMargin(20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              
+              child: GiftPoseButton(
+                buttonType: GiftPoseButtonType.border,
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                textColor:  Theme.of(context).textTheme.bodyLarge?.color,
+                borderColor: Theme.of(context).dividerColor,
+                title: "Log In".tr(context),
+                onTap: () {
+                  HapticFeedback.heavyImpact();
+                  Navigator.pushNamed(context, AppRoutes.siginInPage);
                 },
               ),
             ),

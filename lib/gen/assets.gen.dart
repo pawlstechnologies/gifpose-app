@@ -284,6 +284,13 @@ class $AssetsImagesGen {
   /// File path: assets/images/divider.png
   AssetGenImage get divider => const AssetGenImage('assets/images/divider.png');
 
+  /// File path: assets/images/facebook.png
+  AssetGenImage get facebook =>
+      const AssetGenImage('assets/images/facebook.png');
+
+  /// File path: assets/images/google.png
+  AssetGenImage get google => const AssetGenImage('assets/images/google.png');
+
   /// File path: assets/images/images1.png
   AssetGenImage get images1 => const AssetGenImage('assets/images/images1.png');
 
@@ -345,6 +352,8 @@ class $AssetsImagesGen {
     dash3,
     dash4,
     divider,
+    facebook,
+    google,
     images1,
     images2,
     images3,
