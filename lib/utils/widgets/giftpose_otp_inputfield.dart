@@ -1,106 +1,117 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:giftpose/utils/theme/giftpose_colors.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
-class GiftPoseOtpInputField extends StatelessWidget {
-  final TextEditingController? controller;
-  final ValueChanged<String>? onCompleted;
-  final Function()? onTap;
+class GiftPoseOtpField extends StatelessWidget {
   final int length;
-  final void Function(String)? onChanged;
-  final bool? hasOtp;
-  final EdgeInsetsGeometry? fieldOuterPadding;
-  final MainAxisAlignment? mainAxisAlignment;
-  final Color? inactiveColor;
-  final Color? activeColor;
-  final Color? selectedColor;
-  final Color? activeFillColor;
-  final Color? selectedFillColor;
-  final Color? inactiveFillColor;
-  final Color? backgroundColor;
+  final String value;
+  final ValueChanged<String>? onChanged;
+  final Color backgroundColor;
   final Color? dotColor;
   final Color? emptyDotColor;
 
-  const GiftPoseOtpInputField({
-    super.key,
-    this.controller,
-    this.onCompleted,
-    this.onTap,
+  const GiftPoseOtpField({
+    Key? key,
     this.length = 6,
+    required this.value,
     this.onChanged,
-    this.hasOtp = false,
-    this.mainAxisAlignment,
-    this.fieldOuterPadding,
-    this.inactiveColor,
-    this.activeColor,
-    this.selectedColor,
-    this.activeFillColor,
-    this.selectedFillColor,
-    this.inactiveFillColor,
-    this.backgroundColor,
-    this.dotColor,
-    this.emptyDotColor,
-  });
+    this.backgroundColor = const Color(0xFF6E6E8E), // Example: purple/grey
+    this.dotColor = const Color(0xFFD1D3DB), // Example: light grey
+    this.emptyDotColor = const Color(0xFFD1D3DB),
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return PinCodeTextField(
-      appContext: context,
-      controller: controller,
-      autoDisposeControllers: false,
-      mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
-      readOnly: false,
-      blinkWhenObscuring: false,
-      obscureText: true,
-      autovalidateMode: AutovalidateMode.disabled,
-      pastedTextStyle: TextStyle(
-        color: theme.textTheme.bodyLarge?.color ?? Colors.black,
-        fontWeight: FontWeight.bold,
+    return Container(
+      height: 48,
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color:     Theme.of(context).primaryColor,)
       ),
-      length: length,
-      textStyle: TextStyle(
-        color: theme.textTheme.bodyLarge?.color,
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: List.generate(length, (index) {
+          bool filled = index < value.length;
+          return Container(
+            width: 12.w,
+            height: 12.w,
+            decoration: BoxDecoration(
+              color: filled ? dotColor : emptyDotColor?.withOpacity(0.5),
+              shape: BoxShape.circle,
+            ),
+          );
+        }),
       ),
-      cursorHeight: 15,
-      validator: (value) {
-        if (value?.length != length) {
-          return "input is required";
-        } else if (value == null || value.isEmpty) {
-          return "input is required";
-        }
-        return null;
-      },
-      onTap: onTap,
-      pinTheme: PinTheme(
-        shape: PinCodeFieldShape.box,
-        borderRadius: BorderRadius.circular(8.r),
-        fieldWidth: 48.w,
-        fieldHeight: 57.h,
-        fieldOuterPadding:
-            fieldOuterPadding ?? const EdgeInsets.symmetric(horizontal: 4),
-        borderWidth: 0.5,
-        activeBorderWidth: 0.5,
-        selectedBorderWidth: 0.5,
-        disabledBorderWidth: 0.5,
-        inactiveBorderWidth: 0.5,
-        activeColor: activeColor ?? GiftPoseColors.primaryColor,
-        inactiveColor: inactiveColor ?? Theme.of(context).dividerColor,
-        selectedColor: selectedColor ?? GiftPoseColors.primaryColor,
-        activeFillColor: activeFillColor ?? Theme.of(context).cardColor,
-        inactiveFillColor: inactiveFillColor ?? Theme.of(context).cardColor,
-        selectedFillColor: selectedFillColor ?? Theme.of(context).cardColor,
+    );
+  }
+}
+class GiftPoseOtpInputField extends StatefulWidget {
+  final int length;
+  final Color backgroundColor;
+  final Color? dotColor;
+  final Color? emptyDotColor;
+  final TextEditingController? controller;
+  final ValueChanged<String>? onChanged;
+
+  const GiftPoseOtpInputField({
+    Key? key,
+    this.length = 6,
+    this.backgroundColor = const Color(0xFF6E6E8E),
+    this.dotColor = const Color(0xFFD1D3DB),
+    this.emptyDotColor = const Color(0xFFD1D3DB),
+    this.controller,
+    this.onChanged,
+  }) : super(key: key);
+
+  @override
+  State<GiftPoseOtpInputField> createState() => _GiftPoseOtpInputFieldState();
+}
+
+class _GiftPoseOtpInputFieldState extends State<GiftPoseOtpInputField> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = widget.controller ?? TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          GiftPoseOtpField(
+            length: widget.length,
+            value: _controller.text,
+            backgroundColor: widget.backgroundColor,
+            dotColor: Theme.of(context).textTheme.bodyLarge?.color,
+            emptyDotColor: Theme.of(context).textTheme.bodyMedium?.color,
+          ),
+          Opacity(
+            opacity: 0.0,
+            child: TextField(
+              controller: _controller,
+              maxLength: widget.length,
+              keyboardType: TextInputType.number,
+              onChanged: (value) {
+                setState(() {});
+                widget.onChanged?.call(value);
+              },
+              autofocus: false,
+            ),
+          ),
+        ],
       ),
-      cursorColor: theme.textTheme.bodyLarge?.color,
-      animationDuration: const Duration(milliseconds: 300),
-      keyboardType: TextInputType.number,
-      onCompleted: onCompleted,
-      enableActiveFill: true,
-      onChanged: onChanged ?? (val) {},
-      beforeTextPaste: (text) {
-        return true;
-      },
     );
   }
 }

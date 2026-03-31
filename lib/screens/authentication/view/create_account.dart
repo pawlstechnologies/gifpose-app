@@ -138,58 +138,38 @@ class CreateAccountScreen extends StatelessWidget with Validators{
                           child: Divider(color: Theme.of(context).dividerColor),
                         ),
                         XMargin(10),
-                        Text(
-                          "Or Sign Up with".tr(context),
-                          style: GiftPoseTextStyle.medium(
-                            fontSize: 14,
-                            color: Theme.of(context).textTheme.bodyMedium!.color,
-                          ),
-                        ),
-                        XMargin(10),
-                        Expanded(
-                          child: Divider(color: Theme.of(context).dividerColor),
-                        ),
-                      ],
-                    ),
-                    YMargin(35),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 42.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Assets.icons.ex.svg(),
-                          Assets.images.facebook.image(height: 47, width: 47),
-                          Assets.icons.apple.svg(),
-                          Assets.images.google.image(height: 47, width: 47),
-                        ],
+                      Expanded(child: Divider(color: Theme.of(context).dividerColor,)),
+                    ],
+                  ),
+                          YMargin(35),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 42.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                                            Assets.icons.ex.svg(),
+                                            Assets.images.facebook.image(height: 47,width: 47),
+                                            Assets.icons.apple.svg(),
+                           Assets.images.google.image(height: 47,width: 47),
+                        
+                                            
+                                           ],),
                       ),
-                    ),
-                    YMargin(35),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Already have an account?".tr(context),
-                          style: GiftPoseTextStyle.medium(
-                            color: Theme.of(context).textTheme.bodyMedium!.color,
-                            fontSize: 14,
-                          ),
-                        ),
-                        Text(
-                          "Log In".tr(context),
-                          style: GiftPoseTextStyle.medium(
-                            fontSize: 14,
-                            color: GiftPoseColors.primaryColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                
-                    YMargin(99),
-                  ],
-                ),
+               YMargin(35),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Already have an account?".tr(context),style: GiftPoseTextStyle.medium(color: Theme.of(context).textTheme.bodyMedium!.color,fontSize: 14),),
+                      Text("Log In".tr(context),style: GiftPoseTextStyle.medium( fontSize: 14,color: GiftPoseColors.primaryColor),),
+                    ],
+                  ),
+
+
+
+                  YMargin(99)
+                ],
               ),
-            );
+            ));
           },
         );
       },
