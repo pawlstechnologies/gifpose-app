@@ -267,7 +267,7 @@ createAccountResponse = NetworkDataResponse.error(e.toString());
       forgotPasswordResponse = NetworkDataResponse.loading("");
       LoaderPage.show(navigatorKey.currentContext!);
 
-      final response = await authenticationRepo.forgotPassword(forgotPasswordRequest: ForgotPasswordRequest(email: "rayaderinto@gmail.com"));
+      final response = await authenticationRepo.forgotPassword(forgotPasswordRequest: ForgotPasswordRequest(email: emailCtrl.text.trim()));
 
      
       forgotPasswordResponse = NetworkDataResponse.completed(response);
@@ -354,7 +354,7 @@ createAccountResponse = NetworkDataResponse.error(e.toString());
       resendOtpResponse = NetworkDataResponse.loading("");
       LoaderPage.show(navigatorKey.currentContext!);
 
-      final response = await authenticationRepo.resendOtp(resendOtpRequest: ResendOtpRequest(email: "ray@mailinator.com"));
+      final response = await authenticationRepo.resendOtp(resendOtpRequest: ResendOtpRequest(email: emailCtrl.text.trim()));
 
      
       resendOtpResponse = NetworkDataResponse.completed(response);
