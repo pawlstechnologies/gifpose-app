@@ -195,7 +195,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
           appBarTitleWidget:
 
            Text("Notification Alert".tr(context),
-            style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
+        style: GiftPoseTextStyle.normal(fontWeight: FontWeight.w500),
           ),
 
           builder: (size) {

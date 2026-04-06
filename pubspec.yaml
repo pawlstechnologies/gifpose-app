@@ -64,6 +64,5 @@ flutter:
   fonts:
     - family: Urbanist
       fonts:
-        - asset: assets/fonts/Urbanist/Urbanist-Italic-VariableFont_wght.ttf
         - asset: assets/fonts/Urbanist/Urbanist-VariableFont_wght.ttf
-          style: italic
+

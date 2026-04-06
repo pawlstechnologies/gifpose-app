@@ -45,7 +45,7 @@ class _DetailsPageState extends State<DetailsPage> {
     return Consumer<DashboardViewmodel>(
       builder: (context, vm, child) {
         return GiftPoseBaseScaffold(
-          showAppBar: true,
+         showAppBar: false,
           includeVerticalPadding: false,
           includeHorizontalPadding: false,
           centerTitle: true,
@@ -55,9 +55,11 @@ class _DetailsPageState extends State<DetailsPage> {
               Navigator.pop(context);
             },
             child: Container(
-              width: 200,
+            
+              width: 150,
               height: 100,
               decoration: BoxDecoration(
+                  color: Colors.red,
                 borderRadius: BorderRadius.circular(
                   20,
                 ), // Adjust the value for more/less rounding
@@ -75,39 +77,143 @@ class _DetailsPageState extends State<DetailsPage> {
           appBarTitleWidget: Text("Gift Details".tr(context),
             textAlign: TextAlign.center,
 
-            style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
+            style: GiftPoseTextStyle.normal(fontWeight: FontWeight.w500),
           ),
 
           builder: (size) {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  YMargin(15),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          vm
-                              .fetchItemsByIdMeResponse
-                              .data
-                              ?.data
-                              ?.imageUrls[selectedImageIndex] ??
-                          '',
-                      width: double.infinity,
-                      height: 277.w,
-                      fit: BoxFit.cover,
-                      errorWidget: (context, url, error) => Container(
+                  YMargin(30),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+            onTap: () {
+             HapticFeedback.heavyImpact();
+              Navigator.pop(context);
+            },
+            child: Container(
+            
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+             
+                borderRadius: BorderRadius.circular(
+                  20,
+                ), // Adjust the value for more/less rounding
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Assets.icons.back.svg(
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
+                ),
+              ),
+            ),
+          ),
+
+
+     Text("Gift Details".tr(context),
+            textAlign: TextAlign.center,
+
+            style: GiftPoseTextStyle.normal(fontWeight: FontWeight.w500),
+          ),
+Container(height:50,width: 50,)
+                    ],
+                  ),
+      
+                  GestureDetector(
+                    onTap: () {
+                      final dataResponse = vm.fetchItemsByIdMeResponse.data;
+                      if (dataResponse == null) return;
+                      final responseData = dataResponse.data;
+                      final heroImage = responseData.imageUrls.length > selectedImageIndex
+                          ? responseData.imageUrls[selectedImageIndex]
+                          : null;
+                      if (heroImage != null && heroImage.toString().isNotEmpty) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                            backgroundColor: Colors.transparent,
+                            insetPadding: EdgeInsets.all(10),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              clipBehavior: Clip.none,
+                              children: [
+                                InteractiveViewer(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: CachedNetworkImage(
+                                      imageUrl: heroImage.toString(),
+                                      fit: BoxFit.contain,
+                                      placeholder: (context, url) => Container(
+                                        color: Colors.grey.shade100,
+                                        child: Center(
+                                          child: CupertinoActivityIndicator(),
+                                        ),
+                                      ),
+                                      errorWidget: (context, url, error) => Container(
+                                        color: Colors.grey.shade200,
+                                        child: Icon(Icons.error, color: Colors.grey),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: -15,
+                                  right: -15,
+                                  child: GestureDetector(
+                                    onTap: () => Navigator.pop(context),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black26,
+                                            blurRadius: 4,
+                                            spreadRadius: 1,
+                                          ),
+                                        ],
+                                      ),
+                                      padding: EdgeInsets.all(8),
+                                      child: Icon(Icons.close, color: Colors.black, size: 20),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            vm
+                                .fetchItemsByIdMeResponse
+                                .data
+                                ?.data
+                                .imageUrls[selectedImageIndex] ??
+                            '',
                         width: double.infinity,
-                        height: 102.w,
-                        color: Colors.grey.shade200,
-                        child: Icon(Icons.error, color: Colors.grey),
-                      ),
-                      placeholder: (context, url) => Container(
-                        width: double.infinity,
-                        height: 102.w,
-                        color: Colors.grey.shade100,
-                        child: Center(
-                          child: CupertinoActivityIndicator(),
+                        height: 277.w,
+                        fit: BoxFit.cover,
+                        errorWidget: (context, url, error) => Container(
+                          width: double.infinity,
+                          height: 102.w,
+                          color: Colors.grey.shade200,
+                          child: Icon(Icons.error, color: Colors.grey),
+                        ),
+                        placeholder: (context, url) => Container(
+                          width: double.infinity,
+                          height: 102.w,
+                          color: Colors.grey.shade100,
+                          child: Center(
+                            child: CupertinoActivityIndicator(),
+                          ),
                         ),
                       ),
                     ),
@@ -129,7 +235,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           Padding(
                             padding: EdgeInsets.only(left: 20.0),
                             child: SizedBox(
-                              height: 100.w,
+                              height: 80.w,
                               width: double.infinity,
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
@@ -165,8 +271,8 @@ class _DetailsPageState extends State<DetailsPage> {
                                             ),
                                             child: CachedNetworkImage(
                                               imageUrl: imageUrl,
-                                              width: 92.w,
-                                              height: 86.w,
+                                              width: 60.w,
+                                              height: 60.w,
                                               fit: BoxFit.cover,
                                               errorWidget:
                                                   (
@@ -210,7 +316,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             child: Text(
                               vm.fetchItemsByIdMeResponse.data?.data?.name ??
                                   "",
-                              style: GiftPoseTextStyle.heading1(
+                              style: GiftPoseTextStyle.normal(
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -248,7 +354,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           YMargin(25),
                           Padding(
                             padding: EdgeInsets.symmetric(
-                              horizontal: 20.0,
+                              horizontal: 15.0,
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -282,7 +388,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                                   context,
                                                 ).textTheme.bodyMedium?.color,
                                         ),
-                                        title: "Private Vehicle",
+                                        title: "Private Vehicle".tr(context),
                                       ),
                                     ),
                                     YMargin(10),
@@ -331,7 +437,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                               context,
                                             ).textTheme.bodyMedium?.color,
                                     ),
-                                    title: "Public Transport",
+                                    title: "Public Transport".tr(context),
                                   ),
                                 ),
 
@@ -362,7 +468,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                               context,
                                             ).textTheme.bodyMedium?.color,
                                     ),
-                                    title: "Walking",
+                                    title: "Walking".tr(context),
                                   ),
                                 ),
                                 XMargin(20),
@@ -392,7 +498,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                               context,
                                             ).textTheme.bodyMedium?.color,
                                     ),
-                                    title: "Cycling",
+                                    title: "Cycling".tr(context),
                                   ),
                                 ),
                                 XMargin(20),
@@ -433,7 +539,7 @@ class _DetailsPageState extends State<DetailsPage> {
                               ? Container(
                                   padding: EdgeInsets.symmetric(
                                     vertical: 9,
-                                    horizontal: 17,
+                                    horizontal: 15,
                                   ),
                                   width: width(context),
                                   color: GiftPoseColors.containerBackground,
@@ -517,7 +623,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                   ),
                                 )
                               : SizedBox.shrink(),
-                          YMargin(30),
+                   
                           Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: 20.0,
@@ -533,9 +639,8 @@ class _DetailsPageState extends State<DetailsPage> {
                               ),
                             ),
                           ),
-                          YMargin(10),
+                    
 
-                          YMargin(18),
                           _isNavigating
                               ? Padding(
                                   padding: EdgeInsets.symmetric(

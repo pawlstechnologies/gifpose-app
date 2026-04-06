@@ -44,7 +44,7 @@ class AboutPage extends StatelessWidget {
       appBarTitleWidget: Text("About Gift Pose".tr(context),
         textAlign: TextAlign.center,
 
-        style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
+ style: GiftPoseTextStyle.normal(fontWeight: FontWeight.w500),
       ),
 
       builder: (size) {

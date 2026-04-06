@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:giftpose/app.dart';
-import 'package:giftpose/screens/main_view/viewmodels/base_viewmodel.dart';
 import 'package:giftpose/utils/theme/font_util.dart';
-import 'package:giftpose/utils/theme_type.dart';
-import '../theme_tpye.dart';
-import 'giftpose_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'package:provider/provider.dart';
 
 
 class GiftPoseTextStyle {
@@ -18,10 +12,8 @@ class GiftPoseTextStyle {
       FontFamily fontFamily = FontFamily.urbanist,
       FontWeight fontWeight = FontWeight.bold,
       Color? color}) {
-    final baseVM =
-        Provider.of<BaseViewmodel>(navigatorKey.currentContext!, listen: false);
     return TextStyle(
-        fontFamily: fontFamily.toString(),
+        fontFamily: getFontFamily(fontFamily),
         fontSize: fontSize.sp,
         fontWeight: fontWeight,
               color: color ?? Theme.of(navigatorKey.currentContext!).textTheme.bodyLarge?.color
@@ -36,11 +28,9 @@ class GiftPoseTextStyle {
       FontWeight fontWeight = FontWeight.bold,
       TextDecoration? decoration,
       Color? color}) {
-    final baseVM =
-        Provider.of<BaseViewmodel>(navigatorKey.currentContext!, listen: false);
     return TextStyle(
       decoration: decoration,
-        fontFamily: fontFamily.toString(),
+        fontFamily: getFontFamily(fontFamily),
         fontSize: fontSize.sp,
         fontWeight: fontWeight,
              color: color ?? Theme.of(navigatorKey.currentContext!).textTheme.bodyLarge?.color
@@ -53,11 +43,9 @@ class GiftPoseTextStyle {
       FontWeight fontWeight = FontWeight.bold,
       TextDecoration? decoration,
       Color? color}) {
-    final baseVM =
-        Provider.of<BaseViewmodel>(navigatorKey.currentContext!, listen: false);
     return TextStyle(
       decoration: decoration,
-        fontFamily: fontFamily.toString(),
+        fontFamily: getFontFamily(fontFamily),
         fontSize: fontSize.sp,
         fontWeight: fontWeight,
         color: color ?? Theme.of(navigatorKey.currentContext!).textTheme.bodyLarge?.color
@@ -70,12 +58,10 @@ class GiftPoseTextStyle {
       FontWeight fontWeight = FontWeight.normal,
            TextDecoration? decoration,
       Color? color}) {
-    final baseVM =
-        Provider.of<BaseViewmodel>(navigatorKey.currentContext!, listen: false);
     return TextStyle(
       
             decoration: decoration,
-        fontFamily: fontFamily.toString(),
+        fontFamily: getFontFamily(fontFamily),
         fontSize: fontSize.sp,
         fontWeight: fontWeight,
       
@@ -89,11 +75,9 @@ class GiftPoseTextStyle {
       FontWeight fontWeight = FontWeight.normal,
             TextDecoration? decoration,
       Color? color}) {
-    final baseVM =
-        Provider.of<BaseViewmodel>(navigatorKey.currentContext!, listen: false);
     return TextStyle(
             decoration: decoration,
-        fontFamily: fontFamily.toString(),
+        fontFamily: getFontFamily(fontFamily),
         fontSize: fontSize.sp,
         fontWeight: fontWeight,
           color: color ??Theme.of(navigatorKey.currentContext!).textTheme.bodyLarge?.color

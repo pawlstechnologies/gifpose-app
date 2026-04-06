@@ -61,6 +61,7 @@ class OnboardingViewModel extends BaseViewmodel {
 
   OnboardingViewModel() {
     getDeviceId();
+   getFcmToken();
   }
   final SecureStorageService secureStorageService =
       serviceLocator<SecureStorageService>();
@@ -112,6 +113,8 @@ final DatabaseService databaseService = serviceLocator<DatabaseService>();
           postcode: postcode,
           deviceId: deviceId ?? "",
           miles: miles,
+          firebaseToken: fcmToken ?? "",
+          
         ),
       );
       log('Register location: 3');

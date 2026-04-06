@@ -122,8 +122,8 @@ class CategoryGridItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
             child: CachedNetworkImage(
               imageUrl: response.thumbnail ?? '',
-              width: double.infinity,
-              height: 102.w,
+                   width: 161.w,
+                height: 146.w,
               fit: BoxFit.cover,
               errorWidget: (context, url, error) => Container(
                 width: double.infinity,
@@ -132,8 +132,8 @@ class CategoryGridItem extends StatelessWidget {
                 child: Icon(Icons.error, color: Colors.grey),
               ),
               placeholder: (context, url) => Container(
-                width: double.infinity,
-                height: 102.w,
+                width: 161.w,
+                height: 146.w,
                 color: Colors.grey.shade100,
                 child: Center(
                   child: CupertinoActivityIndicator(),

@@ -28,8 +28,8 @@ class CategoryGrid extends StatelessWidget {
     required this.items,
     required this.userLocation,
     this.crossAxisCount = 2,
-    this.childAspectRatio = 0.9,
-    this.spacing = 12,
+    this.childAspectRatio = 0.4,
+    this.spacing = 5,
     this.scrollController,
     required this.hasReachedMax,
     required this.isLoadingMore,
@@ -42,7 +42,7 @@ class CategoryGrid extends StatelessWidget {
         return GridView.builder(
           controller: scrollController,
           physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.all(spacing),
+          padding: EdgeInsets.all(15),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: crossAxisCount,
             childAspectRatio: childAspectRatio,
@@ -122,18 +122,18 @@ class CategoryGridItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
             child: CachedNetworkImage(
               imageUrl: response.thumbnail ?? '',
-              width: double.infinity,
-              height: 102.w,
+                     width: 161.w,
+                height: 146.w,
               fit: BoxFit.cover,
               errorWidget: (context, url, error) => Container(
-                width: double.infinity,
-                height: 102.w,
+                   width: 161.w,
+                height: 146.w,
                 color: Colors.grey.shade200,
                 child: Icon(Icons.error, color: Colors.grey),
               ),
               placeholder: (context, url) => Container(
-                width: double.infinity,
-                height: 102.w,
+                     width: 161.w,
+                height: 146.w,
                 color: Colors.grey.shade100,
                 child: Center(
                   child: CupertinoActivityIndicator(),
@@ -155,8 +155,8 @@ class CategoryGridItem extends StatelessWidget {
                 Text(
                   response.name ?? 'No name',
                   style: GiftPoseTextStyle.medium(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -176,7 +176,7 @@ class CategoryGridItem extends StatelessWidget {
                       child: Text(
                         userLocation.city ?? "United Kingdom",
                         style: GiftPoseTextStyle.small(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w400,
                           color: Theme.of(context).textTheme.bodyMedium?.color,
                         ),
                         maxLines: 1,

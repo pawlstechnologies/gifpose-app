@@ -49,7 +49,7 @@ class _LanguageViewState extends State<LanguageView> {
       centerTitle: true,
       includeHorizontalPadding: true,
       appBarTitleWidget: Text("Choose your Preferred Language".tr(context),
-        style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
+     style: GiftPoseTextStyle.normal(fontWeight: FontWeight.w500),
       ),
       appBarLeadingWidget:  InkWell(
             onTap: () {

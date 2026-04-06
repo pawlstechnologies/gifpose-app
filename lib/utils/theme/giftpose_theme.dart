@@ -14,6 +14,8 @@ class GiftPoseTheme {
         fontFamily: getFontFamily(FontFamily.urbanist));
   }
   final lightTheme = ThemeData(
+    fontFamily: getFontFamily(FontFamily.urbanist),
+    useMaterial3: true,
     brightness: Brightness.light,
     primaryColor: GiftPoseColors.primaryColor,
     secondaryHeaderColor: GiftPoseColors.secondaryColor,
@@ -40,6 +42,8 @@ class GiftPoseTheme {
 );
 
   final darkTheme = ThemeData(
+    fontFamily: getFontFamily(FontFamily.urbanist),
+    useMaterial3: true,
     brightness: Brightness.dark,
     primaryColor: GiftPoseColors.primaryColor,
       dividerColor: GiftPoseColors.borderColor,

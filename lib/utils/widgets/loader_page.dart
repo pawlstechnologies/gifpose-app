@@ -62,8 +62,8 @@ class _LoaderPageState extends State<LoaderPage>
               turns: _controller,
               child: Image.asset(
                 "assets/images/loader.png",
-                width: 80,
-                height: 80,
+                width: 340,
+                height: 280,
               ),
             ),
             YMargin(30),

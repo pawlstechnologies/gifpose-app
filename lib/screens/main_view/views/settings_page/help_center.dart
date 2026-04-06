@@ -47,7 +47,7 @@ class HelpCenter extends StatelessWidget {
       appBarTitleWidget: Text("Help Center".tr(context),
         textAlign: TextAlign.center,
 
-        style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
+      style: GiftPoseTextStyle.normal(fontWeight: FontWeight.w500),
       ),
 
       builder: (size) {

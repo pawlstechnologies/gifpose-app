@@ -147,7 +147,7 @@ class _DashboardViewState extends State<DashboardView> {
     return GiftPoseBaseScaffold(
       showAppBar: false,
       includeHorizontalPadding: false,
-      includeVerticalPadding: true,
+      includeVerticalPadding: false,
       hasGradient: true,
       builder: (size) {
         return Consumer<DashboardViewmodel>(
@@ -158,7 +158,7 @@ class _DashboardViewState extends State<DashboardView> {
               color: GiftPoseColors.primaryColor,
               child: Column(
                 children: [
- 
+                  YMargin(35),
 
                   // Header
                   Padding(
@@ -199,17 +199,9 @@ class _DashboardViewState extends State<DashboardView> {
                             ),
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            // copyToClipboard(
-                            //   context,
-                            //   viewModel.fcmToken.toString(),
-                            // );
-                          },
-                          child: Text("All Gifts".tr(context),
-                            style: GiftPoseTextStyle.normal(
-                              fontWeight: FontWeight.w500,
-                            ),
+                        Text("All Gifts".tr(context),
+                          style: GiftPoseTextStyle.normal(
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         Row(
@@ -466,8 +458,8 @@ class _DashboardViewState extends State<DashboardView> {
         hasReachedMax: viewModel.hasReachedMax,
         isLoadingMore: viewModel.isLoadingMore,
         crossAxisCount: 2,
-        childAspectRatio: 0.8,
-        spacing: 16,
+        childAspectRatio: 0.78,
+        spacing: 8,
       );
     }
   }

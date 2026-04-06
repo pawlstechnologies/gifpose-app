@@ -51,7 +51,7 @@ class ArticlePage extends StatelessWidget {
         title,
         textAlign: TextAlign.center,
 
-        style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
+ style: GiftPoseTextStyle.normal(fontWeight: FontWeight.w500),
       ),
 
       builder: (size) {

@@ -92,13 +92,13 @@ class GiftPoseBaseScaffold extends StatelessWidget {
                 appBar: showAppBar
                     ? appBar ??
                         AppBar(
-                          toolbarHeight: 60.h,
+                          toolbarHeight: 50.h,
                           elevation: 0,
                           leadingWidth: 69,
                           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                           title: appBarTitleWidget,
                           leading: Padding(
-                            padding: EdgeInsets.only(left: 15.0,top: 10),
+                            padding: EdgeInsets.only(left: 15.0,top: 5),
                             child: appBarLeadingWidget ??
                                 GestureDetector(
                                   onTap: () => Navigator.pop(context),

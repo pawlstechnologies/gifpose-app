@@ -134,9 +134,8 @@ void testLocalNotification() async {
                   debugShowCheckedModeBanner: false,
                   scaffoldMessengerKey: rootScaffoldMessengerKey,
                   navigatorKey: navigatorKey,
-                  //    theme: light,
-          theme: light,
-darkTheme: dark,
+                  theme: light,
+                  darkTheme: dark,
                   builder: (context, child) {
                     return MediaQuery(
                       data: MediaQuery.of(
