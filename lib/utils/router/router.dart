@@ -6,6 +6,7 @@ import 'package:giftpose/screens/authentication/view/forgot_password_view.dart';
 import 'package:giftpose/screens/authentication/view/password_changed.dart';
 import 'package:giftpose/screens/authentication/view/reset_password_view.dart';
 import 'package:giftpose/screens/authentication/view/sigin_in_view.dart';
+import 'package:giftpose/screens/authentication/view/verify_email.dart';
 import 'package:giftpose/screens/main_view/views/settings_page/help_center.dart';
 import 'package:giftpose/screens/main_view/views/settings_page/language_view.dart';
 import 'package:giftpose/screens/main_view/views/settings_page/premium_page.dart';
@@ -60,6 +61,10 @@ class Routers {
         break;
              case AppRoutes.siginInPage:
         routeWidget = SigininScreen();
+        break;
+
+             case AppRoutes.verifyEmailScreen:
+        routeWidget = VerifyEmailScreen();
         break;
              case AppRoutes.forgotPasswordScreen:
         routeWidget = ForgotPasswordScreen();

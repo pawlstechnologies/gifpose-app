@@ -15,6 +15,8 @@ import 'package:giftpose/screens/authentication/models/reset_password_request.da
 import 'package:giftpose/screens/authentication/models/reset_password_response.dart';
 import 'package:giftpose/screens/authentication/models/sigin_request.dart';
 import 'package:giftpose/screens/authentication/models/signin_response.dart';
+import 'package:giftpose/screens/authentication/models/verify_email_request.dart';
+import 'package:giftpose/screens/authentication/models/verify_email_response.dart';
 import 'package:giftpose/screens/authentication/repo/authentication_repo.dart';
 import 'package:giftpose/screens/main_view/viewmodels/base_viewmodel.dart';
 import 'package:giftpose/screens/onboarding/models/register_location_request.dart';
@@ -69,7 +71,7 @@ class AuthenticationViewModel extends BaseViewmodel {
     notifyListeners();
   }
 
-  OnboardingViewModel() {
+  AuthenticationViewModel() {
     getDeviceId();
   }
 
@@ -133,7 +135,8 @@ class AuthenticationViewModel extends BaseViewmodel {
       Navigator.pop(navigatorKey.currentContext!);
 
       if (createAccountResponse.data?.status == true) {
-        Navigator.pushNamed(navigatorKey.currentContext!, AppRoutes.dashboard);
+        Navigator.pushNamed(navigatorKey.currentContext!, AppRoutes.verifyEmailScreen);
+     
       } else {
         CustomToast.show(
           context: navigatorKey.currentContext!,
@@ -177,6 +180,9 @@ createAccountResponse = NetworkDataResponse.error(e.toString());
 
       if (signInResponse.data?.status == true) {
         Navigator.pushNamed(navigatorKey.currentContext!, AppRoutes.dashboard);
+              secureStorageService.write(
+          key: StorageKeys.accessToken,
+          value: "response.data.token");
       } else {
         CustomToast.show(
           context: navigatorKey.currentContext!,
@@ -192,6 +198,54 @@ createAccountResponse = NetworkDataResponse.error(e.toString());
     }
   }
 
+
+
+
+
+//verify Email 
+
+  NetworkDataResponse<VerifyEmailAddressResponse> _verifyEmailAddressResponse =
+      NetworkDataResponse.idle();
+
+  NetworkDataResponse<VerifyEmailAddressResponse> get verifyEmailAddressResponse =>
+      _verifyEmailAddressResponse;
+
+  set verifyEmailAddressResponse(NetworkDataResponse<VerifyEmailAddressResponse> value) {
+    _verifyEmailAddressResponse = value;
+    notifyListeners();
+
+  }
+
+
+  Future<void> verifyEmailAddress() async {
+    try {
+      verifyEmailAddressResponse = NetworkDataResponse.loading("");
+      LoaderPage.show(navigatorKey.currentContext!);
+
+      final response = await authenticationRepo.verifyEmailAddress(verifyEmailAddressRequest: VerifyEmailAddressRequest(email: "ray@mailinator.com", code: otpCtrl.text.trim()));
+
+     
+      verifyEmailAddressResponse = NetworkDataResponse.completed(response);
+
+      Navigator.pop(navigatorKey.currentContext!);
+
+      if (verifyEmailAddressResponse.data?.status == true) {
+        Navigator.pushNamed(navigatorKey.currentContext!, AppRoutes.siginInPage);
+       
+      } else {
+        CustomToast.show(
+          context: navigatorKey.currentContext!,
+          message:
+              verifyEmailAddressResponse.data?.message ?? "Something went wrong",
+        );
+      }
+    } catch (e) {
+      Navigator.pop(navigatorKey.currentContext!);
+      verifyEmailAddressResponse = NetworkDataResponse.error(e.toString());
+
+      CustomToast.show(context: navigatorKey.currentContext!, message: e.toString());
+    }
+  }
 
 
   //forgot password
@@ -213,7 +267,7 @@ createAccountResponse = NetworkDataResponse.error(e.toString());
       forgotPasswordResponse = NetworkDataResponse.loading("");
       LoaderPage.show(navigatorKey.currentContext!);
 
-      final response = await authenticationRepo.forgotPassword(forgotPasswordRequest: ForgotPasswordRequest(email: emailCtrl.text.trim()));
+      final response = await authenticationRepo.forgotPassword(forgotPasswordRequest: ForgotPasswordRequest(email: "rayaderinto@gmail.com"));
 
      
       forgotPasswordResponse = NetworkDataResponse.completed(response);
@@ -300,7 +354,7 @@ createAccountResponse = NetworkDataResponse.error(e.toString());
       resendOtpResponse = NetworkDataResponse.loading("");
       LoaderPage.show(navigatorKey.currentContext!);
 
-      final response = await authenticationRepo.resendOtp(resendOtpRequest: ResendOtpRequest(email: emailCtrl.text.trim()));
+      final response = await authenticationRepo.resendOtp(resendOtpRequest: ResendOtpRequest(email: "ray@mailinator.com"));
 
      
       resendOtpResponse = NetworkDataResponse.completed(response);

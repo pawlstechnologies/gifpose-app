@@ -5,7 +5,9 @@ import 'package:giftpose/utils/theme/giftpose_colors.dart';
 import 'theme.dart';
 
 class GiftPoseTheme {
+
   static ThemeData theme() {
+    
     return ThemeData(
         pageTransitionsTheme: PageTransitionsTheme(builders: {
           TargetPlatform.android: CupertinoPageTransitionsBuilder(),
@@ -42,8 +44,6 @@ class GiftPoseTheme {
 );
 
   final darkTheme = ThemeData(
-    fontFamily: getFontFamily(FontFamily.urbanist),
-    useMaterial3: true,
     brightness: Brightness.dark,
     primaryColor: GiftPoseColors.primaryColor,
       dividerColor: GiftPoseColors.borderColor,
@@ -52,6 +52,7 @@ class GiftPoseTheme {
     
     // cardColor: GiftPoseColors.borderColorDark,
     textTheme: TextTheme(
+
       bodyLarge: TextStyle(color: GiftPoseColors.lightBodyText),
       bodyMedium: TextStyle(color: GiftPoseColors.lightSubtitleTextColor),
     ),

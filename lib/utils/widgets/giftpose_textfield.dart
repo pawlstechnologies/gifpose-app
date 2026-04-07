@@ -190,7 +190,7 @@ class _GiftPoseTextFieldState extends State<GiftPoseTextField> {
                         prefixIconConstraints: BoxConstraints(
                           maxHeight: 25.h,
                           minHeight: 25.h,
-                          minWidth: 25.w,
+                          minWidth: 15.w,
                         ),
                         suffixIconConstraints: BoxConstraints(
                           maxHeight: 25.h,
