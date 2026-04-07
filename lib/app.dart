@@ -4,7 +4,6 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:giftpose/screens/authentication/view/verify_email.dart';
 import 'package:giftpose/screens/authentication/viewmodel/authentication_viewmodel.dart';
 import 'package:giftpose/screens/main_view/viewmodels/base_viewmodel.dart';
 import 'package:giftpose/screens/main_view/viewmodels/connectivit_viewmode.dart';
@@ -12,7 +11,6 @@ import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
 import 'package:giftpose/screens/main_view/views/dashboard_view.dart';
 import 'package:giftpose/screens/onboarding/viewmodels/onboarding_viewmodel.dart';
 import 'package:giftpose/screens/onboarding/views/onboarding_view.dart';
-import 'package:giftpose/screens/requester_flow/views/post_an_item.dart';
 import 'package:giftpose/services/database/database_service.dart';
 import 'package:giftpose/services/notification_services/local_notification_services.dart';
 import 'package:giftpose/services/secure_storage/secure_storage.dart';
@@ -157,7 +155,7 @@ void testLocalNotification() async {
                   },
                   onGenerateRoute: (settings) =>
                       Routers.generateRoute(settings, context),
-                  home: isRegistered ? PostAnItemScreen()  : PostAnItemScreen(),
+                  home: isRegistered ? SplashScreen()  : SplashScreen(),
                 );
               },
             );

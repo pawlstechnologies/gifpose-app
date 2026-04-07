@@ -53,16 +53,23 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
       log("Create account response: ${response?.data}");
      return CreateAccountResponse.fromJson(response?.data);
       } on DioException catch (err) {
-      final errorMessage = Future.error(ApiError.fromDio(err));
-      if (kDebugMode) {
-        print(errorMessage);
+      log("API error response: ${err.response?.data}");
+      String? errorMessage;
+      if (err.response?.data is Map) {
+        errorMessage = err.response?.data["message"];
+      } else if (err.response?.data is String) {
+        try {
+          final decoded = jsonDecode(err.response!.data);
+          errorMessage = decoded["message"];
+        } catch (_) {}
       }
-      throw err.response?.data["message"] ?? errorMessage;
+      errorMessage ??= ApiError.fromDio(err).errorDescription ?? "Something went wrong";
+      
+      if (kDebugMode) print(errorMessage);
+      throw errorMessage;
     } catch (err) {
-      if (kDebugMode) {
-        print(err);
-      }
-      throw err.toString();
+      if (kDebugMode) print(err);
+      throw "An unexpected error occurred.";
     }
   }
 
@@ -88,16 +95,23 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
       log("Sign in response: ${response?.data}");
      return SignInResponse.fromJson(response?.data);
       } on DioException catch (err) {
-      final errorMessage = Future.error(ApiError.fromDio(err));
-      if (kDebugMode) {
-        print(errorMessage);
+      log("API error response: ${err.response?.data}");
+      String? errorMessage;
+      if (err.response?.data is Map) {
+        errorMessage = err.response?.data["message"];
+      } else if (err.response?.data is String) {
+        try {
+          final decoded = jsonDecode(err.response!.data);
+          errorMessage = decoded["message"];
+        } catch (_) {}
       }
-      throw err.response?.data["message"] ?? errorMessage;
+      errorMessage ??= ApiError.fromDio(err).errorDescription ?? "Something went wrong";
+      
+      if (kDebugMode) print(errorMessage);
+      throw Exception(errorMessage);
     } catch (err) {
-      if (kDebugMode) {
-        print(err);
-      }
-      throw err.toString();
+      if (kDebugMode) print(err);
+      throw Exception(err.toString());
     }
   }
 
@@ -116,16 +130,23 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
       log("Reset password response: ${response?.data}");
      return ResetPasswordResponse.fromJson(response?.data);
       } on DioException catch (err) {
-      final errorMessage = Future.error(ApiError.fromDio(err));
-      if (kDebugMode) {
-        print(errorMessage);
+      log("API error response: ${err.response?.data}");
+      String? errorMessage;
+      if (err.response?.data is Map) {
+        errorMessage = err.response?.data["message"];
+      } else if (err.response?.data is String) {
+        try {
+          final decoded = jsonDecode(err.response!.data);
+          errorMessage = decoded["message"];
+        } catch (_) {}
       }
-      throw err.response?.data["message"] ?? errorMessage;
+      errorMessage ??= ApiError.fromDio(err).errorDescription ?? "Something went wrong";
+      
+      if (kDebugMode) print(errorMessage);
+      throw errorMessage;
     } catch (err) {
-      if (kDebugMode) {
-        print(err);
-      }
-      throw err.toString();
+      if (kDebugMode) print(err);
+      throw "An unexpected error occurred.";
     }
   }
     
@@ -145,16 +166,23 @@ async {
       log("Forgot password response: ${response?.data}");
      return ForgotPasswordResponse.fromJson(response?.data);
       } on DioException catch (err) {
-      final errorMessage = Future.error(ApiError.fromDio(err));
-      if (kDebugMode) {
-        print(errorMessage);
+      log("API error response: ${err.response?.data}");
+      String? errorMessage;
+      if (err.response?.data is Map) {
+        errorMessage = err.response?.data["message"];
+      } else if (err.response?.data is String) {
+        try {
+          final decoded = jsonDecode(err.response!.data);
+          errorMessage = decoded["message"];
+        } catch (_) {}
       }
-      throw err.response?.data["message"] ?? errorMessage;
+      errorMessage ??= ApiError.fromDio(err).errorDescription ?? "Something went wrong";
+      
+      if (kDebugMode) print(errorMessage);
+      throw errorMessage;
     } catch (err) {
-      if (kDebugMode) {
-        print(err);
-      }
-      throw err.toString();
+      if (kDebugMode) print(err);
+      throw "An unexpected error occurred.";
     }
   }
 
@@ -173,16 +201,23 @@ Future<VerifyEmailAddressResponse>   verifyEmailAddress({ required VerifyEmailAd
       log("Verify email address response: ${response?.data}");
      return VerifyEmailAddressResponse.fromJson(response?.data);
       } on DioException catch (err) {
-      final errorMessage = Future.error(ApiError.fromDio(err));
-      if (kDebugMode) {
-        print(errorMessage);
+      log("API error response: ${err.response?.data}");
+      String? errorMessage;
+      if (err.response?.data is Map) {
+        errorMessage = err.response?.data["message"];
+      } else if (err.response?.data is String) {
+        try {
+          final decoded = jsonDecode(err.response!.data);
+          errorMessage = decoded["message"];
+        } catch (_) {}
       }
-      throw err.response?.data["message"] ?? errorMessage;
+      errorMessage ??= ApiError.fromDio(err).errorDescription ?? "Something went wrong";
+      
+      if (kDebugMode) print(errorMessage);
+      throw errorMessage;
     } catch (err) {
-      if (kDebugMode) {
-        print(err);
-      }
-      throw err.toString();
+      if (kDebugMode) print(err);
+      throw "An unexpected error occurred.";
     }
   }
     
@@ -202,16 +237,23 @@ Future<VerifyEmailAddressResponse>   verifyEmailAddress({ required VerifyEmailAd
       log("Resend otp response: ${response?.data}");
      return ResendOtpResponse.fromJson(response?.data);
       } on DioException catch (err) {
-      final errorMessage = Future.error(ApiError.fromDio(err));
-      if (kDebugMode) {
-        print(errorMessage);
+      log("API error response: ${err.response?.data}");
+      String? errorMessage;
+      if (err.response?.data is Map) {
+        errorMessage = err.response?.data["message"];
+      } else if (err.response?.data is String) {
+        try {
+          final decoded = jsonDecode(err.response!.data);
+          errorMessage = decoded["message"];
+        } catch (_) {}
       }
-      throw err.response?.data["message"] ?? errorMessage;
+      errorMessage ??= ApiError.fromDio(err).errorDescription ?? "Something went wrong";
+      
+      if (kDebugMode) print(errorMessage);
+      throw errorMessage;
     } catch (err) {
-      if (kDebugMode) {
-        print(err);
-      }
-      throw err.toString();
+      if (kDebugMode) print(err);
+      throw "An unexpected error occurred.";
     }
   }
 

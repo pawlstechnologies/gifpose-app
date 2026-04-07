@@ -147,7 +147,9 @@ class AuthenticationViewModel extends BaseViewmodel {
     } catch (e) {
       Navigator.pop(navigatorKey.currentContext!);
 createAccountResponse = NetworkDataResponse.error(e.toString());
-      CustomToast.show(context: navigatorKey.currentContext!, message: e.toString());
+      final toastContext =
+          navigatorKey.currentContext ?? navigatorKey.currentState!.context;
+      CustomToast.show(context: toastContext, message: e.toString());
     }
   }
 
@@ -193,8 +195,9 @@ createAccountResponse = NetworkDataResponse.error(e.toString());
     } catch (e) {
       Navigator.pop(navigatorKey.currentContext!);
       signInResponse = NetworkDataResponse.error(e.toString());
-
-      CustomToast.show(context: navigatorKey.currentContext!, message: e.toString());
+      final toastContext =
+          navigatorKey.currentContext ?? navigatorKey.currentState!.context;
+      CustomToast.show(context: toastContext, message: e.toString());
     }
   }
 
@@ -243,7 +246,9 @@ createAccountResponse = NetworkDataResponse.error(e.toString());
       Navigator.pop(navigatorKey.currentContext!);
       verifyEmailAddressResponse = NetworkDataResponse.error(e.toString());
 
-      CustomToast.show(context: navigatorKey.currentContext!, message: e.toString());
+      final toastContext =
+          navigatorKey.currentContext ?? navigatorKey.currentState!.context;
+      CustomToast.show(context: toastContext, message: e.toString());
     }
   }
 
@@ -289,7 +294,9 @@ createAccountResponse = NetworkDataResponse.error(e.toString());
       Navigator.pop(navigatorKey.currentContext!);
       forgotPasswordResponse = NetworkDataResponse.error(e.toString());
 
-      CustomToast.show(context: navigatorKey.currentContext!, message: e.toString());
+           final toastContext =
+          navigatorKey.currentContext ?? navigatorKey.currentState!.context;
+      CustomToast.show(context: toastContext, message: e.toString());
     }
   }
 
@@ -332,7 +339,9 @@ createAccountResponse = NetworkDataResponse.error(e.toString());
       Navigator.pop(navigatorKey.currentContext!);
       resetPasswordResponse = NetworkDataResponse.error(e.toString());
 
-      CustomToast.show(context: navigatorKey.currentContext!, message: e.toString());
+         final toastContext =
+          navigatorKey.currentContext ?? navigatorKey.currentState!.context;
+      CustomToast.show(context: toastContext, message: e.toString());
     }
   }
 
@@ -374,7 +383,9 @@ createAccountResponse = NetworkDataResponse.error(e.toString());
       Navigator.pop(navigatorKey.currentContext!);
       resendOtpResponse = NetworkDataResponse.error(e.toString());
 
-      CustomToast.show(context: navigatorKey.currentContext!, message: e.toString());
+      final toastContext =
+          navigatorKey.currentContext ?? navigatorKey.currentState!.context;
+      CustomToast.show(context: toastContext, message: e.toString());
     }
   }
 

@@ -1,5 +1,6 @@
 // lib/utils/widgets/custom_toast.dart
 import 'package:flutter/material.dart';
+import 'package:giftpose/app.dart';
 import 'package:giftpose/utils/theme/giftpose_colors.dart';
 
 class CustomToast {
@@ -11,7 +12,22 @@ class CustomToast {
     Color textColor = Colors.white,
     IconData icon = Icons.check_circle,
   }) {
-    final overlay = Overlay.of(context);
+    final overlay =
+        Overlay.maybeOf(context, rootOverlay: true) ??
+        navigatorKey.currentState?.overlay;
+
+    if (overlay == null) {
+      final messenger = rootScaffoldMessengerKey.currentState;
+      if (messenger != null) {
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text(message),
+            duration: duration,
+          ),
+        );
+      }
+      return;
+    }
     final overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
         top: MediaQuery.of(context).padding.top + 16,

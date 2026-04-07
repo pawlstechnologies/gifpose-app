@@ -9,10 +9,10 @@ SignInResponse signInResponseFromJson(String str) => SignInResponse.fromJson(jso
 String signInResponseToJson(SignInResponse data) => json.encode(data.toJson());
 
 class SignInResponse {
-    bool status;
-    String message;
-    String token;
-    Data data;
+    bool? status;
+    String? message;
+    String? token;
+    Data? data;
 
     SignInResponse({
         required this.status,
@@ -32,7 +32,7 @@ class SignInResponse {
         "status": status,
         "message": message,
         "token": token,
-        "data": data.toJson(),
+        "data": data?.toJson(),
     };
 }
 
