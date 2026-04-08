@@ -9,20 +9,24 @@ NotificationResponse notificationResponseFromJson(String str) => NotificationRes
 String notificationResponseToJson(NotificationResponse data) => json.encode(data.toJson());
 
 class NotificationResponse {
+    bool status;
     String message;
     NotificationResponseData data;
 
     NotificationResponse({
+        required this.status,
         required this.message,
         required this.data,
     });
 
     factory NotificationResponse.fromJson(Map<String, dynamic> json) => NotificationResponse(
+        status: json["status"],
         message: json["message"],
         data: NotificationResponseData.fromJson(json["data"]),
     );
 
     Map<String, dynamic> toJson() => {
+        "status": status,
         "message": message,
         "data": data.toJson(),
     };
@@ -31,7 +35,7 @@ class NotificationResponse {
 class NotificationResponseData {
     int total;
     int unreadCount;
-    List<Notification> notifications;
+    List<Notifications> notifications;
 
     NotificationResponseData({
         required this.total,
@@ -42,7 +46,7 @@ class NotificationResponseData {
     factory NotificationResponseData.fromJson(Map<String, dynamic> json) => NotificationResponseData(
         total: json["total"],
         unreadCount: json["unreadCount"],
-        notifications: List<Notification>.from(json["notifications"].map((x) => Notification.fromJson(x))),
+        notifications: List<Notifications>.from(json["notifications"].map((x) => Notifications.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -52,7 +56,7 @@ class NotificationResponseData {
     };
 }
 
-class Notification {
+class Notifications {
     String id;
     String deviceId;
     String userId;
@@ -60,12 +64,13 @@ class Notification {
     String message;
     String type;
     bool read;
+    String? img;
     NotificationData data;
     DateTime createdAt;
     DateTime updatedAt;
     int v;
 
-    Notification({
+    Notifications({
         required this.id,
         required this.deviceId,
         required this.userId,
@@ -73,13 +78,14 @@ class Notification {
         required this.message,
         required this.type,
         required this.read,
+        this.img,
         required this.data,
         required this.createdAt,
         required this.updatedAt,
         required this.v,
     });
 
-    factory Notification.fromJson(Map<String, dynamic> json) => Notification(
+    factory Notifications.fromJson(Map<String, dynamic> json) => Notifications(
         id: json["_id"],
         deviceId: json["deviceId"],
         userId: json["userId"],
@@ -87,6 +93,7 @@ class Notification {
         message: json["message"],
         type: json["type"],
         read: json["read"],
+        img: json["img"],
         data: NotificationData.fromJson(json["data"]),
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
@@ -101,6 +108,7 @@ class Notification {
         "message": message,
         "type": type,
         "read": read,
+        "img": img,
         "data": data.toJson(),
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),

@@ -51,7 +51,7 @@ class LocalNotificationService {
       NotificationDetails notificationDetails = const NotificationDetails(
           iOS: DarwinNotificationDetails(
             presentAlert: true,
-            presentBadge: true,
+            presentBadge: false,
             presentSound: true,
           ),
           android: AndroidNotificationDetails(
