@@ -16,6 +16,7 @@ import 'package:giftpose/screens/onboarding/models/create_alerts_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_alert_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_itemsnearme_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetchitems_byid_response.dart';
+import 'package:giftpose/screens/onboarding/models/notification_response.dart';
 import 'package:giftpose/screens/onboarding/models/search_alert_category_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_predictions_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_response.dart';
@@ -161,6 +162,7 @@ bool get isDarkMode {
     getDeviceId();
     Future.delayed(Duration(seconds: 2), () {
       fetchItemsNearMe();
+      fetchNotification();
     });
     fetchAlertCategory();
   }
@@ -658,6 +660,42 @@ void selectOption(int index) {
      fetchAlertListResponse = NetworkDataResponse.completed(response);
     } catch (e) {
       fetchAlertListResponse = NetworkDataResponse.error(e.toString());
+    }
+  }
+
+  NetworkDataResponse<NotificationResponse>
+  _fetchNotificationResponse = NetworkDataResponse.idle();
+   NetworkDataResponse<NotificationResponse>
+  get fetchNotificationResponse => _fetchNotificationResponse;
+
+  set fetchNotificationResponse(
+  NetworkDataResponse<NotificationResponse> value,
+  ) {
+    _fetchNotificationResponse = value;
+    notifyListeners();
+  }
+
+
+  Future<void> fetchNotification() async {
+    try {
+        String? deviceIdFromDb = await secureStorageService.read(
+      key: StorageKeys.deviceId,
+    );
+    fetchNotificationResponse = NetworkDataResponse.loading("");
+      // await LoaderPage.show(navigatorKey.currentContext!);
+
+      final response = await mainViewRepo.fetchNotification (
+        deviceID:deviceIdFromDb?? deviceId ?? "",
+
+      );
+
+      // if (navigatorKey.currentContext!.mounted) {
+      //   Navigator.of(navigatorKey.currentContext!, rootNavigator: true).pop(); // Dismiss dialog
+      // }
+
+    fetchNotificationResponse = NetworkDataResponse.completed(response);
+    } catch (e) {
+     fetchNotificationResponse= NetworkDataResponse.error(e.toString());
     }
   }
 }

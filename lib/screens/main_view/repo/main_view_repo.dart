@@ -7,6 +7,7 @@ import 'package:giftpose/screens/onboarding/models/create_alerts_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_alert_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_itemsnearme_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetchitems_byid_response.dart';
+import 'package:giftpose/screens/onboarding/models/notification_response.dart';
 import 'package:giftpose/screens/onboarding/models/search_alert_category_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_predictions_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_response.dart';
@@ -35,5 +36,5 @@ abstract class MainViewRepo {
     required SearchCategoryPredictionRequest  searchCategoryPredictionRequest,
   });
    Future<FetchAlertListResponse> fetchAlertList({  required String deviceID,});
-
+   Future<NotificationResponse> fetchNotification({  required String deviceID,});
 }

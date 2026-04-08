@@ -163,8 +163,8 @@ class CategoryListItem extends StatelessWidget {
                   Text(
                     response.name ?? 'No name',
                     style: GiftPoseTextStyle.medium(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,

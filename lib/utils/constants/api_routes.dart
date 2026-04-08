@@ -9,6 +9,7 @@ static const fetchAlertLists ="alerts?deviceId={deviceId}";
 static const searchAlertCategories = "/alerts/search-keywords";
 static const alertCategoriesList = "/categories";
 static const alertSubCategoriesList = "/categories/tree?categoryId={categoryId}";
+static const notifications = "/notifications/{deviceId}";
 static const alertSearchPredictionList = "/categories/search";
   static const globalSearch = "/item/{deviceId}/search";
 
