@@ -181,7 +181,7 @@ class _GiftPoseTextFieldState extends State<GiftPoseTextField> {
                       decoration: InputDecoration(
                         counterText: "",
                         prefixIcon: Padding(
-                          padding: EdgeInsets.only(left: 14),
+                          padding: EdgeInsets.only(left: 10),
                           child: widget.prefixIcon,
                         ),
                         isCollapsed: true,
@@ -190,7 +190,7 @@ class _GiftPoseTextFieldState extends State<GiftPoseTextField> {
                         prefixIconConstraints: BoxConstraints(
                           maxHeight: 25.h,
                           minHeight: 25.h,
-                          minWidth: 25.w,
+                          minWidth: 15.w,
                         ),
                         suffixIconConstraints: BoxConstraints(
                           maxHeight: 25.h,
@@ -199,14 +199,14 @@ class _GiftPoseTextFieldState extends State<GiftPoseTextField> {
                         ),
                         suffixIcon: widget.obscureText == false
                                 ? Padding(
-                                    padding: EdgeInsets.only(right: 14),
+                                    padding: EdgeInsets.only(right: 10),
                                     child: widget.suffixIcon)
                                 : GestureDetector(
                                     onTap: () {
                                       showPassword.value = !showPassword.value;
                                     },
                                     child: Padding(
-                                      padding: EdgeInsets.only(right: 15.w),
+                                      padding: EdgeInsets.only(right: 10.w),
                                       child: Icon(
                                         show ? Icons.visibility : Icons.visibility_off,
                                         size: 22.sp,
@@ -224,8 +224,8 @@ class _GiftPoseTextFieldState extends State<GiftPoseTextField> {
                         hintStyle: GiftPoseTextStyle.normal(
                             fontWeight: FontWeight.w400,
                             color: Theme.of(context).hintColor,
-                            fontSize: 13),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 14.w),
+                            fontSize: 14),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 14.w),
                         border: outlineInputBorder.copyWith(
                           borderRadius: BorderRadius.circular(10.r),
                           borderSide: BorderSide(

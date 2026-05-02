@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:giftpose/screens/main_view/views/settings_page/about_page.dart';
+import 'package:giftpose/screens/authentication/view/create_account.dart';
+import 'package:giftpose/screens/authentication/view/enter_otp.dart';
+import 'package:giftpose/screens/authentication/view/forgot_password_view.dart';
+import 'package:giftpose/screens/authentication/view/password_changed.dart';
+import 'package:giftpose/screens/authentication/view/reset_password_view.dart';
+import 'package:giftpose/screens/authentication/view/sigin_in_view.dart';
+import 'package:giftpose/screens/authentication/view/verify_email.dart';
 import 'package:giftpose/screens/main_view/views/settings_page/help_center.dart';
 import 'package:giftpose/screens/main_view/views/settings_page/language_view.dart';
 import 'package:giftpose/screens/main_view/views/settings_page/premium_page.dart';
@@ -49,7 +56,28 @@ class Routers {
             case AppRoutes.dashboard:
         routeWidget =  DashboardView();
         break;
+             case AppRoutes.createAccountPage:
+        routeWidget = CreateAccountScreen();
+        break;
+             case AppRoutes.siginInPage:
+        routeWidget = SigininScreen();
+        break;
 
+             case AppRoutes.verifyEmailScreen:
+        routeWidget = VerifyEmailScreen();
+        break;
+             case AppRoutes.forgotPasswordScreen:
+        routeWidget = ForgotPasswordScreen();
+        break;
+             case AppRoutes.passwordChanged:
+        routeWidget = PasswordChangedScreen();
+        break;
+            case AppRoutes.resetPasswordScreen:
+        routeWidget = ResetPasswordScreen();
+        break;
+            case AppRoutes.enterOtpScreen:
+        routeWidget = EnterOtpScreen();
+        break;
             case AppRoutes.languagePage:
         routeWidget = LanguageView();
         break;

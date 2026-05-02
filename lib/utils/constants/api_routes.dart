@@ -28,6 +28,8 @@ static const login = "/auth/login";
 static const resendCode = "/auth/resend-code";
 static const forgotPassword = "/auth/forgot-password";
 static const resetPassword = "/auth/reset-password";
+static const analyseImage = "/item/analyse-image";
+static const postItem = "/item/post";
 
 
 

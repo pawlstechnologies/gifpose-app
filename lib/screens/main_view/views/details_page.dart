@@ -445,12 +445,12 @@ class _DetailsPageState extends State<DetailsPage> {
                                           //           vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.carPrivate ?? "",
                                           //         textAlign: TextAlign.center,
 
-                                          //         maxLines: 2,
+                                    //         maxLines: 2,
 
-                                          //         style: GiftPoseTextStyle.small(
-                                          //           fontSize: 10,
-                                          //           fontWeight: FontWeight.w400,
-                                          //           color:  GiftPoseColors.primaryColor,
+                                    //         style: GiftPoseTextStyle.small(
+                                    //           fontSize: 10,
+                                    //           fontWeight: FontWeight.w400,
+                                    //           color:  GiftPoseColors.primaryColor,
 
                                           //         ),
                                           //       )
@@ -614,17 +614,14 @@ class _DetailsPageState extends State<DetailsPage> {
                                                       textAlign:
                                                           TextAlign.justify,
 
-                                                      style:
-                                                          GiftPoseTextStyle.small(
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color:
-                                                                GiftPoseColors
-                                                                    .textColor,
-                                                          ),
-                                                    ),
-                                                  ],
+                                                style: GiftPoseTextStyle.small(
+                                                  fontWeight: FontWeight.w400,
+                                                  color:
+                                                      GiftPoseColors.textColor,
                                                 ),
+                                              ),
+                                            ],
+                                          ),
 
                                                 Row(
                                                   children: [
