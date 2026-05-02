@@ -48,7 +48,7 @@ class ArticlePage extends StatelessWidget {
 
       hasGradient: true,
       appBarTitleWidget: Text(
-        title,
+        "Article",
         textAlign: TextAlign.center,
 
  style: GiftPoseTextStyle.normal(fontWeight: FontWeight.w500),
@@ -59,7 +59,7 @@ class ArticlePage extends StatelessWidget {
           shrinkWrap: true,
           children: [
             YMargin(19),
-            Text("How to donate".tr(context),
+            Text(title.tr(context),
               textAlign: TextAlign.left,
 
               style: GiftPoseTextStyle.medium(
@@ -71,7 +71,8 @@ class ArticlePage extends StatelessWidget {
             Row(
               children: [
                 Assets.icons.calendar.svg(),
-                Text("Last updated: Oct 24, 2023".tr(context),
+                XMargin(5),
+                Text("Last updated: April 10, 2026".tr(context),
                   textAlign: TextAlign.left,
 
                   style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
@@ -99,7 +100,7 @@ class ArticlePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Choose a cause".tr(context),
+                      Text("Open the Gift Item".tr(context),
                         textAlign: TextAlign.left,
 
                         style: GiftPoseTextStyle.medium(
@@ -108,7 +109,7 @@ class ArticlePage extends StatelessWidget {
                         ),
                       ),
                       YMargin(5),
-                      Text("Browse our verified list of charitable organizations. You can filter by category such as education, environment, or health to find a mission that resonates with you.".tr(context),
+                      Text("Open the gift listing you’re interested in Scroll down past any advertisements at the bottom of the screen.".tr(context),
                         textAlign: TextAlign.justify,
 
                         style: GiftPoseTextStyle.medium(
@@ -121,7 +122,7 @@ class ArticlePage extends StatelessWidget {
                 ),
               ],
             ),
-            YMargin(19),
+            YMargin(9),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -141,7 +142,7 @@ class ArticlePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Choose a cause".tr(context),
+                      Text("Tap the Green Button".tr(context),
                         textAlign: TextAlign.left,
 
                         style: GiftPoseTextStyle.medium(
@@ -150,7 +151,7 @@ class ArticlePage extends StatelessWidget {
                         ),
                       ),
                       YMargin(5),
-                      Text("Browse our verified list of charitable organizations. You can filter by category such as education, environment, or health to find a mission that resonates with you.".tr(context),
+                      Text("Tap the green button below “Ask for Gift Item” (or the equivalent platform button)".tr(context),
                         textAlign: TextAlign.justify,
 
                         style: GiftPoseTextStyle.medium(
@@ -163,7 +164,7 @@ class ArticlePage extends StatelessWidget {
                 ),
               ],
             ),
-            YMargin(19),
+            YMargin(9),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -178,7 +179,7 @@ class ArticlePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Choose a cause".tr(context),
+                      Text("Reach out to the Giver on External Platform".tr(context),
                         textAlign: TextAlign.left,
 
                         style: GiftPoseTextStyle.medium(
@@ -187,7 +188,7 @@ class ArticlePage extends StatelessWidget {
                         ),
                       ),
                       YMargin(5),
-                      Text("Browse our verified list of charitable organizations. You can filter by category such as education, environment, or health to find a mission that resonates with you.".tr(context),
+                      Text("You will be redirected to the original site where the gift was posted so you can message the giver directly.".tr(context),
                         textAlign: TextAlign.justify,
 
                         style: GiftPoseTextStyle.medium(

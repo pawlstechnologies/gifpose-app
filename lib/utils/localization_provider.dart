@@ -6,6 +6,42 @@ import 'package:giftpose/utils/locator.dart';
 class AppTranslations {
   static Map<String, Map<String, String>> translations = {
     'en': {
+      
+      "Step-by-step guide.": "Step-by-step guide.",
+      "Contacting a Gift Giver": "Contacting a Gift Giver",
+      "Article": "Article", 
+      "Last updated: April 10, 2026": "Last updated: April 10, 2026",
+      "Open the Gift Item": "Open the Gift Item",
+      "Tap the Green Button": "Tap the Green Button",
+      "Reach out to the Giver on External Platform": "Reach out to the Giver on External Platform",
+      "Tap the green button below “Ask for Gift Item” (or the equivalent platform button)": "Tap the green button below “Ask for Gift Item” (or the equivalent platform button)",
+      "Open the gift listing you’re interested in Scroll down past any advertisements at the bottom of the screen.": "Open the gift listing you’re interested in Scroll down past any advertisements at the bottom of the screen.",
+     "You will be redirected to the original site where the gift was posted so you can message the giver directly.": "You will be redirected to the original site where the gift was posted so you can message the giver directly.",
+      "coming soon": "coming soon",
+         "How can I contact the person offering a gift?": "How can I contact the person offering a gift?",
+      "Why am I seeing paid items or services in my feed?": "Why am I seeing paid items or services in my feed?",
+      "How do I cut down on too many notifications?": "How do I cut down on too many notifications?",
+      "Why is there hardly any content showing up?": "Why is there hardly any content showing up?",
+      "How do I share my own gift?": "How do I share my own gift?",
+      "How do I update my email address?": "How do I update my email address?",
+      "How do I remove a word from my selected keywords?": "How do I remove a word from my selected keywords?",
+      "If a gift was posted on a partner platform (e.g Trashnothing), do I need a Trashnothing account?": "If a gift was posted on a partner platform (e.g Trashnothing), do I need a Trashnothing account?",
+      "The app won’t load—I only see a white screen with the GiftPose logo.*": "The app won’t load—I only see a white screen with the GiftPose logo.*",
+             "To connect with the giver, open the listing you’re interested in, scroll down past any ads at the bottom, and tap the green “Ask for Gift item” (or equivalent) button. This will take you straight to the original site where the gift was posted so you can message the person directly.": "To connect with the giver, open the listing you’re interested in, scroll down past any ads at the bottom, and tap the green “Ask for Gift item” (or equivalent) button. This will take you straight to the original site where the gift was posted so you can message the person directly.",
+       "Some sellers occasionally list items for sale or paid services in the free giveaway sections of the platforms we scan. That’s why they sometimes appear. If you spot anything that doesn’t belong in GiftPose, just tap the “Report listing” button at the bottom of that post.": "Some sellers occasionally list items for sale or paid services in the free giveaway sections of the platforms we scan. That’s why they sometimes appear. If you spot anything that doesn’t belong in GiftPose, just tap the “Report listing” button at the bottom of that post.",
+             'Add specific keywords on your Notifications Alert settings page so you only receive alerts that match, or are related to the terms of your keyword.Go to Settings (top-left icon) → Notifications Alert Settings Type Keyword into text field at the top of the page and select from drop-down OR   simply search through the items under each Category and select a Keyword.You can also shrink the search radius in the settings under "How far are you willing to go?" to get fewer, more relevant alerts.': 'Add specific keywords on your Notifications Alert settings page so you only receive alerts that match, or are related to the terms of your keyword.Go to Settings (top-left icon) → Notifications Alert Settings Type Keyword into text field at the top of the page and select from drop-down OR   simply search through the items under each Category and select a Keyword.You can also shrink the search radius in the settings under "How far are you willing to go?" to get fewer, more relevant alerts.',  
+             "You may be in an area with fewer shared gifts right now. Try entering a postal code for a nearby spot you’d be willing to travel to. You can also expand your range by going to Settings (top-left icon) and sliding the Max Distance up to 50 miles.": "You may be in an area with fewer shared gifts right now. Try entering a postal code for a nearby spot you’d be willing to travel to. You can also expand your range by going to Settings (top-left icon) and sliding the Max Distance up to 50 miles.",   
+"[This feature is currently in development and will be available soon.]": "[This feature is currently in development and will be available soon.]",
+    "You can change your email by tapping on [this link]": "You can change your email by tapping on [this link]",
+        "In the Gift Notification screen, simply click on the “x” button to the right of each keyword you have selected—tap it to remove the word. Then rewrite the new keyword you'd like to be notified of": "In the Gift Notification screen, simply click on the “x” button to the right of each keyword you have selected—tap it to remove the word. Then rewrite the new keyword you'd like to be notified of",
+      """- Never send money to anyone before meeting them in person. 
+- Skip any offers that require shipping—only deal with local people you can meet face-to-face.
+- Never wire money (Western Union, etc.)—this is a classic scam red flag.
+- Never share financial details such as bank account numbers, Social Security info, PayPal credentials, or similar.""": """- Never send money to anyone before meeting them in person. 
+- Skip any offers that require shipping—only deal with local people you can meet face-to-face.
+- Never wire money (Western Union, etc.)—this is a classic scam red flag.
+- Never share financial details such as bank account numbers, Social Security info, PayPal credentials, or similar.""",
+        "First, check that your internet connection is working. If it is, your phone may be low on storage space—try deleting some unused apps, photos, or files to free up room.": "First, check that your internet connection is working. If it is, your phone may be low on storage space—try deleting some unused apps, photos, or files to free up room.",
          "Tram":"Tram",
        "Train":"Train",          
        "Underground":"Underground",
@@ -121,6 +157,56 @@ class AppTranslations {
       "Gifting": "Gifting",
     },
     'de': {
+             "Getting Notified of Preferred Gift Items": "Benachrichtigungen für bevorzugte Geschenkartikel erhalten",
+     "Access the Gift Notifications settings by doing one of the following:":"Greifen Sie auf die Einstellungen für Geschenkbenachrichtigungen auf eine der folgenden Arten zu:",  
+"""- From the Listings page, tap the “Get notified of items of interest” banner (located below your preferred postal code), **OR**  
+- Go to Settings (top-left gear icon) → Gift Notifications""":"- Tippen Sie auf der Übersichtsseite auf das Banner „Über interessante Artikel benachrichtigt werden“, ODER\n- Gehen Sie zu Einstellungen (Zahnrad-Symbol oben links) → Geschenkbenachrichtigungen",
+"Add your preferred keywords using one of these methods:":"Fügen Sie Ihre bevorzugten Stichwörter mit einer der folgenden Methoden hinzu:",  
+"""- Type the name of the item or category into the text field at the top and select a suggestion from the dropdown list, **OR**  
+- Browse the items listed under each category and select the keywords you want.""":"- Geben Sie den Namen des Artikels oder der Kategorie in das Textfeld oben ein und wählen Sie einen Vorschlag aus der Dropdown-Liste, ODER\n- Durchsuchen Sie die Artikel in jeder Kategorie und wählen Sie die gewünschten Stichwörter aus.",
+   
+"Select as many keywords as you would like to receive notifications for":"Wählen Sie beliebig viele Stichwörter aus, für die Sie Benachrichtigungen erhalten möchten",
+   
+"""Tap the green “Submit” button at the bottom to activate your selected keywords.  
+You will now only receive alerts related to the keywords you have chosen.""":"Tippen Sie auf „Senden“, um Ihre Auswahl zu aktivieren.\nSie erhalten nun nur noch Benachrichtigungen zu den gewählten Schlüsselwörtern.",
+"""- You can also reduce the search radius in the same menu to receive fewer, more relevant notifications.
+- Our "Smart Notifier" feature let's our Al assistant notify you with similar items. No need to do anything, it is activated by default.""":"- Sie können auch den Suchradius im selben Menü verringern, um weniger, dafür relevantere Benachrichtigungen zu erhalten.\n- Unsere „Smart Notifier“-Funktion benachrichtigt Sie automatisch über ähnliche Artikel. Sie müssen nichts tun, da sie standardmäßig aktiviert ist.",
+    
+      "coming soon": "Bald verfügbar",
+      "Step-by-step guide.": "Schritt-für-Schritt-Anleitung.",
+      "Contacting a Gift Giver": "Kontaktaufnahme mit einem Spender",
+      "Article": "Artikel", 
+      "Last updated: April 10, 2026": "Zuletzt aktualisiert: 10. April 2026",
+      "Open the Gift Item": "Öffnen Sie den Geschenkartikel",
+      "Tap the Green Button": "Tippen Sie auf die grüne Schaltfläche",
+      "Reach out to the Giver on External Platform": "Kontaktieren Sie den Spender auf der externen Plattform",
+      "Tap the green button below “Ask for Gift Item” (or die entsprechende Plattform-Schaltfläche)": "Tippen Sie auf die grüne Schaltfläche unter „Geschenkartikel anfragen“ (oder die entsprechende Plattform-Schaltfläche)",
+      "Open the gift listing you’re interested in Scroll down past any advertisements at the bottom of the screen.": "Öffnen Sie das Inserat des Geschenks, an dem Sie interessiert sind. Scrollen Sie nach unten, vorbei an allen Werbeanzeigen am unteren Rand des Bildschirms.",
+     "You will be redirected to the original site where the gift was posted so you can message the giver directly.": "Sie werden zur ursprünglichen Website weitergeleitet, auf der das Geschenk veröffentlicht wurde, sodass Sie den Spender direkt benachrichtigen können.",
+         "How can I contact the person offering a gift?": "Wie kann ich die Person kontaktieren, die ein Geschenk anbietet?",
+      "Why am I seeing paid items or services in my feed?": "Warum sehe ich kostenpflichtige Artikel oder Dienstleistungen in meinem Feed?",
+      "How do I cut down on too many notifications?": "Wie kann ich die Anzahl der Benachrichtigungen reduzieren?",
+      "Why is there hardly any content showing up?": "Warum werden kaum Inhalte angezeigt?",
+      "How do I share my own gift?": "Wie kann ich mein eigenes Geschenk teilen?",
+      "How do I update my email address?": "Wie kann ich meine E-Mail-Adresse aktualisieren?",
+      "How do I remove a word from my selected keywords?": "Wie entferne ich ein Wort aus meinen ausgewählten Schlüsselwörtern?",
+      "If a gift was posted on a partner platform (e.g Trashnothing), do I need a Trashnothing account?": "Wenn ein Geschenk auf einer Partnerplattform (z. B. Trashnothing) gepostet wurde, benötige ich ein Trashnothing-Konto?",
+      "The app won’t load—I only see a white screen with the GiftPose logo.*": "Die App wird nicht geladen—ich sehe nur einen weißen Bildschirm mit dem GiftPose-Logo.*",
+             "To connect with the giver, open the listing you’re interested in, scroll down past any ads at the bottom, and tap the green “Ask for Gift item” (or equivalent) button. This will take you straight to the original site where the gift was posted so you can message the person directly.": "Um mit dem Spender in Kontakt zu treten, öffnen Sie das Inserat Ihres Interesses, scrollen Sie an den Werbeanzeigen unten vorbei und tippen Sie auf die grüne Schaltfläche „Geschenk anfragen“ (oder ähnlich). Dadurch gelangen Sie direkt zur ursprünglichen Seite, auf der das Geschenk veröffentlicht wurde, sodass Sie der Person direkt eine Nachricht senden können.",
+       "Some sellers occasionally list items for sale or paid services in the free giveaway sections of the platforms we scan. That’s why they sometimes appear. If you spot anything that doesn’t belong in GiftPose, just tap the “Report listing” button at the bottom of that post.": "Einige Verkäufer bieten in den kostenlosen Giveaway-Bereichen der von uns gescannten Plattformen gelegentlich Artikel zum Verkauf oder kostenpflichtige Dienste an. Deshalb tauchen diese manchmal auf. Wenn Sie etwas entdecken, das nicht zu GiftPose gehört, tippen Sie einfach unten in diesem Beitrag auf die Schaltfläche „Beitrag melden“.",
+             'Add specific keywords on your Notifications Alert settings page so you only receive alerts that match, or are related to the terms of your keyword.Go to Settings (top-left icon) → Notifications Alert Settings Type Keyword into text field at the top of the page and select from drop-down OR   simply search through the items under each Category and select a Keyword.You can also shrink the search radius in the settings under "How far are you willing to go?" to get fewer, more relevant alerts.': 'Fügen Sie bestimmte Schlüsselwörter auf der Einstellungsseite Ihrer Benachrichtigungsalarme hinzu, damit Sie nur Alarme erhalten, die mit den Begriffen Ihres Schlüsselworts übereinstimmen oder sich auf diese beziehen. Gehen Sie zu Einstellungen (Symbol oben links) → Einstellungen für Benachrichtigungsalarme. Geben Sie das Schlüsselwort in das Textfeld oben auf der Seite ein und wählen Sie es aus der Dropdown-Liste aus. ODER suchen Sie einfach nach den Elementen unter jeder Kategorie und wählen Sie ein Schlüsselwort aus. Sie können den Suchradius auch in den Einstellungen unter "Wie weit sind Sie bereit zu reisen?" verkleinern, um weniger, aber relevantere Benachrichtigungen zu erhalten.',  
+             "You may be in an area with fewer shared gifts right now. Try entering a postal code for a nearby spot you’d be willing to travel to. You can also expand your range by going to Settings (top-left icon) and sliding the Max Distance up to 50 miles.": "Sie befinden sich möglicherweise in einer Gegend, in der zurzeit weniger Geschenke geteilt werden. Versuchen Sie, eine Postleitzahl für einen nahegelegenen Ort einzugeben, zu dem Sie reisen möchten. Sie können Ihre Reichweite auch vergrößern, indem Sie zu den Einstellungen gehen (Symbol oben links) und die maximale Entfernung auf bis zu 50 Meilen einstellen.",   
+"[This feature is currently in development and will be available soon.]": "[Diese Funktion befindet sich derzeit in der Entwicklung und wird in Kürze verfügbar sein.]",
+    "You can change your email by tapping on [this link]": "Sie können Ihre E-Mail-Adresse ändern, indem Sie auf [diesen Link] tippen.",
+        "In the Gift Notification screen, simply click on the “x” button to the right of each keyword you have selected—tap it to remove the word. Then rewrite the new keyword you'd like to be notified of": "Klicken Sie im Bildschirm „Geschenkbenachrichtigungen“ einfach auf die Schaltfläche „x“ rechts neben jedem ausgewählten Stichwort – tippen Sie darauf, um das Wort zu entfernen. Schreiben Sie dann das neue Schlüsselwort ein, über das Sie benachrichtigt werden möchten.",
+      """- Never send money to anyone before meeting them in person. 
+- Skip any offers that require shipping—only deal with local people you can meet face-to-face.
+- Never wire money (Western Union, etc.)—this is a classic scam red flag.
+- Never share financial details such as bank account numbers, Social Security info, PayPal credentials, or similar.""": """- Senden Sie niemals Geld an jemanden, bevor Sie ihn persönlich getroffen haben.
+- Überspringen Sie alle Angebote, die Versand erfordern—handeln Sie nur mit Leuten aus der Region, die Sie persönlich treffen können.
+- Überweisen Sie niemals Geld (Western Union usw.)—dies ist ein klassisches Warnsignal für Betrug.
+- Geben Sie niemals finanzielle Details wie Bankkontonummern, Sozialversicherungsinformationen, PayPal-Anmeldeinformationen oder Ähnliches weiter.""",
+        "First, check that your internet connection is working. If it is, your phone may be low on storage space—try deleting some unused apps, photos, or files to free up room.": "Überprüfen Sie zunächst, ob Ihre Internetverbindung funktioniert. Wenn dies der Fall ist, verfügt Ihr Telefon möglicherweise über zu wenig Speicherplatz—versuchen Sie, einige ungenutzte Apps, Fotos oder Dateien zu löschen, um Speicherplatz freizugeben.",
 "Visit Freebies": "Gratis-Angebote ansehen",
   "Mark as Taken": "Als genommen markieren",
         "Tram":"Straßenbahn",
@@ -238,6 +324,56 @@ class AppTranslations {
   "Gifting": "Schenken",
 },
    'zh': {
+        "Getting Notified of Preferred Gift Items": "获取心仪礼品的通知",
+     " Access the Gift Notifications settings by doing one of the following:":"通过以下方式访问通知设置：",  
+"""- From the Listings page, tap the “Get notified of items of interest” banner (located below your preferred postal code), **OR**  
+- Go to Settings (top-left gear icon) → Gift Notifications""":"- 在列表页面点击横幅，或\n- 前往设置 → 礼品通知",
+"Add your preferred keywords using one of these methods:":"添加关键词：",  
+"""- Type the name of the item or category into the text field at the top and select a suggestion from the dropdown list, **OR**  
+- Browse the items listed under each category and select the keywords you want.""":"- 输入并选择，或\n- 浏览分类",
+   
+"Select as many keywords as you would like to receive notifications for":"选择任意数量的关键词",
+   
+"""Tap the green “Submit” button at the bottom to activate your selected keywords.  
+You will now only receive alerts related to the keywords you have chosen.""":"点击“提交”激活。\n之后只会收到相关关键词的通知。",
+"""- You can also reduce the search radius in the same menu to receive fewer, more relevant notifications.
+- Our "Smart Notifier" feature let's our Al assistant notify you with similar items. No need to do anything, it is activated by default.""":"- 可以减少搜索范围以获取更相关的通知。\n- “智能通知”会自动推荐类似商品。",
+    
+    "coming soon": "即将推出",
+      "Step-by-step guide.": "分步指南。",
+      "Contacting a Gift Giver": "联系礼物的提供者",
+      "Article": "文章", 
+      "Last updated: April 10, 2026": "最后更新：2026年4月10日",
+      "Open the Gift Item": "打开礼物项目",
+      "Tap the Green Button": "点击绿色按钮",
+      "Reach out to the Giver on External Platform": "在外部平台上联系赠与者",
+      "Tap the green button below “Ask for Gift Item” (or the equivalent platform button)": "点击“请求礼物”（或等效平台按钮）下方的绿色按钮",
+      "Open the gift listing you’re interested in Scroll down past any advertisements at the bottom of the screen.": "打开您感兴趣的礼物列表，向下滚动越过屏幕底部的所有广告。",
+     "You will be redirected to the original site where the gift was posted so you can message the giver directly.": "您将被重定向到发布礼物的原始网站，以便直接向赠与者发送消息。",
+         "How can I contact the person offering a gift?": "我该如何联系提供礼物的用户？",
+      "Why am I seeing paid items or services in my feed?": "为什么我在信息流中会看到付费物品或服务？",
+      "How do I cut down on too many notifications?": "如何减少过多的通知？",
+      "Why is there hardly any content showing up?": "为什么几乎没有显示任何内容？",
+      "How do I share my own gift?": "我该如何分享自己的礼物？",
+      "How do I update my email address?": "我该如何更新我的电子邮件地址？",
+      "How do I remove a word from my selected keywords?": "如何从我选择的关键词中删除某个词？",
+      "If a gift was posted on a partner platform (e.g Trashnothing), do I need a Trashnothing account?": "如果礼物发布在合作平台（例如 Trashnothing）上，我需要一个 Trashnothing 帐户吗？",
+      "The app won’t load—I only see a white screen with the GiftPose logo.*": "应用程序无法加载——我只看到一个带有 GiftPose 标志的白屏。*",
+             "To connect with the giver, open the listing you’re interested in, scroll down past any ads at the bottom, and tap the green “Ask for Gift item” (or equivalent) button. This will take you straight to the original site where the gift was posted so you can message the person directly.": "要与赠与者联系，请打开您感兴趣的列表，向下滚动越过底部的所有广告，然后点击绿色的“请求礼物物品”（或等效）按钮。这将带您直接进入发布礼物的原始网站，以便您可以直接给该人发消息。",
+       "Some sellers occasionally list items for sale or paid services in the free giveaway sections of the platforms we scan. That’s why they sometimes appear. If you spot anything that doesn’t belong in GiftPose, just tap the “Report listing” button at the bottom of that post.": "部分卖家偶尔会在我们扫描平台的免费赠品区列出待售物品或付费服务。这就是它们有时会出现的原因。如果您发现任何不属于 GiftPose 的内容，只需点击该帖子底部的“举报帖子”按钮即可。",
+             'Add specific keywords on your Notifications Alert settings page so you only receive alerts that match, or are related to the terms of your keyword.Go to Settings (top-left icon) → Notifications Alert Settings Type Keyword into text field at the top of the page and select from drop-down OR   simply search through the items under each Category and select a Keyword.You can also shrink the search radius in the settings under "How far are you willing to go?" to get fewer, more relevant alerts.': '在您的通知警报设置页面上添加特定的关键词，以便您只接收与您的关键词匹配或相关的警报。转到设置（左上角图标）→ 通知警报设置，在页面顶部的文本框中输入关键词，然后从下拉列表中选择，或者只需在各个类别下搜索项目并选择一个关键词。您还可以在“您愿意走多远？”设置中缩小搜索半径，以获得更少、更相关的警报。',  
+             "You may be in an area with fewer shared gifts right now. Try entering a postal code for a nearby spot you’d be willing to travel to. You can also expand your range by going to Settings (top-left icon) and sliding the Max Distance up to 50 miles.": "您目前所在的地区共享的礼物可能较少。尝试输入您愿意前往的附近地点的邮政编码。您还可以通过转到设置（左上角图标）并将最大距离滑动到最多50英里来扩大您的搜索范围。",   
+"[This feature is currently in development and will be available soon.]": "[该功能目前正在开发中，即将推出。]",
+    "You can change your email by tapping on [this link]": "您可以通过点击 [此链接] 更改您的电子邮件地址",
+        "In the Gift Notification screen, simply click on the “x” button to the right of each keyword you have selected—tap it to remove the word. Then rewrite the new keyword you'd like to be notified of": "在“礼物通知”屏幕中，只需单击您选择的每个关键词右侧的“x”按钮——点击它即可删除该词。然后重新输入您希望收到通知的新关键词。",
+      """- Never send money to anyone before meeting them in person. 
+- Skip any offers that require shipping—only deal with local people you can meet face-to-face.
+- Never wire money (Western Union, etc.)—this is a classic scam red flag.
+- Never share financial details such as bank account numbers, Social Security info, PayPal credentials, or similar.""": """- 在亲自见面之前，切勿向任何人汇款。
+- 跳过任何需要邮寄的提议——只与您可以面对面见面的本地人交易。
+- 绝不进行电汇（西联汇款等）——这是一个典型的诈骗红灯。
+- 绝不泄露财务详细信息，例如银行帐号、社会安全信息、PayPal 凭据或类似信息。""",
+        "First, check that your internet connection is working. If it is, your phone may be low on storage space—try deleting some unused apps, photos, or files to free up room.": "首先，检查您的互联网连接是否正常。如果正常，则您的手机存储空间可能不足——请尝试删除一些未使用的应用程序、照片或文件以释放空间。",
 "Visit Freebies": "查看免费物品",
 "Mark as Taken": "标记为已领取",
      "Tram": "有轨电车",
@@ -355,6 +491,60 @@ class AppTranslations {
   "Gifting": "赠送",
 },
    'fr': {
+            "Getting Notified of Preferred Gift Items": "Recevoir des notifications pour les articles cadeaux préférés",
+     " Access the Gift Notifications settings by doing one of the following:" : "Accédez aux paramètres de notifications des cadeaux de l’une des façons suivantes :", 
+"""- From the Listings page, tap the “Get notified of items of interest” banner (located below your preferred postal code), **OR**  
+- Go to Settings (top-left gear icon) → Gift Notifications""":"Accédez aux paramètres de notifications des cadeaux de l’une des façons suivantes :\n- Depuis la page des annonces, appuyez sur la bannière « Recevoir des notifications pour les articles d’intérêt » (située sous votre code postal préféré), OU\n- Allez dans Paramètres (icône d’engrenage en haut à gauche) → Notifications des cadeaux",
+"Add your preferred keywords using one of these methods:": "Ajoutez vos mots-clés préférés en utilisant l’une des méthodes suivantes :", 
+"""- Type the name of the item or category into the text field at the top and select a suggestion from the dropdown list, **OR**  
+- Browse the items listed under each category and select the keywords you want.""":"- Tapez le nom de l’article ou de la catégorie dans le champ de texte en haut et sélectionnez une suggestion dans la liste déroulante, OU\n- Parcourez les articles répertoriés dans chaque catégorie et sélectionnez les mots-clés souhaités.",
+   
+"Select as many keywords as you would like to receive notifications for":"Sélectionnez autant de mots-clés que vous le souhaitez pour recevoir des notifications",
+   
+"""Tap the green “Submit” button at the bottom to activate your selected keywords.  
+You will now only receive alerts related to the keywords you have chosen.""":"Appuyez sur le bouton vert « Soumettre » en bas pour activer les mots-clés sélectionnés.\nVous recevrez désormais uniquement des alertes liées aux mots-clés choisis.",
+"""- You can also reduce the search radius in the same menu to receive fewer, more relevant notifications.
+- Our "Smart Notifier" feature let's our Al assistant notify you with similar items. No need to do anything, it is activated by default.""":"- Vous pouvez également réduire le rayon de recherche dans le même menu pour recevoir moins de notifications, mais plus pertinentes.\n- Notre fonctionnalité « Smart Notifier » permet à notre assistant IA de vous notifier avec des articles similaires. Vous n'avez rien à faire, elle est activée par défaut.",
+ 
+
+    
+
+    "coming soon": "À venir",
+      "Step-by-step guide.": "Guide étape par étape.",
+      "Contacting a Gift Giver": "Contacter un donateur",
+      "Article": "Article", 
+      "Last updated: April 10, 2026": "Dernière mise à jour : 10 avril 2026",
+      "Open the Gift Item": "Ouvrez l'article cadeau",
+      "Tap the Green Button": "Appuyez sur le bouton vert",
+      "Reach out to the Giver on External Platform": "Contactez le donateur sur la plateforme externe",
+      "Tap the green button below “Ask for Gift Item” (or the equivalent platform button)": "Appuyez sur le bouton vert situé sous « Demander un article cadeau » (ou le bouton équivalent de la plateforme)",
+      "Open the gift listing you’re interested in Scroll down past any advertisements at the bottom of the screen.": "Ouvrez l'annonce du cadeau qui vous intéresse. Faites défiler vers le bas au-delà de toute publicité en bas de l'écran.",
+     "You will be redirected to the original site where the gift was posted so you can message the giver directly.": "Vous serez redirigé vers le site d'origine où le cadeau a été publié afin de pouvoir envoyer un message directement au donateur.",
+         "How can I contact the person offering a gift?": "Comment puis-je contacter la personne offrant un cadeau ?",
+      "Why am I seeing paid items or services in my feed?": "Pourquoi vois-je des articles ou des services payants dans mon fil d'actualité ?",
+      "How do I cut down on too many notifications?": "Comment puis-je réduire le nombre de notifications ?",
+      "Why is there hardly any content showing up?": "Pourquoi n'y a-t-il presque aucun contenu affiché ?",
+      "How do I share my own gift?": "Comment puis-je partager mon propre cadeau ?",
+      "How do I update my email address?": "Comment puis-je mettre à jour mon adresse e-mail ?",
+      "How do I remove a word from my selected keywords?": "Comment puis-je supprimer un mot de mes mots-clés sélectionnés ?",
+      "If a gift was posted on a partner platform (e.g Trashnothing), do I need a Trashnothing account?": "Si un cadeau a été posté sur une plateforme partenaire (ex. Trashnothing), ai-je besoin d'un compte Trashnothing ?",
+      "The app won’t load—I only see a white screen with the GiftPose logo.*": "L'application ne se charge pas—je ne vois qu'un écran blanc avec le logo GiftPose.*",
+             "To connect with the giver, open the listing you’re interested in, scroll down past any ads at the bottom, and tap the green “Ask for Gift item” (or equivalent) button. This will take you straight to the original site where the gift was posted so you can message the person directly.": "Pour contacter le donateur, ouvrez l'annonce qui vous intéresse, faites défiler vers le bas au-delà des éventuelles annonces publicitaires et appuyez sur le bouton vert “Demander le cadeau” (ou équivalent). Cela vous amènera directement au site d'origine où le cadeau a été publié afin que vous puissiez envoyer un message directement à la personne.",
+       "Some sellers occasionally list items for sale or paid services in the free giveaway sections of the platforms we scan. That’s why they sometimes appear. If you spot anything that doesn’t belong in GiftPose, just tap the “Report listing” button at the bottom of that post.": "Certains vendeurs proposent parfois des articles à la vente ou des services payants dans les sections gratuites des plateformes que nous scannons. C'est pourquoi ils apparaissent parfois. Si vous repérez quelque chose qui n'appartient pas à GiftPose, appuyez simplement sur le bouton “Signaler l'annonce” en bas de ce post.",
+             'Add specific keywords on your Notifications Alert settings page so you only receive alerts that match, or are related to the terms of your keyword.Go to Settings (top-left icon) → Notifications Alert Settings Type Keyword into text field at the top of the page and select from drop-down OR   simply search through the items under each Category and select a Keyword.You can also shrink the search radius in the settings under "How far are you willing to go?" to get fewer, more relevant alerts.': "Ajoutez des mots-clés spécifiques sur votre page de paramètres des alertes de notification afin de ne recevoir que les alertes correspondant ou liées aux termes de votre mot-clé. Allez dans Paramètres (icône en haut à gauche) → Paramètres des alertes de notification. Saisissez le mot-clé dans le champ de texte en haut de la page et sélectionnez-le dans le menu déroulant OU recherchez simplement parmi les éléments sous chaque catégorie et sélectionnez un mot-clé. Vous pouvez également réduire le rayon de recherche dans les paramètres sous \"Jusqu'où êtes-vous prêt à aller ?\" pour obtenir moins d'alertes, mais plus pertinentes.",  
+             "You may be in an area with fewer shared gifts right now. Try entering a postal code for a nearby spot you’d be willing to travel to. You can also expand your range by going to Settings (top-left icon) and sliding the Max Distance up to 50 miles.": "Vous vous trouvez peut-être dans une zone où il y a moins de cadeaux partagés actuellement. Essayez de saisir le code postal d'un lieu proche vers lequel vous seriez prêt à voyager. Vous pouvez également étendre votre zone de recherche en accédant aux paramètres (icône en haut à gauche) et en faisant glisser la distance maximale jusqu'à 50 miles.",   
+"[This feature is currently in development and will be available soon.]": "[Cette fonctionnalité est actuellement en cours de développement et sera bientôt disponible.]",
+    "You can change your email by tapping on [this link]": "Vous pouvez modifier votre e-mail en appuyant sur [ce lien]",
+        "In the Gift Notification screen, simply click on the “x” button to the right of each keyword you have selected—tap it to remove the word. Then rewrite the new keyword you'd like to be notified of": "Dans l'écran Notification de cadeaux, cliquez simplement sur le bouton “x” à droite de chaque mot-clé que vous avez sélectionné—appuyez dessus pour supprimer le mot. Ensuite, réécrivez le nouveau mot-clé pour lequel vous souhaitez être notifié.",
+      """- Never send money to anyone before meeting them in person. 
+- Skip any offers that require shipping—only deal with local people you can meet face-to-face.
+- Never wire money (Western Union, etc.)—this is a classic scam red flag.
+- Never share financial details such as bank account numbers, Social Security info, PayPal credentials, or similar.""": """- N'envoyez jamais d'argent à quelqu'un avant de l'avoir rencontré en personne.
+- Ignorez toute offre nécessitant une expédition—traitez uniquement avec des personnes locales que vous pouvez rencontrer en face à face.
+- Ne transférez jamais d'argent (Western Union, etc.)—il s'agit d'un signal d'alarme classique d'escroquerie.
+- Ne partagez jamais d'informations financières telles que des numéros de compte bancaire, des numéros de sécurité sociale, des identifiants PayPal ou similaires.""",
+        "First, check that your internet connection is working. If it is, your phone may be low on storage space—try deleting some unused apps, photos, or files to free up room.": "Tout d'abord, vérifiez que votre connexion Internet fonctionne. Si c'est le cas, votre téléphone manque peut-être d'espace de stockage—essayez de supprimer des applications, photos ou fichiers inutilisés pour libérer de l'espace.",
+ 
 "Visit Freebies": "Voir les cadeaux",
   "Mark as Taken": "Marquer comme pris",
    "Tram": "Tramway",
@@ -471,6 +661,56 @@ class AppTranslations {
   "Gifting": "Offrir",
 },
     'it': {
+      "Getting Notified of Preferred Gift Items": "Ricevere notifiche sugli articoli regalo preferiti",
+     " Access the Gift Notifications settings by doing one of the following:":"Accedi alle impostazioni delle notifiche dei regali in uno dei seguenti modi:",  
+"""- From the Listings page, tap the “Get notified of items of interest” banner (located below your preferred postal code), **OR**  
+- Go to Settings (top-left gear icon) → Gift Notifications""":"- Dalla pagina Annunci, tocca il banner “Ricevi notifiche sugli articoli di interesse” (situato sotto il tuo CAP preferito), OPPURE\n- Vai su Impostazioni (icona a forma di ingranaggio in alto a sinistra) → Notifiche Regali",
+"Add your preferred keywords using one of these methods:":"Aggiungi le parole chiave preferite utilizzando uno dei seguenti metodi:", 
+"""- Type the name of the item or category into the text field at the top and select a suggestion from the dropdown list, **OR**  
+- Browse the items listed under each category and select the keywords you want.""":"- Digita il nome dell’articolo o della categoria nel campo di testo in alto e seleziona un suggerimento dall’elenco a discesa, OPPURE\n- Sfoglia gli articoli elencati in ciascuna categoria e seleziona le parole chiave desiderate.",
+   
+"Select as many keywords as you would like to receive notifications for":"Seleziona tutte le parole chiave per le quali desideri ricevere notifiche",
+   
+"""Tap the green “Submit” button at the bottom to activate your selected keywords.  
+You will now only receive alerts related to the keywords you have chosen.""": "Tocca il pulsante verde “Invia” in basso per attivare le parole chiave selezionate.\nDa questo momento riceverai solo notifiche relative alle parole chiave scelte.",
+"""- You can also reduce the search radius in the same menu to receive fewer, more relevant notifications.
+- Our "Smart Notifier" feature let's our Al assistant notify you with similar items. No need to do anything, it is activated by default.""":  "- Puoi anche ridurre il raggio di ricerca nello stesso menu per ricevere meno notifiche ma più pertinenti.\n- La funzione \"Smart Notifier\" consente al nostro assistente AI di notificarti articoli simili. Non è necessario fare nulla, è attiva per impostazione predefinita.",
+        "coming soon": "Prossimamente",
+      "Step-by-step guide.": "Guida passo passo.",
+      "Contacting a Gift Giver": "Contattare un donatore",
+      "Article": "Articolo", 
+      "Last updated: April 10, 2026": "Ultimo aggiornamento: 10 aprile 2026",
+      "Open the Gift Item": "Apri l'articolo regalo",
+      "Tap the Green Button": "Tocca il pulsante verde",
+      "Reach out to the Giver on External Platform": "Contatta il donatore sulla piattaforma esterna",
+      "Tap the green button below “Ask for Gift Item” (or the equivalent platform button)": "Tocca il pulsante verde sotto “Richiedi regalo” (o il pulsante equivalente della piattaforma)",
+      "Open the gift listing you’re interested in Scroll down past any advertisements at the bottom of the screen.": "Apri l'annuncio del regalo che ti interessa. Scorri verso il basso oltre eventuali annunci pubblicitari nella parte inferiore dello schermo.",
+     "You will be redirected to the original site where the gift was posted so you can message the giver directly.": "Sarai reindirizzato al sito originale in cui è stato pubblicato il regalo per poter inviare un messaggio direttamente al donatore.",
+         "How can I contact the person offering a gift?": "Come posso contattare la persona che offre un regalo?",
+      "Why am I seeing paid items or services in my feed?": "Perché vedo articoli o servizi a pagamento nel mio feed?",
+      "How do I cut down on too many notifications?": "Come posso ridurre il numero di notifiche?",
+      "Why is there hardly any content showing up?": "Perché non viene mostrato quasi nessun contenuto?",
+      "How do I share my own gift?": "Come posso condividere il mio regalo?",
+      "How do I update my email address?": "Come posso aggiornare il mio indirizzo email?",
+      "How do I remove a word from my selected keywords?": "Come posso rimuovere una parola dalle mie parole chiave selezionate?",
+      "If a gift was posted on a partner platform (e.g Trashnothing), do I need a Trashnothing account?": "Se un regalo è stato pubblicato su una piattaforma partner (es. Trashnothing), ho bisogno di un account Trashnothing?",
+      "The app won’t load—I only see a white screen with the GiftPose logo.*": "L'app non si carica—vedo solo uno schermo bianco con il logo GiftPose.*",
+             "To connect with the giver, open the listing you’re interested in, scroll down past any ads at the bottom, and tap the green “Ask for Gift item” (or equivalent) button. This will take you straight to the original site where the gift was posted so you can message the person directly.": "Per contattare il donatore, apri l'annuncio che ti interessa, scorri verso il basso oltre gli eventuali annunci pubblicitari in fondo ed tocca il pulsante verde “Richiedi Regalo” (o equivalente). Questo ti porterà direttamente al sito originale in cui è stato pubblicato il regalo, così potrai mandare un messaggio direttamente alla persona.",
+       "Some sellers occasionally list items for sale or paid services in the free giveaway sections of the platforms we scan. That’s why they sometimes appear. If you spot anything that doesn’t belong in GiftPose, just tap the “Report listing” button at the bottom of that post.": "Alcuni venditori occasionalmente mettono in vendita articoli o servizi a pagamento nelle sezioni gratuite delle piattaforme che analizziamo. Ecco perché a volte compaiono. Se noti qualcosa che non appartiene a GiftPose, tocca semplicemente il pulsante “Segnala annuncio” in fondo a quel post.",
+             'Add specific keywords on your Notifications Alert settings page so you only receive alerts that match, or are related to the terms of your keyword.Go to Settings (top-left icon) → Notifications Alert Settings Type Keyword into text field at the top of the page and select from drop-down OR   simply search through the items under each Category and select a Keyword.You can also shrink the search radius in the settings under "How far are you willing to go?" to get fewer, more relevant alerts.': "Aggiungi parole chiave specifiche nella pagina delle impostazioni degli avvisi di notifica in modo da ricevere solo avvisi pertinenti ai termini della tua parola chiave. Vai su Impostazioni (icona in alto a sinistra) → Impostazioni Avvisi di Notifica. Digita la parola chiave nel campo di testo in alto alla pagina e seleziona dal menu a discesa, OPPURE cerca semplicemente tra gli elementi sotto ogni categoria e seleziona una parola chiave. Puoi anche ridurre il raggio di ricerca nelle impostazioni alla voce \"Quanto lontano sei disposto ad andare?\" per ricevere meno avvisi, ma più rilevanti.",  
+             "You may be in an area with fewer shared gifts right now. Try entering a postal code for a nearby spot you’d be willing to travel to. You can also expand your range by going to Settings (top-left icon) and sliding the Max Distance up to 50 miles.": "Potresti trovarti in un'area con meno regali condivisi al momento. Prova a inserire il codice postale di un luogo vicino verso il quale saresti disposto a viaggiare. Puoi anche ampliare il raggio d'azione andando su Impostazioni (icona in alto a sinistra) e facendo scorrere la Distanza Massima fino a 50 miglia.",   
+"[This feature is currently in development and will be available soon.]": "[Questa funzione è attualmente in fase di sviluppo e sarà disponibile a breve.]",
+    "You can change your email by tapping on [this link]": "Puoi modificare la tua email toccando [questo link]",
+        "In the Gift Notification screen, simply click on the “x” button to the right of each keyword you have selected—tap it to remove the word. Then rewrite the new keyword you'd like to be notified of": "Nella schermata Notifica Regali, fai clic sul pulsante “x” a destra di ciascuna parola chiave che hai selezionato—toccalo per rimuovere la parola. Quindi introduci e seleziona la nuova parola chiave per cui desideri ricevere notifiche.",
+      """- Never send money to anyone before meeting them in person. 
+- Skip any offers that require shipping—only deal with local people you can meet face-to-face.
+- Never wire money (Western Union, etc.)—this is a classic scam red flag.
+- Never share financial details such as bank account numbers, Social Security info, PayPal credentials, or similar.""": """- Non inviare mai denaro a nessuno prima di incontrarlo di persona.
+- Ignora qualsiasi offerta che richieda la spedizione—tratta solo con persone locali che puoi incontrare faccia a faccia.
+- Non trasferire mai denaro (Western Union, ecc.)—questo è un classico campanello d'allarme di truffa.
+- Non condividere mai dettagli finanziari come numeri di conto bancario, informazioni sulla previdenza sociale, credenziali PayPal o simili.""",
+        "First, check that your internet connection is working. If it is, your phone may be low on storage space—try deleting some unused apps, photos, or files to free up room.": "Innanzitutto, verifica che la tua connessione Internet funzioni. Se funziona, il tuo telefono potrebbe avere poco spazio di archiviazione—prova a eliminare alcune app, foto o file inutilizzati per liberare spazio.",
+ 
       "Visit Freebies": "Visita Freebies",
 "Mark as Taken": "Segna come preso",
 "Tram": "Tram",
@@ -589,7 +829,56 @@ class AppTranslations {
   "Gifting": "Fare regali",
 },
    'es': {
-
+         "Getting Notified of Preferred Gift Items":  "Recibir notificaciones de artículos de regalo preferidos",
+     "Access the Gift Notifications settings by doing one of the following:" :"Accede a la configuración de notificaciones:",  
+"""- From the Listings page, tap the “Get notified of items of interest” banner (located below your preferred postal code), **OR**  
+- Go to Settings (top-left gear icon) → Gift Notifications""":"- Desde la página de listados, O\n- Configuración → Notificaciones",
+"Add your preferred keywords using one of these methods:":"Añade palabras clave:",  
+"""- Type the name of the item or category into the text field at the top and select a suggestion from the dropdown list, **OR**  
+- Browse the items listed under each category and select the keywords you want.""":"- Escribe y selecciona, O\n- Explora categorías",
+   
+"Select as many keywords as you would like to receive notifications for":"Selecciona tantas palabras clave como quieras",
+   
+"""Tap the green “Submit” button at the bottom to activate your selected keywords.  
+You will now only receive alerts related to the keywords you have chosen.""": "Pulsa “Enviar” para activar.\nAhora solo recibirás alertas relacionadas con tus palabras clave.",
+"""- You can also reduce the search radius in the same menu to receive fewer, more relevant notifications.
+- Our "Smart Notifier" feature let's our Al assistant notify you with similar items. No need to do anything, it is activated by default.""": "- Puedes reducir el radio de búsqueda.\n- \"Smart Notifier\" usa IA para sugerir artículos similares automáticamente.",
+   
+    "coming soon": "Próximamente",
+      "Step-by-step guide.": "Guía paso a paso.",
+      "Contacting a Gift Giver": "Contactando a un donante",
+      "Article": "Artículo", 
+      "Last updated: April 10, 2026": "Última actualización: 10 de abril de 2026",
+      "Open the Gift Item": "Abra el artículo de regalo",
+      "Tap the Green Button": "Toque el botón verde",
+      "Reach out to the Giver on External Platform": "Contacte al donante en la plataforma externa",
+      "Tap the green button below “Ask for Gift Item” (or the equivalent platform button)": "Toque el botón verde debajo de “Solicitar regalo” (o el botón equivalente de la plataforma)",
+      "Open the gift listing you’re interested in Scroll down past any advertisements at the bottom of the screen.": "Abra el anuncio del regalo en el que esté interesado. Desplácese hacia abajo más allá de cualquier anuncio en la parte inferior de la pantalla.",
+     "You will be redirected to the original site where the gift was posted so you can message the giver directly.": "Será redirigido al sitio original donde se publicó el regalo para que pueda enviar un mensaje directamente al donante.",
+      "How can I contact the person offering a gift?": "¿Cómo puedo ponerme en contacto con la persona que ofrece un regalo?",
+      "Why am I seeing paid items or services in my feed?": "¿Por qué veo artículos o servicios de pago en mi feed?",
+      "How do I cut down on too many notifications?": "¿Cómo puedo reducir el número de notificaciones?",
+      "Why is there hardly any content showing up?": "¿Por qué casi no aparece contenido?",
+      "How do I share my own gift?": "¿Cómo puedo compartir mi propio regalo?",
+      "How do I update my email address?": "¿Cómo puedo actualizar mi dirección de correo electrónico?",
+      "How do I remove a word from my selected keywords?": "¿Cómo puedo eliminar una palabra de mis palabras clave seleccionadas?",
+      "If a gift was posted on a partner platform (e.g Trashnothing), do I need a Trashnothing account?": "Si un regalo se publicó en una plataforma asociada (por ejemplo, Trashnothing), ¿necesito una cuenta de Trashnothing?",
+      "The app won’t load—I only see a white screen with the GiftPose logo.*": "La aplicación no carga—solo veo una pantalla blanca con el logotipo de GiftPose.*",
+             "To connect with the giver, open the listing you’re interested in, scroll down past any ads at the bottom, and tap the green “Ask for Gift item” (or equivalent) button. This will take you straight to the original site where the gift was posted so you can message the person directly.": "Para conectar-se com o doador, abra o anúncio que lhe interessa, role para baixo além de quaisquer anúncios na parte inferior e toque no botão verde “Pedir item de presente” (ou equivalente). Isso o levará diretamente ao site original onde o presente foi postado para que você possa enviar uma mensagem à pessoa diretamente.",
+       "Some sellers occasionally list items for sale or paid services in the free giveaway sections of the platforms we scan. That’s why they sometimes appear. If you spot anything that doesn’t belong in GiftPose, just tap the “Report listing” button at the bottom of that post.": "Algunos vendedores ocasionalmente listan itens para venda ou serviços pagos nas seções de doação gratuita das plataformas que escaneamos. É por isso que eles às vezes aparecem. Se você encontrar algo que não pertence ao GiftPose, basta tocar no botão “Denunciar anúncio” na parte inferior dessa postagem.",
+             'Add specific keywords on your Notifications Alert settings page so you only receive alerts that match, or are related to the terms of your keyword.Go to Settings (top-left icon) → Notifications Alert Settings Type Keyword into text field at the top of the page and select from drop-down OR   simply search through the items under each Category and select a Keyword.You can also shrink the search radius in the settings under "How far are you willing to go?" to get fewer, more relevant alerts.': "Adicione palavras-chave específicas na página de configurações de Alertas de Notificação para receber apenas alertas que correspondam ou estejam relacionados aos termos da sua palavra-chave.Vá para Configurações (ícone no canto superior esquerdo) → Configurações de Alertas de Notificação Digite Palavra-chave no campo de texto na parte superior da página e selecione no menu suspenso OU simplesmente pesquise pelos itens em cada Categoria e selecione uma Palavra-chave.Você também pode reduzir o raio de pesquisa nas configurações em \"Até onde você está disposto a ir?\" para receber menos alertas mais relevantes.",  
+             "You may be in an area with fewer shared gifts right now. Try entering a postal code for a nearby spot you’d be willing to travel to. You can also expand your range by going to Settings (top-left icon) and sliding the Max Distance up to 50 miles.": "Você pode estar em uma área com menos presentes compartilhados no momento. Tente inserir o código postal de um local próximo para o qual você estaria disposto a viajar. Você também pode expandir seu alcance indo em Configurações (ícone no canto superior esquerdo) e deslizando a Distância Máxima até 50 milhas.",   
+"[This feature is currently in development and will be available soon.]": "[Este recurso está em desenvolvimento e estará disponível em breve.]",
+    "You can change your email by tapping on [this link]": "Você pode alterar seu e-mail clicando em [este link]",
+        "In the Gift Notification screen, simply click on the “x” button to the right of each keyword you have selected—tap it to remove the word. Then rewrite the new keyword you'd like to be notified of": "Na tela de Notificação de Presentes, basta clicar no botão “x” à direita de cada palavra-chave que você selecionou — toque nele para remover a palavra. Em seguida, reescreva a nova palavra-chave que você deseja ser notificado.",
+      """- Never send money to anyone before meeting them in person. 
+- Skip any offers that require shipping—only deal with local people you can meet face-to-face.
+- Never wire money (Western Union, etc.)—this is a classic scam red flag.
+- Never share financial details such as bank account numbers, Social Security info, PayPal credentials, or similar.""": """- Nunca envie dinheiro a ninguém antes de conhecê-lo pessoalmente. 
+- Ignore quaisquer ofertas que exijam envio — lide apenas com pessoas locais que você possa encontrar pessoalmente.
+- Nunca transfira dinheiro (Western Union, etc.) — esta é uma bandeira vermelha clássica de golpe.
+- Nunca compartilhe detalhes financeiros como números de conta bancária, informações de seguridade social, credenciais do PayPal ou similares.""",
+        "First, check that your internet connection is working. If it is, your phone may be low on storage space—try deleting some unused apps, photos, or files to free up room.": "Primeiro, verifique se sua conexão com a internet está funcionando. Se estiver, seu telefone pode estar com pouco espaço de armazenamento — tente excluir alguns aplicativos, fotos ou arquivos não utilizados para liberar espaço.",
   "visit_freebies": "Ver objetos gratis",
   "mark_as_taken": "Marcar como entregado",
 
@@ -708,6 +997,56 @@ class AppTranslations {
   "Gifting": "Regalar",
 },
     'pt': {
+            "Getting Notified of Preferred Gift Items":  "Receber notificações de itens de presente preferidos",
+     "Access the Gift Notifications settings by doing one of the following:":"Acesse as configurações de notificações de presentes de uma das seguintes formas:",  
+"""- From the Listings page, tap the “Get notified of items of interest” banner (located below your preferred postal code), **OR**  
+- Go to Settings (top-left gear icon) → Gift Notifications""":"- Na página de listagens, toque no banner “Receber notificações de itens de interesse” (localizado abaixo do seu código postal preferido), OU\n- Vá para Configurações (ícone de engrenagem no canto superior esquerdo) → Notificações de Presentes",
+"""Add your preferred keywords using one of these methods:":"Adicione palavras-chave usando um dos métodos:",  
+- Type the name of the item or category into the text field at the top and select a suggestion from the dropdown list, **OR**  
+- Browse the items listed under each category and select the keywords you want.""":"- Digite o nome do item ou categoria no campo de texto e selecione uma sugestão, OU\n- Navegue pelas categorias e selecione as palavras-chave desejadas.",
+   
+"Select as many keywords as you would like to receive notifications for":"Selecione quantas palavras-chave quiser para receber notificações",
+   
+"""Tap the green “Submit” button at the bottom to activate your selected keywords.  
+You will now only receive alerts related to the keywords you have chosen.""": "Toque no botão verde “Enviar” para ativar as palavras-chave selecionadas.\nAgora você receberá apenas alertas relacionados às palavras-chave escolhidas.",
+"""- You can also reduce the search radius in the same menu to receive fewer, more relevant notifications.
+- Our "Smart Notifier" feature let's our Al assistant notify you with similar items. No need to do anything, it is activated by default.""": "- Você também pode reduzir o raio de busca no mesmo menu para receber menos notificações e mais relevantes.\n- O recurso \"Smart Notifier\" usa IA para sugerir itens semelhantes automaticamente. Não é necessário fazer nada; ele já está ativado por padrão.",
+   
+      "coming soon": "Em breve",
+      "Step-by-step guide.": "Guia passo a passo.",
+      "Contacting a Gift Giver": "Entrando em contato com um doador",
+      "Article": "Artigo", 
+      "Last updated: April 10, 2026": "Última atualização: 10 de abril de 2026",
+      "Open the Gift Item": "Abra o item de presente",
+      "Tap the Green Button": "Toque no botão verde",
+      "Reach out to the Giver on External Platform": "Entre em contato com o doador na plataforma externa",
+      "Tap the green button below “Ask for Gift Item” (or the equivalent platform button)": "Toque no botão verde abaixo de “Pedir item de presente” (ou o botão equivalente da plataforma)",
+      "Open the gift listing you’re interested in Scroll down past any advertisements at the bottom of the screen.": "Abra o anúncio do presente em que você está interessado. Role para baixo além de qualquer anúncio na parte inferior da tela.",
+     "You will be redirected to the original site where the gift was posted so you can message the giver directly.": "Você será redirecionado para o site original onde o presente foi postado para poder enviar uma mensagem diretamente ao doador.",
+      "How can I contact the person offering a gift?": "Como posso entrar em contato com a pessoa que oferece um presente?",
+      "Why am I seeing paid items or services in my feed?": "Por que estou vendo itens pagos ou serviços no meu feed?",
+      "How do I cut down on too many notifications?": "Como posso reduzir o número de notificações?",
+      "Why is there hardly any content showing up?": "Por que quase não há conteúdo aparecendo?",
+      "How do I share my own gift?": "Como posso compartilhar meu próprio presente?",
+      "How do I update my email address?": "Como posso atualizar meu endereço de e-mail?",
+      "How do I remove a word from my selected keywords?": "Como posso remover uma palavra das palavras-chave selecionadas?",
+      "If a gift was posted on a partner platform (e.g Trashnothing), do I need a Trashnothing account?": "Se um presente foi postado em uma plataforma parceira (por exemplo, Trashnothing), preciso de uma conta Trashnothing?",
+      "The app won’t load—I only see a white screen with the GiftPose logo.*": "O aplicativo não carrega—vejo apenas uma tela branca com o logotipo do GiftPose.*",
+             "To connect with the giver, open the listing you’re interested in, scroll down past any ads at the bottom, and tap the green “Ask for Gift item” (or equivalent) button. This will take you straight to the original site where the gift was posted so you can message the person directly.": "Para entrar em contato com o doador, abra o anúncio que lhe interessa, role para baixo além de quaisquer anúncios na parte inferior e toque no botão verde “Pedir item de presente” (ou equivalente). Isso o levará diretamente ao site original onde o presente foi postado para que você possa enviar uma mensagem à pessoa diretamente.",
+       "Some sellers occasionally list items for sale or paid services in the free giveaway sections of the platforms we scan. That’s why they sometimes appear. If you spot anything that doesn’t belong in GiftPose, just tap the “Report listing” button at the bottom of that post.": "Alguns vendedores ocasionalmente listam itens para venda ou serviços pagos nas seções de doação gratuita das plataformas que escaneamos. É por isso que eles às vezes aparecem. Se você encontrar algo que não pertence ao GiftPose, basta tocar no botão “Denunciar anúncio” na parte inferior dessa postagem.",
+             'Add specific keywords on your Notifications Alert settings page so you only receive alerts that match, or are related to the terms of your keyword.Go to Settings (top-left icon) → Notifications Alert Settings Type Keyword into text field at the top of the page and select from drop-down OR simply search through the items under each Category and select a Keyword.You can also shrink the search radius in the settings under "How far are you willing to go?" to get fewer, more relevant alerts.': "Adicione palavras-chave específicas na página de configurações de Alertas de Notificação para receber apenas alertas que correspondam ou estejam relacionados aos termos da sua palavra-chave.Vá para Configurações (ícone no canto superior esquerdo) → Configurações de Alertas de Notificação Digite Palavra-chave no campo de texto na parte superior da página e selecione no menu suspenso OU simplesmente pesquise pelos itens em cada Categoria e selecione uma Palavra-chave.Você também pode reduzir o raio de pesquisa nas configurações em \"Até onde você está disposto a ir?\" para receber menos alertas mais relevantes.",  
+             "You may be in an area with fewer shared gifts right now. Try entering a postal code for a nearby spot you’d be willing to travel to. You can also expand your range by going to Settings (top-left icon) and sliding the Max Distance up to 50 miles.": "Você pode estar em uma área com menos presentes compartilhados no momento. Tente inserir o código postal de um local próximo para o qual você estaria disposto a viajar. Você também pode expandir seu alcance indo em Configurações (ícone no canto superior esquerdo) e deslizando a Distância Máxima até 50 milhas.",   
+"[This feature is currently in development and will be available soon.]": "[Este recurso está em desenvolvimento e estará disponível em breve.]",
+    "You can change your email by tapping on [this link]": "Você pode alterar seu e-mail clicando em [este link]",
+        "In the Gift Notification screen, simply click on the “x” button to the right of each keyword you have selected—tap it to remove the word. Then rewrite the new keyword you'd like to be notified of": "Na tela de Notificação de Presentes, basta clicar no botão “x” à direita de cada palavra-chave que você selecionou — toque nele para remover a palavra. Em seguida, reescreva a nova palavra-chave que você deseja ser notificado.",
+      """- Never send money to anyone before meeting them in person. 
+- Skip any offers that require shipping—only deal with local people you can meet face-to-face.
+- Never wire money (Western Union, etc.)—this is a classic scam red flag.
+- Never share financial details such as bank account numbers, Social Security info, PayPal credentials, or similar.""": """- Nunca envie dinheiro a ninguém antes de conhecê-lo pessoalmente. 
+- Ignore quaisquer ofertas que exijam envio — lide apenas com pessoas locais que você possa encontrar pessoalmente.
+- Nunca transfira dinheiro (Western Union, etc.) — esta é uma bandeira vermelha clássica de golpe.
+- Nunca compartilhe detalhes financeiros como números de conta bancária, informações de seguridade social, credenciais do PayPal ou similares.""",
+        "First, check that your internet connection is working. If it is, your phone may be low on storage space—try deleting some unused apps, photos, or files to free up room.": "Primeiro, verifique se sua conexão com a internet está funcionando. Se estiver, seu telefone pode estar com pouco espaço de armazenamento — tente excluir alguns aplicativos, fotos ou arquivos não utilizados para liberar espaço.",
 "Visit Freebies": "Ver itens grátis",
 "Mark as Taken": "Marcar como recolhido",
 "Tram": "Elétrico",

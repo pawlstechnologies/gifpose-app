@@ -4,9 +4,13 @@ import 'package:giftpose/screens/onboarding/models/alert_sub_category_list_respo
 import 'package:giftpose/screens/onboarding/models/alerts_category_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/create_alerts_request.dart';
 import 'package:giftpose/screens/onboarding/models/create_alerts_response.dart';
+import 'package:giftpose/screens/onboarding/models/create_payment_intent_request.dart';
+import 'package:giftpose/screens/onboarding/models/create_payment_intent_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_alert_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_itemsnearme_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetchitems_byid_response.dart';
+import 'package:giftpose/screens/onboarding/models/hide_item_request.dart';
+import 'package:giftpose/screens/onboarding/models/hide_item_response.dart';
 import 'package:giftpose/screens/onboarding/models/notification_response.dart';
 import 'package:giftpose/screens/onboarding/models/search_alert_category_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_predictions_request.dart';
@@ -30,6 +34,12 @@ abstract class MainViewRepo {
 
  Future<SearchCategoryPredictionResponse> searchAlertPredictions({
     required SearchCategoryPredictionRequest  searchCategoryPredictionRequest,
+  }); 
+   Future<HideItemResponse> hideItem({
+    required HideItemRequest  hideItemRequest,  required String id,
+  });
+     Future<HideItemResponse> markItemTaken({
+    required HideItemRequest  hideItemRequest, required String deviceID, required String id,
   });
   Future<SearchResponse> globalSearch({
     required String deviceId,
@@ -37,4 +47,9 @@ abstract class MainViewRepo {
   });
    Future<FetchAlertListResponse> fetchAlertList({  required String deviceID,});
    Future<NotificationResponse> fetchNotification({  required String deviceID,});
+
+  Future<CreatePaymentIntentResponse> createPaymentIntent({
+    required CreatePaymentIntentRequest  createPaymentIntentRequest,
+  });
+
 }

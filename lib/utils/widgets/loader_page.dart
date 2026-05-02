@@ -58,13 +58,10 @@ class _LoaderPageState extends State<LoaderPage>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            RotationTransition(
-              turns: _controller,
-              child: Image.asset(
-                "assets/images/loader.png",
-                width: 340,
-                height: 280,
-              ),
+            Image.asset(
+              "assets/images/loader.gif",
+              width: 340,
+              height: 280,
             ),
             YMargin(30),
             Text("Getting Gifts Closer to you...".tr(context),

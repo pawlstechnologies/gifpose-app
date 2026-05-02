@@ -26,6 +26,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/about.svg
   SvgGenImage get about => const SvgGenImage('assets/icons/about.svg');
 
+  /// File path: assets/icons/adfree.svg
+  SvgGenImage get adfree => const SvgGenImage('assets/icons/adfree.svg');
+
+  /// File path: assets/icons/ads.svg
+  SvgGenImage get ads => const SvgGenImage('assets/icons/ads.svg');
+
   /// File path: assets/icons/allowNotifications.svg
   SvgGenImage get allowNotifications =>
       const SvgGenImage('assets/icons/allowNotifications.svg');
@@ -72,6 +78,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/fb.svg
   SvgGenImage get fb => const SvgGenImage('assets/icons/fb.svg');
 
+  /// File path: assets/icons/featured.svg
+  SvgGenImage get featured => const SvgGenImage('assets/icons/featured.svg');
+
   /// File path: assets/icons/foward.svg
   SvgGenImage get foward => const SvgGenImage('assets/icons/foward.svg');
 
@@ -90,6 +99,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/helpcentre.svg
   SvgGenImage get helpcentre =>
       const SvgGenImage('assets/icons/helpcentre.svg');
+
+  /// File path: assets/icons/hide.svg
+  SvgGenImage get hide => const SvgGenImage('assets/icons/hide.svg');
 
   /// File path: assets/icons/ig.svg
   SvgGenImage get ig => const SvgGenImage('assets/icons/ig.svg');
@@ -125,6 +137,20 @@ class $AssetsIconsGen {
   /// File path: assets/icons/one.svg
   SvgGenImage get one => const SvgGenImage('assets/icons/one.svg');
 
+  /// File path: assets/icons/paymentImage copy.png
+  AssetGenImage get paymentImageCopy =>
+      const AssetGenImage('assets/icons/paymentImage copy.png');
+
+  /// File path: assets/icons/premium.png
+  AssetGenImage get premiumPng =>
+      const AssetGenImage('assets/icons/premium.png');
+
+  /// File path: assets/icons/premium.svg
+  SvgGenImage get premiumSvg => const SvgGenImage('assets/icons/premium.svg');
+
+  /// File path: assets/icons/privacy.svg
+  SvgGenImage get privacy => const SvgGenImage('assets/icons/privacy.svg');
+
   /// File path: assets/icons/privateVehicle.svg
   SvgGenImage get privateVehicle =>
       const SvgGenImage('assets/icons/privateVehicle.svg');
@@ -132,6 +158,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/publicTransport.svg
   SvgGenImage get publicTransport =>
       const SvgGenImage('assets/icons/publicTransport.svg');
+
+  /// File path: assets/icons/report.svg
+  SvgGenImage get report => const SvgGenImage('assets/icons/report.svg');
 
   /// File path: assets/icons/search.svg
   SvgGenImage get search => const SvgGenImage('assets/icons/search.svg');
@@ -143,6 +172,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/star.svg
   SvgGenImage get star => const SvgGenImage('assets/icons/star.svg');
 
+  /// File path: assets/icons/supporter.svg
+  SvgGenImage get supporter => const SvgGenImage('assets/icons/supporter.svg');
+
   /// File path: assets/icons/three.svg
   SvgGenImage get three => const SvgGenImage('assets/icons/three.svg');
 
@@ -151,6 +183,12 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/two.png
   AssetGenImage get two => const AssetGenImage('assets/icons/two.png');
+
+  /// File path: assets/icons/unlimited.svg
+  SvgGenImage get unlimited => const SvgGenImage('assets/icons/unlimited.svg');
+
+  /// File path: assets/icons/up.svg
+  SvgGenImage get up => const SvgGenImage('assets/icons/up.svg');
 
   /// File path: assets/icons/vehicleHire.svg
   SvgGenImage get vehicleHire =>
@@ -167,6 +205,8 @@ class $AssetsIconsGen {
     line,
     lineh,
     about,
+    adfree,
+    ads,
     allowNotifications,
     apple,
     back,
@@ -182,12 +222,14 @@ class $AssetsIconsGen {
     ex,
     facebook,
     fb,
+    featured,
     foward,
     google,
     grid,
     hamburger,
     heart,
     helpcentre,
+    hide,
     ig,
     language,
     like,
@@ -199,14 +241,22 @@ class $AssetsIconsGen {
     not,
     notificationIcon,
     one,
+    paymentImageCopy,
+    premiumPng,
+    premiumSvg,
+    privacy,
     privateVehicle,
     publicTransport,
+    report,
     search,
     settingsicon,
     star,
+    supporter,
     three,
     train,
     two,
+    unlimited,
+    up,
     vehicleHire,
     walking,
     x,
@@ -215,6 +265,9 @@ class $AssetsIconsGen {
 
 class $AssetsImagesGen {
   const $AssetsImagesGen();
+
+  /// File path: assets/images/avi.png
+  AssetGenImage get avi => const AssetGenImage('assets/images/avi.png');
 
   /// File path: assets/images/dash1.png
   AssetGenImage get dash1 => const AssetGenImage('assets/images/dash1.png');
@@ -240,8 +293,16 @@ class $AssetsImagesGen {
   /// File path: assets/images/images3.png
   AssetGenImage get images3 => const AssetGenImage('assets/images/images3.png');
 
+  /// File path: assets/images/load.png
+  AssetGenImage get load => const AssetGenImage('assets/images/load.png');
+
+  /// File path: assets/images/loader.gif
+  AssetGenImage get loaderGif =>
+      const AssetGenImage('assets/images/loader.gif');
+
   /// File path: assets/images/loader.png
-  AssetGenImage get loader => const AssetGenImage('assets/images/loader.png');
+  AssetGenImage get loaderPng =>
+      const AssetGenImage('assets/images/loader.png');
 
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
@@ -251,6 +312,10 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/map.png
   AssetGenImage get map => const AssetGenImage('assets/images/map.png');
+
+  /// File path: assets/images/paymentImage.png
+  AssetGenImage get paymentImage =>
+      const AssetGenImage('assets/images/paymentImage.png');
 
   /// File path: assets/images/splashImage.png
   AssetGenImage get splashImage =>
@@ -274,6 +339,7 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<dynamic> get values => [
+    avi,
     dash1,
     dash2,
     dash3,
@@ -282,10 +348,13 @@ class $AssetsImagesGen {
     images1,
     images2,
     images3,
-    loader,
+    load,
+    loaderGif,
+    loaderPng,
     logo,
     logo2,
     map,
+    paymentImage,
     splashImage,
     star,
     tileone,

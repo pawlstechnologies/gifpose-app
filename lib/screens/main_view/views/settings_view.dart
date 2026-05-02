@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:giftpose/screens/main_view/widgets/settings_bottomsheet.dart';
 import 'package:giftpose/utils/localization_provider.dart';
 
 import 'package:giftpose/gen/assets.gen.dart';
@@ -10,6 +11,7 @@ import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/theme/theme.dart';
 import 'package:giftpose/utils/widgets/Giftpose_basescafold.dart';
 import 'package:giftpose/utils/widgets/duration_slider.dart';
+import 'package:giftpose/utils/widgets/giftpose_button.dart';
 import 'package:giftpose/utils/widgets/giftpose_switch.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
 import 'package:provider/provider.dart';
@@ -31,39 +33,88 @@ class _SettingsViewState extends State<SettingsView> {
         return GiftPoseBaseScaffold(
           includeHorizontalPadding: true,
 
-          showAppBar: true,
+          showAppBar: false,
           includeVerticalPadding: false,
           centerTitle: true,
-          appBarLeadingWidget: InkWell(
+         
+        
+
+
+          builder: (size) {
+            return ListView(
+              children: [
+               
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                     InkWell(
             onTap: () {
               HapticFeedback.heavyImpact();
               Navigator.pop(context);
             },
             child: Container(
-              width: 60,
+              width: 50,
               height: 40,
 
               child: Padding(
-                padding: const EdgeInsets.all(14.0),
+                padding: const EdgeInsets.all(12.0),
                 child: Assets.icons.back.svg(
                   color: Theme.of(context).textTheme.bodyLarge?.color,
                 ),
               ),
             ),
           ),
-
-          hasGradient: true,
-          appBarTitleWidget: Text(
+Text(
             "Settings".tr(context),
             textAlign: TextAlign.center,
 
      style: GiftPoseTextStyle.normal(fontWeight: FontWeight.w500),
           ),
 
-          builder: (size) {
-            return ListView(
-              children: [
-                YMargin(31),
+
+          InkWell(
+            onTap: () {
+              HapticFeedback.heavyImpact();
+            showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(20),
+      topRight: Radius.circular(20),
+    ),
+  ),
+                                      builder: (_) => SettingsBottomsheet(),
+                                    );
+            },
+            child: Icon(Icons.menu)),
+          
+                  ],
+                ),
+                YMargin(5),
+                Assets.images.avi.image(height: 80, width: 80),
+                YMargin(5),
+                Text(
+                  "My_Username".tr(context),
+                           textAlign: TextAlign.center,
+
+                  style: GiftPoseTextStyle.small(
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
+                  ),
+                ),
+                    YMargin(2),
+                Text(
+                  "username@mail.com".tr(context),
+                  textAlign: TextAlign.center,
+
+                  style: GiftPoseTextStyle.small(
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
+                  ),
+                ),
+                YMargin(16),
+
+
                 Text(
                   "Location".tr(context),
 
@@ -201,7 +252,7 @@ class _SettingsViewState extends State<SettingsView> {
                           ),
                           leading: Assets.icons.notificationIcon.svg(),
                           title: Text(
-                            "Notification Alert Settings".tr(context),
+                            "Gift Notifications".tr(context),
 
                             style: GiftPoseTextStyle.small(
                               color: Theme.of(
@@ -340,6 +391,33 @@ class _SettingsViewState extends State<SettingsView> {
                           ),
                         ),
                       ),
+                      YMargin(10),
+                        Divider(color: Theme.of(context).dividerColor),
+                        InkWell(
+                        onTap: () {
+                          HapticFeedback.heavyImpact();
+                          Navigator.pushNamed(context, AppRoutes.premiumSubscription);
+                        },
+
+                        child: ListTile(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 10,
+                          ),
+                          leading: Assets.icons.ads.svg(),
+                          title: Text(
+                            "Remove ads".tr(context),
+
+                            style: GiftPoseTextStyle.small(
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodyLarge?.color,
+                            ),
+                          ),
+                          trailing: Assets.icons.foward.svg(),
+                        ),
+                      ),
+                      
                     ],
                   ),
                 ),

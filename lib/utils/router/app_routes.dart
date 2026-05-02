@@ -14,6 +14,7 @@ class AppRoutes {
      static const String searchPage = "/searchPage";
 
     static const String helpCenter = "/helpCenter";
+        static const String premiumSubscription = "/premiumSubscription"; 
         static const String aboutPage = "/aboutPage";
                 static const String languagePage = "/languagePage";
            static const String donorPage = "/donorPage";

@@ -173,7 +173,7 @@ class HelpCenter extends StatelessWidget {
                       ),
                       subtitle: Padding(
                         padding: EdgeInsets.only(top: 8.0),
-                        child: Text("Sending and receiving items".tr(context),
+                            child: Text("coming soon".tr(context),
                           
                           style: GiftPoseTextStyle.small(
                             color: Theme.of(context).textTheme.bodyMedium?.color,
@@ -217,7 +217,7 @@ class HelpCenter extends StatelessWidget {
                       ),
                       subtitle: Padding(
                         padding: EdgeInsets.only(top: 8.0),
-                        child: Text("How to ask for support".tr(context),
+                        child: Text("coming soon".tr(context),
                           
                           style: GiftPoseTextStyle.small(
                             color: Theme.of(context).textTheme.bodyMedium?.color,

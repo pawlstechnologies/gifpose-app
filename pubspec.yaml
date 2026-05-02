@@ -2,7 +2,7 @@ name: giftpose
 description: "A new Flutter project."
 publish_to: "none"
 
-version: 1.0.1+8
+version: 1.0.0+8
 
 environment:
   sdk: ">=3.11.0 <4.0.0"
@@ -29,6 +29,7 @@ dependencies:
   get_it: ^9.2.1
   google_maps_flutter: ^2.14.2
   hive_flutter: ^1.1.0
+  flutter_stripe: ^10.0.0
   image_picker: ^1.2.1
   intl: ^0.20.2
   jiffy: ^6.4.3

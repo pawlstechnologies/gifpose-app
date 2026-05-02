@@ -6,6 +6,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:client_information/client_information.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:giftpose/app.dart';
 import 'package:giftpose/screens/main_view/repo/main_view_repo.dart';
 import 'package:giftpose/screens/main_view/viewmodels/base_viewmodel.dart';
@@ -13,9 +14,13 @@ import 'package:giftpose/screens/onboarding/models/alert_sub_category_list_respo
 import 'package:giftpose/screens/onboarding/models/alerts_category_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/create_alerts_request.dart';
 import 'package:giftpose/screens/onboarding/models/create_alerts_response.dart';
+import 'package:giftpose/screens/onboarding/models/create_payment_intent_request.dart';
+import 'package:giftpose/screens/onboarding/models/create_payment_intent_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_alert_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_itemsnearme_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetchitems_byid_response.dart';
+import 'package:giftpose/screens/onboarding/models/hide_item_request.dart';
+import 'package:giftpose/screens/onboarding/models/hide_item_response.dart';
 import 'package:giftpose/screens/onboarding/models/notification_response.dart';
 import 'package:giftpose/screens/onboarding/models/search_alert_category_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_predictions_request.dart';
@@ -420,7 +425,87 @@ bool isLoadMore = false,
       fetchItemsByIdMeResponse = NetworkDataResponse.error(e.toString());
     }
   }
+  NetworkDataResponse<HideItemResponse> _hideItemResponse =
+      NetworkDataResponse.idle();
 
+  NetworkDataResponse<HideItemResponse> get hideItemResponse =>
+      _hideItemResponse;
+
+  set hideItemResponse(
+    NetworkDataResponse<HideItemResponse> value,
+  ) {
+    _hideItemResponse = value;
+    notifyListeners();
+  }
+
+  Future<void> hideItem({required String id}) async {
+    try {
+      hideItemResponse = NetworkDataResponse.loading("");
+      await LoaderPage.show(navigatorKey.currentContext!);
+
+      final response = await mainViewRepo.hideItem(hideItemRequest: HideItemRequest(deviceId: deviceId??""), id: id );
+
+    hideItemResponse  = NetworkDataResponse.completed(response);
+
+     if (navigatorKey.currentContext!.mounted) {
+        Navigator.of(navigatorKey.currentContext!, rootNavigator: true).pop(); // Dismiss dialog
+      }
+      if(hideItemResponse.status == true){
+        CustomToast.show(
+            context: navigatorKey.currentContext!,
+            message: response.message??"");  
+          Navigator.pushNamed(navigatorKey.currentContext!, AppRoutes.dashboard);
+          fetchItemsNearMe(isLoadMore: false);
+      }
+
+      if (navigatorKey.currentContext!.mounted) {
+        Navigator.of(navigatorKey.currentContext!, rootNavigator: true).pop(); // Dismiss dialog
+      }
+
+
+    } catch (e) {
+      hideItemResponse  = NetworkDataResponse.error(e.toString());
+    }
+  }
+
+
+  // mark item
+
+  NetworkDataResponse<HideItemResponse> _markItemResponse =
+      NetworkDataResponse.idle();
+
+  NetworkDataResponse<HideItemResponse> get markItemResponse =>
+      _markItemResponse;
+
+  set markItemResponse(NetworkDataResponse<HideItemResponse> value) {
+    _markItemResponse = value;
+    notifyListeners();
+  }
+
+  Future<void> markItem({required String id}) async {
+    try {
+      markItemResponse = NetworkDataResponse.loading("");
+       await LoaderPage.show(navigatorKey.currentContext!);
+
+      final response = await mainViewRepo.markItemTaken(hideItemRequest: HideItemRequest(deviceId: deviceId??""), deviceID: deviceId??"", id: id );
+   if (navigatorKey.currentContext!.mounted) {
+        Navigator.of(navigatorKey.currentContext!, rootNavigator: true).pop(); // Dismiss dialog
+      }
+      if(markItemResponse.status == true){
+        CustomToast.show(
+            context: navigatorKey.currentContext!,
+            message: response.message??"");  
+         
+          fetchItemsNearMe(isLoadMore: false);
+      }
+
+   
+
+    markItemResponse  = NetworkDataResponse.completed(response);
+    } catch (e) {
+      markItemResponse  = NetworkDataResponse.error(e.toString());
+    }
+  }   
   NetworkDataResponse<CreateAlertListResponse> _createAlertResponse =
       NetworkDataResponse.idle();
 
@@ -450,7 +535,7 @@ bool isLoadMore = false,
           categories: categories,
           keywords: keywords,
           status:"Active",
-          firebaseToken: fcmToken ?? "",
+          firebaseToken:fcmToken??"",
         ),
       );
 
@@ -626,6 +711,94 @@ void selectOption(int index) {
       fetchAlertSubCategoryResponse = NetworkDataResponse.error(e.toString());
     }
   }
+
+  NetworkDataResponse<CreatePaymentIntentResponse> _createPaymentIntentResponse = NetworkDataResponse.idle();
+
+ NetworkDataResponse<CreatePaymentIntentResponse>
+  get createPaymentIntentResponse => _createPaymentIntentResponse;
+
+  set createPaymentIntentResponse(
+  NetworkDataResponse<CreatePaymentIntentResponse> value,
+  ) {
+    _createPaymentIntentResponse = value;
+    notifyListeners();
+  }
+
+Future<void> createPaymentIntent() async {
+  try {
+    print("🟡 STEP 1: شروع createPaymentIntent");
+
+    createPaymentIntentResponse = NetworkDataResponse.loading("");
+
+    final response = await mainViewRepo.createPaymentIntent(
+      createPaymentIntentRequest:
+          CreatePaymentIntentRequest(deviceId: deviceId ?? ""),
+    );
+
+    print("🟢 STEP 2: API RESPONSE RECEIVED");
+    print("👉 Full response: $response");
+
+    createPaymentIntentResponse = NetworkDataResponse.completed(response);
+
+    final clientSecret =
+        createPaymentIntentResponse.data?.data.clientSecret ?? "";
+
+    print("🟢 STEP 3: CLIENT SECRET");
+    print("👉 $clientSecret");
+
+    if (clientSecret.isEmpty) {
+      print("🔴 ERROR: Client secret is EMPTY");
+      return;
+    }
+
+    print("🟡 STEP 4: INITIALIZING PAYMENT SHEET");
+
+    try {
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: clientSecret,
+          merchantDisplayName: 'GiftPose',
+
+          // 👇 Add this for Android
+          googlePay: const PaymentSheetGooglePay(
+            merchantCountryCode: 'NG',
+            testEnv: true,
+          ),
+        ),
+      );
+
+      print("🟢 STEP 5: PAYMENT SHEET INITIALIZED");
+    } catch (e, s) {
+      print("🔴 ERROR DURING initPaymentSheet");
+      print(e);
+      print(s);
+      return;
+    }
+
+    print("🟡 STEP 6: PRESENTING PAYMENT SHEET");
+
+    try {
+      await Stripe.instance.presentPaymentSheet();
+      print("🟢 STEP 7: PAYMENT SHEET CLOSED (SUCCESS)");
+    } catch (e, s) {
+      print("🔴 ERROR DURING presentPaymentSheet");
+      print(e);
+      print(s);
+    }
+
+    print("🟡 STEP 8: DONE");
+
+  } catch (e, s) {
+    print("🔥 FATAL ERROR");
+    print(e);
+    print(s);
+
+    createPaymentIntentResponse =
+        NetworkDataResponse.error(e.toString());
+  }
+}
+
+
     NetworkDataResponse<FetchAlertListResponse>
   _fetchAlertListResponse = NetworkDataResponse.idle();
 
@@ -638,6 +811,9 @@ void selectOption(int index) {
     _fetchAlertListResponse = value;
     notifyListeners();
   }
+
+
+
 
 
   Future<void> fetchAlertList() async {

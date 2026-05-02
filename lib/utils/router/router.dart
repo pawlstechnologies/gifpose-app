@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:giftpose/screens/main_view/views/settings_page/about_page.dart';
 import 'package:giftpose/screens/main_view/views/settings_page/help_center.dart';
 import 'package:giftpose/screens/main_view/views/settings_page/language_view.dart';
+import 'package:giftpose/screens/main_view/views/settings_page/premium_page.dart';
 import 'package:giftpose/utils/localization_provider.dart';
 
 
@@ -29,6 +30,9 @@ class Routers {
         break;
       case AppRoutes.consentPage:
         routeWidget = ConsentScreen();
+        break;
+      case AppRoutes.premiumSubscription:
+        routeWidget = PremiumSubscriptionView();
         break;
       case AppRoutes.postcodePage:
         routeWidget = PostcodeScreen();

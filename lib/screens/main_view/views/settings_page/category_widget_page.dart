@@ -110,7 +110,7 @@ class CategoryWidgetDetails extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        ArticlePage(title: "Article".tr(context)),
+                        ArticlePage(title: "Contacting a Gift Giver".tr(context)),
                   ),
                 );
               },
@@ -128,7 +128,7 @@ class CategoryWidgetDetails extends StatelessWidget {
                   child: ListTile(
                     contentPadding: EdgeInsets.all(16),
                     leading: Assets.icons.location.svg(),
-                    title: Text("How to donate".tr(context),
+                    title: Text("Contacting a Gift Giver".tr(context),
 
                       style: GiftPoseTextStyle.small(
                         color: Theme.of(context).textTheme.bodyLarge?.color,
@@ -136,7 +136,7 @@ class CategoryWidgetDetails extends StatelessWidget {
                     ),
                     subtitle: Padding(
                       padding: EdgeInsets.only(top: 8.0),
-                      child: Text("Step-by-step guide to making a gift.".tr(context),
+                      child: Text("Step-by-step guide.".tr(context),
 
                         style: GiftPoseTextStyle.small(
                           color: Theme.of(context).textTheme.bodyMedium?.color,
@@ -149,92 +149,9 @@ class CategoryWidgetDetails extends StatelessWidget {
               ),
             ),
             YMargin(12),
-            InkWell(
-              onTap: () {
-                HapticFeedback.heavyImpact();
-                   Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        ArticlePage(title: "Article".tr(context)),
-                  ),
-                );
-              },
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Theme.of(context).dividerColor,
-                      width: 1,
-                    ),
-                  ),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(16),
-                    leading: Assets.icons.location.svg(),
-                    title: Text("How to donate".tr(context),
-
-                      style: GiftPoseTextStyle.small(
-                        color: Theme.of(context).textTheme.bodyLarge?.color,
-                      ),
-                    ),
-                    subtitle: Padding(
-                      padding: EdgeInsets.only(top: 8.0),
-                      child: Text("Step-by-step guide to making a gift.".tr(context),
-
-                        style: GiftPoseTextStyle.small(
-                          color: Theme.of(context).textTheme.bodyMedium?.color,
-                        ),
-                      ),
-                    ),
-                    trailing: Assets.icons.foward.svg(),
-                  ),
-                ),
-              ),
-            ),
-            YMargin(12),
-            InkWell(
-              onTap: () {
-                HapticFeedback.heavyImpact();
-          
-              },
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Theme.of(context).dividerColor,
-                      width: 1,
-                    ),
-                  ),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(16),
-                    leading: Assets.icons.location.svg(),
-                    title: Text("How to donate".tr(context),
-
-                      style: GiftPoseTextStyle.small(
-                        color: Theme.of(context).textTheme.bodyLarge?.color,
-                      ),
-                    ),
-                    subtitle: Padding(
-                      padding: EdgeInsets.only(top: 8.0),
-                      child: Text("Step-by-step guide to making a gift.".tr(context),
-
-                        style: GiftPoseTextStyle.small(
-                          color: Theme.of(context).textTheme.bodyMedium?.color,
-                        ),
-                      ),
-                    ),
-                    trailing: Assets.icons.foward.svg(),
-                  ),
-                ),
-              ),
-            ),
+   
             YMargin(25),
+          
 
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),

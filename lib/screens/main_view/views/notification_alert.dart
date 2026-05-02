@@ -24,7 +24,7 @@ class NotificationAlert extends StatefulWidget {
 }
 
 class _NotificationAlertState extends State<NotificationAlert> {
-  bool push = false;
+  bool push = true;
   final searchCtrl = TextEditingController();
 
   /// LOCAL SEARCH LIST
@@ -231,7 +231,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
 
                       leading: Assets.images.star.image(),
 
-                      title: Text("Smart Assistant".tr(context),
+                      title: Text("Smart Notifier".tr(context),
                         style: GiftPoseTextStyle.normal(
                           color: GiftPoseColors.textColor,
                           fontSize: 15,
@@ -545,7 +545,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
                       ),
 
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).scaffoldBackgroundColor,
                         borderRadius: BorderRadius.circular(32),
                         border: Border.all(
                           color: Theme.of(context).dividerColor,

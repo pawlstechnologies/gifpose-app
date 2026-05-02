@@ -87,7 +87,7 @@ get back to you within 24 hours.""".tr(context),
         ),
         GiftPoseMessageTextField(
           controller: messageCtrl,
-          fieldName: "  Message",
+          fieldName: "Message",
 
           hintText: "How can we help today?",
 

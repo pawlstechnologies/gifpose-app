@@ -225,20 +225,51 @@ class _DashboardViewState extends State<DashboardView> {
                                     ),
                             ),
                             XMargin(28),
-                            InkWell(
-                              onTap: () {
-                                HapticFeedback.heavyImpact();
-                                Navigator.pushNamed(
-                                  context,
-                                  AppRoutes.notificationsPage,
-                                );
-                              },
-                              child: Assets.icons.notificationIcon.svg(
-                                color: Theme.of(
-                                  context,
-                                ).textTheme.bodyLarge?.color,
-                              ),
-                            ),
+                           Stack(
+  clipBehavior: Clip.none,
+  children: [
+    InkWell(
+      onTap: () {
+        HapticFeedback.heavyImpact();
+        Navigator.pushNamed(
+          context,
+          AppRoutes.notificationsPage,
+        );
+      },
+      child: Assets.icons.notificationIcon.svg(
+        color: Theme.of(context).textTheme.bodyLarge?.color,
+      ),
+    ),
+
+    // 🔴 Badge
+    viewModel.fetchNotificationResponse.data?.data.unreadCount ==0?SizedBox.shrink():
+    Positioned(
+      right: -4,
+      top: -13,
+      child: Container(
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          color: Colors.red,
+          shape: BoxShape.circle,
+        ),
+        constraints: const BoxConstraints(
+          minWidth: 18,
+          minHeight: 18,
+        ),
+        child: Center(
+          child: Text(
+            (viewModel.fetchNotificationResponse.data?.data.unreadCount ?? 0).toString(), 
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    ),
+  ],
+)
                           ],
                         ),
                       ],
@@ -321,10 +352,12 @@ class _DashboardViewState extends State<DashboardView> {
                     onTap: () {
                       viewModel.fetchAlertCategory();
                       HapticFeedback.heavyImpact();
+
                       Navigator.pushNamed(
                         context,
                         AppRoutes.notificationsAlert,
                       );
+
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(
@@ -340,24 +373,36 @@ class _DashboardViewState extends State<DashboardView> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Get notified on product of interest".tr(context),
+                                Text("Get notified on items of interest".tr(context),
                                   style: GiftPoseTextStyle.normal(
-                                    fontSize: 13,
+                                    fontSize: 14,
                                     color: GiftPoseColors.textColor3,
-                                    fontWeight: FontWeight.w400,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 YMargin(4),
-                                // FIX: Removed nested ListView.builder causing the crash
-                                Text(
-                                  (viewModel
-                                              .fetchAlertListResponse
-                                              .data
-                                              ?.data
-                                              .isEmpty ??
-                                          true)
-                                      ? "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find.".tr(context)
-                                      : "Active".tr(context) + ": ${viewModel.fetchAlertListResponse.data!.data[0].keywords.join(", ".tr(context))}", // Changed .toString() to .join(", ")
+                     
+                               Text(
+  (() {
+    final response = viewModel.fetchAlertListResponse;
+    final list = response?.data?.data;
+
+    if (list == null || list.isEmpty) {
+      return "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find."
+          .tr(context);
+    }
+
+    final keywords = list.first.keywords;
+
+    if (keywords == null || keywords.isEmpty) {
+      return "You are currently receiving all alerts. Click to get alerts ONLY for gifts you want to find."
+          .tr(context);
+    }
+
+    return "Active".tr(context) +
+        ": ${keywords.join(", ")}";
+  })(),
+
                                   style: GiftPoseTextStyle.small(
                                     fontSize: 10,
                                     color: GiftPoseColors.textColor2,

@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:giftpose/app.dart';
 import 'package:giftpose/firebase_options.dart';
 import 'package:giftpose/services/database/database_service.dart';
@@ -21,6 +22,15 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+
+  try {
+ 
+
+    await Stripe.instance.applySettings();
+  } catch (e, s) {
+    print("STRIPE INIT ERROR: $e");
+    print(s);
+  }
   locatorSetUp();
   await serviceLocator<DatabaseService>().initializeDb();
 
@@ -48,7 +58,7 @@ final GoogleMapsFlutterPlatform mapsImplementation =
   // Presentation options for iOS foreground
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
-    badge: true,
+    badge: false,
     sound: true,
   );
 

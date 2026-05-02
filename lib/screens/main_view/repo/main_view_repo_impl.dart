@@ -12,9 +12,13 @@ import 'package:giftpose/screens/onboarding/models/alert_sub_category_list_respo
 import 'package:giftpose/screens/onboarding/models/alerts_category_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/create_alerts_request.dart';
 import 'package:giftpose/screens/onboarding/models/create_alerts_response.dart';
+import 'package:giftpose/screens/onboarding/models/create_payment_intent_request.dart';
+import 'package:giftpose/screens/onboarding/models/create_payment_intent_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_alert_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_itemsnearme_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetchitems_byid_response.dart';
+import 'package:giftpose/screens/onboarding/models/hide_item_request.dart';
+import 'package:giftpose/screens/onboarding/models/hide_item_response.dart';
 import 'package:giftpose/screens/onboarding/models/notification_response.dart';
 import 'package:giftpose/screens/onboarding/models/register_location_response.dart';
 import 'package:giftpose/screens/onboarding/models/search_alert_category_request.dart';
@@ -52,6 +56,101 @@ class MainViewRepoImpl implements MainViewRepo {
       log("create Alert list reponse: ${response?.data}");
     
      return CreateAlertListResponse.fromJson(response?.data);
+      } on DioException catch (err) {
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      if (kDebugMode) {
+        print(errorMessage);
+      }
+      throw err.response?.data["message"] ?? errorMessage;
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
+      throw err.toString();
+    }
+  }
+  @override
+  Future<HideItemResponse> hideItem({
+    required HideItemRequest  hideItemRequest,  required String id,
+  }) async {
+    try {
+       log("Hide items requested}");
+      
+      final response = await networkProvider.call(
+        path: ApiRoutes.markItemHide.replaceAll('{Id}', id),
+        method: RequestMethod.patch,
+       
+   
+      );
+      log("Hide items reponse: ${response?.data}");
+
+
+   
+     return HideItemResponse.fromJson(response?.data);
+      } on DioException catch (err) {
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      if (kDebugMode) {
+        print(errorMessage);
+      }
+      throw err.response?.data["message"] ?? errorMessage;
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
+      throw err.toString();
+    }
+  }
+
+
+  @override
+  Future<CreatePaymentIntentResponse> createPaymentIntent({
+    required CreatePaymentIntentRequest  createPaymentIntentRequest,
+  }) async {
+    try {
+      final payload = jsonEncode(createPaymentIntentRequest.toJson());
+      log('create payment intent: $payload');
+      
+   
+      
+      final response = await networkProvider.call(
+        path: ApiRoutes.createPaymentIntent,
+        method: RequestMethod.post,
+        body: payload,
+      );
+      log("create payment intent reponse: ${response?.data}");
+    
+     return CreatePaymentIntentResponse.fromJson(response?.data);
+      } on DioException catch (err) {
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      if (kDebugMode) {
+        print(errorMessage);
+      }
+      throw err.response?.data["message"] ?? errorMessage;
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
+      throw err.toString();
+    }
+  }   
+  
+  @override
+     Future<HideItemResponse> markItemTaken({
+    required HideItemRequest  hideItemRequest, required String deviceID, required String id,
+  }) async {
+    try {
+      
+      final response = await networkProvider.call(
+        path: ApiRoutes.markItemTaken.replaceAll('{deviceId}', deviceID).replaceAll('{Id}', id),
+        method: RequestMethod.patch,
+       
+   
+      );
+      log("mark items reponse: ${response?.data}");
+
+
+   
+     return HideItemResponse.fromJson(response?.data);
       } on DioException catch (err) {
       final errorMessage = Future.error(ApiError.fromDio(err));
       if (kDebugMode) {
