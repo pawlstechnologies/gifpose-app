@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:giftpose/screens/main_view/widgets/premium_feature_modal.dart';
 import 'package:giftpose/utils/localization_provider.dart';
 
 import 'package:flutter/material.dart';
@@ -309,10 +310,24 @@ class _NotificationAlertState extends State<NotificationAlert> {
                         runSpacing: 8,
 
                         children: vm.selectedKeywords.map((keyword) {
-                          return GestureDetector(
-                            onTap: () {
-                              vm.toggleKeyword(keyword);
-                            },
+            return InkWell(
+onTap: () {
+  // Capture the boolean here!
+  final bool canAdd = vm.toggleKeyword(keyword);
+  
+  print("UI RECEIVED: $canAdd"); // If you don't see this, this code isn't running
+
+  if (!canAdd) {
+    print("TRIGGERING MODAL");
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const PremiumFeaturesModal(),
+    );
+  }
+},
+
 
                             child: Container(
                               padding: EdgeInsets.symmetric(

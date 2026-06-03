@@ -7,9 +7,42 @@ import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/theme/theme.dart';
 import 'package:giftpose/utils/widgets/Giftpose_basescafold.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatelessWidget {
   AboutPage({super.key});
+
+
+
+ Future<void> launchInstagramURL() async {
+    final Uri url = Uri.parse(
+        'https://instagram.com/giftpose');
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+   Future<void> launchTwitterURL() async {
+    final Uri url = Uri.parse('https://x.com/giftpose_app');
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+ Future<void> launchTiktokURL() async {
+    final Uri url = Uri.parse('https://tiktok.com/@giftpose');
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+
+
+  Future<void> launchFacebookURL() async {
+    final Uri url = Uri.parse('https://www.facebook.com/share/17pe7W6k2f/');
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,10 +159,24 @@ you discover meaningful presents thatresonate with the people you care about mos
               YMargin(25),
 
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Assets.icons.fb.svg(),
-                             Assets.icons.ig.svg(),
+                      InkWell(
+                        onTap: launchInstagramURL,
+                        child: Assets.icons.insta.svg(),
+                      ),
+                      InkWell(
+                        onTap: launchTwitterURL,
+                        child: Assets.icons.twitter.svg(),
+                      ),
+                      InkWell(
+                        onTap: launchFacebookURL,
+                        child: Assets.icons.face.svg(),
+                      ),
+                      InkWell(
+                        onTap: launchTiktokURL,
+                        child: Assets.icons.tiktok.svg(),
+                      )
                     ],
                   ),
 

@@ -8,66 +8,127 @@ import 'package:giftpose/utils/widgets/giftpose_button.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
 import 'package:provider/provider.dart';
 
-class PremiumSubscriptionView extends StatelessWidget {
+class PremiumSubscriptionView extends StatefulWidget {
   const PremiumSubscriptionView({super.key});
 
   @override
+  State<PremiumSubscriptionView> createState() =>
+      _PremiumSubscriptionViewState();
+}
+
+class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
+  bool isYearlySelected = true;
+
+  @override
   Widget build(BuildContext context) {
- return Consumer<DashboardViewmodel>(
+    return Consumer<DashboardViewmodel>(
       builder: (context, viewModel, child) {
         return GiftPoseBaseScaffold(
-          includeHorizontalPadding: true,
-          includeVerticalPadding: false,
           showAppBar: false,
-        
+          includeVerticalPadding: false,
+          includeHorizontalPadding: true,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           builder: (size) {
             return Column(
               children: [
-                /// TOP SECTION
                 Expanded(
                   child: ListView(
                     children: [
+                      const SizedBox(height: 15),
+
                       /// HEADER
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              HapticFeedback.heavyImpact();
-                              Navigator.pop(context);
-                            },
-                            child: SizedBox(
-                              width: 50,
-                              height: 40,
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Assets.icons.back.svg(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.color,
+                      SizedBox(
+                        height: 56,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: InkWell(
+                                onTap: () {
+                                  HapticFeedback.heavyImpact();
+                                  Navigator.pop(context);
+                                },
+                                child: SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: Center(
+                                    child: Assets.icons.back.svg(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.color,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-        
-                          Text(
-                            "Premium Subscription",
-                            style: GiftPoseTextStyle.normal(
-                              fontWeight: FontWeight.w500,
+                            Text(
+                              "Premium Subscription",
+                              style: GiftPoseTextStyle.medium(
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-        
-                          SizedBox(width: 50), // balance spacing
-                        ],
+                          ],
+                        ),
                       ),
-        
-           
-        YMargin(20),
-                   Assets.images.paymentImage.image(height: 128, width: 128),
-        
-                         YMargin(20),
-        
+
+                      const SizedBox(height: 25),
+
+                      /// PREMIUM IMAGE
+                      Center(
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Container(
+                              width: 130,
+                              height: 130,
+                              decoration: BoxDecoration(
+                                color: const Color(0xff39D11F),
+                                borderRadius: BorderRadius.circular(28),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(.08),
+                                    blurRadius: 25,
+                                    offset: const Offset(0, 10),
+                                  )
+                                ],
+                              ),
+                              child: Center(
+                                child: Assets.images.paymentImage.image(
+                                  width: 70,
+                                  height: 70,
+                                ),
+                              ),
+                            ),
+
+                            Positioned(
+                              top: -6,
+                              right: -10,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 14,
+                                  vertical: 7,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xffF56D8A),
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: Text(
+                                  "AD FREE",
+                                  style: GiftPoseTextStyle.small(
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      const SizedBox(height: 35),
+
                       /// FEATURES
                       _featureItem(
                         context,
@@ -76,15 +137,15 @@ class PremiumSubscriptionView extends StatelessWidget {
                         subtitle:
                             "Remove all banners and pop-ups for a cleaner experience while browsing or listing.",
                       ),
-        
+
                       _featureItem(
                         context,
-                        icon:Assets.icons.supporter.svg(),
+                        icon: Assets.icons.supporter.svg(),
                         title: "Supporter Badge",
                         subtitle:
                             "A unique badge on your profile to show you're a dedicated community member.",
                       ),
-        
+
                       _featureItem(
                         context,
                         icon: Assets.icons.premiumSvg.svg(),
@@ -92,7 +153,7 @@ class PremiumSubscriptionView extends StatelessWidget {
                         subtitle:
                             "Enjoy fast, reliable support with priority access to our team whenever you need help.",
                       ),
-        
+
                       _featureItem(
                         context,
                         icon: Assets.icons.unlimited.svg(),
@@ -100,7 +161,7 @@ class PremiumSubscriptionView extends StatelessWidget {
                         subtitle:
                             "Choose how and when you get notified about your gift.",
                       ),
-        
+
                       _featureItem(
                         context,
                         icon: Assets.icons.featured.svg(),
@@ -108,105 +169,69 @@ class PremiumSubscriptionView extends StatelessWidget {
                         subtitle:
                             "Give your items more visibility so they find a new home faster.",
                       ),
-        
-                      YMargin(25),
-        
-                      /// PRICING CARD
-                      Container(
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: Colors.green,
-                            width: 2,
+
+                      const SizedBox(height: 20),
+
+                      /// PLANS
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _planCard(
+                              selected: !isYearlySelected,
+                              duration: "1 Month",
+                              monthlyText: "£0.99/mo",
+                              price: "£0.99",
+                              onTap: () {
+                                setState(() {
+                                  isYearlySelected = false;
+                                });
+                              },
+                            ),
                           ),
-                        ),
-                        child: Stack(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Annual",
-                                  style: GiftPoseTextStyle.medium(
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                YMargin(10),
-                                Text(
-                                  "\$4.99 /yr",
-                                  style: GiftPoseTextStyle.large(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                YMargin(6),
-                                Text(
-                                  "Get value for your money",
-                                  style: GiftPoseTextStyle.small(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.color,
-                                  ),
-                                ),
-                              ],
+
+                          const SizedBox(width: 16),
+
+                          Expanded(
+                            child: _planCard(
+                              selected: isYearlySelected,
+                              duration: "12 Months",
+                              oldPrice: "£11.99",
+                              savings: "Save £1.99",
+                              badge: "🔥 16% OFF",
+                              price: "£9.99",
+                              onTap: () {
+                                setState(() {
+                                  isYearlySelected = true;
+                                });
+                              },
                             ),
-        
-                            /// BEST VALUE TAG
-                            Positioned(
-                              right: 0,
-                              top: 0,
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 6),
-                                decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(12),
-                                    bottomLeft: Radius.circular(12),
-                                  ),
-                                ),
-                                child: Text(
-                                  "Best Value",
-                                  style: GiftPoseTextStyle.small(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-        
-                      YMargin(20),
+
+                      const SizedBox(height: 30),
                     ],
                   ),
                 ),
-            YMargin(10),
+
                 /// SUBSCRIBE BUTTON
-                GiftPoseButton( 
-                 title: "Subscribe",
-                 onTap: () {
-                   HapticFeedback.heavyImpact();
-                   print("start");
-                   viewModel.createPaymentIntent();
-                   
-        
-                   /// 👉 Hook Stripe here
-                 }, 
+                GiftPoseButton(
+                  title: "Subscribe",
+                  onTap: () {
+                    HapticFeedback.heavyImpact();
+                    viewModel.createPaymentIntent(plan: isYearlySelected?"annual": "monthly");
+                  },
                 ),
-        
-                YMargin(40),
+
+                const SizedBox(height: 30),
               ],
             );
           },
         );
-      }
+      },
     );
   }
 
-  /// FEATURE ITEM WIDGET
   Widget _featureItem(
     BuildContext context, {
     required Widget icon,
@@ -214,22 +239,12 @@ class PremiumSubscriptionView extends StatelessWidget {
     required String subtitle,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 18),
+      padding: const EdgeInsets.only(bottom: 22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 45,
-            height: 45,
-            decoration: BoxDecoration(
-              color: Theme.of(context).dividerColor.withOpacity(0.2),
-              shape: BoxShape.circle,
-            ),
-            child: Center(child: icon),
-          ),
-
-          XMargin(12),
-
+          Center(child: icon),
+          const SizedBox(width: 14),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -240,18 +255,144 @@ class PremiumSubscriptionView extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                YMargin(4),
+                const SizedBox(height: 6),
                 Text(
                   subtitle,
                   style: GiftPoseTextStyle.small(
-                    color:
-                        Theme.of(context).textTheme.bodyMedium?.color,
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.color
+                        ?.withOpacity(.7),
                   ),
                 ),
               ],
             ),
-          )
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _planCard({
+    required bool selected,
+    required String duration,
+    required String price,
+    String? oldPrice,
+    String? savings,
+    String? badge,
+    String? monthlyText,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 170,
+        decoration: BoxDecoration(
+    color:  Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(
+            color:
+                selected ? const Color(0xff39D11F) : Colors.grey.shade300,
+            width: selected ? 2 : 1,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(.03),
+              blurRadius: 15,
+            )
+          ],
+        ),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            if (badge != null)
+              Positioned(
+                top: -14,
+                left: 30,
+                right: 30,
+                child: Container(
+                  height: 28,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: const Color(0xff39D11F),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Text(
+                    badge,
+                    style: GiftPoseTextStyle.small(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      duration,
+                      style: GiftPoseTextStyle.medium(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18
+                      ),
+                    ),
+
+                    const SizedBox(height: 12),
+
+                    if (oldPrice != null)
+                      Text(
+                        oldPrice,
+                        style: GiftPoseTextStyle.small(
+                          decoration: TextDecoration.lineThrough,      fontWeight: FontWeight.w400,
+                          color: Colors.grey,
+                          fontSize: 14
+                        ),
+                      ),
+
+                    if (savings != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Text(
+                          savings,
+                          style: GiftPoseTextStyle.small(
+                            color: const Color(0xffC77C2A),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14
+                          ),
+                        ),
+                      ),
+
+                    const SizedBox(height: 6),
+
+                    Text(
+                      price,
+                      style: GiftPoseTextStyle.large(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).textTheme.bodyLarge?.color
+                      ),
+                    ),
+
+                    if (monthlyText != null) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        monthlyText,
+                        style: GiftPoseTextStyle.small(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

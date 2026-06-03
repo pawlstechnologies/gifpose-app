@@ -155,7 +155,7 @@ void testLocalNotification() async {
                   },
                   onGenerateRoute: (settings) =>
                       Routers.generateRoute(settings, context),
-                  home: isRegistered ? SplashScreen()  : SplashScreen(),
+                  home: isRegistered ? DashboardView()  :  DashboardView(),
                 );
               },
             );

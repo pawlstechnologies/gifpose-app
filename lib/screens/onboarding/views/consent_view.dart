@@ -69,8 +69,8 @@ class _ConsentScreenState extends State<ConsentScreen>
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
                 children: [
-                  YMargin(52),
-                  Assets.icons.privacy.svg(),
+                  YMargin(62),
+                  Assets.icons.privacy.svg(height: 80,width: 80),
                   YMargin(30),
                   Text("Privacy Preferences".tr(context),
                     style: GiftPoseTextStyle.heading1(fontWeight: FontWeight.w500),

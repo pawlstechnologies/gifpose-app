@@ -14,7 +14,7 @@ static const alertSubCategoriesList = "/categories/tree?categoryId={categoryId}"
 static const notifications = "/notifications/{deviceId}";
 static const alertSearchPredictionList = "/categories/search";
   static const globalSearch = "/item/{deviceId}/search";
-    static const createPaymentIntent = "/payment/create-payment-intent";
+    static const createPaymentIntent = "/subscription/create";
 
 
 

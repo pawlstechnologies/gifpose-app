@@ -52,12 +52,18 @@ class _LoaderPageState extends State<LoaderPage>
 
   @override
   Widget build(BuildContext context) {
+      final isDarkMode =
+
+      Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            isDarkMode?
+            Image.asset("assets/images/darkLoader.gif",  width: 340,
+              height: 280,): 
             Image.asset(
               "assets/images/loader.gif",
               width: 340,

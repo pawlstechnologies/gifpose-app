@@ -72,6 +72,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ex.svg
   SvgGenImage get ex => const SvgGenImage('assets/icons/ex.svg');
 
+  /// File path: assets/icons/face.svg
+  SvgGenImage get face => const SvgGenImage('assets/icons/face.svg');
+
   /// File path: assets/icons/facebook.svg
   SvgGenImage get facebook => const SvgGenImage('assets/icons/facebook.svg');
 
@@ -105,6 +108,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/ig.svg
   SvgGenImage get ig => const SvgGenImage('assets/icons/ig.svg');
+
+  /// File path: assets/icons/insta.svg
+  SvgGenImage get insta => const SvgGenImage('assets/icons/insta.svg');
 
   /// File path: assets/icons/language.svg
   SvgGenImage get language => const SvgGenImage('assets/icons/language.svg');
@@ -178,8 +184,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/three.svg
   SvgGenImage get three => const SvgGenImage('assets/icons/three.svg');
 
+  /// File path: assets/icons/tiktok.svg
+  SvgGenImage get tiktok => const SvgGenImage('assets/icons/tiktok.svg');
+
   /// File path: assets/icons/train.svg
   SvgGenImage get train => const SvgGenImage('assets/icons/train.svg');
+
+  /// File path: assets/icons/twitter.svg
+  SvgGenImage get twitter => const SvgGenImage('assets/icons/twitter.svg');
 
   /// File path: assets/icons/two.png
   AssetGenImage get two => const AssetGenImage('assets/icons/two.png');
@@ -220,6 +232,7 @@ class $AssetsIconsGen {
     down,
     emptyNot,
     ex,
+    face,
     facebook,
     fb,
     featured,
@@ -231,6 +244,7 @@ class $AssetsIconsGen {
     helpcentre,
     hide,
     ig,
+    insta,
     language,
     like,
     loaderPng,
@@ -253,7 +267,9 @@ class $AssetsIconsGen {
     star,
     supporter,
     three,
+    tiktok,
     train,
+    twitter,
     two,
     unlimited,
     up,
@@ -268,6 +284,10 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/avi.png
   AssetGenImage get avi => const AssetGenImage('assets/images/avi.png');
+
+  /// File path: assets/images/darkLoader.gif
+  AssetGenImage get darkLoader =>
+      const AssetGenImage('assets/images/darkLoader.gif');
 
   /// File path: assets/images/dash1.png
   AssetGenImage get dash1 => const AssetGenImage('assets/images/dash1.png');
@@ -347,6 +367,7 @@ class $AssetsImagesGen {
   /// List of all assets
   List<dynamic> get values => [
     avi,
+    darkLoader,
     dash1,
     dash2,
     dash3,

@@ -113,7 +113,7 @@ final DatabaseService databaseService = serviceLocator<DatabaseService>();
           postcode: postcode,
           deviceId: deviceId ?? "",
           miles: miles,
-          firebaseToken:  fcmToken ?? "ffffff",
+          firebaseToken:  fcmToken ?? "",
           
         ),
       );

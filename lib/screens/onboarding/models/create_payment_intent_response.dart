@@ -9,9 +9,9 @@ CreatePaymentIntentResponse createPaymentIntentResponseFromJson(String str) => C
 String createPaymentIntentResponseToJson(CreatePaymentIntentResponse data) => json.encode(data.toJson());
 
 class CreatePaymentIntentResponse {
-    bool success;
-    String message;
-    Data data;
+    final bool success;
+    final String message;
+    final Data data;
 
     CreatePaymentIntentResponse({
         required this.success,
@@ -33,17 +33,21 @@ class CreatePaymentIntentResponse {
 }
 
 class Data {
-    String clientSecret;
+    final String subscriptionId;
+    final String clientSecret;
 
     Data({
+        required this.subscriptionId,
         required this.clientSecret,
     });
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
+        subscriptionId: json["subscriptionId"],
         clientSecret: json["clientSecret"],
     );
 
     Map<String, dynamic> toJson() => {
+        "subscriptionId": subscriptionId,
         "clientSecret": clientSecret,
     };
 }

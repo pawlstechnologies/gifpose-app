@@ -13,6 +13,7 @@ import 'package:giftpose/utils/widgets/Giftpose_basescafold.dart';
 import 'package:giftpose/utils/widgets/duration_slider.dart';
 import 'package:giftpose/utils/widgets/giftpose_button.dart';
 import 'package:giftpose/utils/widgets/giftpose_switch.dart';
+import 'package:giftpose/utils/widgets/premium_card.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
 import 'package:provider/provider.dart';
 
@@ -113,8 +114,16 @@ Text(
                   ),
                 ),
                 YMargin(16),
+                InkWell(
+             
+                       onTap: () {
+                          HapticFeedback.heavyImpact();
+                          Navigator.pushNamed(context, AppRoutes.premiumSubscription);
+                        
+                  },
+                  child: PremiumUpgradeCard(isSettings: true,)),
 
-
+       YMargin(16),
                 Text(
                   "Location".tr(context),
 

@@ -10,6 +10,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:giftpose/app.dart';
 import 'package:giftpose/screens/main_view/repo/main_view_repo.dart';
 import 'package:giftpose/screens/main_view/viewmodels/base_viewmodel.dart';
+import 'package:giftpose/screens/main_view/widgets/premium_feature_modal.dart';
 import 'package:giftpose/screens/onboarding/models/alert_sub_category_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/alerts_category_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/create_alerts_request.dart';
@@ -571,14 +572,25 @@ bool isLoadMore = false,
   List<String> _selectedKeywords = [];
 List<String> get selectedKeywords => _selectedKeywords;
 
-void toggleKeyword(String keyword) {
+bool toggleKeyword(String keyword) {
   if (_selectedKeywords.contains(keyword)) {
     _selectedKeywords.remove(keyword);
-  } else {
+    notifyListeners();
+    return true;
+  } 
+
+  // Use 3 to allow three items (0, 1, 2)
+  if (_selectedKeywords.length < 2) {
     _selectedKeywords.add(keyword);
+    notifyListeners();
+    return true;
   }
-  notifyListeners();
+  
+  print("VM: LIMIT REACHED. Returning false to UI.");
+  return false; 
 }
+
+
   List<String> _selectedCategory = [];
 List<String> get selectedCategory => _selectedCategory;
 
@@ -724,7 +736,7 @@ void selectOption(int index) {
     notifyListeners();
   }
 
-Future<void> createPaymentIntent() async {
+Future<void> createPaymentIntent({required String plan}) async {
   try {
     print("🟡 STEP 1: شروع createPaymentIntent");
 
@@ -732,7 +744,7 @@ Future<void> createPaymentIntent() async {
 
     final response = await mainViewRepo.createPaymentIntent(
       createPaymentIntentRequest:
-          CreatePaymentIntentRequest(deviceId: deviceId ?? ""),
+          CreatePaymentIntentRequest(deviceId: deviceId ?? "", plan: plan),
     );
 
     print("🟢 STEP 2: API RESPONSE RECEIVED");
@@ -780,6 +792,8 @@ Future<void> createPaymentIntent() async {
     try {
       await Stripe.instance.presentPaymentSheet();
       print("🟢 STEP 7: PAYMENT SHEET CLOSED (SUCCESS)");
+      Navigator.pushNamed(navigatorKey.currentContext!, AppRoutes.createAccountPage
+      );
     } catch (e, s) {
       print("🔴 ERROR DURING presentPaymentSheet");
       print(e);
