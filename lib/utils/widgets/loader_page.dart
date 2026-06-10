@@ -62,7 +62,7 @@ class _LoaderPageState extends State<LoaderPage>
           mainAxisSize: MainAxisSize.min,
           children: [
             isDarkMode?
-            Image.asset("assets/images/darkLoader.gif",  width: 340,
+            Image.asset("assets/images/dLoad.gif",  width: 340,
               height: 280,): 
             Image.asset(
               "assets/images/loader.gif",
@@ -70,9 +70,7 @@ class _LoaderPageState extends State<LoaderPage>
               height: 280,
             ),
             YMargin(30),
-            Text("Getting Gifts Closer to you...".tr(context),
-              style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
-            ),
+     
           ],
         ),
       ),

@@ -25,7 +25,7 @@ void main() async {
 
   try {
  
-Stripe.publishableKey = "pk_test_51TNDZpFq5gcTw8VwJCJbuBhVnsG7l8NizPgb40huLXP872TDXIrSZl55vkLZOd5SJCPqsKI6EC9TfbKYc9yCLu0g00HnrNNtCC";
+Stripe.publishableKey = "pk_live_51TNDZZC6ikZRTwRsUGYLPX4L8DxBh3o3P8Dnk1V55CjeuXnPq2QNhwPW3Jj6HqVcXq33YHZE6sMkOxOhB6N2kbww00IB8RZWG5";
     await Stripe.instance.applySettings();
   } catch (e, s) {
     print("STRIPE INIT ERROR: $e");

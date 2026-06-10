@@ -8,10 +8,14 @@ import 'package:giftpose/screens/onboarding/models/create_payment_intent_request
 import 'package:giftpose/screens/onboarding/models/create_payment_intent_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_alert_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_itemsnearme_response.dart';
+import 'package:giftpose/screens/onboarding/models/fetch_user_by_deviceid_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetchitems_byid_response.dart';
+import 'package:giftpose/screens/onboarding/models/get_report_listing_reponse.dart';
 import 'package:giftpose/screens/onboarding/models/hide_item_request.dart';
 import 'package:giftpose/screens/onboarding/models/hide_item_response.dart';
 import 'package:giftpose/screens/onboarding/models/notification_response.dart';
+import 'package:giftpose/screens/onboarding/models/report_listing_request.dart';
+import 'package:giftpose/screens/onboarding/models/report_listing_response.dart';
 import 'package:giftpose/screens/onboarding/models/search_alert_category_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_predictions_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_response.dart';
@@ -27,8 +31,12 @@ abstract class MainViewRepo {
  Future<FetchItemsNearMeResponse> fetchItemsNearme({  required String deviceID, required String page,});
   Future<FetchItemsbyIdResponse> fetchItemsById({ required String deviceID,
       required String id,});
+  Future<FetchUserByDeviceId> fetchUserById({ required String deviceID,
+  });
+
 
         Future<AlertListCategoryResponse> fetchAlertCategories();
+               Future<GetReportListResponse> getReportList();
 
   Future<AlertListSubCategoryResponse> fetchAlertSubCategories({ required String categoryId,});
 
@@ -37,6 +45,9 @@ abstract class MainViewRepo {
   }); 
    Future<HideItemResponse> hideItem({
     required HideItemRequest  hideItemRequest,  required String id,
+  });
+     Future<ReportListingResponse> reportListing({
+    required ReportListingRequest  reportListingRequest,  required String id,
   });
      Future<HideItemResponse> markItemTaken({
     required HideItemRequest  hideItemRequest, required String deviceID, required String id,

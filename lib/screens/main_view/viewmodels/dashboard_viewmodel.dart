@@ -19,10 +19,14 @@ import 'package:giftpose/screens/onboarding/models/create_payment_intent_request
 import 'package:giftpose/screens/onboarding/models/create_payment_intent_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_alert_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_itemsnearme_response.dart';
+import 'package:giftpose/screens/onboarding/models/fetch_user_by_deviceid_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetchitems_byid_response.dart';
+import 'package:giftpose/screens/onboarding/models/get_report_listing_reponse.dart';
 import 'package:giftpose/screens/onboarding/models/hide_item_request.dart';
 import 'package:giftpose/screens/onboarding/models/hide_item_response.dart';
 import 'package:giftpose/screens/onboarding/models/notification_response.dart';
+import 'package:giftpose/screens/onboarding/models/report_listing_request.dart';
+import 'package:giftpose/screens/onboarding/models/report_listing_response.dart';
 import 'package:giftpose/screens/onboarding/models/search_alert_category_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_predictions_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_response.dart';
@@ -171,6 +175,8 @@ bool get isDarkMode {
       fetchNotification();
     });
     fetchAlertCategory();
+    fetchReportList();
+    fetchUserByDeviceId();
   }
 
   final MainViewRepo mainViewRepo = serviceLocator<MainViewRepo>();
@@ -426,6 +432,41 @@ bool isLoadMore = false,
       fetchItemsByIdMeResponse = NetworkDataResponse.error(e.toString());
     }
   }
+
+
+
+    NetworkDataResponse<FetchUserByDeviceId> _fetchUserByDeviceIdResponse =
+      NetworkDataResponse.idle();
+
+  NetworkDataResponse<FetchUserByDeviceId> get fetchUserByDeviceIdResponse =>
+      _fetchUserByDeviceIdResponse;
+
+  set fetchUserByDeviceIdResponse(
+    NetworkDataResponse<FetchUserByDeviceId>  value,
+  ) {
+    _fetchUserByDeviceIdResponse = value;
+    notifyListeners();
+  }
+
+  Future<void> fetchUserByDeviceId() async {
+    try {
+     fetchUserByDeviceIdResponse = NetworkDataResponse.loading("");
+      // await LoaderPage.show(navigatorKey.currentContext!);
+
+      final response = await mainViewRepo.fetchUserById(
+        deviceID: deviceId ?? "",
+  
+      );
+
+      // if (navigatorKey.currentContext!.mounted) {
+      //   Navigator.of(navigatorKey.currentContext!, rootNavigator: true).pop(); // Dismiss dialog
+      // }
+
+      fetchUserByDeviceIdResponse = NetworkDataResponse.completed(response);
+    } catch (e) {
+    fetchUserByDeviceIdResponse = NetworkDataResponse.error(e.toString());
+    }
+  }
   NetworkDataResponse<HideItemResponse> _hideItemResponse =
       NetworkDataResponse.idle();
 
@@ -507,6 +548,64 @@ bool isLoadMore = false,
       markItemResponse  = NetworkDataResponse.error(e.toString());
     }
   }   
+
+ NetworkDataResponse<ReportListingResponse> _reportListingResponse =
+      NetworkDataResponse.idle();
+
+  NetworkDataResponse<ReportListingResponse> get reportListingResponse =>
+      _reportListingResponse;
+
+  set reportListingResponse( NetworkDataResponse<ReportListingResponse> value) {
+    _reportListingResponse = value;
+    notifyListeners();
+  }
+
+  Future<void> reportListing({
+    required BuildContext context,
+required String id,
+    required String reason,
+  }) async {
+    try {
+      reportListingResponse = NetworkDataResponse.loading("");
+
+      // Show loader
+      LoaderPage.show(context);
+
+      final response = await mainViewRepo.reportListing(reportListingRequest: ReportListingRequest(deviceId: deviceId??"", reason: reason), id: id);
+      
+
+     reportListingResponse = NetworkDataResponse.completed(response);
+
+      if (navigatorKey.currentContext!.mounted) {
+        Navigator.of(
+          navigatorKey.currentContext!,
+          rootNavigator: true,
+        ).pop(); // Dismiss dialog
+      }
+
+      if (response.status == true) {
+        Navigator.pushNamed(context, AppRoutes.dashboard);
+        
+
+        
+            CustomToast.show(context: context, message: "Success");
+      } else {
+        final errorMessage = "Something went wrong";
+        CustomToast.show(context: context, message: errorMessage);
+      }
+    } catch (e) {
+     reportListingResponse = NetworkDataResponse.error(e.toString());
+
+      if (context.mounted) {
+        Navigator.pop(context);
+        CustomToast.show(context: context, message: e.toString());
+      }
+    }
+  }
+
+
+
+
   NetworkDataResponse<CreateAlertListResponse> _createAlertResponse =
       NetworkDataResponse.idle();
 
@@ -577,17 +676,21 @@ bool toggleKeyword(String keyword) {
     _selectedKeywords.remove(keyword);
     notifyListeners();
     return true;
-  } 
+  }
 
-  // Use 3 to allow three items (0, 1, 2)
-  if (_selectedKeywords.length < 2) {
+  final int maxKeywords =
+      fetchUserByDeviceIdResponse.data?.data.isPremium == true
+          ? 80
+          : 2;
+
+  if (_selectedKeywords.length < maxKeywords) {
     _selectedKeywords.add(keyword);
     notifyListeners();
     return true;
   }
-  
+
   print("VM: LIMIT REACHED. Returning false to UI.");
-  return false; 
+  return false;
 }
 
 
@@ -689,6 +792,39 @@ void selectOption(int index) {
       fetchAlertCategoryResponse = NetworkDataResponse.completed(response);
     } catch (e) {
       fetchAlertCategoryResponse = NetworkDataResponse.error(e.toString());
+    }
+  }
+
+
+
+
+    NetworkDataResponse<GetReportListResponse> _fetchReportListResponse=
+      NetworkDataResponse.idle();
+
+ NetworkDataResponse<GetReportListResponse>
+  get fetchReportListResponse => _fetchReportListResponse;
+
+  set fetchReportListResponse(
+ NetworkDataResponse<GetReportListResponse> value,
+  ) {
+    _fetchReportListResponse = value;
+    notifyListeners();
+  }
+
+  Future<void> fetchReportList() async {
+    try {
+     fetchReportListResponse = NetworkDataResponse.loading("");
+      // await LoaderPage.show(navigatorKey.currentContext!);
+
+      final response = await mainViewRepo.getReportList();
+
+      // if (navigatorKey.currentContext!.mounted) {
+      //   Navigator.of(navigatorKey.currentContext!, rootNavigator: true).pop(); // Dismiss dialog
+      // }
+
+     fetchReportListResponse = NetworkDataResponse.completed(response);
+    } catch (e) {
+      fetchReportListResponse = NetworkDataResponse.error(e.toString());
     }
   }
 

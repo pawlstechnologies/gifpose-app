@@ -41,7 +41,7 @@ class SettingsBottomsheet extends StatelessWidget {
             ],
           ),
           YMargin(14),
-          Assets.icons.hide.svg(),
+          Assets.icons.hide.svg(height: 40,width: 40),
           YMargin(18),
       
           Text("Delete Account".tr(context),

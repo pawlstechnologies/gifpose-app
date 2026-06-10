@@ -161,7 +161,8 @@ class CategoryGrid extends StatelessWidget {
                   (context, index) {
                     
                     // Render First Premium Promo Card Position
-                    if (displayPromo1 && index == premiumPromoIndex1) {
+                    if (displayPromo1 && index == premiumPromoIndex1 && vm.fetchUserByDeviceIdResponse.data?.data.isPremium == false)
+    {
                       return PremiumProCardGridview(
                         onTap: () {
                           HapticFeedback.heavyImpact();
@@ -171,7 +172,7 @@ class CategoryGrid extends StatelessWidget {
                     }
 
                     // Render Second Premium Promo Card Position
-                    if (displayPromo2 && index == premiumPromoIndex2) {
+                    if (displayPromo2 && index == premiumPromoIndex2 && vm.fetchUserByDeviceIdResponse.data?.data.isPremium == false) {
                        return PremiumProCardGridview(
                         onTap: () {
                           HapticFeedback.heavyImpact();

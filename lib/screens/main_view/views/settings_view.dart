@@ -37,60 +37,57 @@ class _SettingsViewState extends State<SettingsView> {
           showAppBar: false,
           includeVerticalPadding: false,
           centerTitle: true,
-         
-        
-
 
           builder: (size) {
             return ListView(
               children: [
-               
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                     InkWell(
-            onTap: () {
-              HapticFeedback.heavyImpact();
-              Navigator.pop(context);
-            },
-            child: Container(
-              width: 50,
-              height: 40,
+                    InkWell(
+                      onTap: () {
+                        HapticFeedback.heavyImpact();
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        width: 50,
+                        height: 40,
 
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Assets.icons.back.svg(
-                  color: Theme.of(context).textTheme.bodyLarge?.color,
-                ),
-              ),
-            ),
-          ),
-Text(
-            "Settings".tr(context),
-            textAlign: TextAlign.center,
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Assets.icons.back.svg(
+                            color: Theme.of(context).textTheme.bodyLarge?.color,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      "Settings".tr(context),
+                      textAlign: TextAlign.center,
 
-     style: GiftPoseTextStyle.normal(fontWeight: FontWeight.w500),
-          ),
+                      style: GiftPoseTextStyle.normal(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
 
-
-          InkWell(
-            onTap: () {
-              HapticFeedback.heavyImpact();
-            showModalBottomSheet(
-                                      context: context,
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      shape: const RoundedRectangleBorder(
-    borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(20),
-      topRight: Radius.circular(20),
-    ),
-  ),
-                                      builder: (_) => SettingsBottomsheet(),
-                                    );
-            },
-            child: Icon(Icons.menu)),
-          
+                    InkWell(
+                      onTap: () {
+                        HapticFeedback.heavyImpact();
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                          ),
+                          builder: (_) => SettingsBottomsheet(),
+                        );
+                      },
+                      child: Icon(Icons.menu),
+                    ),
                   ],
                 ),
                 YMargin(5),
@@ -98,13 +95,13 @@ Text(
                 YMargin(5),
                 Text(
                   "My_Username".tr(context),
-                           textAlign: TextAlign.center,
+                  textAlign: TextAlign.center,
 
                   style: GiftPoseTextStyle.small(
                     color: Theme.of(context).textTheme.bodyLarge?.color,
                   ),
                 ),
-                    YMargin(2),
+                YMargin(2),
                 Text(
                   "username@mail.com".tr(context),
                   textAlign: TextAlign.center,
@@ -114,16 +111,21 @@ Text(
                   ),
                 ),
                 YMargin(16),
-                InkWell(
-             
-                       onTap: () {
+                viewModel.fetchUserByDeviceIdResponse.data?.data.isPremium ==
+                        true
+                    ? SizedBox.shrink()
+                    : InkWell(
+                        onTap: () {
                           HapticFeedback.heavyImpact();
-                          Navigator.pushNamed(context, AppRoutes.premiumSubscription);
-                        
-                  },
-                  child: PremiumUpgradeCard(isSettings: true,)),
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.premiumSubscription,
+                          );
+                        },
+                        child: PremiumUpgradeCard(isSettings: true),
+                      ),
 
-       YMargin(16),
+                YMargin(16),
                 Text(
                   "Location".tr(context),
 
@@ -401,11 +403,14 @@ Text(
                         ),
                       ),
                       YMargin(10),
-                        Divider(color: Theme.of(context).dividerColor),
-                        InkWell(
+                      Divider(color: Theme.of(context).dividerColor),
+                      InkWell(
                         onTap: () {
                           HapticFeedback.heavyImpact();
-                          Navigator.pushNamed(context, AppRoutes.premiumSubscription);
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.premiumSubscription,
+                          );
                         },
 
                         child: ListTile(
@@ -426,7 +431,6 @@ Text(
                           trailing: Assets.icons.foward.svg(),
                         ),
                       ),
-                      
                     ],
                   ),
                 ),

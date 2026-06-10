@@ -16,11 +16,15 @@ import 'package:giftpose/screens/onboarding/models/create_payment_intent_request
 import 'package:giftpose/screens/onboarding/models/create_payment_intent_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_alert_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_itemsnearme_response.dart';
+import 'package:giftpose/screens/onboarding/models/fetch_user_by_deviceid_response.dart';
 import 'package:giftpose/screens/onboarding/models/fetchitems_byid_response.dart';
+import 'package:giftpose/screens/onboarding/models/get_report_listing_reponse.dart';
 import 'package:giftpose/screens/onboarding/models/hide_item_request.dart';
 import 'package:giftpose/screens/onboarding/models/hide_item_response.dart';
 import 'package:giftpose/screens/onboarding/models/notification_response.dart';
 import 'package:giftpose/screens/onboarding/models/register_location_response.dart';
+import 'package:giftpose/screens/onboarding/models/report_listing_request.dart';
+import 'package:giftpose/screens/onboarding/models/report_listing_response.dart';
 import 'package:giftpose/screens/onboarding/models/search_alert_category_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_predictions_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_response.dart';
@@ -98,6 +102,59 @@ class MainViewRepoImpl implements MainViewRepo {
         print(err);
       }
       throw err.toString();
+    }
+  }
+  Future<ReportListingResponse> reportListing({
+    required ReportListingRequest  reportListingRequest,  required String id,
+  }) async {
+    try {
+          final payload = jsonEncode(reportListingRequest.toJson());
+      log('create Alert list: $payload');
+      
+
+      
+      final response = await networkProvider.call(
+        path: ApiRoutes.reportItem
+        .replaceAll('{Id}', id),
+        method: RequestMethod.post,
+        body: payload,
+       
+   
+      );
+      log("Hide items reponse: ${response?.data}");
+
+
+   
+     return ReportListingResponse.fromJson(response?.data);
+      } on DioException catch (err) {
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      if (kDebugMode) {
+        print(errorMessage);
+      }
+      throw err.response?.data["message"] ?? errorMessage;
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
+      throw err.toString();
+    }
+  }
+  
+          @override
+           Future<GetReportListResponse> getReportList()async {
+try { 
+      final response = await networkProvider.call(
+        path: ApiRoutes.getReportList,
+        method: RequestMethod.get,
+      );
+      log("fetch report list ${response?.data}");
+      return GetReportListResponse.fromJson(response?.data);
+    } on DioException catch (err) {
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      if (kDebugMode) {
+        print(errorMessage);
+      }
+      throw err.response?.data["message"] ?? errorMessage;
     }
   }
 
@@ -239,6 +296,27 @@ class MainViewRepoImpl implements MainViewRepo {
       );
       log("fetch items by id ${response?.data}");
       return FetchItemsbyIdResponse.fromJson(response?.data);
+    } on DioException catch (err) {
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      if (kDebugMode) {
+        print(errorMessage);
+      }
+      throw err.response?.data["message"] ?? errorMessage;
+    }
+  }
+
+@override
+   Future<FetchUserByDeviceId> fetchUserById({ required String deviceID,
+  })async {
+
+ 
+    try { 
+      final response = await networkProvider.call(
+        path: ApiRoutes.fetchUserbyDeviceID.replaceAll('{Id}', deviceID),
+        method: RequestMethod.get,
+      );
+      log("fetch items by id ${response?.data}");
+      return FetchUserByDeviceId.fromJson(response?.data);
     } on DioException catch (err) {
       final errorMessage = Future.error(ApiError.fromDio(err));
       if (kDebugMode) {

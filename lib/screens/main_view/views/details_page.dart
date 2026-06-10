@@ -85,797 +85,778 @@ class _DetailsPageState extends State<DetailsPage> {
           ),
 
           builder: (size) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        YMargin(30),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                HapticFeedback.heavyImpact();
-                                Navigator.pop(context);
-                              },
-                              child: Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                    20,
-                                  ), // Adjust the value for more/less rounding
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(16.0),
-                                  child: Assets.icons.back.svg(
-                                    color: Theme.of(
-                                      context,
-                                    ).textTheme.bodyLarge?.color,
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            Text(
-                              "Gift Details".tr(context),
-                              textAlign: TextAlign.center,
-
-                              style: GiftPoseTextStyle.normal(
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Container(height: 50, width: 50),
-                          ],
-                        ),
-
-                        GestureDetector(
-                          onTap: () {
-                            final dataResponse =
-                                vm.fetchItemsByIdMeResponse.data;
-                            if (dataResponse == null) return;
-                            final responseData = dataResponse.data;
-                            final heroImage =
-                                responseData.imageUrls.length >
-                                    selectedImageIndex
-                                ? responseData.imageUrls[selectedImageIndex]
-                                : null;
-                            if (heroImage != null &&
-                                heroImage.toString().isNotEmpty) {
-                              showDialog(
-                                context: context,
-                                builder: (context) => Dialog(
-                                  backgroundColor: Colors.transparent,
-                                  insetPadding: EdgeInsets.all(10),
-                                  child: Stack(
-                                    alignment: Alignment.center,
-                                    clipBehavior: Clip.none,
-                                    children: [
-                                      InteractiveViewer(
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                          child: CachedNetworkImage(
-                                            imageUrl: heroImage.toString(),
-                                            fit: BoxFit.contain,
-                                            placeholder: (context, url) =>
-                                                Container(
-                                                  color: Colors.grey.shade100,
-                                                  child: Center(
-                                                    child:
-                                                        CupertinoActivityIndicator(),
-                                                  ),
-                                                ),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    Container(
-                                                      color:
-                                                          Colors.grey.shade200,
-                                                      child: Icon(
-                                                        Icons.error,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    ),
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        top: -15,
-                                        right: -15,
-                                        child: GestureDetector(
-                                          onTap: () => Navigator.pop(context),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              shape: BoxShape.circle,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.black26,
-                                                  blurRadius: 4,
-                                                  spreadRadius: 1,
-                                                ),
-                                              ],
-                                            ),
-                                            padding: EdgeInsets.all(8),
-                                            child: Icon(
-                                              Icons.close,
-                                              color: Colors.black,
-                                              size: 20,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  vm
-                                      .fetchItemsByIdMeResponse
-                                      .data
-                                      ?.data
-                                      .imageUrls[selectedImageIndex] ??
-                                  '',
-                              width: double.infinity,
-                              height: 277.w,
-                              fit: BoxFit.cover,
-                              errorWidget: (context, url, error) => Container(
-                                width: double.infinity,
-                                height: 102.w,
-                                color: Colors.grey.shade200,
-                                child: Icon(Icons.error, color: Colors.grey),
-                              ),
-                              placeholder: (context, url) => Container(
-                                width: double.infinity,
-                                height: 102.w,
-                                color: Colors.grey.shade100,
-                                child: Center(
-                                  child: CupertinoActivityIndicator(),
-                                ),
-                              ),
+            return SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  YMargin(30),
+                              
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          HapticFeedback.heavyImpact();
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              20,
+                            ), // Adjust the value for more/less rounding
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Assets.icons.back.svg(
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodyLarge?.color,
                             ),
                           ),
                         ),
-                        Transform.translate(
-                          offset: Offset(0, -20),
-                          child: Container(
-                            width: width(context),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                            ),
-
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
+                              
+                      Text(
+                        "Gift Details".tr(context),
+                        textAlign: TextAlign.center,
+                              
+                        style: GiftPoseTextStyle.normal(
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Container(height: 50, width: 50),
+                    ],
+                  ),
+                              
+                  GestureDetector(
+                    onTap: () {
+                      final dataResponse =
+                          vm.fetchItemsByIdMeResponse.data;
+                      if (dataResponse == null) return;
+                      final responseData = dataResponse.data;
+                      final heroImage =
+                          responseData.imageUrls.length >
+                              selectedImageIndex
+                          ? responseData.imageUrls[selectedImageIndex]
+                          : null;
+                      if (heroImage != null &&
+                          heroImage.toString().isNotEmpty) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                            backgroundColor: Colors.transparent,
+                            insetPadding: EdgeInsets.all(10),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              clipBehavior: Clip.none,
                               children: [
-                                YMargin(14),
-
-                                Padding(
-                                  padding: EdgeInsets.only(left: 20.0),
-                                  child: SizedBox(
-                                    height: 80.w,
-                                    width: double.infinity,
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: List.generate(
-                                          vm
-                                                  .fetchItemsByIdMeResponse
-                                                  .data
-                                                  ?.data
-                                                  ?.imageUrls
-                                                  .length ??
-                                              0,
-                                          (index) {
-                                            final imageUrl =
-                                                vm
-                                                    .fetchItemsByIdMeResponse
-                                                    .data
-                                                    ?.data
-                                                    ?.imageUrls[index] ??
-                                                '';
-
-                                            return GestureDetector(
-                                              onTap: () {
-                                                setState(() {
-                                                  selectedImageIndex = index;
-                                                });
-                                              },
-                                              child: Padding(
-                                                padding: EdgeInsets.only(
-                                                  right: 15.w,
-                                                ),
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  child: CachedNetworkImage(
-                                                    imageUrl: imageUrl,
-                                                    width: 60.w,
-                                                    height: 60.w,
-                                                    fit: BoxFit.cover,
-                                                    errorWidget:
-                                                        (context, url, error) =>
-                                                            Container(
-                                                              width: 92.w,
-                                                              height: 86.w,
-                                                              color: Colors
-                                                                  .grey
-                                                                  .shade200,
-                                                              child: Icon(
-                                                                Icons.error,
-                                                                color:
-                                                                    Colors.grey,
-                                                              ),
-                                                            ),
-                                                    placeholder:
-                                                        (
-                                                          context,
-                                                          url,
-                                                        ) => Container(
-                                                          width: 92.w,
-                                                          height: 86.w,
-                                                          color: Colors
-                                                              .grey
-                                                              .shade100,
-                                                          child: Center(
-                                                            child:
-                                                                CupertinoActivityIndicator(),
-                                                          ),
-                                                        ),
-                                                  ),
+                                InteractiveViewer(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                      12,
+                                    ),
+                                    child: CachedNetworkImage(
+                                      imageUrl: heroImage.toString(),
+                                      fit: BoxFit.contain,
+                                      placeholder: (context, url) =>
+                                          Container(
+                                            color: Colors.grey.shade100,
+                                            child: Center(
+                                              child:
+                                                  CupertinoActivityIndicator(),
+                                            ),
+                                          ),
+                                      errorWidget:
+                                          (context, url, error) =>
+                                              Container(
+                                                color:
+                                                    Colors.grey.shade200,
+                                                child: Icon(
+                                                  Icons.error,
+                                                  color: Colors.grey,
                                                 ),
                                               ),
-                                            );
-                                          },
-                                        ),
-                                      ),
                                     ),
                                   ),
                                 ),
-                                YMargin(14),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 20.0,
-                                  ),
-                                  child: Text(
-                                    vm
-                                            .fetchItemsByIdMeResponse
-                                            .data
-                                            ?.data
-                                            ?.name ??
-                                        "",
-                                    style: GiftPoseTextStyle.normal(
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                                YMargin(10),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 20.0,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Assets.icons.location.svg(
-                                            color: GiftPoseColors.primaryColor,
-                                          ),
-                                          XMargin(8),
-                                          Text(
-                                            widget.location ?? "",
-                                            style: GiftPoseTextStyle.small(
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                Positioned(
+                                  top: -15,
+                                  right: -15,
+                                  child: GestureDetector(
+                                    onTap: () => Navigator.pop(context),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black26,
+                                            blurRadius: 4,
+                                            spreadRadius: 1,
                                           ),
                                         ],
                                       ),
-                                      Text(
-                                        "${vm.fetchItemsByIdMeResponse.data?.data?.distanceInMiles ?? 0} miles away"
-                                            .tr(context),
-                                        style: GiftPoseTextStyle.small(
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                      padding: EdgeInsets.all(8),
+                                      child: Icon(
+                                        Icons.close,
+                                        color: Colors.black,
+                                        size: 20,
                                       ),
-                                    ],
-                                  ),
-                                ),
-                                YMargin(25),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 15.0,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Column(
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              isTappedPrivate = true;
-                                              isTappedCycling = false;
-                                              isTappedPublic = false;
-                                              isTappedVehicle = false;
-                                              isTappedWalking = false;
-                                              setState(() {});
-                                            },
-                                            child: TransportWidgets(
-                                              location:
-                                                  vm
-                                                      .fetchItemsByIdMeResponse
-                                                      .data
-                                                      ?.data
-                                                      ?.estimatedTravelTime
-                                                      ?.carPrivate ??
-                                                  "",
-                                              isTapped: isTappedPrivate,
-                                              icon: Assets.icons.privateVehicle
-                                                  .svg(
-                                                    color: isTappedPrivate
-                                                        ? GiftPoseColors
-                                                              .primaryColor
-                                                        : Theme.of(context)
-                                                              .textTheme
-                                                              .bodyMedium
-                                                              ?.color,
-                                                  ),
-                                              title: "Private Vehicle".tr(
-                                                context,
-                                              ),
-                                            ),
-                                          ),
-                                          YMargin(10),
-                                          // isTappedPrivate
-                                          //     ? Text(
-                                          //           vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.carPrivate ?? "",
-                                          //         textAlign: TextAlign.center,
-
-                                    //         maxLines: 2,
-
-                                    //         style: GiftPoseTextStyle.small(
-                                    //           fontSize: 10,
-                                    //           fontWeight: FontWeight.w400,
-                                    //           color:  GiftPoseColors.primaryColor,
-
-                                          //         ),
-                                          //       )
-                                          //     : SizedBox.shrink(),
-                                        ],
-                                      ),
-                                      XMargin(20),
-                                      InkWell(
-                                        onTap: () {
-                                          isTappedPrivate = false;
-                                          isTappedCycling = false;
-                                          isTappedPublic = true;
-                                          isTappedVehicle = false;
-                                          setState(() {});
-                                          isTappedWalking = false;
-                                        },
-                                        child: TransportWidgets(
-                                          location:
-                                              vm
-                                                  .fetchItemsByIdMeResponse
-                                                  .data
-                                                  ?.data
-                                                  ?.estimatedTravelTime
-                                                  ?.publicTransport ??
-                                              "",
-                                          isTapped: isTappedPublic,
-                                          isTappedPublic: true,
-                                          icon: Assets.icons.publicTransport
-                                              .svg(
-                                                color: isTappedPublic
-                                                    ? GiftPoseColors
-                                                          .primaryColor
-                                                    : Theme.of(context)
-                                                          .textTheme
-                                                          .bodyMedium
-                                                          ?.color,
-                                              ),
-                                          title: "Public Transport".tr(context),
-                                        ),
-                                      ),
-
-                                      XMargin(20),
-                                      InkWell(
-                                        onTap: () {
-                                          isTappedPrivate = false;
-                                          isTappedCycling = false;
-                                          isTappedPublic = false;
-                                          isTappedVehicle = false;
-                                          isTappedWalking = true;
-                                          setState(() {});
-                                        },
-                                        child: TransportWidgets(
-                                          location:
-                                              vm
-                                                  .fetchItemsByIdMeResponse
-                                                  .data
-                                                  ?.data
-                                                  ?.estimatedTravelTime
-                                                  ?.walking ??
-                                              "",
-                                          isTapped: isTappedWalking,
-                                          icon: Assets.icons.walking.svg(
-                                            color: isTappedWalking
-                                                ? GiftPoseColors.primaryColor
-                                                : Theme.of(
-                                                    context,
-                                                  ).textTheme.bodyMedium?.color,
-                                          ),
-                                          title: "Walking".tr(context),
-                                        ),
-                                      ),
-                                      XMargin(20),
-                                      InkWell(
-                                        onTap: () {
-                                          isTappedPrivate = false;
-                                          isTappedCycling = true;
-                                          isTappedPublic = false;
-                                          isTappedVehicle = false;
-                                          isTappedWalking = false;
-                                          setState(() {});
-                                        },
-                                        child: TransportWidgets(
-                                          location:
-                                              vm
-                                                  .fetchItemsByIdMeResponse
-                                                  .data
-                                                  ?.data
-                                                  ?.estimatedTravelTime
-                                                  ?.cycling ??
-                                              "",
-                                          isTapped: isTappedCycling,
-                                          icon: Assets.icons.cycling.svg(
-                                            color: isTappedCycling
-                                                ? GiftPoseColors.primaryColor
-                                                : Theme.of(
-                                                    context,
-                                                  ).textTheme.bodyMedium?.color,
-                                          ),
-                                          title: "Cycling".tr(context),
-                                        ),
-                                      ),
-                                      XMargin(20),
-                                      InkWell(
-                                        onTap: () {
-                                          isTappedPrivate = false;
-                                          isTappedCycling = false;
-                                          isTappedPublic = false;
-                                          isTappedVehicle = true;
-                                          isTappedWalking = false;
-                                          setState(() {});
-                                        },
-                                        child: TransportWidgets(
-                                          location:
-                                              vm
-                                                  .fetchItemsByIdMeResponse
-                                                  .data
-                                                  ?.data
-                                                  ?.estimatedTravelTime
-                                                  ?.carHire ??
-                                              "",
-                                          isTapped: isTappedVehicle,
-                                          icon: Assets.icons.vehicleHire.svg(
-                                            color: isTappedVehicle
-                                                ? GiftPoseColors.primaryColor
-                                                : Theme.of(
-                                                    context,
-                                                  ).textTheme.bodyMedium?.color,
-                                          ),
-                                          title: "Vehicle Hire",
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                isTappedPublic
-                                    ? YMargin(20)
-                                    : SizedBox.shrink(),
-                                isTappedPublic
-                                    ? Container(
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: 9,
-                                          horizontal: 15,
-                                        ),
-                                        width: width(context),
-                                        color:
-                                            GiftPoseColors.containerBackground,
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Assets.icons.train.svg(),
-                                                    XMargin(5),
-                                                    Text(
-                                                      "Train:".tr(context) +
-                                                          " ${vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.publicTransport ?? ''} mins",
-                                                      textAlign:
-                                                          TextAlign.justify,
-
-                                                style: GiftPoseTextStyle.small(
-                                                  fontWeight: FontWeight.w400,
-                                                  color:
-                                                      GiftPoseColors.textColor,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-
-                                                Row(
-                                                  children: [
-                                                    Assets.icons.train.svg(),
-                                                    XMargin(5),
-                                                    Text(
-                                                      "Tram:".tr(context) +
-                                                          " ${vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.publicTransport ?? ''} mins",
-                                                      textAlign:
-                                                          TextAlign.justify,
-
-                                                      style:
-                                                          GiftPoseTextStyle.small(
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color:
-                                                                GiftPoseColors
-                                                                    .textColor,
-                                                          ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                            YMargin(20),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Assets.icons.train.svg(),
-                                                    XMargin(5),
-                                                    Text(
-                                                      "Underground:".tr(
-                                                            context,
-                                                          ) +
-                                                          " ${vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.publicTransport ?? ''} mins",
-                                                      textAlign:
-                                                          TextAlign.justify,
-
-                                                      style:
-                                                          GiftPoseTextStyle.small(
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color:
-                                                                GiftPoseColors
-                                                                    .textColor,
-                                                          ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Assets.icons.train.svg(),
-                                                    XMargin(5),
-                                                    Text(
-                                                      "Bus:".tr(context) +
-                                                          " ${vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.publicTransport ?? ''} mins",
-                                                      textAlign:
-                                                          TextAlign.justify,
-
-                                                      style:
-                                                          GiftPoseTextStyle.small(
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color:
-                                                                GiftPoseColors
-                                                                    .textColor,
-                                                          ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    : SizedBox.shrink(),
-
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 20.0,
-                                  ),
-                                  child: Text(
-                                    "${vm.fetchItemsByIdMeResponse.data?.data?.description}"
-                                        .tr(context),
-                                    textAlign: TextAlign.justify,
-
-                                    style: GiftPoseTextStyle.small(
-                                      fontWeight: FontWeight.w400,
-                                      color: Theme.of(
-                                        context,
-                                      ).textTheme.bodyMedium?.color,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
+                        );
+                      }
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            vm
+                                .fetchItemsByIdMeResponse
+                                .data
+                                ?.data
+                                .imageUrls[selectedImageIndex] ??
+                            '',
+                        width: double.infinity,
+                        height: 277.w,
+                        fit: BoxFit.cover,
+                        errorWidget: (context, url, error) => Container(
+                          width: double.infinity,
+                          height: 102.w,
+                          color: Colors.grey.shade200,
+                          child: Icon(Icons.error, color: Colors.grey),
                         ),
-                        YMargin(24),
-                      ],
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      hideListing = !hideListing;
-                    });
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Text(
-                      "Hide listing".tr(context),
-                      textAlign: TextAlign.left,
-
-                      style: GiftPoseTextStyle.small(
-                        fontWeight: FontWeight.w400,
-                        color: Theme.of(context).textTheme.bodyLarge?.color,
+                        placeholder: (context, url) => Container(
+                          width: double.infinity,
+                          height: 102.w,
+                          color: Colors.grey.shade100,
+                          child: Center(
+                            child: CupertinoActivityIndicator(),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                _isNavigating
-                    ? Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0),
-                        child: GiftPoseButton(
-                          title: !isMarked
-                              ? "Mark as Taken"
-                              : "Marked as Taken",
-                          borderColor: textColor,
-                          buttonType: GiftPoseButtonType.border,
-                          prefixIcon: isMarked
-                              ? Assets.icons.mark.svg()
-                              : SizedBox.shrink(),
-                          backgroundColor: !isMarked
-                              ? Theme.of(context).scaffoldBackgroundColor
-                              : Theme.of(context).textTheme.bodyMedium?.color,
-                          fontSize: 14,
-                          textColor: Theme.of(
-                            context,
-                          ).textTheme.bodyLarge?.color,
-                          onTap: () {
-                            HapticFeedback.heavyImpact();
-                            isMarked = !isMarked;
-                            setState(() {
-                              vm.markItem(id: vm.fetchItemsByIdMeResponse.data?.data.id ?? "");
-
-                            });
-                          },
-                        ),
-                      )
-                    : SizedBox.shrink(),
-                YMargin(24),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: GiftPoseButton(
-                    title: "Ask for Gift Item",
-                    textColor: Theme.of(context).scaffoldBackgroundColor,
-                    onTap: () {
-                      HapticFeedback.heavyImpact();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => WebViewScreen(
-                            url:
-                                vm.fetchItemsByIdMeResponse.data?.data.url ??
-                                "",
-                            title: "GiftPose",
-                          ),
-                        ),
-                      );
-                      setState(() => _isNavigating = true);
-                    },
-                  ),
-                ),
-                hideListing
-                    ? Column(
+                  Transform.translate(
+                    offset: Offset(0, -20),
+                    child: Container(
+                      width: width(context),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                      ),
+                              
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          YMargin(13),
+                          YMargin(14),
+                              
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20.0),
-                            child: GiftPoseButton(
-                              title: "Hide Listing",
-                              borderColor: textColor,
-                              textColor: Theme.of(
-                                context,
-                              ).textTheme.bodyLarge?.color,
-                              backgroundColor: Theme.of(
-                                context,
-                              ).scaffoldBackgroundColor,
-                              buttonType: GiftPoseButtonType.border,
-                              onTap: () {
-                                HapticFeedback.heavyImpact();
-                                showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20),
-                                    ),
+                            padding: EdgeInsets.only(left: 20.0),
+                            child: SizedBox(
+                              height: 80.w,
+                              width: double.infinity,
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: List.generate(
+                                    vm
+                                            .fetchItemsByIdMeResponse
+                                            .data
+                                            ?.data
+                                            ?.imageUrls
+                                            .length ??
+                                        0,
+                                    (index) {
+                                      final imageUrl =
+                                          vm
+                                              .fetchItemsByIdMeResponse
+                                              .data
+                                              ?.data
+                                              ?.imageUrls[index] ??
+                                          '';
+                              
+                                      return GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            selectedImageIndex = index;
+                                          });
+                                        },
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                            right: 15.w,
+                                          ),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            child: CachedNetworkImage(
+                                              imageUrl: imageUrl,
+                                              width: 60.w,
+                                              height: 60.w,
+                                              fit: BoxFit.cover,
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Container(
+                                                        width: 92.w,
+                                                        height: 86.w,
+                                                        color: Colors
+                                                            .grey
+                                                            .shade200,
+                                                        child: Icon(
+                                                          Icons.error,
+                                                          color:
+                                                              Colors.grey,
+                                                        ),
+                                                      ),
+                                              placeholder:
+                                                  (
+                                                    context,
+                                                    url,
+                                                  ) => Container(
+                                                    width: 92.w,
+                                                    height: 86.w,
+                                                    color: Colors
+                                                        .grey
+                                                        .shade100,
+                                                    child: Center(
+                                                      child:
+                                                          CupertinoActivityIndicator(),
+                                                    ),
+                                                  ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   ),
-                                  builder: (_) => HideListingBottomsheet(
-                                    id:
+                                ),
+                              ),
+                            ),
+                          ),
+                          YMargin(14),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20.0,
+                            ),
+                            child: Text(
+                              vm
+                                      .fetchItemsByIdMeResponse
+                                      .data
+                                      ?.data
+                                      ?.name ??
+                                  "",
+                              style: GiftPoseTextStyle.normal(
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          YMargin(10),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20.0,
+                            ),
+                            child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Assets.icons.location.svg(
+                                      color: GiftPoseColors.primaryColor,
+                                    ),
+                                    XMargin(8),
+                                    Text(
+                                      widget.location ?? "",
+                                      style: GiftPoseTextStyle.small(
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  "${vm.fetchItemsByIdMeResponse.data?.data?.distanceInMiles ?? 0} miles away"
+                                      .tr(context),
+                                  style: GiftPoseTextStyle.small(
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          YMargin(25),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 15.0,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        isTappedPrivate = true;
+                                        isTappedCycling = false;
+                                        isTappedPublic = false;
+                                        isTappedVehicle = false;
+                                        isTappedWalking = false;
+                                        setState(() {});
+                                      },
+                                      child: TransportWidgets(
+                                        location:
+                                            vm
+                                                .fetchItemsByIdMeResponse
+                                                .data
+                                                ?.data
+                                                ?.estimatedTravelTime
+                                                ?.carPrivate ??
+                                            "",
+                                        isTapped: isTappedPrivate,
+                                        icon: Assets.icons.privateVehicle
+                                            .svg(
+                                              color: isTappedPrivate
+                                                  ? GiftPoseColors
+                                                        .primaryColor
+                                                  : Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium
+                                                        ?.color,
+                                            ),
+                                        title: "Private Vehicle".tr(
+                                          context,
+                                        ),
+                                      ),
+                                    ),
+                                    YMargin(10),
+                                    // isTappedPrivate
+                                    //     ? Text(
+                                    //           vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.carPrivate ?? "",
+                                    //         textAlign: TextAlign.center,
+                              
+                              //         maxLines: 2,
+                              
+                              //         style: GiftPoseTextStyle.small(
+                              //           fontSize: 10,
+                              //           fontWeight: FontWeight.w400,
+                              //           color:  GiftPoseColors.primaryColor,
+                              
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox.shrink(),
+                                  ],
+                                ),
+                                XMargin(20),
+                                InkWell(
+                                  onTap: () {
+                                    isTappedPrivate = false;
+                                    isTappedCycling = false;
+                                    isTappedPublic = true;
+                                    isTappedVehicle = false;
+                                    setState(() {});
+                                    isTappedWalking = false;
+                                  },
+                                  child: TransportWidgets(
+                                    location:
                                         vm
                                             .fetchItemsByIdMeResponse
                                             .data
                                             ?.data
-                                            .id ??
+                                            ?.estimatedTravelTime
+                                            ?.publicTransport ??
                                         "",
+                                    isTapped: isTappedPublic,
+                                    isTappedPublic: true,
+                                    icon: Assets.icons.publicTransport
+                                        .svg(
+                                          color: isTappedPublic
+                                              ? GiftPoseColors
+                                                    .primaryColor
+                                              : Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium
+                                                    ?.color,
+                                        ),
+                                    title: "Public Transport".tr(context),
                                   ),
-                                );
-                              },
+                                ),
+                              
+                                XMargin(20),
+                                InkWell(
+                                  onTap: () {
+                                    isTappedPrivate = false;
+                                    isTappedCycling = false;
+                                    isTappedPublic = false;
+                                    isTappedVehicle = false;
+                                    isTappedWalking = true;
+                                    setState(() {});
+                                  },
+                                  child: TransportWidgets(
+                                    location:
+                                        vm
+                                            .fetchItemsByIdMeResponse
+                                            .data
+                                            ?.data
+                                            ?.estimatedTravelTime
+                                            ?.walking ??
+                                        "",
+                                    isTapped: isTappedWalking,
+                                    icon: Assets.icons.walking.svg(
+                                      color: isTappedWalking
+                                          ? GiftPoseColors.primaryColor
+                                          : Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium?.color,
+                                    ),
+                                    title: "Walking".tr(context),
+                                  ),
+                                ),
+                                XMargin(20),
+                                InkWell(
+                                  onTap: () {
+                                    isTappedPrivate = false;
+                                    isTappedCycling = true;
+                                    isTappedPublic = false;
+                                    isTappedVehicle = false;
+                                    isTappedWalking = false;
+                                    setState(() {});
+                                  },
+                                  child: TransportWidgets(
+                                    location:
+                                        vm
+                                            .fetchItemsByIdMeResponse
+                                            .data
+                                            ?.data
+                                            ?.estimatedTravelTime
+                                            ?.cycling ??
+                                        "",
+                                    isTapped: isTappedCycling,
+                                    icon: Assets.icons.cycling.svg(
+                                      color: isTappedCycling
+                                          ? GiftPoseColors.primaryColor
+                                          : Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium?.color,
+                                    ),
+                                    title: "Cycling".tr(context),
+                                  ),
+                                ),
+                                XMargin(20),
+                                InkWell(
+                                  onTap: () {
+                                    isTappedPrivate = false;
+                                    isTappedCycling = false;
+                                    isTappedPublic = false;
+                                    isTappedVehicle = true;
+                                    isTappedWalking = false;
+                                    setState(() {});
+                                  },
+                                  child: TransportWidgets(
+                                    location:
+                                        vm
+                                            .fetchItemsByIdMeResponse
+                                            .data
+                                            ?.data
+                                            ?.estimatedTravelTime
+                                            ?.carHire ??
+                                        "",
+                                    isTapped: isTappedVehicle,
+                                    icon: Assets.icons.vehicleHire.svg(
+                                      color: isTappedVehicle
+                                          ? GiftPoseColors.primaryColor
+                                          : Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium?.color,
+                                    ),
+                                    title: "Vehicle Hire",
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          YMargin(12),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20.0),
-                            child: GiftPoseButton(
-                              title: "Report listing",
-                              borderColor: textColor,
-
-                              textColor: Colors.red,
-                              backgroundColor: Theme.of(
-                                context,
-                              ).scaffoldBackgroundColor,
-                              buttonType: GiftPoseButtonType.text,
-                              onTap: () {
-                                HapticFeedback.heavyImpact();
-                                showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20),
-                                    ),
+                          isTappedPublic
+                              ? YMargin(20)
+                              : SizedBox.shrink(),
+                          isTappedPublic
+                              ? Container(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 9,
+                                    horizontal: 15,
                                   ),
-                                  builder: (_) => ReportListingBottomsheet(),
-                                );
-                              },
+                                  width: width(context),
+                                  color:
+                                      GiftPoseColors.containerBackground,
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment
+                                                .spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Assets.icons.train.svg(),
+                                              XMargin(5),
+                                              Text(
+                                                "Train:".tr(context) +
+                                                    " ${vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.publicTransport ?? ''} mins",
+                                                textAlign:
+                                                    TextAlign.justify,
+                              
+                                          style: GiftPoseTextStyle.small(
+                                            fontWeight: FontWeight.w400,
+                                            color:
+                                                GiftPoseColors.textColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                              
+                                          Row(
+                                            children: [
+                                              Assets.icons.train.svg(),
+                                              XMargin(5),
+                                              Text(
+                                                "Tram:".tr(context) +
+                                                    " ${vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.publicTransport ?? ''} mins",
+                                                textAlign:
+                                                    TextAlign.justify,
+                              
+                                                style:
+                                                    GiftPoseTextStyle.small(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color:
+                                                          GiftPoseColors
+                                                              .textColor,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      YMargin(20),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment
+                                                .spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Assets.icons.train.svg(),
+                                              XMargin(5),
+                                              Text(
+                                                "Underground:".tr(
+                                                      context,
+                                                    ) +
+                                                    " ${vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.publicTransport ?? ''} mins",
+                                                textAlign:
+                                                    TextAlign.justify,
+                              
+                                                style:
+                                                    GiftPoseTextStyle.small(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color:
+                                                          GiftPoseColors
+                                                              .textColor,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Assets.icons.train.svg(),
+                                              XMargin(5),
+                                              Text(
+                                                "Bus:".tr(context) +
+                                                    " ${vm.fetchItemsByIdMeResponse.data?.data?.estimatedTravelTime?.publicTransport ?? ''} mins",
+                                                textAlign:
+                                                    TextAlign.justify,
+                              
+                                                style:
+                                                    GiftPoseTextStyle.small(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color:
+                                                          GiftPoseColors
+                                                              .textColor,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : SizedBox.shrink(),
+                              
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20.0,
+                            ),
+                            child: Text(
+                              "${vm.fetchItemsByIdMeResponse.data?.data?.description}"
+                                  .tr(context),
+                              textAlign: TextAlign.justify,
+                              
+                              style: GiftPoseTextStyle.small(
+                                fontWeight: FontWeight.w400,
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyMedium?.color,
+                              ),
                             ),
                           ),
                         ],
-                      )
-                    : SizedBox.shrink(),
-                YMargin(40),
-              ],
+                      ),
+                    ),
+                  ),
+                  YMargin(24),
+               
+                  _isNavigating
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.0),
+                          child: GiftPoseButton(
+                            title: !isMarked
+                                ? "Mark as Taken"
+                                : "Marked as Taken",
+                            borderColor: textColor,
+                            buttonType: GiftPoseButtonType.border,
+                            prefixIcon: isMarked
+                                ? Assets.icons.mark.svg()
+                                : SizedBox.shrink(),
+                            backgroundColor: !isMarked
+                                ? Theme.of(context).scaffoldBackgroundColor
+                                : Theme.of(context).textTheme.bodyMedium?.color,
+                            fontSize: 14,
+                            textColor: Theme.of(
+                              context,
+                            ).textTheme.bodyLarge?.color,
+                            onTap: () {
+                              HapticFeedback.heavyImpact();
+                              isMarked = !isMarked;
+                              setState(() {
+                                vm.markItem(id: vm.fetchItemsByIdMeResponse.data?.data.id ?? "");
+              
+                              });
+                            },
+                          ),
+                        )
+                      : SizedBox.shrink(),
+                  YMargin(24),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    child: GiftPoseButton(
+                      title: "Ask for Gift Item",
+                      textColor: Theme.of(context).scaffoldBackgroundColor,
+                      onTap: () {
+                        HapticFeedback.heavyImpact();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => WebViewScreen(
+                              url:
+                                  vm.fetchItemsByIdMeResponse.data?.data.url ??
+                                  "",
+                              title: "GiftPose",
+                            ),
+                          ),
+                        );
+                        setState(() => _isNavigating = true);
+                      },
+                    ),
+                  ),
+                 Column(
+                          children: [
+                            YMargin(13),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.0),
+                              child: GiftPoseButton(
+                                title: "Hide Listing",
+                                borderColor: textColor,
+                                textColor: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge?.color,
+                                backgroundColor: Theme.of(
+                                  context,
+                                ).scaffoldBackgroundColor,
+                                buttonType: GiftPoseButtonType.border,
+                                onTap: () {
+                                  HapticFeedback.heavyImpact();
+                                  showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
+                                      ),
+                                    ),
+                                    builder: (_) => HideListingBottomsheet(
+                                      id:
+                                          vm
+                                              .fetchItemsByIdMeResponse
+                                              .data
+                                              ?.data
+                                              .id ??
+                                          "",
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            YMargin(12),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.0),
+                              child: GiftPoseButton(
+                                title: "Report listing",
+                                borderColor: textColor,
+              
+                                textColor: Colors.red,
+                                backgroundColor: Theme.of(
+                                  context,
+                                ).scaffoldBackgroundColor,
+                                buttonType: GiftPoseButtonType.text,
+                                onTap: () {
+                                  HapticFeedback.heavyImpact();
+                                  showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
+                                      ),
+                                    ),
+                                    builder: (_) => ReportListingBottomsheet(   id:
+                                          vm
+                                              .fetchItemsByIdMeResponse
+                                              .data
+                                              ?.data
+                                              .id ??
+                                          "",),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                  
+                  YMargin(40),
+                ],
+              ),
             );
           },
         );

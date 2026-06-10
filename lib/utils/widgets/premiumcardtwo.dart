@@ -8,7 +8,7 @@ class PremiumProCardGridview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 165,
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: const Color(0xFFFFF5CC),
         borderRadius: BorderRadius.circular(14),
@@ -21,37 +21,34 @@ class PremiumProCardGridview extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           /// Header
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Text(
-                  "Premium Pro",
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                    color: const Color(0xFF8A4300),
-                  ),
-                ),
-              ),
-              const Icon(
-                Icons.star,
-                color: Color(0xFFF6D78C),
-                size: 32,
-              ),
-            ],
+          Align(
+            alignment: Alignment.bottomRight,
+            child: const Icon(
+              Icons.star,
+              color: Color(0xFFF6D78C),
+              size: 32,
+            ),
           ),
 
-          const SizedBox(height: 12),
+           Text(
+                "Go Pro",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w700,
+                  color: const Color(0xFF8A4300),
+                ),
+              ),
+
+          const SizedBox(height: 5),
 
           /// Features
-          _feature("Unlimited early access"),
-          const SizedBox(height: 8),
+          _feature("Ad-Free Browsing"),
+          const SizedBox(height: 5),
 
-          _feature("Priority notifications"),
-          const SizedBox(height: 8),
+          _feature("Supporter Badge"),
+          const SizedBox(height: 5),
 
-          _feature("Dedicated support"),
+          _feature("Premium Support"),
 
           const SizedBox(height: 20),
 
@@ -70,7 +67,7 @@ class PremiumProCardGridview extends StatelessWidget {
                 ),
               ),
               child: const Text(
-                "Get Pro",
+                "Get Premium",
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
