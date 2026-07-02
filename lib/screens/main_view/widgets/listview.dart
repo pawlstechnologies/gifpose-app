@@ -9,6 +9,7 @@ import 'package:giftpose/gen/assets.gen.dart';
 import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
 import 'package:giftpose/screens/main_view/views/details_page.dart';
 import 'package:giftpose/screens/onboarding/models/fetch_itemsnearme_response.dart';
+import 'package:giftpose/utils/router/app_routes.dart';
 import 'package:giftpose/utils/theme/giftpose_colors.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/theme/theme.dart';
@@ -19,10 +20,7 @@ import 'package:provider/provider.dart';
 class PremiumUpgradeCard extends StatelessWidget {
   final VoidCallback? onTap;
 
-  const PremiumUpgradeCard({
-    super.key,
-    this.onTap,
-  });
+  const PremiumUpgradeCard({super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +36,7 @@ class PremiumUpgradeCard extends StatelessWidget {
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Color(0xFFFFE5CC),
-              Color(0xFFF5D3E9),
-              Color(0xFFD6C7FF),
-            ],
+            colors: [Color(0xFFFFE5CC), Color(0xFFF5D3E9), Color(0xFFD6C7FF)],
             stops: [0.0, 0.5, 1.0],
           ),
         ),
@@ -107,10 +101,7 @@ class PremiumUpgradeCard extends StatelessWidget {
 class PremiumProCard extends StatelessWidget {
   final VoidCallback? onTap;
 
-  const PremiumProCard({
-    super.key,
-    this.onTap,
-  });
+  const PremiumProCard({super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -226,22 +217,20 @@ class ListViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const int firstPromoIndex = 2;  
-    const int secondPromoIndex = 7; 
+    const int firstPromoIndex = 2;
+    const int secondPromoIndex = 7;
 
     return Consumer<DashboardViewmodel>(
       builder: (context, dashVM, child) {
         final items = dashVM.items;
 
         if (items.isEmpty) {
-          return Center(
-            child: Text('No items available'.tr(context)),
-          );
+          return Center(child: Text('No items available'.tr(context)));
         }
 
         final bool showPromo1 = items.length > firstPromoIndex;
         final bool showPromo2 = items.length > (secondPromoIndex - 1);
-        
+
         int totalItemCount = items.length;
         if (showPromo1) totalItemCount += 1;
         if (showPromo2) totalItemCount += 1;
@@ -254,18 +243,23 @@ class ListViewWidget extends StatelessWidget {
           itemCount: totalItemCount,
           separatorBuilder: (context, index) => const YMargin(12),
           itemBuilder: (context, index) {
-            
             // 1. First Promo Card
             if (showPromo1 && index == firstPromoIndex) {
               return PremiumProCardListview(
-                onTap: () => HapticFeedback.mediumImpact(),
+                onTap: () {
+                  HapticFeedback.heavyImpact();
+                  Navigator.pushNamed(context, AppRoutes.premiumSubscription);
+                },
               );
             }
 
             // 2. Second Promo Card (PremiumProCard)
             if (showPromo2 && index == secondPromoIndex) {
               return PremiumProCardListview(
-                onTap: () => HapticFeedback.mediumImpact(),
+                onTap: () {
+                  HapticFeedback.heavyImpact();
+                  Navigator.pushNamed(context, AppRoutes.premiumSubscription);
+                },
               );
             }
 
@@ -290,17 +284,26 @@ class ListViewWidget extends StatelessWidget {
                 HapticFeedback.heavyImpact();
                 dashVM.fetchItemsById(id: data.id).whenComplete(() {
                   if (dashVM.fetchItemsByIdMeResponse.data?.success == true &&
-                      dashVM.fetchItemsByIdMeResponse.data!.data.imageUrls.isNotEmpty) {
+                      dashVM
+                          .fetchItemsByIdMeResponse
+                          .data!
+                          .data
+                          .imageUrls
+                          .isNotEmpty) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DetailsPage(location: userLocation.city),
+                        builder: (context) =>
+                            DetailsPage(location: userLocation.city),
                       ),
                     );
                   }
                 });
               },
-              child: CategoryListItem(response: data, userLocation: userLocation),
+              child: CategoryListItem(
+                response: data,
+                userLocation: userLocation,
+              ),
             );
           },
         );
@@ -310,7 +313,7 @@ class ListViewWidget extends StatelessWidget {
 
   Widget _buildLoadingIndicator() {
     if (!isLoadingMore) return const SizedBox.shrink();
-    
+
     return Container(
       height: 60,
       alignment: Alignment.center,
@@ -328,101 +331,82 @@ class CategoryListItem extends StatelessWidget {
   final FetchItemsNearMeData response;
   final UserLocation userLocation;
 
-  CategoryListItem({super.key, required this.response, required this.userLocation});
+  CategoryListItem({
+    super.key,
+    required this.response,
+    required this.userLocation,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+      padding: EdgeInsets.symmetric(vertical: 8.h),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipRRect(
-            borderRadius: const BorderRadius.horizontal(
-              left: Radius.circular(12),
-            ),
+            borderRadius: BorderRadius.circular(16.r),
             child: CachedNetworkImage(
               imageUrl: response.thumbnail ?? '',
-              height: 100,
-              width: 100,
+              height: 110.h,
+              width: 150.w,
               fit: BoxFit.cover,
               errorWidget: (context, url, error) => Container(
-                height: 100,
-                width: 100,
+                height: 110.h,
+                width: 150.w,
                 color: Colors.grey.shade200,
                 child: const Icon(Icons.error, color: Colors.grey),
               ),
               placeholder: (context, url) => Container(
-                height: 100,
-                width: 100,
+                height: 110.h,
+                width: 150.w,
                 color: Colors.grey.shade100,
-                child: const Center(
-                  child: CupertinoActivityIndicator(),
-                ),
+                child: const Center(child: CupertinoActivityIndicator()),
               ),
             ),
           ),
+
+          SizedBox(width: 16.w),
 
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    response.name ?? 'No name',
-                    style: GiftPoseTextStyle.medium(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  response.name ?? 'No name',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16.sp,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+
+                SizedBox(height: 16.h),
+
+                Row(
+                  children: [
+                    Assets.icons.location.svg(
+                      height: 18.r, 
+                      width: 18.r,
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-
-                  const YMargin(8),
-
-                  Row(
-                    children: [
-                      Assets.icons.location.svg(
-                        height: 14,
-                        width: 14,
-                      ),
-                      const XMargin(4),
-                      Expanded(
-                        child: Text(
-                          userLocation.city ?? "United Kingdom",
-                          style: GiftPoseTextStyle.small(
-                            color: Theme.of(context).textTheme.bodyMedium?.color,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                    SizedBox(width: 6.w),
+                    Expanded(
+                      child: Text(
+                        userLocation.city ?? "United Kingdom",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: Colors.grey.shade600,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ],
-                  ),
-
-                  const YMargin(8),
-                ],
-              ),
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Icon(
-              Icons.arrow_forward_ios,
-              size: 16,
-              color: Theme.of(context).textTheme.bodyMedium?.color,
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ],

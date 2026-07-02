@@ -61,9 +61,7 @@ class DashboardViewmodel extends BaseViewmodel {
   bool _hasReachedMax = false;
   bool _isLoadingMore = false;
 
-
-
- // search Pagination properties
+  // search Pagination properties
   int _currentPageSearch = 1;
   int _totalPagesSearch = 1;
   bool _hasReachedMaxSearch = false;
@@ -72,10 +70,9 @@ class DashboardViewmodel extends BaseViewmodel {
   List<FetchItemsNearMeData> _items = [];
   List<FetchItemsNearMeData> get items => _items;
 
-    // Items list
+  // Items list
   List<SearchData> _itemsSearch = [];
-  List<SearchData> get itemsSearch=> _itemsSearch;
-
+  List<SearchData> get itemsSearch => _itemsSearch;
 
   // Getters for pagination state
   bool get hasReachedMax => _hasReachedMax;
@@ -83,7 +80,7 @@ class DashboardViewmodel extends BaseViewmodel {
   int get currentPage => _currentPage;
   int get totalPages => _totalPages;
 
-    // Getters for pagination state
+  // Getters for pagination state
   bool get hasReachedMaxSearch => _hasReachedMaxSearch;
   bool get isLoadingMoreSearch => _isLoadingMoreSearch;
   int get currentPageSearch => _currentPageSearch;
@@ -94,10 +91,10 @@ class DashboardViewmodel extends BaseViewmodel {
   bool _isDark = false;
   bool get isDark => _isDark;
 
-bool get isDarkMode {
-  final theme = AdaptiveTheme.of(navigatorKey.currentContext!);
-  return theme.mode == AdaptiveThemeMode.dark;
-}
+  bool get isDarkMode {
+    final theme = AdaptiveTheme.of(navigatorKey.currentContext!);
+    return theme.mode == AdaptiveThemeMode.dark;
+  }
 
   void toggleTheme(BuildContext context) {
     final theme = AdaptiveTheme.of(context);
@@ -112,7 +109,6 @@ bool get isDarkMode {
 
     notifyListeners();
   }
-
 
   // fetch device details
   Future<void> getDeviceId() async {
@@ -131,7 +127,7 @@ bool get isDarkMode {
       androidInfo = await deviceInfo.androidInfo;
       // imel = "21345t5y65";
       deviceId = info.deviceId;
- 
+
       log('deviceID: $deviceId');
     } else if (Platform.isIOS) {
       // await DeviceImei().getDeviceImei().then((value) {
@@ -169,6 +165,7 @@ bool get isDarkMode {
   }
 
   DashboardViewmodel() {
+    getDeviceId();
     getDeviceId();
     Future.delayed(Duration(seconds: 2), () {
       fetchItemsNearMe();
@@ -210,7 +207,8 @@ bool get isDarkMode {
     _isLoadingMore = false;
     _items.clear();
   }
- // Reset search pagination (call this when refreshing or changing filters)
+
+  // Reset search pagination (call this when refreshing or changing filters)
   void resetPaginationSearch() {
     _currentPageSearch = 1;
     _totalPagesSearch = 1;
@@ -218,9 +216,9 @@ bool get isDarkMode {
     _isLoadingMoreSearch = false;
     _items.clear();
   }
+
   final SecureStorageService secureStorageService =
       serviceLocator<SecureStorageService>();
-
 
   // Main fetch method with pagination
   Future<void> fetchItemsNearMe({bool isLoadMore = false}) async {
@@ -252,7 +250,7 @@ bool get isDarkMode {
       // Make API call with pagination parameters
       final response = await mainViewRepo.fetchItemsNearme(
         page: _currentPage.toString(),
-        deviceID:deviceIdFromDb?? deviceId ?? "",
+        deviceID: deviceIdFromDb ?? deviceId ?? "",
       );
       if (response.success == true) {
         fetchItemsNearMeResponse = NetworkDataResponse.completed(response);
@@ -303,23 +301,20 @@ bool get isDarkMode {
     }
   }
 
-
-NetworkDataResponse<SearchResponse> _globalSearchResponse =
+  NetworkDataResponse<SearchResponse> _globalSearchResponse =
       NetworkDataResponse.idle();
 
-NetworkDataResponse<SearchResponse>get globalSearchResponse=>
+  NetworkDataResponse<SearchResponse> get globalSearchResponse =>
       _globalSearchResponse;
 
-  set globalSearchResponse(
-NetworkDataResponse<SearchResponse> value,
-  ) {
+  set globalSearchResponse(NetworkDataResponse<SearchResponse> value) {
     _globalSearchResponse = value;
     notifyListeners();
   }
 
   Future<void> search({
     required BuildContext context,
-bool isLoadMore = false,
+    bool isLoadMore = false,
     required List<String> keywords,
   }) async {
     try {
@@ -329,15 +324,14 @@ bool isLoadMore = false,
       // await LoaderPage.show(context);
 
       final response = await mainViewRepo.globalSearch(
-        deviceId: deviceId??"",
+        deviceId: deviceId ?? "",
         searchCategoryPredictionRequest: SearchCategoryPredictionRequest(
           keywords: keywords,
-          
         ),
       );
 
-         if (response.success == true) {
-         globalSearchResponse = NetworkDataResponse.completed(response);
+      if (response.success == true) {
+        globalSearchResponse = NetworkDataResponse.completed(response);
       } else {
         globalSearchResponse = NetworkDataResponse.error(
           response.message ?? "Something went wrong",
@@ -367,7 +361,7 @@ bool isLoadMore = false,
           _currentPage >= _totalPages || (response.data?.items.isEmpty ?? true);
 
       // Update response state
-     globalSearchResponse = NetworkDataResponse.completed(response);
+      globalSearchResponse = NetworkDataResponse.completed(response);
     } catch (e) {
       if (isLoadMore) {
         // Handle load more error silently
@@ -375,7 +369,7 @@ bool isLoadMore = false,
         _isLoadingMore = false;
         notifyListeners();
       } else {
-         globalSearchResponse = NetworkDataResponse.error(e.toString());
+        globalSearchResponse = NetworkDataResponse.error(e.toString());
       }
     } finally {
       if (isLoadMore) {
@@ -384,7 +378,6 @@ bool isLoadMore = false,
       }
     }
   }
-
 
   // Method to load next page (called when user scrolls to bottom)
   Future<void> loadNextPage() async {
@@ -433,16 +426,14 @@ bool isLoadMore = false,
     }
   }
 
-
-
-    NetworkDataResponse<FetchUserByDeviceId> _fetchUserByDeviceIdResponse =
+  NetworkDataResponse<FetchUserByDeviceId> _fetchUserByDeviceIdResponse =
       NetworkDataResponse.idle();
 
   NetworkDataResponse<FetchUserByDeviceId> get fetchUserByDeviceIdResponse =>
       _fetchUserByDeviceIdResponse;
 
   set fetchUserByDeviceIdResponse(
-    NetworkDataResponse<FetchUserByDeviceId>  value,
+    NetworkDataResponse<FetchUserByDeviceId> value,
   ) {
     _fetchUserByDeviceIdResponse = value;
     notifyListeners();
@@ -450,12 +441,11 @@ bool isLoadMore = false,
 
   Future<void> fetchUserByDeviceId() async {
     try {
-     fetchUserByDeviceIdResponse = NetworkDataResponse.loading("");
+      fetchUserByDeviceIdResponse = NetworkDataResponse.loading("");
       // await LoaderPage.show(navigatorKey.currentContext!);
 
       final response = await mainViewRepo.fetchUserById(
         deviceID: deviceId ?? "",
-  
       );
 
       // if (navigatorKey.currentContext!.mounted) {
@@ -464,52 +454,64 @@ bool isLoadMore = false,
 
       fetchUserByDeviceIdResponse = NetworkDataResponse.completed(response);
     } catch (e) {
-    fetchUserByDeviceIdResponse = NetworkDataResponse.error(e.toString());
+      fetchUserByDeviceIdResponse = NetworkDataResponse.error(e.toString());
     }
   }
+
   NetworkDataResponse<HideItemResponse> _hideItemResponse =
       NetworkDataResponse.idle();
 
   NetworkDataResponse<HideItemResponse> get hideItemResponse =>
       _hideItemResponse;
 
-  set hideItemResponse(
-    NetworkDataResponse<HideItemResponse> value,
-  ) {
+  set hideItemResponse(NetworkDataResponse<HideItemResponse> value) {
     _hideItemResponse = value;
     notifyListeners();
   }
 
-  Future<void> hideItem({required String id}) async {
+  Future<void> hideItem({required String id, required String deviceID}) async {
     try {
       hideItemResponse = NetworkDataResponse.loading("");
-      await LoaderPage.show(navigatorKey.currentContext!);
 
-      final response = await mainViewRepo.hideItem(hideItemRequest: HideItemRequest(deviceId: deviceId??""), id: id );
+      final response = await mainViewRepo.hideItem(
+        hideItemRequest: HideItemRequest(deviceId: deviceID ?? ""),
+        id: id,
+      );
 
-    hideItemResponse  = NetworkDataResponse.completed(response);
+      hideItemResponse = NetworkDataResponse.completed(response);
 
-     if (navigatorKey.currentContext!.mounted) {
-        Navigator.of(navigatorKey.currentContext!, rootNavigator: true).pop(); // Dismiss dialog
-      }
-      if(hideItemResponse.status == true){
+      if (hideItemResponse.message.toString() == "Item hidden successfully") {
         CustomToast.show(
-            context: navigatorKey.currentContext!,
-            message: response.message??"");  
-          Navigator.pushNamed(navigatorKey.currentContext!, AppRoutes.dashboard);
-          fetchItemsNearMe(isLoadMore: false);
+          context: navigatorKey.currentContext!,
+          message: response.message ?? "",
+        );
+
+        Navigator.of(
+          navigatorKey.currentContext!,
+          rootNavigator: true,
+        ).pop(); // Dismiss dialog
+        Navigator.of(
+          navigatorKey.currentContext!,
+          rootNavigator: true,
+        ).pop(); // Dismiss dialog
+
+        fetchItemsNearMe(isLoadMore: false);
+      } else {
+        if (navigatorKey.currentContext!.mounted) {
+          Navigator.of(
+            navigatorKey.currentContext!,
+            rootNavigator: true,
+          ).pop(); // Dismiss dialog
+        }
+        CustomToast.show(
+          context: navigatorKey.currentContext!,
+          message: response.message ?? "",
+        );
       }
-
-      if (navigatorKey.currentContext!.mounted) {
-        Navigator.of(navigatorKey.currentContext!, rootNavigator: true).pop(); // Dismiss dialog
-      }
-
-
     } catch (e) {
-      hideItemResponse  = NetworkDataResponse.error(e.toString());
+      hideItemResponse = NetworkDataResponse.error(e.toString());
     }
   }
-
 
   // mark item
 
@@ -527,42 +529,48 @@ bool isLoadMore = false,
   Future<void> markItem({required String id}) async {
     try {
       markItemResponse = NetworkDataResponse.loading("");
-       await LoaderPage.show(navigatorKey.currentContext!);
+      await LoaderPage.show(navigatorKey.currentContext!);
 
-      final response = await mainViewRepo.markItemTaken(hideItemRequest: HideItemRequest(deviceId: deviceId??""), deviceID: deviceId??"", id: id );
-   if (navigatorKey.currentContext!.mounted) {
-        Navigator.of(navigatorKey.currentContext!, rootNavigator: true).pop(); // Dismiss dialog
+      final response = await mainViewRepo.markItemTaken(
+        hideItemRequest: HideItemRequest(deviceId: deviceId ?? ""),
+        deviceID: deviceId ?? "",
+        id: id,
+      );
+      if (navigatorKey.currentContext!.mounted) {
+        Navigator.of(
+          navigatorKey.currentContext!,
+          rootNavigator: true,
+        ).pop(); // Dismiss dialog
       }
-      if(markItemResponse.status == true){
+      if (markItemResponse.status == true) {
         CustomToast.show(
-            context: navigatorKey.currentContext!,
-            message: response.message??"");  
-         
-          fetchItemsNearMe(isLoadMore: false);
+          context: navigatorKey.currentContext!,
+          message: response.message ?? "",
+        );
+
+        fetchItemsNearMe(isLoadMore: false);
       }
 
-   
-
-    markItemResponse  = NetworkDataResponse.completed(response);
+      markItemResponse = NetworkDataResponse.completed(response);
     } catch (e) {
-      markItemResponse  = NetworkDataResponse.error(e.toString());
+      markItemResponse = NetworkDataResponse.error(e.toString());
     }
-  }   
+  }
 
- NetworkDataResponse<ReportListingResponse> _reportListingResponse =
+  NetworkDataResponse<ReportListingResponse> _reportListingResponse =
       NetworkDataResponse.idle();
 
   NetworkDataResponse<ReportListingResponse> get reportListingResponse =>
       _reportListingResponse;
 
-  set reportListingResponse( NetworkDataResponse<ReportListingResponse> value) {
+  set reportListingResponse(NetworkDataResponse<ReportListingResponse> value) {
     _reportListingResponse = value;
     notifyListeners();
   }
 
   Future<void> reportListing({
     required BuildContext context,
-required String id,
+    required String id,
     required String reason,
   }) async {
     try {
@@ -571,10 +579,15 @@ required String id,
       // Show loader
       LoaderPage.show(context);
 
-      final response = await mainViewRepo.reportListing(reportListingRequest: ReportListingRequest(deviceId: deviceId??"", reason: reason), id: id);
-      
+      final response = await mainViewRepo.reportListing(
+        reportListingRequest: ReportListingRequest(
+          deviceId: deviceId ?? "",
+          reason: reason,
+        ),
+        id: id,
+      );
 
-     reportListingResponse = NetworkDataResponse.completed(response);
+      reportListingResponse = NetworkDataResponse.completed(response);
 
       if (navigatorKey.currentContext!.mounted) {
         Navigator.of(
@@ -585,16 +598,14 @@ required String id,
 
       if (response.status == true) {
         Navigator.pushNamed(context, AppRoutes.dashboard);
-        
 
-        
-            CustomToast.show(context: context, message: "Success");
+        CustomToast.show(context: context, message: "Success");
       } else {
         final errorMessage = "Something went wrong";
         CustomToast.show(context: context, message: errorMessage);
       }
     } catch (e) {
-     reportListingResponse = NetworkDataResponse.error(e.toString());
+      reportListingResponse = NetworkDataResponse.error(e.toString());
 
       if (context.mounted) {
         Navigator.pop(context);
@@ -602,9 +613,6 @@ required String id,
       }
     }
   }
-
-
-
 
   NetworkDataResponse<CreateAlertListResponse> _createAlertResponse =
       NetworkDataResponse.idle();
@@ -634,8 +642,8 @@ required String id,
           deviceId: deviceId ?? "",
           categories: categories,
           keywords: keywords,
-          status:"Active",
-          firebaseToken:fcmToken??"",
+          status: "Active",
+          firebaseToken: fcmToken ?? "",
         ),
       );
 
@@ -650,10 +658,8 @@ required String id,
 
       if (response.success == true) {
         Navigator.pushNamed(context, AppRoutes.dashboard);
-        
 
-        
-            CustomToast.show(context: context, message: "Notification alert set");
+        CustomToast.show(context: context, message: "Notification alert set");
       } else {
         final errorMessage = "Something went wrong";
         CustomToast.show(context: context, message: errorMessage);
@@ -669,38 +675,42 @@ required String id,
   }
 
   List<String> _selectedKeywords = [];
-List<String> get selectedKeywords => _selectedKeywords;
+  List<String> get selectedKeywords => _selectedKeywords;
 
-bool toggleKeyword(String keyword) {
-  if (_selectedKeywords.contains(keyword)) {
-    _selectedKeywords.remove(keyword);
-    notifyListeners();
-    return true;
+  bool toggleKeyword(String keyword) {
+    if (_selectedKeywords.contains(keyword)) {
+      _selectedKeywords.remove(keyword);
+      notifyListeners();
+      return true;
+    }
+
+    final int maxKeywords =
+        fetchUserByDeviceIdResponse.data?.data.isPremium == true ? 80 : 3;
+
+    if (_selectedKeywords.length < maxKeywords) {
+      _selectedKeywords.add(keyword);
+      notifyListeners();
+      return true;
+    }
+
+    print("VM: LIMIT REACHED. Returning false to UI.");
+    print("TRIGGERING MODAL");
+    showModalBottomSheet(
+      context: navigatorKey.currentContext!,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const PremiumFeaturesModal(),
+    );
+    return false;
   }
-
-  final int maxKeywords =
-      fetchUserByDeviceIdResponse.data?.data.isPremium == true
-          ? 80
-          : 2;
-
-  if (_selectedKeywords.length < maxKeywords) {
-    _selectedKeywords.add(keyword);
-    notifyListeners();
-    return true;
-  }
-
-  print("VM: LIMIT REACHED. Returning false to UI.");
-  return false;
-}
-
 
   List<String> _selectedCategory = [];
-List<String> get selectedCategory => _selectedCategory;
+  List<String> get selectedCategory => _selectedCategory;
 
-void selectedCategoryKeyword(List<String> value) {
- _selectedCategory = value;
-  notifyListeners();
-}
+  void selectedCategoryKeyword(List<String> value) {
+    _selectedCategory = value;
+    notifyListeners();
+  }
 
   NetworkDataResponse<SearchCategoryPredictionResponse>
   _searchPredictionResponse = NetworkDataResponse.idle();
@@ -756,14 +766,13 @@ void selectedCategoryKeyword(List<String> value) {
     }
   }
 
-
   int _selectedIndex = -1;
-int get selectedIndex => _selectedIndex;
+  int get selectedIndex => _selectedIndex;
 
-void selectOption(int index) {
-  _selectedIndex = index;
-  notifyListeners();
-}
+  void selectOption(int index) {
+    _selectedIndex = index;
+    notifyListeners();
+  }
 
   NetworkDataResponse<AlertListCategoryResponse> _fetchAlertCategoryResponse =
       NetworkDataResponse.idle();
@@ -795,17 +804,14 @@ void selectOption(int index) {
     }
   }
 
-
-
-
-    NetworkDataResponse<GetReportListResponse> _fetchReportListResponse=
+  NetworkDataResponse<GetReportListResponse> _fetchReportListResponse =
       NetworkDataResponse.idle();
 
- NetworkDataResponse<GetReportListResponse>
-  get fetchReportListResponse => _fetchReportListResponse;
+  NetworkDataResponse<GetReportListResponse> get fetchReportListResponse =>
+      _fetchReportListResponse;
 
   set fetchReportListResponse(
- NetworkDataResponse<GetReportListResponse> value,
+    NetworkDataResponse<GetReportListResponse> value,
   ) {
     _fetchReportListResponse = value;
     notifyListeners();
@@ -813,7 +819,7 @@ void selectOption(int index) {
 
   Future<void> fetchReportList() async {
     try {
-     fetchReportListResponse = NetworkDataResponse.loading("");
+      fetchReportListResponse = NetworkDataResponse.loading("");
       // await LoaderPage.show(navigatorKey.currentContext!);
 
       final response = await mainViewRepo.getReportList();
@@ -822,7 +828,7 @@ void selectOption(int index) {
       //   Navigator.of(navigatorKey.currentContext!, rootNavigator: true).pop(); // Dismiss dialog
       // }
 
-     fetchReportListResponse = NetworkDataResponse.completed(response);
+      fetchReportListResponse = NetworkDataResponse.completed(response);
     } catch (e) {
       fetchReportListResponse = NetworkDataResponse.error(e.toString());
     }
@@ -860,168 +866,170 @@ void selectOption(int index) {
     }
   }
 
-  NetworkDataResponse<CreatePaymentIntentResponse> _createPaymentIntentResponse = NetworkDataResponse.idle();
+  NetworkDataResponse<CreatePaymentIntentResponse>
+  _createPaymentIntentResponse = NetworkDataResponse.idle();
 
- NetworkDataResponse<CreatePaymentIntentResponse>
+  NetworkDataResponse<CreatePaymentIntentResponse>
   get createPaymentIntentResponse => _createPaymentIntentResponse;
 
   set createPaymentIntentResponse(
-  NetworkDataResponse<CreatePaymentIntentResponse> value,
+    NetworkDataResponse<CreatePaymentIntentResponse> value,
   ) {
     _createPaymentIntentResponse = value;
     notifyListeners();
   }
 
-Future<void> createPaymentIntent({required String plan}) async {
-  try {
-    print("🟡 STEP 1: شروع createPaymentIntent");
-
-    createPaymentIntentResponse = NetworkDataResponse.loading("");
-
-    final response = await mainViewRepo.createPaymentIntent(
-      createPaymentIntentRequest:
-          CreatePaymentIntentRequest(deviceId: deviceId ?? "", plan: plan),
-    );
-
-    print("🟢 STEP 2: API RESPONSE RECEIVED");
-    print("👉 Full response: $response");
-
-    createPaymentIntentResponse = NetworkDataResponse.completed(response);
-
-    final clientSecret =
-        createPaymentIntentResponse.data?.data.clientSecret ?? "";
-
-    print("🟢 STEP 3: CLIENT SECRET");
-    print("👉 $clientSecret");
-
-    if (clientSecret.isEmpty) {
-      print("🔴 ERROR: Client secret is EMPTY");
-      return;
-    }
-
-    print("🟡 STEP 4: INITIALIZING PAYMENT SHEET");
-
+  Future<void> createPaymentIntent({required String plan}) async {
     try {
-      await Stripe.instance.initPaymentSheet(
-        paymentSheetParameters: SetupPaymentSheetParameters(
-          paymentIntentClientSecret: clientSecret,
-          merchantDisplayName: 'GiftPose',
+      print("🟡 STEP 1: شروع createPaymentIntent");
 
-          // 👇 Add this for Android
-          googlePay: const PaymentSheetGooglePay(
-            merchantCountryCode: 'NG',
-            testEnv: true,
-          ),
+      createPaymentIntentResponse = NetworkDataResponse.loading("");
+
+      final response = await mainViewRepo.createPaymentIntent(
+        createPaymentIntentRequest: CreatePaymentIntentRequest(
+          deviceId: deviceId ?? "",
+          plan: plan,
         ),
       );
 
-      print("🟢 STEP 5: PAYMENT SHEET INITIALIZED");
+      print("🟢 STEP 2: API RESPONSE RECEIVED");
+      print("👉 Full response: $response");
+
+      createPaymentIntentResponse = NetworkDataResponse.completed(response);
+
+      final clientSecret =
+          createPaymentIntentResponse.data?.data.clientSecret ?? "";
+
+      print("🟢 STEP 3: CLIENT SECRET");
+      print("👉 $clientSecret");
+
+      if (clientSecret.isEmpty) {
+        print("🔴 ERROR: Client secret is EMPTY");
+        return;
+      }
+
+      print("🟡 STEP 4: INITIALIZING PAYMENT SHEET");
+
+      try {
+        await Stripe.instance.initPaymentSheet(
+          paymentSheetParameters: SetupPaymentSheetParameters(
+            paymentIntentClientSecret: clientSecret,
+            merchantDisplayName: 'GiftPose',
+
+            // 👇 Add this for Android
+            googlePay: const PaymentSheetGooglePay(
+              merchantCountryCode: 'NG',
+              testEnv: false,
+            ),
+          ),
+        );
+
+        print("🟢 STEP 5: PAYMENT SHEET INITIALIZED");
+      } catch (e, s) {
+        print("🔴 ERROR DURING initPaymentSheet");
+        print(e);
+        print(s);
+        return;
+      }
+
+      print("🟡 STEP 6: PRESENTING PAYMENT SHEET");
+
+      try {
+        await Stripe.instance.presentPaymentSheet();
+        print("🟢 STEP 7: PAYMENT SHEET CLOSED (SUCCESS)");
+        Navigator.pushNamed(
+          navigatorKey.currentContext!,
+          AppRoutes.createAccountPage,
+        );
+      } catch (e, s) {
+        print("🔴 ERROR DURING presentPaymentSheet");
+        print(e);
+        print(s);
+      }
+
+      print("🟡 STEP 8: DONE");
     } catch (e, s) {
-      print("🔴 ERROR DURING initPaymentSheet");
+      print("🔥 FATAL ERROR");
       print(e);
       print(s);
-      return;
+
+      createPaymentIntentResponse = NetworkDataResponse.error(e.toString());
     }
-
-    print("🟡 STEP 6: PRESENTING PAYMENT SHEET");
-
-    try {
-      await Stripe.instance.presentPaymentSheet();
-      print("🟢 STEP 7: PAYMENT SHEET CLOSED (SUCCESS)");
-      Navigator.pushNamed(navigatorKey.currentContext!, AppRoutes.createAccountPage
-      );
-    } catch (e, s) {
-      print("🔴 ERROR DURING presentPaymentSheet");
-      print(e);
-      print(s);
-    }
-
-    print("🟡 STEP 8: DONE");
-
-  } catch (e, s) {
-    print("🔥 FATAL ERROR");
-    print(e);
-    print(s);
-
-    createPaymentIntentResponse =
-        NetworkDataResponse.error(e.toString());
   }
-}
 
+  NetworkDataResponse<FetchAlertListResponse> _fetchAlertListResponse =
+      NetworkDataResponse.idle();
 
-    NetworkDataResponse<FetchAlertListResponse>
-  _fetchAlertListResponse = NetworkDataResponse.idle();
-
- NetworkDataResponse<FetchAlertListResponse>
-  get fetchAlertListResponse => _fetchAlertListResponse;
+  NetworkDataResponse<FetchAlertListResponse> get fetchAlertListResponse =>
+      _fetchAlertListResponse;
 
   set fetchAlertListResponse(
-  NetworkDataResponse<FetchAlertListResponse> value,
+    NetworkDataResponse<FetchAlertListResponse> value,
   ) {
     _fetchAlertListResponse = value;
     notifyListeners();
   }
 
-
-
-
-
   Future<void> fetchAlertList() async {
     try {
-        String? deviceIdFromDb = await secureStorageService.read(
-      key: StorageKeys.deviceId,
-    );
+      String? deviceIdFromDb = await secureStorageService.read(
+        key: StorageKeys.deviceId,
+      );
       fetchAlertListResponse = NetworkDataResponse.loading("");
       // await LoaderPage.show(navigatorKey.currentContext!);
 
-      final response = await mainViewRepo.fetchAlertList (
-        deviceID:deviceIdFromDb?? deviceId ?? "",
-
+      final response = await mainViewRepo.fetchAlertList(
+        deviceID: deviceIdFromDb ?? deviceId ?? "",
       );
+      // Collect all keywords from all alerts and ensure uniqueness
 
+      _selectedKeywords.addAll(
+        response.data.expand((datum) => datum.keywords).toSet().toList(),
+        
+      );
+       notifyListeners();
+      // _selectedKeywords.add(response.data.data); // Fixed: removed invalid getter usage
       // if (navigatorKey.currentContext!.mounted) {
       //   Navigator.of(navigatorKey.currentContext!, rootNavigator: true).pop(); // Dismiss dialog
       // }
 
-     fetchAlertListResponse = NetworkDataResponse.completed(response);
+      fetchAlertListResponse = NetworkDataResponse.completed(response);
     } catch (e) {
       fetchAlertListResponse = NetworkDataResponse.error(e.toString());
     }
   }
 
-  NetworkDataResponse<NotificationResponse>
-  _fetchNotificationResponse = NetworkDataResponse.idle();
-   NetworkDataResponse<NotificationResponse>
-  get fetchNotificationResponse => _fetchNotificationResponse;
+  NetworkDataResponse<NotificationResponse> _fetchNotificationResponse =
+      NetworkDataResponse.idle();
+  NetworkDataResponse<NotificationResponse> get fetchNotificationResponse =>
+      _fetchNotificationResponse;
 
   set fetchNotificationResponse(
-  NetworkDataResponse<NotificationResponse> value,
+    NetworkDataResponse<NotificationResponse> value,
   ) {
     _fetchNotificationResponse = value;
     notifyListeners();
   }
 
-
   Future<void> fetchNotification() async {
     try {
-        String? deviceIdFromDb = await secureStorageService.read(
-      key: StorageKeys.deviceId,
-    );
-    fetchNotificationResponse = NetworkDataResponse.loading("");
+      String? deviceIdFromDb = await secureStorageService.read(
+        key: StorageKeys.deviceId,
+      );
+      fetchNotificationResponse = NetworkDataResponse.loading("");
       // await LoaderPage.show(navigatorKey.currentContext!);
 
-      final response = await mainViewRepo.fetchNotification (
-        deviceID:deviceIdFromDb?? deviceId ?? "",
-
+      final response = await mainViewRepo.fetchNotification(
+        deviceID: deviceIdFromDb ?? deviceId ?? "",
       );
 
       // if (navigatorKey.currentContext!.mounted) {
       //   Navigator.of(navigatorKey.currentContext!, rootNavigator: true).pop(); // Dismiss dialog
       // }
 
-    fetchNotificationResponse = NetworkDataResponse.completed(response);
+      fetchNotificationResponse = NetworkDataResponse.completed(response);
     } catch (e) {
-     fetchNotificationResponse= NetworkDataResponse.error(e.toString());
+      fetchNotificationResponse = NetworkDataResponse.error(e.toString());
     }
   }
 }

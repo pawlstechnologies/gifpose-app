@@ -286,7 +286,7 @@ class _SettingsViewState extends State<SettingsView> {
                             vertical: 10,
                           ),
 
-                          leading: Assets.icons.dot.svg(),
+                         leading: Assets.icons.notificationIcon.svg(),
                           title: Text(
                             "Push Notifications".tr(context),
 

@@ -1,5 +1,6 @@
 // screens/main_view/views/dashboard_view.dart
 import 'package:flutter/material.dart';
+import 'package:giftpose/screens/onboarding/models/fetch_itemsnearme_response.dart';
 import 'package:giftpose/utils/localization_provider.dart';
 
 import 'package:flutter/services.dart';
@@ -42,6 +43,9 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   void initState() {
     super.initState();
+    searchCtrl.addListener(() {
+      setState(() {});
+    });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.microtask(
         () => context.read<DashboardViewmodel>().fetchItemsNearMe(),
@@ -284,15 +288,7 @@ class _DashboardViewState extends State<DashboardView> {
                     child: CompositedTransformTarget(
                       link: _layerLink,
                       child: GiftPoseTextField(
-                        readOnly: true,
                         onTap: () {
-                          // Navigate to a new screen
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SearchView(isList: isList),
-                            ),
-                          );
                           HapticFeedback.heavyImpact();
                         },
                         controller: searchCtrl,
@@ -433,6 +429,15 @@ class _DashboardViewState extends State<DashboardView> {
   }
 
   Widget _buildContent(DashboardViewmodel viewModel) {
+    List<FetchItemsNearMeData> displayItems = viewModel.items;
+    if (searchCtrl.text.isNotEmpty) {
+      final query = searchCtrl.text.toLowerCase();
+      displayItems = displayItems.where((item) {
+        return (item.name?.toLowerCase().contains(query) ?? false) ||
+               (item.description?.toLowerCase().contains(query) ?? false);
+      }).toList();
+    }
+
     // Handle loading state
     if (isApiResponseLoading(viewModel.fetchItemsNearMeResponse) &&
         viewModel.items.isEmpty) {
@@ -471,7 +476,7 @@ class _DashboardViewState extends State<DashboardView> {
     }
 
     // Handle empty state
-    if (viewModel.items.isEmpty) {
+    if (displayItems.isEmpty) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -494,12 +499,13 @@ class _DashboardViewState extends State<DashboardView> {
         userLocation: viewModel.fetchItemsNearMeResponse.data!.userLocation,
         hasReachedMax: viewModel.hasReachedMax,
         isLoadingMore: viewModel.isLoadingMore,
+        // items: displayItems,
       );
     } else {
       return CategoryGrid(
         userLocation: viewModel.fetchItemsNearMeResponse.data!.userLocation,
         scrollController: _scrollController,
-        items: viewModel.items,
+        items: displayItems,
         hasReachedMax: viewModel.hasReachedMax,
         isLoadingMore: viewModel.isLoadingMore,
         crossAxisCount: 2,

@@ -1,4 +1,3 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:giftpose/utils/localization_provider.dart';
 
 import 'package:flutter/material.dart';
@@ -28,7 +27,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void initState() {
-    initFirebase();
     super.initState();
   }
 
@@ -38,14 +36,6 @@ class _SplashScreenState extends State<SplashScreen>
     super.dispose();
   }
 
-  void initFirebase() async {
-    // Request Permissions
-    await FirebaseMessaging.instance.requestPermission(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {

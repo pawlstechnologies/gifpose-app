@@ -79,11 +79,11 @@ class MainViewRepoImpl implements MainViewRepo {
   }) async {
     try {
        log("Hide items requested}");
-      
+      final payload = jsonEncode(hideItemRequest.toJson());
       final response = await networkProvider.call(
         path: ApiRoutes.markItemHide.replaceAll('{Id}', id),
         method: RequestMethod.patch,
-       
+           body: payload,
    
       );
       log("Hide items reponse: ${response?.data}");
@@ -399,7 +399,7 @@ try {
    
       
       final response = await networkProvider.call(
-        path: ApiRoutes.alertSearchPredictionList ,
+        path: ApiRoutes.searchAlertCategories ,
         method: RequestMethod.post,
         body: payload,
       );

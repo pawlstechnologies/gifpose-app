@@ -45,7 +45,7 @@ class HideListingBottomsheet extends StatelessWidget {
                 ],
               ),
               YMargin(14),
-              Assets.icons.hide.svg(),
+              Assets.icons.hide.svg(height: 80, width: 80),
               YMargin(18),
 
               Text(
@@ -77,7 +77,8 @@ class HideListingBottomsheet extends StatelessWidget {
                   textColor: Theme.of(context).scaffoldBackgroundColor,
                   onTap: () {
                     HapticFeedback.heavyImpact();
-            vm.hideItem(id: id);
+   print("device id ${vm.deviceId}");
+   vm.hideItem(id: id, deviceID: vm.deviceId??"");
                   },
                 ),
               ),

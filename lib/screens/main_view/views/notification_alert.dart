@@ -47,7 +47,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
 
       await vm.fetchAlertCategory();
 
-      vm.selectedKeywords.clear();
+
 
       setState(() {
         filteredCategories =
@@ -122,19 +122,19 @@ class _NotificationAlertState extends State<NotificationAlert> {
               child: ListView.builder(
                 padding: EdgeInsets.zero,
 
-                itemCount: vm.searchPredictionResponse.data?.data.length ?? 0,
+                itemCount: vm.searchPredictionResponse.data?.data. length ?? 0,
 
                 itemBuilder: (context, index) {
                   final item = vm.searchPredictionResponse.data?.data[index];
 
                   return ListTile(
-                    title: Text(item?.name ?? ""),
+                    // title: Text(item? ?? ""),
 
                     onTap: () {
                       final categories =
                           vm.fetchAlertCategoryResponse.data?.data.data ?? [];
 
-                      _localCategorySearch(searchCtrl.text, categories);
+                      // _localCategorySearch(searchCtrl.text, categories);
                       if (!vm.selectedKeywords.contains(item?.name)) {
                         // vm.toggleKeyword(item?.name ?? "");
                       }
@@ -195,7 +195,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
 
           appBarTitleWidget:
 
-           Text("Notification Alert".tr(context),
+           Text("Gift Notification".tr(context),
         style: GiftPoseTextStyle.normal(fontWeight: FontWeight.w500),
           ),
 
@@ -267,7 +267,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
                       child: GiftPoseTextField(
                         controller: searchCtrl,
                         focusNode: _searchFocus,
-                        hintText: "Search for items",
+                        hintText: "Enter the keyword you want to be notified of",
                         prefixIcon: Assets.icons.search.svg(),
 
                         onChanged: (value) async {
@@ -278,7 +278,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
                           final categories =
                               vm.fetchAlertCategoryResponse.data?.data.data ??
                               [];
-                          _localCategorySearch(value, categories);
+                    
 
                           if (value.trim().length > 2) {
                             await vm.searchPrediction(
@@ -298,7 +298,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
                     ),
                   ),
 
-                  YMargin(20),
+                  
 
                   /// SELECTED KEYWORDS
                   if (vm.selectedKeywords.isNotEmpty)

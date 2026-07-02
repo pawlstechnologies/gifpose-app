@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:giftpose/utils/localization_provider.dart';
+import 'package:giftpose/utils/router/app_routes.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
+import 'package:giftpose/utils/theme/theme.dart';
 import 'package:giftpose/utils/widgets/giftpose_button.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
 
@@ -85,14 +87,21 @@ class PremiumFeaturesModal extends StatelessWidget {
           const YMargin(20),
 
           // Upgrade Button
-         GiftPoseButton(title: "Upgrade", onTap: () {}),
+         GiftPoseButton(title: "Upgrade", onTap: () {
+              HapticFeedback.heavyImpact();
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.premiumSubscription,
+                          );
+         }),
           const YMargin(12),
           
           // Cancel Button
          GiftPoseButton(
           buttonType: GiftPoseButtonType.text,
+          textColor: Theme.of(context).textTheme.bodyLarge?.color,
           title: "Cancel", onTap: () {
-
+Navigator.pop(context);
          }),
           const YMargin(10),
         ],

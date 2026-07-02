@@ -34,11 +34,9 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                 Expanded(
                   child: ListView(
                     children: [
-                      const SizedBox(height: 15),
-
                       /// HEADER
                       SizedBox(
-                        height: 56,
+                        height: 36,
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
@@ -54,10 +52,9 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                                   height: 40,
                                   child: Center(
                                     child: Assets.icons.back.svg(
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.color,
+                                      color: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge?.color,
                                     ),
                                   ),
                                 ),
@@ -73,7 +70,7 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                         ),
                       ),
 
-                      const SizedBox(height: 25),
+                      const SizedBox(height: 15),
 
                       /// PREMIUM IMAGE
                       Center(
@@ -81,8 +78,8 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                           clipBehavior: Clip.none,
                           children: [
                             Container(
-                              width: 130,
-                              height: 130,
+                              width: 100,
+                              height: 100,
                               decoration: BoxDecoration(
                                 color: const Color(0xff39D11F),
                                 borderRadius: BorderRadius.circular(28),
@@ -91,7 +88,7 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                                     color: Colors.black.withOpacity(.08),
                                     blurRadius: 25,
                                     offset: const Offset(0, 10),
-                                  )
+                                  ),
                                 ],
                               ),
                               child: Center(
@@ -127,9 +124,17 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                         ),
                       ),
 
-                      const SizedBox(height: 35),
+                      const SizedBox(height: 15),
 
                       /// FEATURES
+                      ///
+                      _featureItem(
+                        context,
+                        icon: Assets.icons.unlimited.svg(),
+                        title: "Unlimited Smart Notification",
+                        subtitle:
+                            "Choose how and when you get notified about your gift.",
+                      ),
                       _featureItem(
                         context,
                         icon: Assets.icons.adfree.svg(),
@@ -152,14 +157,6 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                         title: "Premium Support",
                         subtitle:
                             "Enjoy fast, reliable support with priority access to our team whenever you need help.",
-                      ),
-
-                      _featureItem(
-                        context,
-                        icon: Assets.icons.unlimited.svg(),
-                        title: "Unlimited Smart Notification",
-                        subtitle:
-                            "Choose how and when you get notified about your gift.",
                       ),
 
                       _featureItem(
@@ -219,7 +216,9 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                   title: "Subscribe",
                   onTap: () {
                     HapticFeedback.heavyImpact();
-                    viewModel.createPaymentIntent(plan: isYearlySelected?"annual": "monthly");
+                    viewModel.createPaymentIntent(
+                      plan: isYearlySelected ? "annual" : "monthly",
+                    );
                   },
                 ),
 
@@ -251,19 +250,15 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
               children: [
                 Text(
                   title,
-                  style: GiftPoseTextStyle.medium(
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   subtitle,
                   style: GiftPoseTextStyle.small(
-                    color: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.color
-                        ?.withOpacity(.7),
+                    color: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.color?.withOpacity(.7),
                   ),
                 ),
               ],
@@ -289,18 +284,14 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
       child: Container(
         height: 170,
         decoration: BoxDecoration(
-    color:  Theme.of(context).scaffoldBackgroundColor,
+          color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(18),
           border: Border.all(
-            color:
-                selected ? const Color(0xff39D11F) : Colors.grey.shade300,
+            color: selected ? const Color(0xff39D11F) : Colors.grey.shade300,
             width: selected ? 2 : 1,
           ),
           boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(.03),
-              blurRadius: 15,
-            )
+            BoxShadow(color: Colors.black.withOpacity(.03), blurRadius: 15),
           ],
         ),
         child: Stack(
@@ -338,7 +329,7 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                       duration,
                       style: GiftPoseTextStyle.medium(
                         fontWeight: FontWeight.w400,
-                        fontSize: 18
+                        fontSize: 18,
                       ),
                     ),
 
@@ -348,9 +339,10 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                       Text(
                         oldPrice,
                         style: GiftPoseTextStyle.small(
-                          decoration: TextDecoration.lineThrough,      fontWeight: FontWeight.w400,
+                          decoration: TextDecoration.lineThrough,
+                          fontWeight: FontWeight.w400,
                           color: Colors.grey,
-                          fontSize: 14
+                          fontSize: 14,
                         ),
                       ),
 
@@ -362,7 +354,7 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                           style: GiftPoseTextStyle.small(
                             color: const Color(0xffC77C2A),
                             fontWeight: FontWeight.w400,
-                            fontSize: 14
+                            fontSize: 14,
                           ),
                         ),
                       ),
@@ -374,7 +366,7 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                       style: GiftPoseTextStyle.large(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).textTheme.bodyLarge?.color
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
 
@@ -382,9 +374,7 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                       const SizedBox(height: 8),
                       Text(
                         monthlyText,
-                        style: GiftPoseTextStyle.small(
-                          color: Colors.grey,
-                        ),
+                        style: GiftPoseTextStyle.small(color: Colors.grey),
                       ),
                     ],
                   ],

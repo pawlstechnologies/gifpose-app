@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:giftpose/utils/localization_provider.dart';
 
@@ -12,6 +13,7 @@ import 'package:giftpose/utils/widgets/Giftpose_basescafold.dart';
 import 'package:giftpose/utils/widgets/giftpose_button.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ConsentScreen extends StatefulWidget {
   ConsentScreen({super.key});
@@ -28,7 +30,24 @@ class _ConsentScreenState extends State<ConsentScreen>
 
   @override
   void initState() {
+    initFirebase();
     super.initState();
+  }
+
+  void initFirebase() async {
+    // Request Permissions
+    await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+  }
+
+  Future<void> _launchPrivacyPolicy() async {
+    final Uri url = Uri.parse('https://giftpose.com/privacy-policy');
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
   }
 
   @override
@@ -92,11 +111,15 @@ class _ConsentScreenState extends State<ConsentScreen>
                    
                         style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500,color: Theme.of(navigatorKey.currentContext!).textTheme.bodyMedium?.color),
                       ),
-                      Text("Privacy Policy Page".tr(context),
-                    textAlign: TextAlign.justify,
-              
-                    style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500,color: GiftPoseColors.primaryColor),
-                  ),
+                      XMargin(5),
+                      InkWell(
+                        onTap: _launchPrivacyPolicy,
+                        child: Text("Privacy Policy Page".tr(context),
+                          textAlign: TextAlign.justify,
+                    
+                          style: GiftPoseTextStyle.medium(fontWeight: FontWeight.w500,color: GiftPoseColors.primaryColor),
+                        ),
+                      ),
                  ],
                ),
               
