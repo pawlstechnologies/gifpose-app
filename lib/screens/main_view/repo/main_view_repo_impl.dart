@@ -451,4 +451,34 @@ try {
     }
   }
 
+  @override
+Future<CreateAlertListResponse> createAlertList({
+  required CreateAlertListRequest createAlertListRequest,
+}) async {
+  try {
+    final payload = jsonEncode(createAlertListRequest.toJson());
+    log('create Alert list request: $payload');
+    
+    final response = await networkProvider.call(
+      path: ApiRoutes.createAlerts, // Assuming this route exists
+      method: RequestMethod.post,
+      body: payload,
+    );
+    
+    log("create Alert list response: ${response?.data}");
+    return CreateAlertListResponse.fromJson(response?.data);
+  } on DioException catch (err) {
+    final errorMessage = Future.error(ApiError.fromDio(err));
+    if (kDebugMode) {
+      print(errorMessage);
+    }
+    throw err.response?.data["message"] ?? errorMessage;
+  } catch (err) {
+    if (kDebugMode) {
+      print(err);
+    }
+    throw err.toString();
+  }
+}
+
  }

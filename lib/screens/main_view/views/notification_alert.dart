@@ -111,41 +111,77 @@ class _NotificationAlertState extends State<NotificationAlert> {
             elevation: 6,
             borderRadius: BorderRadius.circular(12),
 
-            child: Container(
-              constraints: BoxConstraints(maxHeight: 250),
+            child: Consumer<DashboardViewmodel>(
+              builder: (context, vm, child) {
+                final contents = vm.searchPredictionResponse.data?.data.contents ?? [];
+                return Container(
+                  constraints: BoxConstraints(maxHeight: 250),
 
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                borderRadius: BorderRadius.circular(12),
-              ),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
 
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (contents.isNotEmpty)
+                        Expanded(
+                          child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            itemCount: contents.length,
 
-                itemCount: vm.searchPredictionResponse.data?.data. length ?? 0,
+                            itemBuilder: (context, index) {
+                              final item = contents[index];
 
-                itemBuilder: (context, index) {
-                  final item = vm.searchPredictionResponse.data?.data[index];
+                              return ListTile(
+                                title: Text(item.name),
 
-                  return ListTile(
-                    // title: Text(item? ?? ""),
-
-                    onTap: () {
-                      final categories =
-                          vm.fetchAlertCategoryResponse.data?.data.data ?? [];
-
-                      // _localCategorySearch(searchCtrl.text, categories);
-                      if (!vm.selectedKeywords.contains(item?.name)) {
-                        // vm.toggleKeyword(item?.name ?? "");
-                      }
-
-                      searchCtrl.text = item?.name ?? "";
-
-                      removeOverlay();
-                    },
-                  );
-                },
-              ),
+                                onTap: () {
+                                  if (!vm.selectedKeywords.contains(item.name)) {
+                                    vm.toggleKeyword(item.name);
+                                  }
+                                  removeOverlay();
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      if (searchCtrl.text.trim().isNotEmpty) ...[
+                        if (contents.isNotEmpty)
+                          Divider(height: 1, color: Theme.of(context).dividerColor),
+                        ListTile(
+                          leading: Icon(Icons.add, color: GiftPoseColors.primaryColor),
+                          title: Text(
+                            "Add keyword: \"${searchCtrl.text.trim()}\"",
+                            style: TextStyle(
+                              color: GiftPoseColors.primaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onTap: () {
+                            final keyword = searchCtrl.text.trim();
+                            if (keyword.isNotEmpty) {
+                              bool added = true;
+                              if (!vm.selectedKeywords.contains(keyword)) {
+                                added = vm.toggleKeyword(keyword);
+                              }
+                              if (added) {
+                                vm.createAlertList(
+                                  selectedCategory: vm.selectedCategory,
+                                  selectedKeywords: vm.selectedKeywords,
+                                );
+                              }
+                            }
+                            removeOverlay();
+                          },
+                        ),
+                      ],
+                    ],
+                  ),
+                );
+              },
             ),
           ),
         ),
@@ -271,27 +307,19 @@ class _NotificationAlertState extends State<NotificationAlert> {
                         prefixIcon: Assets.icons.search.svg(),
 
                         onChanged: (value) async {
-                          if (value.length < 1) {
+                          final trimmed = value.trim();
+                          if (trimmed.isEmpty) {
                             removeOverlay();
+                            return;
                           }
 
-                          final categories =
-                              vm.fetchAlertCategoryResponse.data?.data.data ??
-                              [];
-                    
+                          showOverlay(vm);
 
-                          if (value.trim().length > 2) {
+                          if (trimmed.length > 2) {
                             await vm.searchPrediction(
                               context: context,
-                              keywords: [value.trim()],
+                              keywords: [trimmed],
                             );
-
-                            if ((vm.searchPredictionResponse.data?.data ?? [])
-                                .isNotEmpty) {
-                              showOverlay(vm);
-                            }
-                          } else {
-                            removeOverlay();
                           }
                         },
                       ),

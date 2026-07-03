@@ -766,6 +766,10 @@ class DashboardViewmodel extends BaseViewmodel {
     }
   }
 
+
+
+
+
   int _selectedIndex = -1;
   int get selectedIndex => _selectedIndex;
 
@@ -831,6 +835,38 @@ class DashboardViewmodel extends BaseViewmodel {
       fetchReportListResponse = NetworkDataResponse.completed(response);
     } catch (e) {
       fetchReportListResponse = NetworkDataResponse.error(e.toString());
+    }
+  }
+
+    NetworkDataResponse<CreateAlertListResponse>
+  _createAlertListResponse = NetworkDataResponse.idle();
+
+  NetworkDataResponse<CreateAlertListResponse>
+  get createAlertListResponse => _createAlertListResponse;
+
+  set createAlertListResponse(
+    NetworkDataResponse<CreateAlertListResponse> value,
+  ) {
+    _createAlertListResponse = value;
+    notifyListeners();
+  }
+
+  Future<void> createAlertList({required List<String> selectedCategory, required List<String> selectedKeywords}) async {
+    try {
+      createAlertListResponse = NetworkDataResponse.loading("");
+      // await LoaderPage.show(navigatorKey.currentContext!);
+
+        final response = await mainViewRepo.createAlertList(
+          createAlertListRequest: CreateAlertListRequest(firebaseToken:  fcmToken ??"", deviceId: deviceId??"", categories: selectedCategory, keywords: selectedKeywords, status: "active")
+        );
+
+      // if (navigatorKey.currentContext!.mounted) {
+      //   Navigator.of(navigatorKey.currentContext!, rootNavigator: true).pop(); // Dismiss dialog
+      // }
+
+      createAlertListResponse = NetworkDataResponse.completed(response);
+    } catch (e) {
+      createAlertListResponse = NetworkDataResponse.error(e.toString());
     }
   }
 

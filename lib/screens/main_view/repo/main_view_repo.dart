@@ -46,6 +46,7 @@ abstract class MainViewRepo {
    Future<HideItemResponse> hideItem({
     required HideItemRequest  hideItemRequest,  required String id,
   });
+  
      Future<ReportListingResponse> reportListing({
     required ReportListingRequest  reportListingRequest,  required String id,
   });
@@ -62,5 +63,7 @@ abstract class MainViewRepo {
   Future<CreatePaymentIntentResponse> createPaymentIntent({
     required CreatePaymentIntentRequest  createPaymentIntentRequest,
   });
-
+ Future<CreateAlertListResponse> createAlertList({
+    required CreateAlertListRequest  createAlertListRequest,
+  });
 }

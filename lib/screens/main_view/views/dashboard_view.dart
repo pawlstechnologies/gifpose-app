@@ -99,18 +99,18 @@ class _DashboardViewState extends State<DashboardView> {
               ),
               child: ListView.builder(
                 padding: EdgeInsets.zero,
-                itemCount: vm.searchPredictionResponse.data?.data.length ?? 0,
+                itemCount: 0,
                 itemBuilder: (context, index) {
-                  final item = vm.searchPredictionResponse.data?.data[index];
+                  // final item = vm.searchPredictionResponse.data?.data[index];
 
                   return ListTile(
-                    title: Text(item?.name ?? ""),
+                    title: Text( ""),
                     onTap: () {
-                      if (!vm.selectedKeywords.contains(item?.name)) {
-                        vm.toggleKeyword(item?.name ?? "");
+                      if (!vm.selectedKeywords.contains("d")) {
+                        // vm.toggleKeyword(item?.name ?? "");
                       }
 
-                      searchCtrl.text = item?.name ?? "";
+                      // searchCtrl.text = item?.name ?? "";
 
                       removeOverlay();
                     },
