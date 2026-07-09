@@ -331,7 +331,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
                   /// SELECTED KEYWORDS
                   if (vm.selectedKeywords.isNotEmpty)
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 5),
 
                       child: Wrap(
                         spacing: 8,
@@ -445,15 +445,20 @@ onTap: () {
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: GiftPoseButton(
                       title: "Submit",
-                      onTap: () {
+                      onTap: () async {
                        HapticFeedback.heavyImpact();
 
-                        vm.createNotificationAlerts(
+                        await vm.createNotificationAlerts(
                           context: context,
                           categories: vm.selectedCategory,
                           keywords: vm.selectedKeywords,
                           status: "active",
                         );
+                        
+                        vm.selectedCategory.clear();
+                        vm.selectedKeywords.clear();
+                        searchCtrl.clear();
+                        setState(() {});
                       },
                     ),
                   ),

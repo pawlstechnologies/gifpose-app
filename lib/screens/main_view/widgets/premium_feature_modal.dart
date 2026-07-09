@@ -78,7 +78,7 @@ class PremiumFeaturesModal extends StatelessWidget {
           
           // Pricing
           Text(
-            "Only \$4.99".tr(context),
+            "Only \$0.99".tr(context),
             style: GiftPoseTextStyle.medium(
               fontWeight: FontWeight.w600,
               color: Colors.blueGrey,

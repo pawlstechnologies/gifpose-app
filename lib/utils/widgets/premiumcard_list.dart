@@ -70,10 +70,14 @@ class PremiumProCardListview extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildCheckRow("Ad-Free Browsing"),
-                  SizedBox(height: 6.h),
+                  _buildCheckRow("Unlimited Smart Notification"),
+                  SizedBox(height: 2.h),
                   _buildCheckRow("Supporter Badge"),
-                  SizedBox(height: 12.h),
+                        SizedBox(height: 2.h),
+                    _buildCheckRow("Unlimited Smart Notification"),
+       
+               
+                  SizedBox(height: 5.h),
                   
                   /// Get Premium Button
                   Container(

@@ -20,9 +20,9 @@ class VerifyEmailAddressResponse {
     });
 
     factory VerifyEmailAddressResponse.fromJson(Map<String, dynamic> json) => VerifyEmailAddressResponse(
-        status: json["status"],
-        message: json["message"],
-        data: Data.fromJson(json["data"]),
+        status: json["status"] ?? false,
+        message: json["message"] ?? "",
+        data: Data.fromJson(json["data"] ?? json),
     );
 
     Map<String, dynamic> toJson() => {
@@ -40,7 +40,7 @@ class Data {
     });
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
-        message: json["message"],
+        message: json["message"] ?? "",
     );
 
     Map<String, dynamic> toJson() => {

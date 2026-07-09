@@ -7,6 +7,7 @@ import 'package:giftpose/utils/widgets/Giftpose_basescafold.dart';
 import 'package:giftpose/utils/widgets/giftpose_button.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
 import 'package:provider/provider.dart';
+import 'package:giftpose/utils/network_data_response.dart';
 
 class PremiumSubscriptionView extends StatefulWidget {
   const PremiumSubscriptionView({super.key});
@@ -214,6 +215,7 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                 /// SUBSCRIBE BUTTON
                 GiftPoseButton(
                   title: "Subscribe",
+                  isLoading: viewModel.createPaymentIntentResponse.status == Status.LOADING,
                   onTap: () {
                     HapticFeedback.heavyImpact();
                     viewModel.createPaymentIntent(

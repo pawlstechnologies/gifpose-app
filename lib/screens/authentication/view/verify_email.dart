@@ -50,7 +50,7 @@ class VerifyEmailScreen extends StatelessWidget {
                   dotColor: Theme.of(context).textTheme.bodyLarge!.color,
                   emptyDotColor: Theme.of(context).textTheme.bodyMedium!.color,
                 ),
-
+YMargin(30),
                 GiftPoseButton(
                   title: "Send Code".tr(context),
                   onTap: () {

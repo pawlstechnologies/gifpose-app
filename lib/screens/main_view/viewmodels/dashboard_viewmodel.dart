@@ -921,6 +921,16 @@ class DashboardViewmodel extends BaseViewmodel {
 
       createPaymentIntentResponse = NetworkDataResponse.loading("");
 
+      if (deviceId == null || deviceId!.isEmpty) {
+        String? deviceIdFromDb = await secureStorageService.read(
+          key: StorageKeys.deviceId,
+        );
+        deviceId = deviceIdFromDb;
+      }
+      if (deviceId == null || deviceId!.isEmpty) {
+        await getDeviceId();
+      }
+
       final response = await mainViewRepo.createPaymentIntent(
         createPaymentIntentRequest: CreatePaymentIntentRequest(
           deviceId: deviceId ?? "",
@@ -941,6 +951,11 @@ class DashboardViewmodel extends BaseViewmodel {
 
       if (clientSecret.isEmpty) {
         print("🔴 ERROR: Client secret is EMPTY");
+        createPaymentIntentResponse = NetworkDataResponse.error("Client secret is empty");
+        CustomToast.show(
+          context: navigatorKey.currentContext!,
+          message: "Unable to initialize payment details. Please try again.",
+        );
         return;
       }
 
@@ -961,10 +976,23 @@ class DashboardViewmodel extends BaseViewmodel {
         );
 
         print("🟢 STEP 5: PAYMENT SHEET INITIALIZED");
+      } on StripeException catch (e) {
+        print("🔴 StripeException during initPaymentSheet");
+        createPaymentIntentResponse = NetworkDataResponse.error(e.error.localizedMessage ?? e.toString());
+        CustomToast.show(
+          context: navigatorKey.currentContext!,
+          message: e.error.localizedMessage ?? "Stripe initialization failed.",
+        );
+        return;
       } catch (e, s) {
         print("🔴 ERROR DURING initPaymentSheet");
         print(e);
         print(s);
+        createPaymentIntentResponse = NetworkDataResponse.error(e.toString());
+        CustomToast.show(
+          context: navigatorKey.currentContext!,
+          message: "Failed to load payment options.",
+        );
         return;
       }
 
@@ -973,14 +1001,32 @@ class DashboardViewmodel extends BaseViewmodel {
       try {
         await Stripe.instance.presentPaymentSheet();
         print("🟢 STEP 7: PAYMENT SHEET CLOSED (SUCCESS)");
+        createPaymentIntentResponse = NetworkDataResponse.completed(response);
         Navigator.pushNamed(
           navigatorKey.currentContext!,
           AppRoutes.createAccountPage,
         );
+      } on StripeException catch (e) {
+        print("🔴 StripeException during presentPaymentSheet");
+        if (e.error.code == FailureCode.Canceled) {
+          print("User canceled payment");
+          createPaymentIntentResponse = NetworkDataResponse.idle();
+        } else {
+          createPaymentIntentResponse = NetworkDataResponse.error(e.error.localizedMessage ?? e.toString());
+          CustomToast.show(
+            context: navigatorKey.currentContext!,
+            message: e.error.localizedMessage ?? "Payment failed.",
+          );
+        }
       } catch (e, s) {
         print("🔴 ERROR DURING presentPaymentSheet");
         print(e);
         print(s);
+        createPaymentIntentResponse = NetworkDataResponse.error(e.toString());
+        CustomToast.show(
+          context: navigatorKey.currentContext!,
+          message: "An unexpected error occurred during payment.",
+        );
       }
 
       print("🟡 STEP 8: DONE");
@@ -989,7 +1035,15 @@ class DashboardViewmodel extends BaseViewmodel {
       print(e);
       print(s);
 
-      createPaymentIntentResponse = NetworkDataResponse.error(e.toString());
+      String errorMsg = e.toString();
+      if (e is Future) {
+        errorMsg = "Connection issue. Please check your network and try again.";
+      }
+      createPaymentIntentResponse = NetworkDataResponse.error(errorMsg);
+      CustomToast.show(
+        context: navigatorKey.currentContext!,
+        message: errorMsg,
+      );
     }
   }
 

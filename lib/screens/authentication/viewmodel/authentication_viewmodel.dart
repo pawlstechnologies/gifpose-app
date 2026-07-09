@@ -220,12 +220,12 @@ createAccountResponse = NetworkDataResponse.error(e.toString());
   }
 
 
-  Future<void> verifyEmailAddress() async {
+  Future<void>verifyEmailAddress() async {
     try {
       verifyEmailAddressResponse = NetworkDataResponse.loading("");
       LoaderPage.show(navigatorKey.currentContext!);
 
-      final response = await authenticationRepo.verifyEmailAddress(verifyEmailAddressRequest: VerifyEmailAddressRequest(email: "ray@mailinator.com", code: otpCtrl.text.trim()));
+      final response = await authenticationRepo.verifyEmailAddress(verifyEmailAddressRequest: VerifyEmailAddressRequest(email: emailCtrl.text.trim(), code: otpCtrl.text.trim()));
 
      
       verifyEmailAddressResponse = NetworkDataResponse.completed(response);

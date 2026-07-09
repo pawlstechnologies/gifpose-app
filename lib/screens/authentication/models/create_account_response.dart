@@ -22,7 +22,7 @@ class CreateAccountResponse {
     factory CreateAccountResponse.fromJson(Map<String, dynamic> json) => CreateAccountResponse(
         status: json["status"],
         message: json["message"],
-        data: Data.fromJson(json["data"]),
+        data: Data.fromJson(json["data"] ?? json),
     );
 
     Map<String, dynamic> toJson() => {
@@ -46,10 +46,10 @@ class Data {
     });
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
-        userId: json["userId"],
-        fullname: json["fullname"],
-        email: json["email"],
-        username: json["username"],
+        userId: json["userId"] ?? "",
+        fullname: json["fullname"] ?? "",
+        email: json["email"] ?? "",
+        username: json["username"] ?? "",
     );
 
     Map<String, dynamic> toJson() => {

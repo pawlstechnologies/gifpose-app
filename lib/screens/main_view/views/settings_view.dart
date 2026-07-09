@@ -70,23 +70,31 @@ class _SettingsViewState extends State<SettingsView> {
                       ),
                     ),
 
-                    InkWell(
-                      onTap: () {
-                        HapticFeedback.heavyImpact();
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
+                    PopupMenuButton<String>(
+                      icon: const Icon(Icons.menu),
+                      onSelected: (value) {
+                        if (value == 'delete') {
+                          HapticFeedback.heavyImpact();
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              ),
                             ),
-                          ),
-                          builder: (_) => SettingsBottomsheet(),
-                        );
+                            builder: (_) => SettingsBottomsheet(),
+                          );
+                        }
                       },
-                      child: Icon(Icons.menu),
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          value: 'delete',
+                          child: Text("Delete Account".tr(context)),
+                        ),
+                      ],
                     ),
                   ],
                 ),

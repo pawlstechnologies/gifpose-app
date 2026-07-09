@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 import 'package:dio/dio.dart';
 import 'package:giftpose/screens/authentication/models/create_account_request.dart';
@@ -14,15 +13,10 @@ import 'package:giftpose/screens/authentication/models/resend_otp_response.dart'
 import 'package:giftpose/screens/authentication/models/reset_password_request.dart';
 import 'package:giftpose/screens/authentication/models/reset_password_response.dart';
 import 'package:giftpose/screens/authentication/models/sigin_request.dart';
-import 'package:giftpose/screens/authentication/models/signin_response.dart';
+import 'package:giftpose/screens/authentication/models/signin_response.dart' hide Data;
 import 'package:giftpose/screens/authentication/models/verify_email_request.dart';
-import 'package:giftpose/screens/authentication/models/verify_email_response.dart';
+import 'package:giftpose/screens/authentication/models/verify_email_response.dart' hide Data;
 import 'package:giftpose/screens/authentication/repo/authentication_repo.dart';
-import 'package:giftpose/screens/onboarding/models/fetch_itemsnearme_response.dart';
-import 'package:giftpose/screens/onboarding/models/fetchitems_byid_response.dart';
-import 'package:giftpose/screens/onboarding/models/register_location_request.dart';
-import 'package:giftpose/screens/onboarding/models/register_location_response.dart';
-import 'package:giftpose/screens/onboarding/repo/onboarding_repo.dart';
 import 'package:giftpose/services/network_services/dio_core/dio_client.dart';
 import 'package:giftpose/services/network_services/dio_core/dio_error.dart';
 import 'package:giftpose/utils/constants/api_routes.dart';
@@ -52,7 +46,14 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
       );
       log("Create account response: ${response?.data}");
      return CreateAccountResponse.fromJson(response?.data);
-      } on DioException catch (err) {
+      } on ApiError catch (err) {
+      if (kDebugMode) print(err);
+      return CreateAccountResponse(
+        status: false,
+        message: err.errorDescription ?? "Something went wrong",
+        data: Data(userId: "", fullname: "", email: "", username: ""),
+      );
+    } on DioException catch (err) {
       log("API error response: ${err.response?.data}");
       String? errorMessage;
       if (err.response?.data is Map) {
@@ -66,10 +67,18 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
       errorMessage ??= ApiError.fromDio(err).errorDescription ?? "Something went wrong";
       
       if (kDebugMode) print(errorMessage);
-      throw errorMessage;
+      return CreateAccountResponse(
+        status: false,
+        message: errorMessage,
+        data: Data(userId: "", fullname: "", email: "", username: ""),
+      );
     } catch (err) {
       if (kDebugMode) print(err);
-      throw "An unexpected error occurred.";
+      return CreateAccountResponse(
+        status: false,
+        message: err.toString(),
+        data: Data(userId: "", fullname: "", email: "", username: ""),
+      );
     }
   }
 
@@ -115,6 +124,7 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
     }
   }
 
+  @override
   Future<ResetPasswordResponse> resetPassword({ required ResetPasswordRequest resetPasswordRequest}) async {
     try {
       final payload = jsonEncode(resetPasswordRequest.toJson());
@@ -150,6 +160,7 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
     }
   }
     
+@override     
 Future<ForgotPasswordResponse> forgotPassword({ required ForgotPasswordRequest forgotPasswordRequest}) 
 async {
     try {
@@ -186,6 +197,7 @@ async {
     }
   }
 
+@override
 Future<VerifyEmailAddressResponse>   verifyEmailAddress({ required VerifyEmailAddressRequest verifyEmailAddressRequest})async {
     try {
       final payload = jsonEncode(verifyEmailAddressRequest.toJson());
@@ -222,6 +234,7 @@ Future<VerifyEmailAddressResponse>   verifyEmailAddress({ required VerifyEmailAd
   }
     
 
+    @override
     Future<ResendOtpResponse> resendOtp({ required ResendOtpRequest resendOtpRequest})async {
     try {
       final payload = jsonEncode(resendOtpRequest.toJson());

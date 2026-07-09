@@ -178,11 +178,11 @@ try {
     
      return CreatePaymentIntentResponse.fromJson(response?.data);
       } on DioException catch (err) {
-      final errorMessage = Future.error(ApiError.fromDio(err));
+      final apiError = ApiError.fromDio(err);
       if (kDebugMode) {
-        print(errorMessage);
+        print(apiError);
       }
-      throw err.response?.data["message"] ?? errorMessage;
+      throw err.response?.data["message"] ?? apiError;
     } catch (err) {
       if (kDebugMode) {
         print(err);
