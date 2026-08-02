@@ -45,14 +45,26 @@ class _NotificationAlertState extends State<NotificationAlert> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final vm = context.read<DashboardViewmodel>();
 
+      await vm.loadCachedAlertsData();
+
+      final initialData =
+          vm.fetchAlertCategoryResponse.data?.data.data ?? [];
+      if (initialData.isNotEmpty && mounted) {
+        setState(() {
+          filteredCategories = initialData;
+        });
+      }
+
       await vm.fetchAlertCategory();
+      await vm.fetchAlertList();
 
-
-
-      setState(() {
-        filteredCategories =
-            vm.fetchAlertCategoryResponse.data?.data.data ?? [];
-      });
+      final updatedData =
+          vm.fetchAlertCategoryResponse.data?.data.data ?? [];
+      if (updatedData.isNotEmpty && mounted) {
+        setState(() {
+          filteredCategories = updatedData;
+        });
+      }
     });
   }
 
@@ -140,9 +152,19 @@ class _NotificationAlertState extends State<NotificationAlert> {
 
                                 onTap: () {
                                   if (!vm.selectedKeywords.contains(item.name)) {
-                                    vm.toggleKeyword(item.name);
+                                    final added = vm.toggleKeyword(item.name);
+                                    searchCtrl.clear();
+                                    removeOverlay();
+                                    if (added) {
+                                      vm.createAlertList(
+                                        selectedCategory: vm.selectedCategory,
+                                        selectedKeywords: vm.selectedKeywords,
+                                      );
+                                    }
+                                  } else {
+                                    searchCtrl.clear();
+                                    removeOverlay();
                                   }
-                                  removeOverlay();
                                 },
                               );
                             },
@@ -167,14 +189,18 @@ class _NotificationAlertState extends State<NotificationAlert> {
                               if (!vm.selectedKeywords.contains(keyword)) {
                                 added = vm.toggleKeyword(keyword);
                               }
+                              searchCtrl.clear();
+                              removeOverlay();
                               if (added) {
                                 vm.createAlertList(
                                   selectedCategory: vm.selectedCategory,
                                   selectedKeywords: vm.selectedKeywords,
                                 );
                               }
+                            } else {
+                              searchCtrl.clear();
+                              removeOverlay();
                             }
-                            removeOverlay();
                           },
                         ),
                       ],
@@ -239,12 +265,15 @@ class _NotificationAlertState extends State<NotificationAlert> {
             return RefreshIndicator(
               onRefresh: () async {
                 await vm.fetchAlertCategory();
+                await vm.fetchAlertList();
 
-                setState(() {
-
-                  filteredCategories =
-                      vm.fetchAlertCategoryResponse.data?.data.data ?? [];
-                });
+                final updatedCategories =
+                    vm.fetchAlertCategoryResponse.data?.data.data ?? [];
+                if (updatedCategories.isNotEmpty && mounted) {
+                  setState(() {
+                    filteredCategories = updatedCategories;
+                  });
+                }
               },
 
 
@@ -339,22 +368,13 @@ class _NotificationAlertState extends State<NotificationAlert> {
 
                         children: vm.selectedKeywords.map((keyword) {
             return InkWell(
-onTap: () {
-  // Capture the boolean here!
-  final bool canAdd = vm.toggleKeyword(keyword);
-  
-  print("UI RECEIVED: $canAdd"); // If you don't see this, this code isn't running
-
-  if (!canAdd) {
-    print("TRIGGERING MODAL");
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => const PremiumFeaturesModal(),
-    );
-  }
-},
+              onTap: () {
+                vm.toggleKeyword(keyword);
+                vm.createAlertList(
+                  selectedCategory: vm.selectedCategory,
+                  selectedKeywords: vm.selectedKeywords,
+                );
+              },
 
 
                             child: Container(
@@ -407,6 +427,13 @@ onTap: () {
                         ),
                         XMargin(20),
                         Assets.icons.line.svg(),
+                          XMargin(20),
+                         Text("Keywords".tr(context),
+                          style: GiftPoseTextStyle.normal(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -455,10 +482,11 @@ onTap: () {
                           status: "active",
                         );
                         
-                        vm.selectedCategory.clear();
-                        vm.selectedKeywords.clear();
+                        await vm.fetchAlertList();
                         searchCtrl.clear();
-                        setState(() {});
+                        if (mounted) {
+                          setState(() {});
+                        }
                       },
                     ),
                   ),
@@ -479,14 +507,18 @@ onTap: () {
     List categories,
     bool isLoading,
   ) {
-    if (isLoading && categories.isEmpty) {
+    final displayCategories = categories.isNotEmpty
+        ? categories
+        : (vm.fetchAlertCategoryResponse.data?.data.data ?? []);
+
+    if (isLoading && displayCategories.isEmpty) {
       return Center(child: CircularProgressIndicator());
     }
 
     return ListView.builder(
-      itemCount: categories.length,
+      itemCount: displayCategories.length,
       itemBuilder: (context, index) {
-        final optionsCat = categories[index];
+        final optionsCat = displayCategories[index];
 
         return GestureDetector(
           onTap: () {
@@ -583,7 +615,15 @@ onTap: () {
 
                   return GestureDetector(
                     onTap: () {
-                      vm.toggleKeyword(content.name ?? "".tr(context));
+                      if (content.name != null) {
+                        final added = vm.toggleKeyword(content.name!);
+                        if (added) {
+                          vm.createAlertList(
+                            selectedCategory: vm.selectedCategory,
+                            selectedKeywords: vm.selectedKeywords,
+                          );
+                        }
+                      }
                     },
 
                     child: Container(
@@ -593,10 +633,14 @@ onTap: () {
                       ),
 
                       decoration: BoxDecoration(
-                        color: Theme.of(context).scaffoldBackgroundColor,
+                        color: isSelected
+                            ? GiftPoseColors.greenColor
+                            : Theme.of(context).scaffoldBackgroundColor,
                         borderRadius: BorderRadius.circular(32),
                         border: Border.all(
-                          color: Theme.of(context).dividerColor,
+                          color: isSelected
+                              ? GiftPoseColors.primaryColor
+                              : Theme.of(context).dividerColor,
                         ),
                       ),
 
@@ -604,7 +648,7 @@ onTap: () {
                         content.name ?? "",
                         style: GiftPoseTextStyle.medium(
                           color: isSelected
-                              ? Theme.of(context).textTheme.bodyMedium?.color
+                              ? GiftPoseColors.primaryColor
                               : Theme.of(context).textTheme.bodyLarge?.color,
                         ),
                       ),

@@ -18,6 +18,7 @@ static const notifications = "/notifications/{deviceId}";
 static const alertSearchPredictionList = "/categories/search";
   static const globalSearch = "/item/{deviceId}/search";
     static const createPaymentIntent = "/subscription/create";
+    static const currentSubscription = "/subscription/current";
       static const getReportList = "/item/report-options";
 
 
@@ -32,6 +33,7 @@ static const login = "/auth/login";
 static const resendCode = "/auth/resend-code";
 static const forgotPassword = "/auth/forgot-password";
 static const resetPassword = "/auth/reset-password";
+static const userMe = "/user/me";
 static const analyseImage = "/item/analyse-image";
 static const postItem = "/item/post";
 

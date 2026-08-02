@@ -14,6 +14,7 @@ import 'package:giftpose/screens/authentication/models/reset_password_request.da
 import 'package:giftpose/screens/authentication/models/reset_password_response.dart';
 import 'package:giftpose/screens/authentication/models/sigin_request.dart';
 import 'package:giftpose/screens/authentication/models/signin_response.dart' hide Data;
+import 'package:giftpose/screens/authentication/models/user_me_response.dart';
 import 'package:giftpose/screens/authentication/models/verify_email_request.dart';
 import 'package:giftpose/screens/authentication/models/verify_email_response.dart' hide Data;
 import 'package:giftpose/screens/authentication/repo/authentication_repo.dart';
@@ -118,8 +119,11 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
       
       if (kDebugMode) print(errorMessage);
       throw Exception(errorMessage);
-    } catch (err) {
-      if (kDebugMode) print(err);
+    } catch (err, stack) {
+      if (kDebugMode) {
+        print("ERROR IN SIGNIN: $err");
+        print("STACK TRACE: $stack");
+      }
       throw Exception(err.toString());
     }
   }
@@ -270,5 +274,51 @@ Future<VerifyEmailAddressResponse>   verifyEmailAddress({ required VerifyEmailAd
     }
   }
 
+  @override
+  Future<UserMeResponse> getMe() async {
+    try {
+      print("Sending GET request to ApiRoutes.userMe (${ApiRoutes.userMe})...");
+      final response = await networkProvider.call(
+        path: ApiRoutes.userMe,
+        method: RequestMethod.get,
+      );
+      print("GetMe API Status Code: ${response?.statusCode}");
+      print("GetMe API Response Data: ${response?.data}");
+      log("Get me response: ${response?.data}");
+      return UserMeResponse.fromJson(response?.data);
+    } on ApiError catch (err) {
+      print("GetMe ApiError: ${err.errorDescription}");
+      return UserMeResponse(
+        status: false,
+        message: err.errorDescription ?? "Something went wrong",
+      );
+    } on DioException catch (err) {
+      print("GetMe DioException status: ${err.response?.statusCode}, data: ${err.response?.data}, message: ${err.message}");
+      log("API error response: ${err.response?.data}");
+      String? errorMessage;
+      if (err.response?.data is Map) {
+        errorMessage = err.response?.data["message"];
+      }
+      return UserMeResponse(
+        status: false,
+        message: errorMessage ?? err.message ?? "Something went wrong",
+      );
+    } catch (e) {
+      print("GetMe Unexpected Exception: $e");
+      return UserMeResponse(status: false, message: e.toString());
+    }
+  }
 
- }
+  @override
+  Future<void> logout() async {
+    try {
+      final response = await networkProvider.call(
+        path: ApiRoutes.logOut,
+        method: RequestMethod.post,
+      );
+      log("Logout API response: ${response?.data}");
+    } catch (err) {
+      if (kDebugMode) print("Logout error: $err");
+    }
+  }
+}

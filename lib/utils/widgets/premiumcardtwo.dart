@@ -50,7 +50,7 @@ class PremiumProCardGridview extends StatelessWidget {
             const SizedBox(height: 5),
       
             /// Features
-            _feature("Unlimited Smart Notification"),
+            _feature("Unlimited Smart Notifications"),
             const SizedBox(height: 5),
             _feature("Ad-Free Browsing"),
             const SizedBox(height: 5),

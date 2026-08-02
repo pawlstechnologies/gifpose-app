@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:giftpose/screens/authentication/viewmodel/authentication_viewmodel.dart';
 import 'package:giftpose/utils/localization_provider.dart';
 
@@ -23,14 +24,55 @@ final formKey = GlobalKey<FormState>();
   Widget build(BuildContext context) {
     return Consumer<AuthenticationViewModel>(
       builder: (context, vm, child) {
-        return GiftPoseBaseScaffold(
-          showAppBar: false,
-          hasGradient: true,
+        final canPop = Navigator.canPop(context);
 
-          builder: (size) {
-            return Column(
-              children: [
-                YMargin(40),
+        return PopScope(
+          canPop: canPop,
+          onPopInvokedWithResult: (didPop, result) {
+            if (!didPop) {
+              Navigator.pushReplacementNamed(
+                context,
+                AppRoutes.dashboard,
+              );
+            }
+          },
+          child: GiftPoseBaseScaffold(
+            showAppBar: false,
+            hasGradient: true,
+
+            builder: (size) {
+              return Column(
+                children: [
+                  YMargin(16),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: InkWell(
+                      onTap: () {
+                        HapticFeedback.heavyImpact();
+                        if (Navigator.canPop(context)) {
+                          Navigator.pop(context);
+                        } else {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            AppRoutes.dashboard,
+                          );
+                        }
+                      },
+                    child: SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: Center(
+                        child: Assets.icons.back.svg(
+                          colorFilter: ColorFilter.mode(
+                            Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                YMargin(16),
                 Assets.images.logo.image(height: 40, width: 40),
                 YMargin(26),
                 Text(
@@ -42,23 +84,16 @@ final formKey = GlobalKey<FormState>();
                 YMargin(26),
 
                 GiftPoseTextField(
-                  controller: vm.passwordCtrl,
-                  hintText: "Enter your password".tr(context),
-                  fieldName: "Password".tr(context),
-                  obscureText: vm.obscureText,
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      vm.updateObscureText();
-                    },
-                    icon: Icon(
-                      vm.obscureText ? Icons.visibility : Icons.visibility_off,
-                    ),
-                  ),
+                  controller: vm.emailCtrl,
+                  hintText: "Enter your email".tr(context),
+                  fieldName: "Email".tr(context),
+        
+                 
                 ),
                 GiftPoseTextField(
-                  controller: vm.confirmPasswordCtrl,
-                  hintText: "Enter your password".tr(context),
-                  fieldName: "Confirm Password".tr(context),
+                  controller: vm.passwordCtrl,
+                  hintText: "password".tr(context),
+                  fieldName: "Password".tr(context),
                   obscureText: vm.obscureText2,
                   suffixIcon: IconButton(
                     onPressed: () {
@@ -134,31 +169,41 @@ final formKey = GlobalKey<FormState>();
                   ),
                 ),
                 YMargin(35),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Already have an account?".tr(context),
-                      style: GiftPoseTextStyle.medium(
-                        color: Theme.of(context).textTheme.bodyMedium!.color,
-                        fontSize: 14,
+                InkWell(
+                  onTap: () {
+                    HapticFeedback.heavyImpact();
+                    Navigator.pushNamed(
+                      context,
+                      AppRoutes.createAccountPage,
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Don't have an account?".tr(context),
+                        style: GiftPoseTextStyle.medium(
+                          color: Theme.of(context).textTheme.bodyMedium!.color,
+                          fontSize: 14,
+                        ),
                       ),
-                    ),
-                    XMargin(10),
-                    Text(
-                      "Sign Up".tr(context),
-                      style: GiftPoseTextStyle.medium(
-                        fontSize: 14,
-                        color: GiftPoseColors.primaryColor,
+                      XMargin(8),
+                      Text(
+                        "Sign Up".tr(context),
+                        style: GiftPoseTextStyle.medium(
+                          fontSize: 14,
+                          color: GiftPoseColors.primaryColor,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             );
           },
-        );
-      },
-    );
+        ),
+      );
+    },
+  );
   }
 }

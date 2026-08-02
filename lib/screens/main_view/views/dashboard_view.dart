@@ -53,6 +53,9 @@ class _DashboardViewState extends State<DashboardView> {
       Future.microtask(() => context.read<DashboardViewmodel>().getDeviceId());
       Future.microtask(() => context.read<DashboardViewmodel>().getFcmToken());
       Future.microtask(
+        () => context.read<DashboardViewmodel>().checkUserSession(context),
+      );
+      Future.microtask(
         () => context.read<DashboardViewmodel>().fetchAlertList(),
       );
 
@@ -327,7 +330,7 @@ class _DashboardViewState extends State<DashboardView> {
                                   .data
                                   ?.userLocation
                                   .postcode ??
-                              "S1 2AH",
+                              "Update Location",
                           textAlign: TextAlign.center,
                           style: GiftPoseTextStyle.medium(
                             fontWeight: FontWeight.w500,
@@ -492,18 +495,26 @@ class _DashboardViewState extends State<DashboardView> {
       );
     }
 
+    final defaultLocation = UserLocation(
+      deviceId: viewModel.deviceId ?? "",
+      postcode: "Update Location",
+      city: "",
+      setMile: 15,
+    );
+    final userLocation = viewModel.fetchItemsNearMeResponse.data?.userLocation ?? defaultLocation;
+
     // Show grid or list with pagination
     if (isList) {
       return ListViewWidget(
         scrollController: _scrollController,
-        userLocation: viewModel.fetchItemsNearMeResponse.data!.userLocation,
+        userLocation: userLocation,
         hasReachedMax: viewModel.hasReachedMax,
         isLoadingMore: viewModel.isLoadingMore,
         // items: displayItems,
       );
     } else {
       return CategoryGrid(
-        userLocation: viewModel.fetchItemsNearMeResponse.data!.userLocation,
+        userLocation: userLocation,
         scrollController: _scrollController,
         items: displayItems,
         hasReachedMax: viewModel.hasReachedMax,

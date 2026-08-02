@@ -19,6 +19,8 @@ import 'package:giftpose/screens/authentication/models/verify_email_request.dart
 import 'package:giftpose/screens/authentication/models/verify_email_response.dart';
 import 'package:giftpose/screens/authentication/repo/authentication_repo.dart';
 import 'package:giftpose/screens/main_view/viewmodels/base_viewmodel.dart';
+import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
+import 'package:provider/provider.dart';
 import 'package:giftpose/screens/onboarding/models/register_location_request.dart';
 import 'package:giftpose/screens/onboarding/models/register_location_response.dart';
 import 'package:giftpose/screens/onboarding/repo/onboarding_repo.dart';
@@ -181,10 +183,24 @@ createAccountResponse = NetworkDataResponse.error(e.toString());
       Navigator.pop(navigatorKey.currentContext!);
 
       if (signInResponse.data?.status == true) {
-        Navigator.pushNamed(navigatorKey.currentContext!, AppRoutes.dashboard);
-              secureStorageService.write(
+        await secureStorageService.write(
           key: StorageKeys.accessToken,
-          value: "response.data.token");
+          value: response.data.accessToken ?? "",
+        );
+        try {
+          final context = navigatorKey.currentContext!;
+          final dashVM = context.read<DashboardViewmodel>();
+          dashVM.setCurrentUserFromSignIn(response.data.user);
+          dashVM.checkCurrentUser();
+          dashVM.handlePostLoginSubscription();
+        } catch (e) {
+          print("Error triggering post-login subscription update: $e");
+        }
+        Navigator.pushNamedAndRemoveUntil(
+          navigatorKey.currentContext!,
+          AppRoutes.dashboard,
+          (route) => false,
+        );
       } else {
         CustomToast.show(
           context: navigatorKey.currentContext!,
@@ -396,34 +412,56 @@ createAccountResponse = NetworkDataResponse.error(e.toString());
 
   // fetch device details
   Future<void> getDeviceId() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    late IosDeviceInfo iosInfo;
-    ClientInformation info = await ClientInformation.fetch();
-    log('deviceName ${info.deviceName}');
-    log('deviceId ${info.deviceId}');
-    late AndroidDeviceInfo androidInfo;
-    if (Platform.isAndroid) {
-      // await DeviceImei().getDeviceImei().then((value) {
-      //   imel = "214356743";
+    try {
+      String? dbDeviceId = await secureStorageService.read(
+        key: StorageKeys.deviceId,
+      );
+      if (dbDeviceId != null && dbDeviceId.isNotEmpty) {
+        deviceId = dbDeviceId;
+        log('Loaded deviceID from db: $deviceId');
+        return;
+      }
 
-      // });
-      print(imel);
-      androidInfo = await deviceInfo.androidInfo;
-      // imel = "21345t5y65";
-      deviceId = info.deviceId;
-      secureStorageService.write(key: StorageKeys.deviceId, value: deviceId);
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      if (Platform.isAndroid) {
+        try {
+          AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+          deviceId = androidInfo.id;
+        } catch (e) {
+          log('Error getting androidInfo: $e');
+        }
+      } else if (Platform.isIOS) {
+        try {
+          IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+          deviceId = iosInfo.identifierForVendor;
+        } catch (e) {
+          log('Error getting iosInfo: $e');
+        }
+      }
 
-      log('deviceID: $deviceId');
-    } else if (Platform.isIOS) {
-      // await DeviceImei().getDeviceImei().then((value) {
-      //   imel = value;
-      // });
-      iosInfo = await deviceInfo.iosInfo;
+      if (deviceId == null || deviceId!.isEmpty) {
+        try {
+          ClientInformation info = await ClientInformation.fetch();
+          if (info.deviceId.isNotEmpty) {
+            deviceId = info.deviceId;
+          }
+        } catch (e) {
+          log('Error fetching ClientInformation: $e');
+        }
+      }
 
-      deviceId = iosInfo.identifierForVendor;
-      secureStorageService.write(key: StorageKeys.deviceId, value: deviceId);
+      if (deviceId == null || deviceId!.isEmpty) {
+        deviceId = "dev_${DateTime.now().millisecondsSinceEpoch}";
+      }
 
-      log('deviceID ios : $deviceId');
+      await secureStorageService.write(
+        key: StorageKeys.deviceId,
+        value: deviceId!,
+      );
+      log('Resolved deviceID: $deviceId');
+    } catch (e) {
+      log('Error resolving deviceId: $e');
+      deviceId ??= "dev_${DateTime.now().millisecondsSinceEpoch}";
     }
   }
 }

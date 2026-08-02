@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:giftpose/utils/localization_provider.dart';
+import 'package:giftpose/utils/network_data_response.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -228,8 +229,10 @@ class ListViewWidget extends StatelessWidget {
           return Center(child: Text('No items available'.tr(context)));
         }
 
-        final bool showPromo1 = items.length > firstPromoIndex;
-        final bool showPromo2 = items.length > (secondPromoIndex - 1);
+        final bool isSubscribed = dashVM.isSubscribed;
+        final bool isLoading = dashVM.fetchItemsNearMeResponse.status == Status.LOADING;
+        final bool showPromo1 = !isSubscribed && !isLoading && items.length > firstPromoIndex;
+        final bool showPromo2 = !isSubscribed && !isLoading && items.length > (secondPromoIndex - 1);
 
         int totalItemCount = items.length;
         if (showPromo1) totalItemCount += 1;

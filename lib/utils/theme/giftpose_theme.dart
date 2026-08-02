@@ -47,7 +47,7 @@ class GiftPoseTheme {
     brightness: Brightness.dark,
     primaryColor: GiftPoseColors.primaryColor,
       dividerColor: GiftPoseColors.borderColor,
-    // scaffoldBackgroundColor: GiftPoseColors.darkmodeBackground,
+    scaffoldBackgroundColor: GiftPoseColors.darkmodeBackground,
     hintColor: Color(0xFFA1A2AE),
     
     // cardColor: GiftPoseColors.borderColorDark,
@@ -57,7 +57,7 @@ class GiftPoseTheme {
       bodyMedium: TextStyle(color: GiftPoseColors.lightSubtitleTextColor),
     ),
     appBarTheme: AppBarTheme(
-      // backgroundColor: GiftPoseColors.darkmodeBackground,
+      backgroundColor: GiftPoseColors.darkmodeBackground,
       elevation: 0,
       iconTheme: IconThemeData(color: GiftPoseColors.lightBodyText),
     ),

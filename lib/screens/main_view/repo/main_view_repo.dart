@@ -21,7 +21,13 @@ import 'package:giftpose/screens/onboarding/models/search_predictions_request.da
 import 'package:giftpose/screens/onboarding/models/search_response.dart';
 
 
+import 'package:giftpose/screens/onboarding/models/current_subscription_response.dart';
+
 abstract class MainViewRepo {
+  Future<CurrentSubscriptionResponse> getCurrentSubscription({
+    required String deviceId,
+    String? userId,
+  });
 
  
    Future<CreateAlertListResponse> createNotificationAlerts({

@@ -145,38 +145,58 @@ final DatabaseService databaseService = serviceLocator<DatabaseService>();
 
   String? imel;
 
-// fetch device details
+  // fetch device details
   Future<void> getDeviceId() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    late IosDeviceInfo iosInfo;
-    ClientInformation info = await ClientInformation.fetch();
-    log('deviceName ${info.deviceName}');
-    log('deviceId ${info.deviceId}');
-    late AndroidDeviceInfo androidInfo;
-    if (Platform.isAndroid) {
-      // await DeviceImei().getDeviceImei().then((value) {
-      //   imel = "214356743";
+    try {
+      String? dbDeviceId = await secureStorageService.read(
+        key: StorageKeys.deviceId,
+      );
+      if (dbDeviceId != null && dbDeviceId.isNotEmpty) {
+        deviceId = dbDeviceId;
+        log('Loaded deviceID from db: $deviceId');
+        return;
+      }
 
-      // });
-      print(imel);
-      androidInfo = await deviceInfo.androidInfo;
-      // imel = "21345t5y65";
-      deviceId = info.deviceId;
-           secureStorageService.write(
-       key: StorageKeys.deviceId, value: deviceId);
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      if (Platform.isAndroid) {
+        try {
+          AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+          deviceId = androidInfo.id;
+        } catch (e) {
+          log('Error getting androidInfo: $e');
+        }
+      } else if (Platform.isIOS) {
+        try {
+          IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+          deviceId = iosInfo.identifierForVendor;
+        } catch (e) {
+          log('Error getting iosInfo: $e');
+        }
+      }
 
-      log('deviceID: $deviceId');
-    } else if (Platform.isIOS) {
-      // await DeviceImei().getDeviceImei().then((value) {
-      //   imel = value;
-      // });
-      iosInfo = await deviceInfo.iosInfo;
+      if (deviceId == null || deviceId!.isEmpty) {
+        try {
+          ClientInformation info = await ClientInformation.fetch();
+          if (info.deviceId.isNotEmpty) {
+            deviceId = info.deviceId;
+          }
+        } catch (e) {
+          log('Error fetching ClientInformation: $e');
+        }
+      }
 
-      deviceId = iosInfo.identifierForVendor;
-           secureStorageService.write(
-          key: StorageKeys.deviceId, value: deviceId);
+      if (deviceId == null || deviceId!.isEmpty) {
+        deviceId = "dev_${DateTime.now().millisecondsSinceEpoch}";
+      }
 
-      log('deviceID ios : $deviceId');
+      await secureStorageService.write(
+        key: StorageKeys.deviceId,
+        value: deviceId!,
+      );
+      log('Resolved deviceID: $deviceId');
+    } catch (e) {
+      log('Error resolving deviceId: $e');
+      deviceId ??= "dev_${DateTime.now().millisecondsSinceEpoch}";
     }
   }
 }

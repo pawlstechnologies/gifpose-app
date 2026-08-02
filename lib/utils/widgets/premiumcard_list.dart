@@ -74,7 +74,7 @@ class PremiumProCardListview extends StatelessWidget {
                   SizedBox(height: 2.h),
                   _buildCheckRow("Supporter Badge"),
                         SizedBox(height: 2.h),
-                    _buildCheckRow("Unlimited Smart Notification"),
+                    _buildCheckRow("Ad-Free Browsing"),
        
                
                   SizedBox(height: 5.h),

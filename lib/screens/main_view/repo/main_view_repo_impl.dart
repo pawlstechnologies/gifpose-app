@@ -29,16 +29,44 @@ import 'package:giftpose/screens/onboarding/models/search_alert_category_request
 import 'package:giftpose/screens/onboarding/models/search_predictions_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_response.dart';
 
+import 'package:giftpose/screens/onboarding/models/current_subscription_response.dart';
 import 'package:giftpose/services/network_services/dio_core/dio_client.dart';
 import 'package:giftpose/services/network_services/dio_core/dio_error.dart';
 import 'package:giftpose/utils/constants/api_routes.dart';
 
-
 class MainViewRepoImpl implements MainViewRepo {
+  final NetworkProvider networkProvider = NetworkProvider();
 
-
-
-    final NetworkProvider networkProvider = NetworkProvider();
+  @override
+  Future<CurrentSubscriptionResponse> getCurrentSubscription({
+    required String deviceId,
+    String? userId,
+  }) async {
+    try {
+      String path = "${ApiRoutes.currentSubscription}?deviceId=$deviceId";
+      if (userId != null && userId.isNotEmpty) {
+        path += "&userId=$userId";
+      }
+      log("Fetching current subscription: $path");
+      final response = await networkProvider.call(
+        path: path,
+        method: RequestMethod.get,
+      );
+      log("getCurrentSubscription response: ${response?.data}");
+      return CurrentSubscriptionResponse.fromJson(response?.data);
+    } on DioException catch (err) {
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      if (kDebugMode) {
+        print(errorMessage);
+      }
+      throw err.response?.data["message"] ?? errorMessage;
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
+      throw err.toString();
+    }
+  }
 
   @override
 

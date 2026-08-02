@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:giftpose/screens/authentication/viewmodel/authentication_viewmodel.dart';
 import 'package:giftpose/utils/localization_provider.dart';
 
@@ -24,17 +25,55 @@ class CreateAccountScreen extends StatelessWidget with Validators{
   Widget build(BuildContext context) {
     return Consumer<AuthenticationViewModel>(
       builder: (context, vm, child) {
-        return GiftPoseBaseScaffold(
-          showAppBar: false,
-          hasGradient: true,
+        final canPop = Navigator.canPop(context);
 
-          builder: (size) {
-            return SingleChildScrollView(
-              child: Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    YMargin(40),
+        return PopScope(
+          canPop: canPop,
+          onPopInvokedWithResult: (didPop, result) {
+            if (!didPop) {
+              Navigator.pushReplacementNamed(
+                context,
+                AppRoutes.dashboard,
+              );
+            }
+          },
+          child: GiftPoseBaseScaffold(
+            showAppBar: false,
+            hasGradient: true,
+
+            builder: (size) {
+              return SingleChildScrollView(
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      YMargin(16),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: InkWell(
+                          onTap: () {
+                            HapticFeedback.heavyImpact();
+                            if (Navigator.canPop(context)) {
+                              Navigator.pop(context);
+                            } else {
+                              Navigator.pushReplacementNamed(
+                                context,
+                                AppRoutes.dashboard,
+                              );
+                            }
+                          },
+                        child: SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: Center(
+                            child: Assets.icons.back.svg(
+                              color: Theme.of(context).textTheme.bodyLarge?.color,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    YMargin(12),
                     Assets.images.logo.image(height: 40, width: 40),
                     YMargin(26),
                     Text(
@@ -156,12 +195,21 @@ class CreateAccountScreen extends StatelessWidget with Validators{
                                            ],),
                       ),
                YMargin(35),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Already have an account?".tr(context),style: GiftPoseTextStyle.medium(color: Theme.of(context).textTheme.bodyMedium!.color,fontSize: 14),),
-                      Text("Log In".tr(context),style: GiftPoseTextStyle.medium( fontSize: 14,color: GiftPoseColors.primaryColor),),
-                    ],
+                  InkWell(
+                    onTap: () {
+                      HapticFeedback.heavyImpact();
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.siginInPage,
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Already have an account? ".tr(context),style: GiftPoseTextStyle.medium(color: Theme.of(context).textTheme.bodyMedium!.color,fontSize: 14),),
+                        Text("Log In".tr(context),style: GiftPoseTextStyle.medium( fontSize: 14,color: GiftPoseColors.primaryColor),),
+                      ],
+                    ),
                   ),
 
 
@@ -169,10 +217,12 @@ class CreateAccountScreen extends StatelessWidget with Validators{
                   YMargin(99)
                 ],
               ),
-            ));
-          },
-        );
-      },
+            ),
+          );
+        },
+      ),
     );
+  },
+);
   }
 }

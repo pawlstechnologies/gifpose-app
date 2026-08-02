@@ -32,15 +32,19 @@ class FetchItemsNearMeResponse {
     });
 
     factory FetchItemsNearMeResponse.fromJson(Map<String, dynamic> json) => FetchItemsNearMeResponse(
-        success: json["success"],
-        message: json["message"],
-        count: json["count"],
-        userLocation: UserLocation.fromJson(json["userLocation"]),
-        data: List<FetchItemsNearMeData>.from(json["data"].map((x) => FetchItemsNearMeData.fromJson(x))),
-        page: json["page"],
-        perPage: json["perPage"],
-        total: json["total"],
-        totalPages: json["totalPages"],
+        success: json["success"] ?? false,
+        message: json["message"] ?? "",
+        count: json["count"] ?? 0,
+        userLocation: json["userLocation"] != null
+            ? UserLocation.fromJson(json["userLocation"])
+            : UserLocation(deviceId: "", postcode: "Update Location", city: "", setMile: 15),
+        data: json["data"] != null
+            ? List<FetchItemsNearMeData>.from((json["data"] as List).map((x) => FetchItemsNearMeData.fromJson(x)))
+            : [],
+        page: json["page"] ?? 1,
+        perPage: json["perPage"] ?? 10,
+        total: json["total"] ?? 0,
+        totalPages: json["totalPages"] ?? 1,
     );
 
     Map<String, dynamic> toJson() => {
@@ -78,14 +82,14 @@ class FetchItemsNearMeData {
     });
 
     factory FetchItemsNearMeData.fromJson(Map<String, dynamic> json) => FetchItemsNearMeData(
-        id: json["_id"],
-        name: json["name"],
-        description: json["description"],
-        partner: partnerValues.map[json["partner"]]!,
+        id: json["_id"] ?? "",
+        name: json["name"] ?? "",
+        description: json["description"] ?? "",
+        partner: partnerValues.map[json["partner"]] ?? Partner.TRASH_NOTHING,
         thumbnail: json["thumbnail"],
-        visitCount: json["visitCount"],
-        distanceInMeters: json["distanceInMeters"]?.toDouble(),
-        distanceInMiles: json["distanceInMiles"]?.toDouble(),
+        visitCount: json["visitCount"] ?? 0,
+        distanceInMeters: json["distanceInMeters"]?.toDouble() ?? 0.0,
+        distanceInMiles: json["distanceInMiles"]?.toDouble() ?? 0.0,
     );
 
     Map<String, dynamic> toJson() => {
@@ -122,10 +126,10 @@ class UserLocation {
     });
 
     factory UserLocation.fromJson(Map<String, dynamic> json) => UserLocation(
-        deviceId: json["deviceId"],
-        postcode: json["postcode"],
-        city: json["city"],
-        setMile: json["setMile"],
+        deviceId: json["deviceId"] ?? "",
+        postcode: json["postcode"] ?? "",
+        city: json["city"] ?? "",
+        setMile: json["setMile"] ?? 15,
     );
 
     Map<String, dynamic> toJson() => {

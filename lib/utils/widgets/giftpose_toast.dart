@@ -122,7 +122,6 @@ class _AnimatedToastState extends State<AnimatedToast>
       child: SlideTransition(
         position: _offsetAnimation,
         child: Container(
-          height: 50,
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
             color: widget.backgroundColor,
@@ -138,7 +137,7 @@ class _AnimatedToastState extends State<AnimatedToast>
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(
                 widget.icon,
@@ -146,12 +145,14 @@ class _AnimatedToastState extends State<AnimatedToast>
                 size: 20,
               ),
               SizedBox(width: 8),
-              Text(
-                widget.message,
-                style: TextStyle(
-                  color: widget.textColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
+              Expanded(
+                child: Text(
+                  widget.message,
+                  style: TextStyle(
+                    color: widget.textColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],

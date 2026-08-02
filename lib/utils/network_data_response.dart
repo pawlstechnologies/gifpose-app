@@ -7,14 +7,14 @@ class NetworkDataResponse<T> {
       : status = Status.IDLE,
         message = "";
 
-  NetworkDataResponse.loading(this.message) : status = Status.LOADING;
+  NetworkDataResponse.loading(this.message, {this.data}) : status = Status.LOADING;
 
   NetworkDataResponse.completed(
     this.data, {
     this.message = "",
   }) : status = Status.COMPLETED;
 
-  NetworkDataResponse.error(this.message) : status = Status.ERROR;
+  NetworkDataResponse.error(this.message, {this.data}) : status = Status.ERROR;
 
   @override
   String toString() {

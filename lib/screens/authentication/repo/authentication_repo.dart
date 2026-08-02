@@ -10,12 +10,15 @@ import 'package:giftpose/screens/authentication/models/reset_password_request.da
 import 'package:giftpose/screens/authentication/models/reset_password_response.dart';
 import 'package:giftpose/screens/authentication/models/sigin_request.dart';
 import 'package:giftpose/screens/authentication/models/signin_response.dart';
+import 'package:giftpose/screens/authentication/models/user_me_response.dart';
 import 'package:giftpose/screens/authentication/models/verify_email_request.dart';
 import 'package:giftpose/screens/authentication/models/verify_email_response.dart';
 import 'package:giftpose/screens/onboarding/models/register_location_request.dart';
 import 'package:giftpose/screens/onboarding/models/register_location_response.dart';
 
 abstract class AuthenticationRepo {
+
+  Future<UserMeResponse> getMe();
 
   Future<CreateAccountResponse> createAccount({
     required CreateAccountRequest createAccountRequest,
@@ -34,7 +37,6 @@ Future<VerifyEmailAddressResponse>   verifyEmailAddress({ required VerifyEmailAd
 
  
 
-
- 
+  Future<void> logout();
 
 }

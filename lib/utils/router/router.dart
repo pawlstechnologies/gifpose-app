@@ -10,6 +10,8 @@ import 'package:giftpose/screens/authentication/view/verify_email.dart';
 import 'package:giftpose/screens/main_view/views/settings_page/help_center.dart';
 import 'package:giftpose/screens/main_view/views/settings_page/language_view.dart';
 import 'package:giftpose/screens/main_view/views/settings_page/premium_page.dart';
+import 'package:giftpose/screens/main_view/views/settings_page/delete_account_page.dart';
+import 'package:giftpose/screens/main_view/views/settings_page/billing_history_page.dart';
 import 'package:giftpose/utils/localization_provider.dart';
 
 
@@ -50,8 +52,11 @@ class Routers {
                case AppRoutes.notificationsAlert:
         routeWidget = NotificationAlert();
         break;
-            case AppRoutes.settingsPage:
-        routeWidget =  SettingsView();
+      case AppRoutes.settingsPage:
+        routeWidget = SettingsView();
+        break;
+      case AppRoutes.deleteAccountPage:
+        routeWidget = const DeleteAccountPage();
         break;
             case AppRoutes.dashboard:
         routeWidget =  DashboardView();
@@ -83,6 +88,9 @@ class Routers {
         break;
                 case AppRoutes.helpCenter:
         routeWidget = HelpCenter();
+        break;
+              case AppRoutes.billingHistory:
+        routeWidget = const BillingHistoryPage();
         break;
         
     

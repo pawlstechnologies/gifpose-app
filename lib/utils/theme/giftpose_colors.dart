@@ -44,6 +44,7 @@ static Color dividerColorNew = Color(0x33EC5B13);
   static Color borderColor2 = Color(0xFFE7E8EB);
   static Color hintText = Color(0xA30B051D);
   static Color background = Color(0xFFFFFFFF);
+  static Color darkmodeBackground = Color(0xFF050505);
   static Color errorColor = Color(0xFFFF3932);
   static Color borderColorLight = Color(0xFFF6FFF5);
   static Color cardColor =Color(0xFFFFFFFF);

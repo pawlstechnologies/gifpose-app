@@ -4,7 +4,6 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:giftpose/screens/authentication/view/create_account.dart';
 import 'package:giftpose/screens/authentication/viewmodel/authentication_viewmodel.dart';
 import 'package:giftpose/screens/main_view/viewmodels/base_viewmodel.dart';
 import 'package:giftpose/screens/main_view/viewmodels/connectivit_viewmode.dart';
@@ -156,7 +155,7 @@ void testLocalNotification() async {
                   },
                   onGenerateRoute: (settings) =>
                       Routers.generateRoute(settings, context),
-                  home: isRegistered ? CreateAccountScreen()  : SplashScreen(),
+                  home: isRegistered ? DashboardView()  : SplashScreen(),
                 );
               },
             );

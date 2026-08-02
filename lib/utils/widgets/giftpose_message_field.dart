@@ -159,7 +159,9 @@ class _GiftPoseMessageTextFieldState extends State<GiftPoseMessageTextField> {
                           fontSize: 12.sp,
                         ),
                         initialValue: widget.initialValue,
-                        textCapitalization: widget.textFieldType == TextFieldType.email || widget.textFieldType == TextFieldType.password
+                        textCapitalization: widget.textFieldType == TextFieldType.email || 
+                                            widget.textFieldType == TextFieldType.password ||
+                                            widget.obscureText
                             ? TextCapitalization.none
                             : TextCapitalization.sentences,
                         onChanged: widget.onChanged,

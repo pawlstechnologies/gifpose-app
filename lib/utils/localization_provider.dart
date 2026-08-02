@@ -160,6 +160,32 @@ class AppTranslations {
       "Settings": "Settings",
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit purus sit amet ": "Lorem ipsum dolor sit amet, consectetur adipiscing elit purus sit amet ",
       "Gifting": "Gifting",
+      "Subscription Details": "Subscription Details",
+      "Cancel Subscription": "Cancel Subscription",
+      "Subscription Cancelled": "Subscription Cancelled",
+      "You currently have no active premium subscription.": "You currently have no active premium subscription.",
+      "Subscribe Again": "Subscribe Again",
+      "Premium Plan": "Premium Plan",
+      "Billed Monthly": "Billed Monthly",
+      "Billed Yearly": "Billed Yearly",
+      "Price": "Price",
+      "Next Billing": "Next Billing",
+      "AUTO-RENEW": "AUTO-RENEW",
+      "Enabled": "Enabled",
+      "Change Plan": "Change Plan",
+      "Need help?": "Need help?",
+      "Billing History": "Billing History",
+      "View All": "View All",
+      "Benefits": "Benefits",
+      "Ad-Free Browsing": "Ad-Free Browsing",
+      "Remove all banners and pop-ups for a cleaner experience while browsing or listing.": "Remove all banners and pop-ups for a cleaner experience while browsing or listing.",
+      "Supporter Badge": "Supporter Badge",
+      "A unique badge on your profile to show you're a dedicated community member.": "A unique badge on your profile to show you're a dedicated community member.",
+      "Premium Support": "Premium Support",
+      "Enjoy fast, reliable support with priority access to our team whenever you need help.": "Enjoy fast, reliable support with priority access to our team whenever you need help.",
+      "Unlimited Smart Notification": "Unlimited Smart Notification",
+      "Choose how and when you get notified about your gift.": "Choose how and when you get notified about your gift.",
+      "No subscription history found.": "No subscription history found.",
     },
     'de': {
              "Getting Notified of Preferred Gift Items": "Benachrichtigungen für bevorzugte Geschenkartikel erhalten",
@@ -1249,8 +1275,8 @@ class LanguageProvider extends ChangeNotifier {
 }
 
 extension TranslateExtension on String {
-  String tr(BuildContext context) {
-    return Provider.of<LanguageProvider>(context, listen: true).translate(this);
+  String tr(BuildContext context, {bool listen = true}) {
+    return Provider.of<LanguageProvider>(context, listen: listen).translate(this);
   }
 }
 

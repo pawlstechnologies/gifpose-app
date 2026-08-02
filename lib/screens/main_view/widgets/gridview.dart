@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:giftpose/utils/network_data_response.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:giftpose/gen/assets.gen.dart';
 import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
@@ -132,9 +133,11 @@ class CategoryGrid extends StatelessWidget {
         // (anywhere between grid slot index 10 to 13) preventing them from cluttering together.
         final int premiumPromoIndex2 = premiumPromoIndex1 + 19 + (seedModifier % 4);
 
+        final bool isSubscribed = vm.isSubscribed;
+        final bool isLoading = vm.fetchItemsNearMeResponse.status == Status.LOADING;
         // Evaluate flags checking if data array length qualifies to display the ad cards safely
-        final bool displayPromo1 = items.length > premiumPromoIndex1;
-        final bool displayPromo2 = items.length > (premiumPromoIndex2 - 1);
+        final bool displayPromo1 = !isSubscribed && !isLoading && items.length > premiumPromoIndex1;
+        final bool displayPromo2 = !isSubscribed && !isLoading && items.length > (premiumPromoIndex2 - 1);
 
         // Calculate layout totals including offsets
         int totalGridItems = items.length;

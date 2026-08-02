@@ -7,7 +7,7 @@ class ApiError {
   ApiError.fromDio(Object dioError) {
     _handleError(dioError);
   }
-  void _handleError(Object error)async {
+  void _handleError(Object error) async {
     if (error is DioError) {
       var dioError = error; // as DioError;
       switch (dioError.type) {
@@ -24,18 +24,31 @@ class ApiError {
           errorDescription = 'Receiving timeout';
           break;
         case DioExceptionType.badResponse:
-          if (dioError.response!.statusCode == 401) {
-            errorDescription = dioError.response?.data["message"] ?? 'Session timeout';
-          } else if(dioError.response!.statusCode == 422){
-            errorDescription = dioError.response?.data["message"];
+          final response = dioError.response;
+          if (response == null) {
+            errorDescription = 'Something went wrong, please check your internet connection..';
+            break;
           }
-          else if (dioError.response!.statusCode == 400 || dioError.response!.statusCode! <= 500) {
-            if(dioError.response!.statusCode == 429){
-              errorDescription = dioError.response?.data["message"] ?? error.response!.statusMessage! ;
-            }
-            errorDescription = dioError.response?.data["message"] ?? extractDescriptionFromResponse(dioError.response?.data["message"]);
-          }else if(dioError.response!.statusCode == 500){
-            errorDescription = 'A Server Error Occurred';
+          final statusCode = response.statusCode;
+          final dynamic data = response.data;
+          
+          String? message;
+          if (data is Map) {
+            message = data['message']?.toString();
+          } else if (data is String) {
+            message = data;
+          }
+
+          if (statusCode == 401) {
+            errorDescription = message ?? 'Session timeout';
+          } else if (statusCode == 422) {
+            errorDescription = message ?? 'Validation error';
+          } else if (statusCode == 500) {
+            errorDescription = message ?? 'A Server Error Occurred';
+          } else if (statusCode == 429) {
+            errorDescription = message ?? response.statusMessage ?? 'Too many requests';
+          } else if (statusCode != null && statusCode >= 400 && statusCode < 500) {
+            errorDescription = message ?? extractDescriptionFromResponse(response);
           } else {
             errorDescription = 'Something went wrong, please check your internet connection..';
           }
@@ -56,27 +69,41 @@ class ApiError {
   }
 
   String? extractDescriptionFromResponse(Response? response) {
-    String? message;
+    if (response == null) return null;
+    final dynamic data = response.data;
+    if (data == null) return response.statusMessage;
+
     try {
-      if(response?.data['data']['error'] != null) {
-        message = '${message!}. ${response!.data["data"]["error"]}';
-      }
-      if (response?.data != null && response!.data['message'] != null) {
-        message = response.data['message'];
-
-        if(response.data['error'] != null) {
-          message = '${message!}. ${response.data['error']}';
+      if (data is Map) {
+        String? message;
+        if (data['data'] is Map && data['data']['error'] != null) {
+          message = data['data']['error'].toString();
         }
-
-      } else {
-        message = response!.statusMessage;
+        if (data['message'] != null) {
+          final msg = data['message'].toString();
+          if (message != null) {
+            message = '$message. $msg';
+          } else {
+            message = msg;
+          }
+          if (data['error'] != null) {
+            message = '$message. ${data['error']}';
+          }
+        } else if (data['error'] != null) {
+          if (message != null) {
+            message = '$message. ${data['error']}';
+          } else {
+            message = data['error'].toString();
+          }
+        }
+        return message ?? response.statusMessage;
+      } else if (data is String) {
+        return data;
       }
-
     } catch (error) {
-      message = response?.statusMessage ?? error.toString();
+      return response.statusMessage ?? error.toString();
     }
-
-    return message;
+    return response.statusMessage;
   }
 
   @override

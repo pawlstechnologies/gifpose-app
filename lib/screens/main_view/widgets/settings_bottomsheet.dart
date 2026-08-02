@@ -5,8 +5,11 @@ import 'package:giftpose/gen/assets.gen.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/theme/theme.dart';
 import 'package:giftpose/utils/widgets/giftpose_button.dart';
-
 import 'package:giftpose/utils/widgets/spacing.dart';
+import 'package:giftpose/utils/router/app_routes.dart';
+import 'package:giftpose/services/secure_storage/secure_storage.dart';
+import 'package:giftpose/utils/constants/storage_keys.dart';
+import 'package:giftpose/utils/locator.dart';
 
 class SettingsBottomsheet extends StatelessWidget {
   SettingsBottomsheet({super.key});
@@ -72,9 +75,12 @@ class SettingsBottomsheet extends StatelessWidget {
                                           context,
                                         ).scaffoldBackgroundColor,
                                         onTap: () {
-                                         HapticFeedback.heavyImpact();
-                                         Navigator.pop(context);
-                                       
+                                          HapticFeedback.heavyImpact();
+                                          Navigator.pop(context);
+                                          Navigator.pushNamed(
+                                            context, 
+                                            AppRoutes.deleteAccountPage,
+                                          );
                                         },
                                       ),
           ),
