@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:giftpose/utils/router/app_routes.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/widgets/Giftpose_basescafold.dart';
+import 'package:giftpose/utils/widgets/giftpose_button.dart';
 import 'package:giftpose/gen/assets.gen.dart';
 import 'package:provider/provider.dart';
 import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
@@ -28,6 +30,76 @@ class _BillingHistoryPageState extends State<BillingHistoryPage> {
   Widget build(BuildContext context) {
     return Consumer<DashboardViewmodel>(
       builder: (context, viewModel, child) {
+        final isLoggedIn = viewModel.currentUser?.user?.email != null &&
+            viewModel.currentUser!.user!.email.isNotEmpty;
+
+        if (!isLoggedIn) {
+          return GiftPoseBaseScaffold(
+            showAppBar: false,
+            includeVerticalPadding: false,
+            includeHorizontalPadding: true,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            builder: (size) {
+              return SafeArea(
+                child: Center(
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 24),
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.08),
+                          blurRadius: 20,
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 70,
+                          height: 70,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFFFFF1F1),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Center(
+                            child: Icon(
+                              Icons.error_outline,
+                              color: Colors.redAccent,
+                              size: 36,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        Text(
+                          "Please login to view your billing history".tr(context),
+                          textAlign: TextAlign.center,
+                          style: GiftPoseTextStyle.medium(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        GiftPoseButton(
+                          title: "Login".tr(context),
+                          onTap: () {
+                            HapticFeedback.heavyImpact();
+                            Navigator.pushNamed(context, AppRoutes.siginInPage);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        }
+
         List<SubscriptionItem> items = [];
         if (viewModel.subscriptionListResponse?.data != null &&
             viewModel.subscriptionListResponse!.data!.isNotEmpty) {

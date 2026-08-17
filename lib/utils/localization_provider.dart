@@ -164,6 +164,8 @@ class AppTranslations {
       "Cancel Subscription": "Cancel Subscription",
       "Subscription Cancelled": "Subscription Cancelled",
       "You currently have no active premium subscription.": "You currently have no active premium subscription.",
+      "You are currently subscribed till": "You are currently subscribed till",
+      "but you will not be charged": "but you will not be charged",
       "Subscribe Again": "Subscribe Again",
       "Premium Plan": "Premium Plan",
       "Billed Monthly": "Billed Monthly",

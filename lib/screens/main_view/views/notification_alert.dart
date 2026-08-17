@@ -151,15 +151,12 @@ class _NotificationAlertState extends State<NotificationAlert> {
                                 title: Text(item.name),
 
                                 onTap: () {
-                                  if (!vm.selectedKeywords.contains(item.name)) {
+                              if (!vm.selectedKeywords.contains(item.name)) {
                                     final added = vm.toggleKeyword(item.name);
                                     searchCtrl.clear();
                                     removeOverlay();
                                     if (added) {
-                                      vm.createAlertList(
-                                        selectedCategory: vm.selectedCategory,
-                                        selectedKeywords: vm.selectedKeywords,
-                                      );
+                                      vm.scheduleAlertListSync();
                                     }
                                   } else {
                                     searchCtrl.clear();
@@ -192,10 +189,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
                               searchCtrl.clear();
                               removeOverlay();
                               if (added) {
-                                vm.createAlertList(
-                                  selectedCategory: vm.selectedCategory,
-                                  selectedKeywords: vm.selectedKeywords,
-                                );
+                                vm.scheduleAlertListSync();
                               }
                             } else {
                               searchCtrl.clear();
@@ -279,8 +273,14 @@ class _NotificationAlertState extends State<NotificationAlert> {
 
               color: GiftPoseColors.primaryColor,
 
-              child: ListView(
-                physics: AlwaysScrollableScrollPhysics(),
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  removeOverlay();
+                  FocusScope.of(context).unfocus();
+                },
+                child: ListView(
+                  physics: AlwaysScrollableScrollPhysics(),
 
                 children: [
                   YMargin(14),
@@ -367,15 +367,12 @@ class _NotificationAlertState extends State<NotificationAlert> {
                         runSpacing: 8,
 
                         children: vm.selectedKeywords.map((keyword) {
-            return InkWell(
-              onTap: () {
-                vm.toggleKeyword(keyword);
-                vm.createAlertList(
-                  selectedCategory: vm.selectedCategory,
-                  selectedKeywords: vm.selectedKeywords,
-                );
-              },
-
+                          return GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              vm.toggleKeyword(keyword);
+                              vm.scheduleAlertListSync();
+                            },
 
                             child: Container(
                               padding: EdgeInsets.symmetric(
@@ -494,7 +491,8 @@ class _NotificationAlertState extends State<NotificationAlert> {
                   YMargin(30),
                 ],
               ),
-            );
+            ),
+          );
           },
         );
       },
@@ -521,6 +519,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
         final optionsCat = displayCategories[index];
 
         return GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () {
             vm.selectOption(index);
 
@@ -614,14 +613,12 @@ class _NotificationAlertState extends State<NotificationAlert> {
                   final isSelected = vm.selectedKeywords.contains(content.name);
 
                   return GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: () {
                       if (content.name != null) {
                         final added = vm.toggleKeyword(content.name!);
                         if (added) {
-                          vm.createAlertList(
-                            selectedCategory: vm.selectedCategory,
-                            selectedKeywords: vm.selectedKeywords,
-                          );
+                          vm.scheduleAlertListSync();
                         }
                       }
                     },

@@ -21,10 +21,7 @@ import 'package:provider/provider.dart';
 class PremiumUpgradeCard extends StatelessWidget {
   final VoidCallback? onTap;
 
-  const PremiumUpgradeCard({
-    super.key,
-    this.onTap,
-  });
+  const PremiumUpgradeCard({super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +35,7 @@ class PremiumUpgradeCard extends StatelessWidget {
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Color(0xFFFFE5CC),
-              Color(0xFFF5D3E9),
-              Color(0xFFD6C7FF),
-            ],
+            colors: [Color(0xFFFFE5CC), Color(0xFFF5D3E9), Color(0xFFD6C7FF)],
             stops: [0.0, 0.5, 1.0],
           ),
         ),
@@ -125,19 +118,25 @@ class CategoryGrid extends StatelessWidget {
     return Consumer<DashboardViewmodel>(
       builder: (context, vm, child) {
         final int seedModifier = items.length;
-        
+
         // Slot position 1: Renders early in the scroll cycle (anywhere between grid slot index 2 to 4)
-        final int premiumPromoIndex1 = 8 + (seedModifier % 3); 
-        
+        final int premiumPromoIndex1 = 8 + (seedModifier % 3);
+
         // Slot position 2: Forced to stay at least 8 elements lower down the scroll path
         // (anywhere between grid slot index 10 to 13) preventing them from cluttering together.
-        final int premiumPromoIndex2 = premiumPromoIndex1 + 19 + (seedModifier % 4);
+        final int premiumPromoIndex2 =
+            premiumPromoIndex1 + 19 + (seedModifier % 4);
 
         final bool isSubscribed = vm.isSubscribed;
-        final bool isLoading = vm.fetchItemsNearMeResponse.status == Status.LOADING;
+        final bool isLoading =
+            vm.fetchItemsNearMeResponse.status == Status.LOADING;
         // Evaluate flags checking if data array length qualifies to display the ad cards safely
-        final bool displayPromo1 = !isSubscribed && !isLoading && items.length > premiumPromoIndex1;
-        final bool displayPromo2 = !isSubscribed && !isLoading && items.length > (premiumPromoIndex2 - 1);
+        final bool displayPromo1 =
+            !isSubscribed && !isLoading && items.length > premiumPromoIndex1;
+        final bool displayPromo2 =
+            !isSubscribed &&
+            !isLoading &&
+            items.length > (premiumPromoIndex2 - 1);
 
         // Calculate layout totals including offsets
         int totalGridItems = items.length;
@@ -149,7 +148,7 @@ class CategoryGrid extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           slivers: [
             SliverPadding(padding: EdgeInsets.only(top: 15.h)),
-            
+
             // Reunified Single Grid handling dynamic structural inline transformations
             SliverPadding(
               padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -160,49 +159,51 @@ class CategoryGrid extends StatelessWidget {
                   crossAxisSpacing: spacing,
                   mainAxisSpacing: spacing,
                 ),
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    
-                    // Render First Premium Promo Card Position
-                    if (displayPromo1 && index == premiumPromoIndex1)
-    {
-                      return PremiumProCardGridview(
-                        onTap: () {
-                          HapticFeedback.heavyImpact();
-                          Navigator.pushNamed(context, AppRoutes.premiumSubscription);
-                        },
-                      );
-                    }
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  // Render First Premium Promo Card Position
+                  if (displayPromo1 && index == premiumPromoIndex1) {
+                    return PremiumProCardGridview(
+                      onTap: () {
+                        HapticFeedback.heavyImpact();
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.premiumSubscription,
+                        );
+                      },
+                    );
+                  }
 
-                    // Render Second Premium Promo Card Position
-                    if (displayPromo2 && index == premiumPromoIndex2 ) {
-                       return PremiumProCardGridview(
-                        onTap: () {
-                          HapticFeedback.heavyImpact();
-                          Navigator.pushNamed(context, AppRoutes.premiumSubscription);
-                        },
-                      );
-                    }
+                  // Render Second Premium Promo Card Position
+                  if (displayPromo2 && index == premiumPromoIndex2) {
+                    return PremiumProCardGridview(
+                      onTap: () {
+                        HapticFeedback.heavyImpact();
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.premiumSubscription,
+                        );
+                      },
+                    );
+                  }
 
-                    // Shift data reading indices based on current map rendering states
-                    int adjustedDataIndex = index;
-                    if (displayPromo1 && index > premiumPromoIndex1) {
-                      adjustedDataIndex--;
-                    }
-                    if (displayPromo2 && index > premiumPromoIndex2) {
-                      adjustedDataIndex--;
-                    }
+                  // Shift data reading indices based on current map rendering states
+                  int adjustedDataIndex = index;
+                  if (displayPromo1 && index > premiumPromoIndex1) {
+                    adjustedDataIndex--;
+                  }
+                  if (displayPromo2 && index > premiumPromoIndex2) {
+                    adjustedDataIndex--;
+                  }
 
-                    // Fallback defensive safety check
-                    if (adjustedDataIndex >= items.length || adjustedDataIndex < 0) {
-                      return const SizedBox.shrink();
-                    }
+                  // Fallback defensive safety check
+                  if (adjustedDataIndex >= items.length ||
+                      adjustedDataIndex < 0) {
+                    return const SizedBox.shrink();
+                  }
 
-                    final data = items[adjustedDataIndex];
-                    return _buildGridItem(context, vm, data);
-                  },
-                  childCount: totalGridItems,
-                ),
+                  final data = items[adjustedDataIndex];
+                  return _buildGridItem(context, vm, data);
+                }, childCount: totalGridItems),
               ),
             ),
 
@@ -220,7 +221,11 @@ class CategoryGrid extends StatelessWidget {
     );
   }
 
-  Widget _buildGridItem(BuildContext context, DashboardViewmodel vm, FetchItemsNearMeData data) {
+  Widget _buildGridItem(
+    BuildContext context,
+    DashboardViewmodel vm,
+    FetchItemsNearMeData data,
+  ) {
     return InkWell(
       onTap: () {
         HapticFeedback.heavyImpact();
@@ -258,7 +263,11 @@ class CategoryGrid extends StatelessWidget {
 class CategoryGridItem extends StatelessWidget {
   final FetchItemsNearMeData response;
   final UserLocation userLocation;
-  CategoryGridItem({super.key, required this.response, required this.userLocation});
+  CategoryGridItem({
+    super.key,
+    required this.response,
+    required this.userLocation,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -288,9 +297,7 @@ class CategoryGridItem extends StatelessWidget {
                 width: 161.w,
                 height: 146.w,
                 color: Colors.grey.shade100,
-                child: const Center(
-                  child: CupertinoActivityIndicator(),
-                ),
+                child: const Center(child: CupertinoActivityIndicator()),
               ),
             ),
           ),
@@ -313,10 +320,7 @@ class CategoryGridItem extends StatelessWidget {
                 YMargin(4),
                 Row(
                   children: [
-                    Assets.icons.location.svg(
-                      height: 12,
-                      width: 12,
-                    ),
+                    Assets.icons.location.svg(height: 12, width: 12),
                     XMargin(4),
                     Expanded(
                       child: Text(

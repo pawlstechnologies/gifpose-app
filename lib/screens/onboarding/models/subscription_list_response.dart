@@ -31,6 +31,7 @@ class SubscriptionListResponse {
 
 class SubscriptionItem {
   final String? id;
+  final String? stripeSubscriptionId;
   final String? deviceId;
   final String? userId;
   final String? plan;
@@ -43,6 +44,7 @@ class SubscriptionItem {
 
   SubscriptionItem({
     this.id,
+    this.stripeSubscriptionId,
     this.deviceId,
     this.userId,
     this.plan,
@@ -57,6 +59,7 @@ class SubscriptionItem {
   factory SubscriptionItem.fromJson(Map<String, dynamic> json) {
     return SubscriptionItem(
       id: (json['_id'] ?? json['id'])?.toString(),
+      stripeSubscriptionId: (json['stripeSubscriptionId'] ?? json['_id'] ?? json['id'])?.toString(),
       deviceId: json['deviceId']?.toString(),
       userId: json['userId']?.toString(),
       plan: json['plan']?.toString(),
@@ -74,6 +77,7 @@ class SubscriptionItem {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'stripeSubscriptionId': stripeSubscriptionId,
       'deviceId': deviceId,
       'userId': userId,
       'plan': plan,

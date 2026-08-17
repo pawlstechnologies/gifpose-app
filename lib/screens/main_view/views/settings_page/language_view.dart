@@ -85,57 +85,60 @@ class _LanguageViewState extends State<LanguageView> {
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: Colors.grey.withOpacity(0.1)),
                 ),
-                child: ListView.separated(
-                  padding: EdgeInsets.zero,
-                  itemCount: languages.length,
-                  separatorBuilder: (context, index) => Divider(
-                    height: 1,
-                    color: Colors.grey.withOpacity(0.1),
-                    indent: 15,
-                    endIndent: 15,
-                  ),
-                  itemBuilder: (context, index) {
-                    final lang = languages[index];
-                    final isSelected = selectedLanguage == lang;
+                child: Material(
+                  color: Colors.transparent,
+                  child: ListView.separated(
+                    padding: EdgeInsets.zero,
+                    itemCount: languages.length,
+                    separatorBuilder: (context, index) => Divider(
+                      height: 1,
+                      color: Colors.grey.withOpacity(0.1),
+                      indent: 15,
+                      endIndent: 15,
+                    ),
+                    itemBuilder: (context, index) {
+                      final lang = languages[index];
+                      final isSelected = selectedLanguage == lang;
 
-                    return ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                      title: Text(
-                        lang,
-                        style: GiftPoseTextStyle.normal(
-                          fontWeight: isSelected ? FontWeight.w500 : FontWeight.w400,
-                        ),
-                      ),
-                      trailing: Container(
-                        height: 22,
-                        width: 22,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: isSelected ? GiftPoseColors.primaryColor : Colors.grey,
-                            width: 2,
+                      return ListTile(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                        title: Text(
+                          lang,
+                          style: GiftPoseTextStyle.normal(
+                            fontWeight: isSelected ? FontWeight.w500 : FontWeight.w400,
                           ),
                         ),
-                        child: isSelected
-                            ? Center(
-                                child: Container(
-                                  height: 12,
-                                  width: 12,
-                                  decoration: BoxDecoration(
-                                    color: GiftPoseColors.primaryColor,
-                                    shape: BoxShape.circle,
+                        trailing: Container(
+                          height: 22,
+                          width: 22,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: isSelected ? GiftPoseColors.primaryColor : Colors.grey,
+                              width: 2,
+                            ),
+                          ),
+                          child: isSelected
+                              ? Center(
+                                  child: Container(
+                                    height: 12,
+                                    width: 12,
+                                    decoration: BoxDecoration(
+                                      color: GiftPoseColors.primaryColor,
+                                      shape: BoxShape.circle,
+                                    ),
                                   ),
-                                ),
-                              )
-                            : null,
-                      ),
-                      onTap: () {
-                        setState(() {
-                          selectedLanguage = lang;
-                        });
-                      },
-                    );
-                  },
+                                )
+                              : null,
+                        ),
+                        onTap: () {
+                          setState(() {
+                            selectedLanguage = lang;
+                          });
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),

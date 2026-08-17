@@ -21,9 +21,20 @@ import 'package:giftpose/screens/onboarding/models/search_predictions_request.da
 import 'package:giftpose/screens/onboarding/models/search_response.dart';
 
 
+import 'package:giftpose/screens/onboarding/models/cancel_subscription_request.dart';
+import 'package:giftpose/screens/onboarding/models/cancel_subscription_response.dart';
+import 'package:giftpose/screens/onboarding/models/subscription_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/current_subscription_response.dart';
 
+import 'package:giftpose/screens/onboarding/models/update_subscription_status_request.dart';
+import 'package:giftpose/screens/onboarding/models/update_subscription_status_response.dart';
+
 abstract class MainViewRepo {
+  Future<SubscriptionListResponse> getSubscriptionList({
+    required String deviceId,
+    String? userId,
+  });
+
   Future<CurrentSubscriptionResponse> getCurrentSubscription({
     required String deviceId,
     String? userId,
@@ -71,5 +82,11 @@ abstract class MainViewRepo {
   });
  Future<CreateAlertListResponse> createAlertList({
     required CreateAlertListRequest  createAlertListRequest,
+  });
+  Future<CancelSubscriptionResponse> cancelSubscription({
+    required CancelSubscriptionRequest cancelSubscriptionRequest,
+  });
+  Future<UpdateSubscriptionStatusResponse> updateSubscriptionStatus({
+    required UpdateSubscriptionStatusRequest updateSubscriptionStatusRequest,
   });
 }

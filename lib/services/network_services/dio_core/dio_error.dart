@@ -36,19 +36,23 @@ class ApiError {
           if (data is Map) {
             message = data['message']?.toString();
           } else if (data is String) {
-            message = data;
+            if (!data.trim().toLowerCase().startsWith('<')) {
+              message = data;
+            }
           }
 
           if (statusCode == 401) {
             errorDescription = message ?? 'Session timeout';
+          } else if (statusCode == 404) {
+            errorDescription = message ?? 'Internal server error';
           } else if (statusCode == 422) {
             errorDescription = message ?? 'Validation error';
-          } else if (statusCode == 500) {
-            errorDescription = message ?? 'A Server Error Occurred';
           } else if (statusCode == 429) {
             errorDescription = message ?? response.statusMessage ?? 'Too many requests';
           } else if (statusCode != null && statusCode >= 400 && statusCode < 500) {
             errorDescription = message ?? extractDescriptionFromResponse(response);
+          } else if (statusCode != null && statusCode >= 500) {
+            errorDescription = 'Internal server error';
           } else {
             errorDescription = 'Something went wrong, please check your internet connection..';
           }
@@ -98,6 +102,9 @@ class ApiError {
         }
         return message ?? response.statusMessage;
       } else if (data is String) {
+        if (data.trim().toLowerCase().startsWith('<')) {
+          return response.statusMessage ?? 'Internal server error';
+        }
         return data;
       }
     } catch (error) {

@@ -29,13 +29,49 @@ import 'package:giftpose/screens/onboarding/models/search_alert_category_request
 import 'package:giftpose/screens/onboarding/models/search_predictions_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_response.dart';
 
+import 'package:giftpose/screens/onboarding/models/cancel_subscription_request.dart';
+import 'package:giftpose/screens/onboarding/models/cancel_subscription_response.dart';
+import 'package:giftpose/screens/onboarding/models/subscription_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/current_subscription_response.dart';
+import 'package:giftpose/screens/onboarding/models/update_subscription_status_request.dart';
+import 'package:giftpose/screens/onboarding/models/update_subscription_status_response.dart';
 import 'package:giftpose/services/network_services/dio_core/dio_client.dart';
 import 'package:giftpose/services/network_services/dio_core/dio_error.dart';
 import 'package:giftpose/utils/constants/api_routes.dart';
 
 class MainViewRepoImpl implements MainViewRepo {
   final NetworkProvider networkProvider = NetworkProvider();
+
+  @override
+  Future<SubscriptionListResponse> getSubscriptionList({
+    required String deviceId,
+    String? userId,
+  }) async {
+    try {
+      String path = "${ApiRoutes.subscriptionList}?deviceId=$deviceId";
+      if (userId != null && userId.isNotEmpty) {
+        path += "&userId=$userId";
+      }
+      log("Fetching subscription list: $path");
+      final response = await networkProvider.call(
+        path: path,
+        method: RequestMethod.get,
+      );
+      log("getSubscriptionList response: ${response?.data}");
+      return SubscriptionListResponse.fromJson(response?.data);
+    } on DioException catch (err) {
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      if (kDebugMode) {
+        print(errorMessage);
+      }
+      throw err.response?.data["message"] ?? errorMessage;
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
+      throw err.toString();
+    }
+  }
 
   @override
   Future<CurrentSubscriptionResponse> getCurrentSubscription({
@@ -236,12 +272,19 @@ try {
 
    
      return HideItemResponse.fromJson(response?.data);
-      } on DioException catch (err) {
-      final errorMessage = Future.error(ApiError.fromDio(err));
+    } on DioException catch (err) {
+      final apiError = ApiError.fromDio(err);
+      String errorMessage = apiError.errorDescription ?? "Something went wrong";
+      if (err.response?.statusCode == null || err.response!.statusCode! < 500) {
+        final responseData = err.response?.data;
+        if (responseData is Map && responseData["message"] != null) {
+          errorMessage = responseData["message"].toString();
+        }
+      }
       if (kDebugMode) {
         print(errorMessage);
       }
-      throw err.response?.data["message"] ?? errorMessage;
+      throw errorMessage;
     } catch (err) {
       if (kDebugMode) {
         print(err);
@@ -509,4 +552,63 @@ Future<CreateAlertListResponse> createAlertList({
   }
 }
 
- }
+  @override
+  Future<CancelSubscriptionResponse> cancelSubscription({
+    required CancelSubscriptionRequest cancelSubscriptionRequest,
+  }) async {
+    try {
+      final payload = jsonEncode(cancelSubscriptionRequest.toJson());
+      log('cancel subscription payload: $payload');
+
+      final response = await networkProvider.call(
+        path: ApiRoutes.cancelSubscription,
+        method: RequestMethod.post,
+        body: payload,
+      );
+      log("cancel subscription response: ${response?.data}");
+
+      return CancelSubscriptionResponse.fromJson(response?.data);
+    } on DioException catch (err) {
+      final apiError = ApiError.fromDio(err);
+      if (kDebugMode) {
+        print(apiError);
+      }
+      throw err.response?.data["message"] ?? apiError;
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
+      throw err.toString();
+    }
+  }
+
+  @override
+  Future<UpdateSubscriptionStatusResponse> updateSubscriptionStatus({
+    required UpdateSubscriptionStatusRequest updateSubscriptionStatusRequest,
+  }) async {
+    try {
+      final payload = jsonEncode(updateSubscriptionStatusRequest.toJson());
+      log('update subscription status payload: $payload');
+
+      final response = await networkProvider.call(
+        path: ApiRoutes.updateSubscriptionStatus,
+        method: RequestMethod.patch,
+        body: payload,
+      );
+      log("update subscription status response: ${response?.data}");
+
+      return UpdateSubscriptionStatusResponse.fromJson(response?.data);
+    } on DioException catch (err) {
+      final apiError = ApiError.fromDio(err);
+      if (kDebugMode) {
+        print(apiError);
+      }
+      throw err.response?.data["message"] ?? apiError;
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
+      throw err.toString();
+    }
+  }
+}

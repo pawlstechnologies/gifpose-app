@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:giftpose/gen/assets.gen.dart';
 import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
+import 'package:giftpose/utils/theme/giftpose_colors.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/widgets/Giftpose_basescafold.dart';
 import 'package:giftpose/utils/widgets/giftpose_button.dart';
@@ -12,6 +13,8 @@ import 'package:giftpose/utils/router/app_routes.dart';
 import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:giftpose/utils/localization_provider.dart';
+import 'package:giftpose/screens/main_view/widgets/change_plan_modal.dart';
+
 
 class PremiumSubscriptionView extends StatefulWidget {
   const PremiumSubscriptionView({super.key});
@@ -64,6 +67,9 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
   Widget build(BuildContext context) {
     return Consumer<DashboardViewmodel>(
       builder: (context, viewModel, child) {
+        final isLoggedIn = viewModel.currentUser?.user?.email != null &&
+            viewModel.currentUser!.user!.email.isNotEmpty;
+
         return GiftPoseBaseScaffold(
           showAppBar: false,
           includeVerticalPadding: false,
@@ -86,6 +92,9 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                     return _buildLoginPromptView(context, viewModel);
                   }
                   if (viewModel.isSubscribed || viewModel.isSubscriptionCancelled) {
+                    if (!isLoggedIn) {
+                      return _buildLoginPromptView(context, viewModel);
+                    }
                     return _buildSubscriptionDetailsView(context, viewModel);
                   }
                   return _buildSubscribeView(context, viewModel);
@@ -146,17 +155,22 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                     color: Color(0xFFFFF1F1),
                     shape: BoxShape.circle,
                   ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.error_outline,
-                      color: Colors.redAccent,
-                      size: 36,
+                  child:  Center(
+                    child: InkWell(
+                      onTap: (){
+                          Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.error_outline,
+                        color: Colors.redAccent,
+                        size: 36,
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 24),
                 Text(
-                  "Please login to view your subscription history",
+                  "Please login to view your subscription status",
                   textAlign: TextAlign.center,
                   style: GiftPoseTextStyle.medium(
                     fontWeight: FontWeight.w500,
@@ -731,13 +745,25 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Text(
-                        "You currently have no active premium subscription.".tr(context),
-                        textAlign: TextAlign.center,
-                        style: GiftPoseTextStyle.small(
-                          color: Colors.grey.shade600,
-                          fontSize: 14,
-                        ),
+                      Builder(
+                        builder: (context) {
+                          final rawNextDate = viewModel.currentSubscriptionResponse?.data?.currentPeriodEnd ??
+                              viewModel.subscriptionListResponse?.data?.firstOrNull?.nextBillingDate;
+                          var formattedDate = _getFormattedDate(rawNextDate);
+                          if (formattedDate.isEmpty) {
+                            formattedDate = DateFormat("MMM dd, yyyy").format(
+                              DateTime.now().add(const Duration(days: 30)),
+                            );
+                          }
+                          return Text(
+                            "You are currently subscribed till $formattedDate but you will not be charged".tr(context),
+                            textAlign: TextAlign.center,
+                            style: GiftPoseTextStyle.small(
+                              color: Colors.grey.shade600,
+                              fontSize: 14,
+                            ),
+                          );
+                        },
                       ),
                       const SizedBox(height: 20),
                       OutlinedButton(
@@ -981,63 +1007,66 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                           : Colors.grey.shade200,
                     ),
                   ),
-                  child: Column(
-                    children: [
-                      ListTile(
-                        leading: Icon(
-                          Icons.arrow_upward,
-                          color: Theme.of(context).textTheme.bodyLarge?.color,
-                        ),
-                        title: Text(
-                          "Change Plan".tr(context),
-                          style: GiftPoseTextStyle.medium(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Column(
+                      children: [
+                        ListTile(
+                          leading: Icon(
+                            Icons.arrow_upward,
                             color: Theme.of(context).textTheme.bodyLarge?.color,
                           ),
-                        ),
-                        trailing: Assets.icons.foward.svg(
-                          colorFilter: ColorFilter.mode(
-                            Theme.of(context).textTheme.bodyLarge?.color ?? Colors.white,
-                            BlendMode.srcIn,
+                          title: Text(
+                            "Change Plan".tr(context),
+                            style: GiftPoseTextStyle.medium(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: Theme.of(context).textTheme.bodyLarge?.color,
+                            ),
                           ),
+                          trailing: Assets.icons.foward.svg(
+                            colorFilter: ColorFilter.mode(
+                              Theme.of(context).textTheme.bodyLarge?.color ?? Colors.white,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                          onTap: () {
+                            HapticFeedback.heavyImpact();
+                            _showChangePlanDialog(context, viewModel);
+                          },
                         ),
-                        onTap: () {
-                          HapticFeedback.heavyImpact();
-                          _showChangePlanDialog(context, viewModel);
-                        },
-                      ),
-                      Divider(
-                        height: 1,
-                        color: Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white.withValues(alpha: 0.1)
-                            : Colors.grey.shade100,
-                      ),
-                      ListTile(
-                        leading: Icon(
-                          Icons.cancel_outlined,
-                          color: Theme.of(context).textTheme.bodyLarge?.color,
+                        Divider(
+                          height: 1,
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white.withValues(alpha: 0.1)
+                              : Colors.grey.shade100,
                         ),
-                        title: Text(
-                          "Need help?".tr(context),
-                          style: GiftPoseTextStyle.medium(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
+                        ListTile(
+                          leading: Icon(
+                            Icons.cancel_outlined,
                             color: Theme.of(context).textTheme.bodyLarge?.color,
                           ),
-                        ),
-                        trailing: Assets.icons.foward.svg(
-                          colorFilter: ColorFilter.mode(
-                            Theme.of(context).textTheme.bodyLarge?.color ?? Colors.white,
-                            BlendMode.srcIn,
+                          title: Text(
+                            "Need help?".tr(context),
+                            style: GiftPoseTextStyle.medium(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: Theme.of(context).textTheme.bodyLarge?.color,
+                            ),
                           ),
+                          trailing: Assets.icons.foward.svg(
+                            colorFilter: ColorFilter.mode(
+                              Theme.of(context).textTheme.bodyLarge?.color ?? Colors.white,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                          onTap: () {
+                            HapticFeedback.heavyImpact();
+                            Navigator.pushNamed(context, AppRoutes.helpCenter);
+                          },
                         ),
-                        onTap: () {
-                          HapticFeedback.heavyImpact();
-                          Navigator.pushNamed(context, AppRoutes.helpCenter);
-                        },
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -1203,6 +1232,13 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
         ),
       ],
     );
+  }
+
+  void _showChangePlanDialog(
+    BuildContext context,
+    DashboardViewmodel viewModel,
+  ) {
+    ChangePlanModal.show(context, viewModel);
   }
 
   void _showCancelConfirmationDialog(
@@ -1855,7 +1891,7 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   HapticFeedback.heavyImpact();
                   if (_cancelReasonController.text.trim().isEmpty) {
                     setState(() {
@@ -1867,8 +1903,10 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
                     _cancelReasonError = null;
                     _showCancelPlanPage = false;
                   });
-                  viewModel.cancelSubscription();
-                  _showCancellationSuccessDialog(context, viewModel);
+                  await viewModel.cancelSubscription();
+                  if (context.mounted) {
+                    _showCancellationSuccessDialog(context, viewModel);
+                  }
                 },
                 child: Text(
                   "Cancel my Subscription".tr(context),
@@ -1918,259 +1956,6 @@ class _PremiumSubscriptionViewState extends State<PremiumSubscriptionView> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  void _showChangePlanDialog(
-    BuildContext context,
-    DashboardViewmodel viewModel,
-  ) {
-    String selectedPlan = viewModel.currentSubscriptionPlan;
-
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Theme.of(context).cardColor,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (ctx) {
-        return StatefulBuilder(
-          builder: (context, setModalState) {
-            final isMonthlyCurrent = viewModel.currentSubscriptionPlan == "monthly";
-            final isAnnualCurrent = viewModel.currentSubscriptionPlan == "annual";
-
-            return Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Title & Close Button
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Center(
-                        child: Text(
-                          "Change Plan".tr(context),
-                          style: GiftPoseTextStyle.medium(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Theme.of(context).textTheme.bodyLarge?.color,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        right: 0,
-                        child: GestureDetector(
-                          onTap: () => Navigator.pop(ctx),
-                          child: Icon(
-                            Icons.close,
-                            color: Theme.of(context).brightness == Brightness.dark
-                                ? Colors.grey.shade400
-                                : Colors.grey.shade600,
-                            size: 24,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 32),
-
-                  // Plans Row
-                  Row(
-                    children: [
-                      // 1 Month Plan Card
-                      Expanded(
-                        child: _changePlanCard(
-                          context,
-                          selected: selectedPlan == "monthly",
-                          isCurrent: isMonthlyCurrent,
-                          duration: "1 Month",
-                          price: "£0.99",
-                          monthlyText: "£0.99/mo",
-                          onTap: () {
-                            setModalState(() {
-                              selectedPlan = "monthly";
-                            });
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      // 12 Months Plan Card
-                      Expanded(
-                        child: _changePlanCard(
-                          context,
-                          selected: selectedPlan == "annual",
-                          isCurrent: isAnnualCurrent,
-                          duration: "12 Months",
-                          price: "£9.99",
-                          oldPrice: "£11.99",
-                          savings: "Save £1.99",
-                          onTap: () {
-                            setModalState(() {
-                              selectedPlan = "annual";
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 32),
-
-                  // Change Button
-                  GiftPoseButton(
-                    title: "Change".tr(context),
-                    onTap: () {
-                      HapticFeedback.heavyImpact();
-                      Navigator.pop(ctx);
-                      viewModel.switchSubscriptionPlan(selectedPlan);
-                    },
-                  ),
-                  const SizedBox(height: 12),
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-
-  Widget _changePlanCard(
-    BuildContext context, {
-    required bool selected,
-    required bool isCurrent,
-    required String duration,
-    required String price,
-    String? oldPrice,
-    String? savings,
-    String? monthlyText,
-    required VoidCallback onTap,
-  }) {
-    final cardBg = Theme.of(context).cardColor;
-    final borderColor = selected
-        ? const Color(0xff39D11F)
-        : (Theme.of(context).brightness == Brightness.dark
-            ? Colors.white.withValues(alpha: 0.15)
-            : Colors.grey.shade200);
-
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 180,
-        decoration: BoxDecoration(
-          color: cardBg,
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(
-            color: borderColor,
-            width: selected ? 2 : 1,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.04),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            if (isCurrent)
-              Positioned(
-                top: -14,
-                left: 16,
-                right: 16,
-                child: Container(
-                  height: 28,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).brightness == Brightness.dark
-                        ? const Color(0xFF1B382B)
-                        : const Color(0xFFEAF8EA),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    "Current Plan".tr(context),
-                    style: GiftPoseTextStyle.small(
-                      color: const Color(0xff39D11F),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              ),
-
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (isCurrent) const SizedBox(height: 8),
-                    Text(
-                      duration,
-                      style: GiftPoseTextStyle.medium(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                        color: Theme.of(context).textTheme.bodyLarge?.color,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-
-                    if (oldPrice != null)
-                      Text(
-                        oldPrice,
-                        style: GiftPoseTextStyle.small(
-                          decoration: TextDecoration.lineThrough,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey,
-                          fontSize: 14,
-                        ),
-                      ),
-
-                    if (savings != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 2),
-                        child: Text(
-                          savings,
-                          style: GiftPoseTextStyle.small(
-                            color: const Color(0xffC77C2A),
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-
-                    const SizedBox(height: 4),
-
-                    Text(
-                      price,
-                      style: GiftPoseTextStyle.large(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: const Color(0xff39D11F),
-                      ),
-                    ),
-
-                    if (monthlyText != null) ...[
-                      const SizedBox(height: 4),
-                      Text(
-                        monthlyText,
-                        style: GiftPoseTextStyle.small(
-                          color: Theme.of(context).brightness == Brightness.dark
-                              ? Colors.grey.shade400
-                              : Colors.grey.shade600,
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

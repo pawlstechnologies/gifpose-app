@@ -57,7 +57,9 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
     } on DioException catch (err) {
       log("API error response: ${err.response?.data}");
       String? errorMessage;
-      if (err.response?.data is Map) {
+      if (err.response?.statusCode != null && err.response!.statusCode! >= 500) {
+        errorMessage = ApiError.fromDio(err).errorDescription;
+      } else if (err.response?.data is Map) {
         errorMessage = err.response?.data["message"];
       } else if (err.response?.data is String) {
         try {
@@ -107,7 +109,9 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
       } on DioException catch (err) {
       log("API error response: ${err.response?.data}");
       String? errorMessage;
-      if (err.response?.data is Map) {
+      if (err.response?.statusCode != null && err.response!.statusCode! >= 500) {
+        errorMessage = ApiError.fromDio(err).errorDescription;
+      } else if (err.response?.data is Map) {
         errorMessage = err.response?.data["message"];
       } else if (err.response?.data is String) {
         try {
@@ -146,7 +150,9 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
       } on DioException catch (err) {
       log("API error response: ${err.response?.data}");
       String? errorMessage;
-      if (err.response?.data is Map) {
+      if (err.response?.statusCode != null && err.response!.statusCode! >= 500) {
+        errorMessage = ApiError.fromDio(err).errorDescription;
+      } else if (err.response?.data is Map) {
         errorMessage = err.response?.data["message"];
       } else if (err.response?.data is String) {
         try {
@@ -183,7 +189,9 @@ async {
       } on DioException catch (err) {
       log("API error response: ${err.response?.data}");
       String? errorMessage;
-      if (err.response?.data is Map) {
+      if (err.response?.statusCode != null && err.response!.statusCode! >= 500) {
+        errorMessage = ApiError.fromDio(err).errorDescription;
+      } else if (err.response?.data is Map) {
         errorMessage = err.response?.data["message"];
       } else if (err.response?.data is String) {
         try {
@@ -219,7 +227,9 @@ Future<VerifyEmailAddressResponse>   verifyEmailAddress({ required VerifyEmailAd
       } on DioException catch (err) {
       log("API error response: ${err.response?.data}");
       String? errorMessage;
-      if (err.response?.data is Map) {
+      if (err.response?.statusCode != null && err.response!.statusCode! >= 500) {
+        errorMessage = ApiError.fromDio(err).errorDescription;
+      } else if (err.response?.data is Map) {
         errorMessage = err.response?.data["message"];
       } else if (err.response?.data is String) {
         try {
@@ -256,7 +266,9 @@ Future<VerifyEmailAddressResponse>   verifyEmailAddress({ required VerifyEmailAd
       } on DioException catch (err) {
       log("API error response: ${err.response?.data}");
       String? errorMessage;
-      if (err.response?.data is Map) {
+      if (err.response?.statusCode != null && err.response!.statusCode! >= 500) {
+        errorMessage = ApiError.fromDio(err).errorDescription;
+      } else if (err.response?.data is Map) {
         errorMessage = err.response?.data["message"];
       } else if (err.response?.data is String) {
         try {
@@ -296,7 +308,9 @@ Future<VerifyEmailAddressResponse>   verifyEmailAddress({ required VerifyEmailAd
       print("GetMe DioException status: ${err.response?.statusCode}, data: ${err.response?.data}, message: ${err.message}");
       log("API error response: ${err.response?.data}");
       String? errorMessage;
-      if (err.response?.data is Map) {
+      if (err.response?.statusCode != null && err.response!.statusCode! >= 500) {
+        errorMessage = ApiError.fromDio(err).errorDescription;
+      } else if (err.response?.data is Map) {
         errorMessage = err.response?.data["message"];
       }
       return UserMeResponse(

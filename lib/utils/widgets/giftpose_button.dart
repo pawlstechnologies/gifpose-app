@@ -8,11 +8,11 @@ enum GiftPoseButtonType { full, border, text }
 class GiftPoseButton extends StatelessWidget {
   final bool isLoading;
   final String title;
-  final Function() onTap;
+  final Function()? onTap;
   final double width;
   final double height;
   final Color? backgroundColor;
-  Color borderColor;
+  final Color borderColor;
   final Color? textColor;
   final double fontSize;
   final GiftPoseButtonType buttonType;
@@ -20,12 +20,13 @@ class GiftPoseButton extends StatelessWidget {
   final Widget? suffixIcon;
   final double borderRadius;
   final double? elevation;
+  final bool isEnabled;
 
-  GiftPoseButton({
+  const GiftPoseButton({
     super.key,
     this.isLoading = false,
     required this.title,
-    required this.onTap,
+    this.onTap,
     this.width = double.infinity,
     this.height = 49,
     this.fontSize = 14,
@@ -37,20 +38,26 @@ class GiftPoseButton extends StatelessWidget {
     this.buttonType = GiftPoseButtonType.full,
     this.borderColor = Colors.transparent,
     this.elevation,
+    this.isEnabled = true,
 });
 
   @override
   Widget build(BuildContext context) {
+    final bool effectiveEnabled = isEnabled && !isLoading && onTap != null;
     return Opacity(
-      opacity: isLoading ? 0.6 : 1, // Slightly dim button while loading
+      opacity: isLoading ? 0.6 : (effectiveEnabled ? 1.0 : 0.5),
       child: IgnorePointer(
-        ignoring: isLoading,
+        ignoring: !effectiveEnabled,
         child: MaterialButton(
           minWidth: width.w,
           elevation: elevation ?? 0,
           color: buttonType == GiftPoseButtonType.text
               ? null
               : backgroundColor ?? GiftPoseColors.primaryColor,
+          disabledColor: buttonType == GiftPoseButtonType.text
+              ? null
+              : Colors.grey.shade400,
+          disabledTextColor: Colors.white,
           shape: RoundedRectangleBorder(
             side: buttonType == GiftPoseButtonType.full ||
                     buttonType == GiftPoseButtonType.text
@@ -61,7 +68,7 @@ class GiftPoseButton extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
           ),
           height: height.h,
-          onPressed: isLoading ? null : onTap,
+          onPressed: effectiveEnabled ? onTap : null,
           child: isLoading
               ? Center(
                   child: CircularProgressIndicator(

@@ -230,9 +230,14 @@ class ListViewWidget extends StatelessWidget {
         }
 
         final bool isSubscribed = dashVM.isSubscribed;
-        final bool isLoading = dashVM.fetchItemsNearMeResponse.status == Status.LOADING;
-        final bool showPromo1 = !isSubscribed && !isLoading && items.length > firstPromoIndex;
-        final bool showPromo2 = !isSubscribed && !isLoading && items.length > (secondPromoIndex - 1);
+        final bool isLoading =
+            dashVM.fetchItemsNearMeResponse.status == Status.LOADING;
+        final bool showPromo1 =
+            !isSubscribed && !isLoading && items.length > firstPromoIndex;
+        final bool showPromo2 =
+            !isSubscribed &&
+            !isLoading &&
+            items.length > (secondPromoIndex - 1);
 
         int totalItemCount = items.length;
         if (showPromo1) totalItemCount += 1;
@@ -391,10 +396,7 @@ class CategoryListItem extends StatelessWidget {
 
                 Row(
                   children: [
-                    Assets.icons.location.svg(
-                      height: 18.r, 
-                      width: 18.r,
-                    ),
+                    Assets.icons.location.svg(height: 18.r, width: 18.r),
                     SizedBox(width: 6.w),
                     Expanded(
                       child: Text(

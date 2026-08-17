@@ -23,7 +23,11 @@ abstract class SecureStorageService {
 }
 
 class SecureStorageServiceImpl extends SecureStorageService {
-  final _storage = const FlutterSecureStorage();
+  final _storage = const FlutterSecureStorage(
+    aOptions: AndroidOptions(
+      resetOnError: true,
+    ),
+  );
 
   @override
   Future<void> delete({required String key}) async {

@@ -19,7 +19,10 @@ static const alertSearchPredictionList = "/categories/search";
   static const globalSearch = "/item/{deviceId}/search";
     static const createPaymentIntent = "/subscription/create";
     static const currentSubscription = "/subscription/current";
-      static const getReportList = "/item/report-options";
+    static const cancelSubscription = "/subscription/cancel";
+    static const subscriptionList = "/subscription/list";
+    static const updateSubscriptionStatus = "/subscription/status";
+    static const getReportList = "/item/report-options";
 
 
 

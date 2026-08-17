@@ -103,29 +103,30 @@ class CategoryWidgetDetails extends StatelessWidget {
             ),
             YMargin(10),
 
-            InkWell(
-              onTap: () {
-                HapticFeedback.heavyImpact();
-                  Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        ArticlePage(title: "Contacting a Gift Giver".tr(context)),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: Theme.of(context).dividerColor,
+                    width: 1,
                   ),
-                );
-              },
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Theme.of(context).dividerColor,
-                      width: 1,
-                    ),
-                  ),
+                ),
+                child: Material(
+                  color: Colors.transparent,
                   child: ListTile(
+                    onTap: () {
+                      HapticFeedback.heavyImpact();
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ArticlePage(title: "Contacting a Gift Giver".tr(context)),
+                        ),
+                      );
+                    },
                     contentPadding: EdgeInsets.all(16),
                     leading: Assets.icons.location.svg(),
                     title: Text("Contacting a Gift Giver".tr(context),

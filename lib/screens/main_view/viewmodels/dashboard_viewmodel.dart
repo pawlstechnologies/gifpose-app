@@ -1,4 +1,5 @@
 // screens/main_view/viewmodels/dashboard_viewmodel.dart
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
@@ -29,8 +30,12 @@ import 'package:giftpose/screens/onboarding/models/report_listing_request.dart';
 import 'package:giftpose/screens/onboarding/models/report_listing_response.dart';
 import 'package:giftpose/screens/authentication/models/user_me_response.dart';
 import 'package:giftpose/screens/authentication/repo/authentication_repo.dart';
+import 'package:giftpose/screens/onboarding/models/cancel_subscription_request.dart';
+import 'package:giftpose/screens/onboarding/models/cancel_subscription_response.dart';
 import 'package:giftpose/screens/onboarding/models/subscription_list_response.dart';
 import 'package:giftpose/screens/onboarding/models/current_subscription_response.dart';
+import 'package:giftpose/screens/onboarding/models/update_subscription_status_request.dart';
+import 'package:giftpose/screens/onboarding/models/update_subscription_status_response.dart';
 import 'package:giftpose/screens/onboarding/models/search_alert_category_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_predictions_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_response.dart';
@@ -93,6 +98,9 @@ class DashboardViewmodel extends BaseViewmodel {
 
   UserMeResponse? _currentUser;
   UserMeResponse? get currentUser => _currentUser;
+  bool get isLoggedIn =>
+      _currentUser?.user?.email != null &&
+      _currentUser!.user!.email.isNotEmpty;
   bool _isLoadingUser = false;
   bool get isLoadingUser => _isLoadingUser;
 
@@ -143,7 +151,8 @@ class DashboardViewmodel extends BaseViewmodel {
       if (_activeTestCase == "C") {
         fetchUserByDeviceIdResponse.data!.data.isPremium = true;
       } else if (_activeTestCase == "A") {
-        final isLoggedIn = _currentUser?.user?.email != null &&
+        final isLoggedIn =
+            _currentUser?.user?.email != null &&
             _currentUser!.user!.email.isNotEmpty;
         fetchUserByDeviceIdResponse.data!.data.isPremium = isLoggedIn;
       } else {
@@ -187,7 +196,9 @@ class DashboardViewmodel extends BaseViewmodel {
         v: 0,
       ),
     );
-    print("DashboardViewmodel: Set currentUser from signIn -> email: $email, fullname: $fullname, username: $username");
+    print(
+      "DashboardViewmodel: Set currentUser from signIn -> email: $email, fullname: $fullname, username: $username",
+    );
     _updatePremiumStatusFromTestCase();
     notifyListeners();
   }
@@ -199,7 +210,9 @@ class DashboardViewmodel extends BaseViewmodel {
 
       print("DashboardViewmodel: Fetching getMe()...");
       final response = await serviceLocator<AuthenticationRepo>().getMe();
-      print("DashboardViewmodel: getMe() response -> status=${response.status}, message=${response.message}, email=${response.user?.email}");
+      print(
+        "DashboardViewmodel: getMe() response -> status=${response.status}, message=${response.message}, email=${response.user?.email}",
+      );
       if (response.status == true && response.user != null) {
         _currentUser = response;
       }
@@ -230,8 +243,14 @@ class DashboardViewmodel extends BaseViewmodel {
 
     final status = currentSubscriptionResponse?.data?.status?.toLowerCase();
     final isSubActive = status == "active" || status == "trialing";
+    final hasActiveSubscriptionList =
+        subscriptionListResponse?.data?.any((item) {
+          final itemStatus = item.status?.toLowerCase();
+          return itemStatus == "active" || itemStatus == "trialing";
+        }) ??
+        false;
 
-    return isSubActive || isDevicePremium;
+    return isSubActive || isDevicePremium || hasActiveSubscriptionList;
   }
 
   String _currentSubscriptionPlan = "monthly";
@@ -241,18 +260,57 @@ class DashboardViewmodel extends BaseViewmodel {
     notifyListeners();
   }
 
-  Future<void> cancelSubscription() async {
-    if (fetchUserByDeviceIdResponse.data?.data != null) {
-      fetchUserByDeviceIdResponse.data!.data.isPremium = false;
+  Future<CancelSubscriptionResponse?> cancelSubscription({
+    String? subscriptionId,
+    bool cancelImmediately = false,
+  }) async {
+    final subId =
+        subscriptionId ??
+        currentSubscriptionResponse?.data?.stripeSubscriptionId ??
+        currentSubscriptionResponse?.data?.id;
+
+    if (subId != null && subId.isNotEmpty) {
+      try {
+        final request = CancelSubscriptionRequest(
+          subscriptionId: subId,
+          cancelImmediately: cancelImmediately,
+        );
+        final res = await mainViewRepo.cancelSubscription(
+          cancelSubscriptionRequest: request,
+        );
+        if (fetchUserByDeviceIdResponse.data?.data != null) {
+          fetchUserByDeviceIdResponse.data!.data.isPremium = false;
+        }
+        _isSubscriptionCancelled = true;
+        await fetchSubscriptionList();
+        await fetchCurrentSubscription();
+        notifyListeners();
+        CustomToast.show(
+          context: navigatorKey.currentContext!,
+          message: res.message ?? "Subscription canceled successfully.",
+        );
+        return res;
+      } catch (e) {
+        CustomToast.show(
+          context: navigatorKey.currentContext!,
+          message: e.toString(),
+        );
+        return null;
+      }
+    } else {
+      if (fetchUserByDeviceIdResponse.data?.data != null) {
+        fetchUserByDeviceIdResponse.data!.data.isPremium = false;
+      }
+      _isSubscriptionCancelled = true;
+      await fetchSubscriptionList();
+      await fetchCurrentSubscription();
+      notifyListeners();
+      CustomToast.show(
+        context: navigatorKey.currentContext!,
+        message: "Subscription canceled successfully.",
+      );
+      return null;
     }
-    _isSubscriptionCancelled = true;
-    await fetchSubscriptionList();
-    await fetchCurrentSubscription();
-    notifyListeners();
-    CustomToast.show(
-      context: navigatorKey.currentContext!,
-      message: "Subscription canceled successfully.",
-    );
   }
 
   Future<void> switchSubscriptionPlan(String newPlan) async {
@@ -271,6 +329,40 @@ class DashboardViewmodel extends BaseViewmodel {
 
   Future<void> fetchSubscriptionList() async {
     try {
+      if (deviceId == null || deviceId!.isEmpty) {
+        String? deviceIdFromDb = await secureStorageService.read(
+          key: StorageKeys.deviceId,
+        );
+        deviceId = deviceIdFromDb;
+      }
+      if (deviceId == null || deviceId!.isEmpty) {
+        await getDeviceId();
+      }
+
+      final userId = _currentUser?.user?.id;
+      final response = await mainViewRepo.getSubscriptionList(
+        deviceId: deviceId ?? "",
+        userId: userId,
+      );
+
+      subscriptionListResponse = response;
+      final hasActiveSubscription = response.data?.any((item) {
+            final status = item.status?.toLowerCase();
+            return status == "active" || status == "trialing";
+          }) ??
+          false;
+      if (fetchUserByDeviceIdResponse.data?.data != null) {
+        fetchUserByDeviceIdResponse.data!.data.isPremium = hasActiveSubscription;
+      }
+      if (hasActiveSubscription) {
+        _isSubscriptionCancelled = false;
+      }
+      print(
+        "DashboardViewmodel: fetchSubscriptionList API response -> items: ${subscriptionListResponse?.data?.length}",
+      );
+      notifyListeners();
+    } catch (e) {
+      print("Error in fetchSubscriptionList API call: $e");
       final planName = _currentSubscriptionPlan;
       final isSubActive = isSubscribed && !_isSubscriptionCancelled;
       subscriptionListResponse = SubscriptionListResponse(
@@ -282,19 +374,22 @@ class DashboardViewmodel extends BaseViewmodel {
             deviceId: deviceId ?? "",
             userId: currentUser?.user?.id ?? "",
             plan: planName,
-            status: isSubActive ? "active" : (_isSubscriptionCancelled ? "canceled" : "inactive"),
+            status: isSubActive
+                ? "active"
+                : (_isSubscriptionCancelled ? "canceled" : "inactive"),
             amount: planName == "monthly" ? "0.99" : "9.99",
             currency: "£",
-            createdAt: DateTime.now().subtract(const Duration(days: 30)).toIso8601String(),
-            nextBillingDate: DateTime.now().add(Duration(days: planName == "monthly" ? 30 : 365)).toIso8601String(),
+            createdAt: DateTime.now()
+                .subtract(const Duration(days: 30))
+                .toIso8601String(),
+            nextBillingDate: DateTime.now()
+                .add(Duration(days: planName == "monthly" ? 30 : 365))
+                .toIso8601String(),
             autoRenew: !isSubscriptionCancelled,
-          )
+          ),
         ],
       );
-      print("DashboardViewmodel: fetchSubscriptionList populated -> items: ${subscriptionListResponse?.data?.length}");
       notifyListeners();
-    } catch (e) {
-      print("Error in fetchSubscriptionList: $e");
     }
   }
 
@@ -320,7 +415,20 @@ class DashboardViewmodel extends BaseViewmodel {
       if (response.data?.plan != null && response.data!.plan!.isNotEmpty) {
         _currentSubscriptionPlan = response.data!.plan!;
       }
-      print("DashboardViewmodel: fetchCurrentSubscription API response -> plan: $_currentSubscriptionPlan, currentPeriodEnd: ${currentSubscriptionResponse?.data?.currentPeriodEnd}");
+      final currentStatus = response.data?.status?.toLowerCase();
+      final isCurrentSubscriptionActive =
+          currentStatus == "active" || currentStatus == "trialing";
+      if (fetchUserByDeviceIdResponse.data?.data != null) {
+        fetchUserByDeviceIdResponse.data!.data.isPremium =
+            isCurrentSubscriptionActive ||
+            fetchUserByDeviceIdResponse.data!.data.isPremium == true;
+      }
+      if (isCurrentSubscriptionActive) {
+        _isSubscriptionCancelled = false;
+      }
+      print(
+        "DashboardViewmodel: fetchCurrentSubscription API response -> plan: $_currentSubscriptionPlan, currentPeriodEnd: ${currentSubscriptionResponse?.data?.currentPeriodEnd}",
+      );
       notifyListeners();
     } catch (e) {
       print("Error in fetchCurrentSubscription API call: $e");
@@ -408,6 +516,7 @@ class DashboardViewmodel extends BaseViewmodel {
 
   @override
   void dispose() {
+    _alertListSyncDebounce?.cancel();
     emailCtrl.dispose();
     otpCtrl.dispose();
     passwordCtrl.dispose();
@@ -794,32 +903,43 @@ class DashboardViewmodel extends BaseViewmodel {
 
   Future<void> markItem({required String id}) async {
     try {
+      if (deviceId == null || deviceId!.isEmpty) {
+        await getDeviceId();
+      }
       markItemResponse = NetworkDataResponse.loading("");
-      await LoaderPage.show(navigatorKey.currentContext!);
+      LoaderPage.show(navigatorKey.currentContext!, isDismissible: true);
 
       final response = await mainViewRepo.markItemTaken(
         hideItemRequest: HideItemRequest(deviceId: deviceId ?? ""),
         deviceID: deviceId ?? "",
         id: id,
       );
-      if (navigatorKey.currentContext!.mounted) {
-        Navigator.of(
-          navigatorKey.currentContext!,
-          rootNavigator: true,
-        ).pop(); // Dismiss dialog
-      }
-      if (markItemResponse.status == true) {
+
+      markItemResponse = NetworkDataResponse.completed(response);
+
+      if (response.status == true) {
         CustomToast.show(
           context: navigatorKey.currentContext!,
           message: response.message ?? "",
         );
 
         fetchItemsNearMe(isLoadMore: false);
+      } else {
+        CustomToast.show(
+          context: navigatorKey.currentContext!,
+          message: response.message ?? "Failed to mark item",
+        );
       }
-
-      markItemResponse = NetworkDataResponse.completed(response);
     } catch (e) {
       markItemResponse = NetworkDataResponse.error(e.toString());
+      if (navigatorKey.currentContext != null) {
+        CustomToast.show(
+          context: navigatorKey.currentContext!,
+          message: e.toString(),
+        );
+      }
+    } finally {
+      LoaderPage.dismiss();
     }
   }
 
@@ -942,6 +1062,19 @@ class DashboardViewmodel extends BaseViewmodel {
 
   List<String> _selectedKeywords = [];
   List<String> get selectedKeywords => _selectedKeywords;
+  Timer? _alertListSyncDebounce;
+
+  void scheduleAlertListSync() {
+    _alertListSyncDebounce?.cancel();
+    _alertListSyncDebounce = Timer(const Duration(milliseconds: 350), () {
+      unawaited(
+        createAlertList(
+          selectedCategory: selectedCategory,
+          selectedKeywords: selectedKeywords,
+        ),
+      );
+    });
+  }
 
   bool toggleKeyword(String keyword) {
     if (_selectedKeywords.contains(keyword)) {
@@ -1031,10 +1164,6 @@ class DashboardViewmodel extends BaseViewmodel {
     }
   }
 
-
-
-
-
   int _selectedIndex = -1;
   int get selectedIndex => _selectedIndex;
 
@@ -1066,10 +1195,14 @@ class DashboardViewmodel extends BaseViewmodel {
 
   Future<void> _loadCachedAlertCategory() async {
     try {
-      final cachedJson = await secureStorageService.read(key: _alertCategoryCacheKey);
+      final cachedJson = await secureStorageService.read(
+        key: _alertCategoryCacheKey,
+      );
       if (cachedJson != null && cachedJson.isNotEmpty) {
         final cachedResponse = alertListCategoryResponseFromJson(cachedJson);
-        _fetchAlertCategoryResponse = NetworkDataResponse.completed(cachedResponse);
+        _fetchAlertCategoryResponse = NetworkDataResponse.completed(
+          cachedResponse,
+        );
       }
     } catch (e) {
       print("Error loading cached alert categories: $e");
@@ -1078,13 +1211,18 @@ class DashboardViewmodel extends BaseViewmodel {
 
   Future<void> _loadCachedAlertList() async {
     try {
-      final cachedJson = await secureStorageService.read(key: _alertListCacheKey);
+      final cachedJson = await secureStorageService.read(
+        key: _alertListCacheKey,
+      );
       if (cachedJson != null && cachedJson.isNotEmpty) {
         final cachedResponse = fetchAlertListResponseFromJson(cachedJson);
         _fetchAlertListResponse = NetworkDataResponse.completed(cachedResponse);
         if (_selectedKeywords.isEmpty) {
           _selectedKeywords.addAll(
-            cachedResponse.data.expand((datum) => datum.keywords).toSet().toList(),
+            cachedResponse.data
+                .expand((datum) => datum.keywords)
+                .toSet()
+                .toList(),
           );
         }
       }
@@ -1100,7 +1238,10 @@ class DashboardViewmodel extends BaseViewmodel {
       }
 
       final previousData = _fetchAlertCategoryResponse.data;
-      fetchAlertCategoryResponse = NetworkDataResponse.loading("", data: previousData);
+      fetchAlertCategoryResponse = NetworkDataResponse.loading(
+        "",
+        data: previousData,
+      );
 
       final response = await mainViewRepo.fetchAlertCategories();
 
@@ -1118,7 +1259,9 @@ class DashboardViewmodel extends BaseViewmodel {
       print("Error in fetchAlertCategory: $e");
       final previousData = _fetchAlertCategoryResponse.data;
       if (previousData != null) {
-        fetchAlertCategoryResponse = NetworkDataResponse.completed(previousData);
+        fetchAlertCategoryResponse = NetworkDataResponse.completed(
+          previousData,
+        );
       } else {
         fetchAlertCategoryResponse = NetworkDataResponse.error(e.toString());
       }
@@ -1155,11 +1298,11 @@ class DashboardViewmodel extends BaseViewmodel {
     }
   }
 
-    NetworkDataResponse<CreateAlertListResponse>
-  _createAlertListResponse = NetworkDataResponse.idle();
+  NetworkDataResponse<CreateAlertListResponse> _createAlertListResponse =
+      NetworkDataResponse.idle();
 
-  NetworkDataResponse<CreateAlertListResponse>
-  get createAlertListResponse => _createAlertListResponse;
+  NetworkDataResponse<CreateAlertListResponse> get createAlertListResponse =>
+      _createAlertListResponse;
 
   set createAlertListResponse(
     NetworkDataResponse<CreateAlertListResponse> value,
@@ -1168,7 +1311,10 @@ class DashboardViewmodel extends BaseViewmodel {
     notifyListeners();
   }
 
-  Future<void> createAlertList({required List<String> selectedCategory, required List<String> selectedKeywords}) async {
+  Future<void> createAlertList({
+    required List<String> selectedCategory,
+    required List<String> selectedKeywords,
+  }) async {
     try {
       final response = await mainViewRepo.createAlertList(
         createAlertListRequest: CreateAlertListRequest(
@@ -1251,9 +1397,11 @@ class DashboardViewmodel extends BaseViewmodel {
         await getDeviceId();
       }
 
+      final userId = _currentUser?.user?.id;
       final response = await mainViewRepo.createPaymentIntent(
         createPaymentIntentRequest: CreatePaymentIntentRequest(
           deviceId: deviceId ?? "",
+          userId: userId,
           plan: plan,
         ),
       );
@@ -1271,7 +1419,9 @@ class DashboardViewmodel extends BaseViewmodel {
 
       if (clientSecret.isEmpty) {
         print("🔴 ERROR: Client secret is EMPTY");
-        createPaymentIntentResponse = NetworkDataResponse.error("Client secret is empty");
+        createPaymentIntentResponse = NetworkDataResponse.error(
+          "Client secret is empty",
+        );
         CustomToast.show(
           context: navigatorKey.currentContext!,
           message: "Unable to initialize payment details. Please try again.",
@@ -1298,7 +1448,9 @@ class DashboardViewmodel extends BaseViewmodel {
         print("🟢 STEP 5: PAYMENT SHEET INITIALIZED");
       } on StripeException catch (e) {
         print("🔴 StripeException during initPaymentSheet");
-        createPaymentIntentResponse = NetworkDataResponse.error(e.error.localizedMessage ?? e.toString());
+        createPaymentIntentResponse = NetworkDataResponse.error(
+          e.error.localizedMessage ?? e.toString(),
+        );
         CustomToast.show(
           context: navigatorKey.currentContext!,
           message: e.error.localizedMessage ?? "Stripe initialization failed.",
@@ -1332,10 +1484,14 @@ class DashboardViewmodel extends BaseViewmodel {
       } on StripeException catch (e) {
         print("🔴 StripeException during presentPaymentSheet");
         if (e.error.code == FailureCode.Canceled) {
-          print("User canceled payment");
+          print("User canceled payment - updating subscription status to active");
           createPaymentIntentResponse = NetworkDataResponse.idle();
+          await updateSubscriptionStatus(status: "active");
         } else {
-          createPaymentIntentResponse = NetworkDataResponse.error(e.error.localizedMessage ?? e.toString());
+          createPaymentIntentResponse = NetworkDataResponse.error(
+            e.error.localizedMessage ?? e.toString(),
+          );
+          await updateSubscriptionStatus(status: "active");
           CustomToast.show(
             context: navigatorKey.currentContext!,
             message: e.error.localizedMessage ?? "Payment failed.",
@@ -1346,6 +1502,7 @@ class DashboardViewmodel extends BaseViewmodel {
         print(e);
         print(s);
         createPaymentIntentResponse = NetworkDataResponse.error(e.toString());
+        await updateSubscriptionStatus(status: "active");
         CustomToast.show(
           context: navigatorKey.currentContext!,
           message: "An unexpected error occurred during payment.",
@@ -1368,6 +1525,39 @@ class DashboardViewmodel extends BaseViewmodel {
         message: errorMsg,
       );
     }
+  }
+
+  Future<UpdateSubscriptionStatusResponse?> updateSubscriptionStatus({
+    String? subscriptionId,
+    String status = "active",
+  }) async {
+    final subId = subscriptionId ??
+        currentSubscriptionResponse?.data?.stripeSubscriptionId ??
+        currentSubscriptionResponse?.data?.id ??
+        (subscriptionListResponse?.data != null &&
+                subscriptionListResponse!.data!.isNotEmpty
+            ? subscriptionListResponse!.data!.first.stripeSubscriptionId
+            : null);
+
+    if (subId != null && subId.isNotEmpty) {
+      try {
+        final request = UpdateSubscriptionStatusRequest(
+          subscriptionId: subId,
+          status: status,
+        );
+        final res = await mainViewRepo.updateSubscriptionStatus(
+          updateSubscriptionStatusRequest: request,
+        );
+        await fetchSubscriptionList();
+        await fetchCurrentSubscription();
+        notifyListeners();
+        return res;
+      } catch (e) {
+        print("Error updating subscription status: $e");
+        return null;
+      }
+    }
+    return null;
   }
 
   NetworkDataResponse<FetchAlertListResponse> _fetchAlertListResponse =
@@ -1393,13 +1583,17 @@ class DashboardViewmodel extends BaseViewmodel {
         key: StorageKeys.deviceId,
       );
       final previousData = _fetchAlertListResponse.data;
-      fetchAlertListResponse = NetworkDataResponse.loading("", data: previousData);
+      fetchAlertListResponse = NetworkDataResponse.loading(
+        "",
+        data: previousData,
+      );
 
       final response = await mainViewRepo.fetchAlertList(
         deviceID: deviceIdFromDb ?? deviceId ?? "",
       );
-      final fetchedKeywords =
-          response.data.expand((datum) => datum.keywords).toSet();
+      final fetchedKeywords = response.data
+          .expand((datum) => datum.keywords)
+          .toSet();
       if (_selectedKeywords.isEmpty) {
         _selectedKeywords.addAll(fetchedKeywords);
       } else {

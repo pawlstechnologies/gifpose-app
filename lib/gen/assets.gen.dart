@@ -282,8 +282,18 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/Untitled
+  String get untitled => 'assets/images/Untitled';
+
+  /// File path: assets/images/app_icon.png
+  AssetGenImage get appIcon =>
+      const AssetGenImage('assets/images/app_icon.png');
+
   /// File path: assets/images/avi.png
   AssetGenImage get avi => const AssetGenImage('assets/images/avi.png');
+
+  /// File path: assets/images/dLoad.gif
+  AssetGenImage get dLoad => const AssetGenImage('assets/images/dLoad.gif');
 
   /// File path: assets/images/darkLoader.gif
   AssetGenImage get darkLoader =>
@@ -310,6 +320,9 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/google.png
   AssetGenImage get google => const AssetGenImage('assets/images/google.png');
+
+  /// File path: assets/images/gopro.png
+  AssetGenImage get gopro => const AssetGenImage('assets/images/gopro.png');
 
   /// File path: assets/images/images1.png
   AssetGenImage get images1 => const AssetGenImage('assets/images/images1.png');
@@ -348,6 +361,10 @@ class $AssetsImagesGen {
   AssetGenImage get splashImage =>
       const AssetGenImage('assets/images/splashImage.png');
 
+  /// File path: assets/images/splashim.png
+  AssetGenImage get splashim =>
+      const AssetGenImage('assets/images/splashim.png');
+
   /// File path: assets/images/star.png
   AssetGenImage get star => const AssetGenImage('assets/images/star.png');
 
@@ -366,7 +383,10 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<dynamic> get values => [
+    untitled,
+    appIcon,
     avi,
+    dLoad,
     darkLoader,
     dash1,
     dash2,
@@ -375,6 +395,7 @@ class $AssetsImagesGen {
     divider,
     facebook,
     google,
+    gopro,
     images1,
     images2,
     images3,
@@ -386,6 +407,7 @@ class $AssetsImagesGen {
     map,
     paymentImage,
     splashImage,
+    splashim,
     star,
     tileone,
     tilethree,

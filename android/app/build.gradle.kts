@@ -61,9 +61,9 @@ android {
                 "proguard-rules.pro"
             )
 
-            ndk {
-                abiFilters += listOf("armeabi-v7a", "arm64-v8a")
-            }
+            // ndk {
+            //     abiFilters += listOf("armeabi-v7a", "arm64-v8a")
+            // }
         }
 
         getByName("debug") {

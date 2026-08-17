@@ -98,27 +98,28 @@ class HelpCenter extends StatelessWidget {
             ),
             YMargin(10),
 
-            InkWell(
-              onTap: () {
-                HapticFeedback.heavyImpact();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                       CategoryWidgetDetails(title: "Recieving".tr(context)),
-                  ),
-                );
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: Theme.of(context).dividerColor,
-                    width: 1,
-                  ),
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
                 ),
+              ),
+              child: Material(
+                color: Colors.transparent,
                 child: ListTile(
+                  onTap: () {
+                    HapticFeedback.heavyImpact();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                           CategoryWidgetDetails(title: "Recieving".tr(context)),
+                      ),
+                    );
+                  },
                   contentPadding: EdgeInsets.all(16),
                   leading: Assets.icons.location.svg(),
                   title: Text("Recieving".tr(context),
@@ -141,93 +142,79 @@ class HelpCenter extends StatelessWidget {
               ),
             ),
             YMargin(12),
-             InkWell(
-            onTap: () {
-                     HapticFeedback.heavyImpact();
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) =>
-                      //         PostcodeScreen(fromDashboard: true),
-                      //   ),
-                      // );
-                    
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
+                ),
+              ),
+              child: Material(
+                color: Colors.transparent,
+                child: ListTile(
+                  onTap: () {
+                    HapticFeedback.heavyImpact();
                   },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: Theme.of(context).dividerColor,
-                        width: 1,
-                      ),
-                    ),
-                    child: ListTile(
-                      contentPadding: EdgeInsets.all(16),
-                      leading: Assets.icons.location.svg(),
-                      title: Text("Gifting".tr(context),
-                          
-                        style: GiftPoseTextStyle.small(
-                          color: Theme.of(context).textTheme.bodyLarge?.color,
-                        ),
-                      ),
-                      subtitle: Padding(
-                        padding: EdgeInsets.only(top: 8.0),
-                            child: Text("coming soon".tr(context),
-                          
-                          style: GiftPoseTextStyle.small(
-                            color: Theme.of(context).textTheme.bodyMedium?.color,
-                          ),
-                        ),
-                      ),
-                      trailing: Assets.icons.foward.svg(),
+                  contentPadding: EdgeInsets.all(16),
+                  leading: Assets.icons.location.svg(),
+                  title: Text("Gifting".tr(context),
+                      
+                    style: GiftPoseTextStyle.small(
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
                     ),
                   ),
-                ),
-                YMargin(12),
-                  InkWell(
-            onTap: () {
-                     HapticFeedback.heavyImpact();
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) =>
-                      //         PostcodeScreen(fromDashboard: true),
-                      //   ),
-                      // );
-                    
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: Theme.of(context).dividerColor,
-                        width: 1,
+                  subtitle: Padding(
+                    padding: EdgeInsets.only(top: 8.0),
+                    child: Text("coming soon".tr(context),
+                      
+                      style: GiftPoseTextStyle.small(
+                        color: Theme.of(context).textTheme.bodyMedium?.color,
                       ),
-                    ),
-                    child: ListTile(
-                      contentPadding: EdgeInsets.all(16),
-                      leading: Assets.icons.location.svg(),
-                      title: Text("Requesting".tr(context),
-                          
-                        style: GiftPoseTextStyle.small(
-                          color: Theme.of(context).textTheme.bodyLarge?.color,
-                        ),
-                      ),
-                      subtitle: Padding(
-                        padding: EdgeInsets.only(top: 8.0),
-                        child: Text("coming soon".tr(context),
-                          
-                          style: GiftPoseTextStyle.small(
-                            color: Theme.of(context).textTheme.bodyMedium?.color,
-                          ),
-                        ),
-                      ),
-                      trailing: Assets.icons.foward.svg(),
                     ),
                   ),
+                  trailing: Assets.icons.foward.svg(),
                 ),
+              ),
+            ),
+            YMargin(12),
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
+                ),
+              ),
+              child: Material(
+                color: Colors.transparent,
+                child: ListTile(
+                  onTap: () {
+                    HapticFeedback.heavyImpact();
+                  },
+                  contentPadding: EdgeInsets.all(16),
+                  leading: Assets.icons.location.svg(),
+                  title: Text("Requesting".tr(context),
+                      
+                    style: GiftPoseTextStyle.small(
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
+                    ),
+                  ),
+                  subtitle: Padding(
+                    padding: EdgeInsets.only(top: 8.0),
+                    child: Text("coming soon".tr(context),
+                      
+                      style: GiftPoseTextStyle.small(
+                        color: Theme.of(context).textTheme.bodyMedium?.color,
+                      ),
+                    ),
+                  ),
+                  trailing: Assets.icons.foward.svg(),
+                ),
+              ),
+            ),
                 YMargin(39),
 
                  Text("Frequently Asked Questions".tr(context),

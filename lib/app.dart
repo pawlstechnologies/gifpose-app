@@ -27,14 +27,13 @@ final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
 
 class GifteposeApp extends StatefulWidget {
-  GifteposeApp({super.key});
+  const GifteposeApp({super.key});
 
   @override
   State<GifteposeApp> createState() => _GifteposeAppState();
 }
 
 class _GifteposeAppState extends State<GifteposeApp> {
-  Timer? _rootTimer;
   bool isRegistered = false;
   @override
   void initState() {
@@ -142,7 +141,7 @@ void testLocalNotification() async {
                     return MediaQuery(
                       data: MediaQuery.of(
                         context,
-                      ).copyWith(textScaleFactor: 1.0),
+                      ).copyWith(textScaler: TextScaler.linear(1.0)),
                       child: ChangeNotifierProvider(
                         create: (context) => ConnectivityProvider(context),
                         lazy: false,
