@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -53,6 +51,18 @@ final GoogleMapsFlutterPlatform mapsImplementation =
   // Listen for Foreground Messages
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     LocalNotificationService.displayNotification(message);
+  });
+
+  // Handle message when app is opened from background state via notification tap
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    debugPrint("Notification clicked from background: ${message.messageId}");
+  });
+
+  // Handle message when app is opened from terminated state via notification tap
+  FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
+    if (message != null) {
+      debugPrint("Notification clicked from terminated state: ${message.messageId}");
+    }
   });
 
   // Presentation options for iOS foreground

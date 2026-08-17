@@ -16,6 +16,14 @@
             android:name="com.google.android.geo.API_KEY"
              android:value="AIzaSyD0adDCs8YaUAElLHDL19qc114FeDT5Pl8"/>
 
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="GiftPose" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_launcher" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
