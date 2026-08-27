@@ -217,13 +217,13 @@ class _DetailsPageState extends State<DetailsPage> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: CachedNetworkImage(
-                        imageUrl:
-                            vm
-                                .fetchItemsByIdMeResponse
-                                .data
-                                ?.data
-                                .imageUrls[selectedImageIndex] ??
-                            '',
+                        imageUrl: (() {
+                          final list = vm.fetchItemsByIdMeResponse.data?.data.imageUrls;
+                          if (list != null && list.isNotEmpty && selectedImageIndex < list.length) {
+                            return list[selectedImageIndex];
+                          }
+                          return '';
+                        })(),
                         width: double.infinity,
                         height: 277.w,
                         fit: BoxFit.cover,

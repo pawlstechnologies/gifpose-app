@@ -58,6 +58,12 @@ class _DashboardViewState extends State<DashboardView> {
       Future.microtask(
         () => context.read<DashboardViewmodel>().fetchAlertList(),
       );
+      Future.microtask(
+        () => context.read<DashboardViewmodel>().fetchCurrentSubscription(),
+      );
+      Future.microtask(
+        () => context.read<DashboardViewmodel>().fetchSubscriptionList(),
+      );
 
       Future.delayed(Duration(seconds: 2), () {});
     });

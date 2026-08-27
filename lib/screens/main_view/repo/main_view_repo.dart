@@ -28,6 +28,8 @@ import 'package:giftpose/screens/onboarding/models/current_subscription_response
 
 import 'package:giftpose/screens/onboarding/models/update_subscription_status_request.dart';
 import 'package:giftpose/screens/onboarding/models/update_subscription_status_response.dart';
+import 'package:giftpose/screens/onboarding/models/change_plan_request.dart';
+import 'package:giftpose/screens/onboarding/models/change_plan_response.dart';
 
 abstract class MainViewRepo {
   Future<SubscriptionListResponse> getSubscriptionList({
@@ -68,7 +70,7 @@ abstract class MainViewRepo {
     required ReportListingRequest  reportListingRequest,  required String id,
   });
      Future<HideItemResponse> markItemTaken({
-    required HideItemRequest  hideItemRequest, required String deviceID, required String id,
+    required HideItemRequest  hideItemRequest, required String id,
   });
   Future<SearchResponse> globalSearch({
     required String deviceId,
@@ -88,5 +90,8 @@ abstract class MainViewRepo {
   });
   Future<UpdateSubscriptionStatusResponse> updateSubscriptionStatus({
     required UpdateSubscriptionStatusRequest updateSubscriptionStatusRequest,
+  });
+  Future<ChangePlanResponse> changePlan({
+    required ChangePlanRequest changePlanRequest,
   });
 }

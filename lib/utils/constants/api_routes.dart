@@ -8,7 +8,7 @@ static const fetchUserbyDeviceID = "location/device/{Id}";
 
 static const createAlerts = "/alerts";
 static const fetchAlertLists ="alerts?deviceId={deviceId}";
-static const markItemTaken = "/item/mark-taken/{deviceId}/{Id}";
+static const markItemTaken = "/item/mark-taken/{Id}";
 static const markItemHide = "/item/hide/{Id}";
 static const reportItem = "/item/report/{id}";
 static const searchAlertCategories = "/alerts/search-keywords";
@@ -22,6 +22,7 @@ static const alertSearchPredictionList = "/categories/search";
     static const cancelSubscription = "/subscription/cancel";
     static const subscriptionList = "/subscription/list";
     static const updateSubscriptionStatus = "/subscription/status";
+    static const changePlan = "/subscription/change-plan";
     static const getReportList = "/item/report-options";
 
 

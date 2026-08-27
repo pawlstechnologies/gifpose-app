@@ -41,10 +41,14 @@ class _SettingsViewState extends State<SettingsView> {
   void initState() {
     super.initState();
     _checkSignInStatus();
-    final viewModel = context.read<DashboardViewmodel>();
-    viewModel.checkCurrentUser();
-    viewModel.fetchSubscriptionList();
-    viewModel.fetchCurrentSubscription();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+
+      final viewModel = context.read<DashboardViewmodel>();
+      viewModel.checkCurrentUser();
+      viewModel.fetchSubscriptionList();
+      viewModel.fetchCurrentSubscription();
+    });
   }
 
   Future<void> _checkSignInStatus() async {
@@ -737,7 +741,8 @@ class _SettingsViewState extends State<SettingsView> {
                                 );
                               },
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -831,7 +836,10 @@ class _SettingsViewState extends State<SettingsView> {
                           ListTile(
                             onTap: () {
                               HapticFeedback.heavyImpact();
-                              Navigator.pushNamed(context, AppRoutes.helpCenter);
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.helpCenter,
+                              );
                             },
 
                             contentPadding: EdgeInsets.symmetric(
@@ -851,60 +859,64 @@ class _SettingsViewState extends State<SettingsView> {
                             trailing: Assets.icons.foward.svg(),
                           ),
                           Divider(color: Theme.of(context).dividerColor),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 16,
-                          ),
-                          child: InkWell(
-                            onTap: () {
-                              HapticFeedback.heavyImpact();
-                              Navigator.pushNamed(context, AppRoutes.aboutPage);
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Assets.icons.about.svg(),
-                                    XMargin(15),
-                                    Text(
-                                      "About GiftPose".tr(context),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 16,
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                HapticFeedback.heavyImpact();
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.aboutPage,
+                                );
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Assets.icons.about.svg(),
+                                      XMargin(15),
+                                      Text(
+                                        "About GiftPose".tr(context),
 
-                                      style: GiftPoseTextStyle.small(
-                                        color: Theme.of(
-                                          context,
-                                        ).textTheme.bodyLarge?.color,
+                                        style: GiftPoseTextStyle.small(
+                                          color: Theme.of(
+                                            context,
+                                          ).textTheme.bodyLarge?.color,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
+                                    ],
+                                  ),
 
-                                Row(
-                                  children: [
-                                    Text(
-                                      "v1.0.0".tr(context),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "v1.0.0".tr(context),
 
-                                      style: GiftPoseTextStyle.small(
-                                        color: Theme.of(
-                                          context,
-                                        ).textTheme.bodyLarge?.color,
+                                        style: GiftPoseTextStyle.small(
+                                          color: Theme.of(
+                                            context,
+                                          ).textTheme.bodyLarge?.color,
+                                        ),
                                       ),
-                                    ),
-                                    XMargin(8),
-                                    Assets.icons.foward.svg(),
-                                  ],
-                                ),
-                              ],
+                                      XMargin(8),
+                                      Assets.icons.foward.svg(),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                YMargin(85),
-              ],
+                  YMargin(85),
+                ],
               ),
             );
           },

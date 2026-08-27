@@ -372,8 +372,7 @@ class _ChangePlanModalState extends State<ChangePlanModal> {
             onTap: () async {
               HapticFeedback.heavyImpact();
               Navigator.pop(context);
-              widget.viewModel.currentSubscriptionPlan = _selectedPlan;
-              await widget.viewModel.createSubscription(plan: _selectedPlan);
+              await widget.viewModel.changeSubscriptionPlan(plan: _selectedPlan);
             },
           ),
           const YMargin(16),

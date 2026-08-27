@@ -35,6 +35,8 @@ import 'package:giftpose/screens/onboarding/models/subscription_list_response.da
 import 'package:giftpose/screens/onboarding/models/current_subscription_response.dart';
 import 'package:giftpose/screens/onboarding/models/update_subscription_status_request.dart';
 import 'package:giftpose/screens/onboarding/models/update_subscription_status_response.dart';
+import 'package:giftpose/screens/onboarding/models/change_plan_request.dart';
+import 'package:giftpose/screens/onboarding/models/change_plan_response.dart';
 import 'package:giftpose/services/network_services/dio_core/dio_client.dart';
 import 'package:giftpose/services/network_services/dio_core/dio_error.dart';
 import 'package:giftpose/utils/constants/api_routes.dart';
@@ -256,22 +258,20 @@ try {
   }   
   
   @override
-     Future<HideItemResponse> markItemTaken({
-    required HideItemRequest  hideItemRequest, required String deviceID, required String id,
+  Future<HideItemResponse> markItemTaken({
+    required HideItemRequest hideItemRequest,
+    required String id,
   }) async {
     try {
-      
+      final payload = jsonEncode(hideItemRequest.toJson());
       final response = await networkProvider.call(
-        path: ApiRoutes.markItemTaken.replaceAll('{deviceId}', deviceID).replaceAll('{Id}', id),
+        path: ApiRoutes.markItemTaken.replaceAll('{Id}', id),
         method: RequestMethod.patch,
-       
-   
+        body: payload,
       );
-      log("mark items reponse: ${response?.data}");
+      log("mark items response: ${response?.data}");
 
-
-   
-     return HideItemResponse.fromJson(response?.data);
+      return HideItemResponse.fromJson(response?.data);
     } on DioException catch (err) {
       final apiError = ApiError.fromDio(err);
       String errorMessage = apiError.errorDescription ?? "Something went wrong";
@@ -604,6 +604,43 @@ Future<CreateAlertListResponse> createAlertList({
         print(apiError);
       }
       throw err.response?.data["message"] ?? apiError;
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
+      throw err.toString();
+    }
+  }
+
+  @override
+  Future<ChangePlanResponse> changePlan({
+    required ChangePlanRequest changePlanRequest,
+  }) async {
+    try {
+      final payload = jsonEncode(changePlanRequest.toJson());
+      log('change plan payload: $payload');
+
+      final response = await networkProvider.call(
+        path: ApiRoutes.changePlan,
+        method: RequestMethod.post,
+        body: payload,
+      );
+      log("change plan response: ${response?.data}");
+
+      return ChangePlanResponse.fromJson(response?.data);
+    } on DioException catch (err) {
+      final apiError = ApiError.fromDio(err);
+      String errorMessage = apiError.errorDescription ?? "Something went wrong";
+      if (err.response?.statusCode == null || err.response!.statusCode! < 500) {
+        final responseData = err.response?.data;
+        if (responseData is Map && responseData["message"] != null) {
+          errorMessage = responseData["message"].toString();
+        }
+      }
+      if (kDebugMode) {
+        print(errorMessage);
+      }
+      throw err.response?.data?["message"] ?? errorMessage;
     } catch (err) {
       if (kDebugMode) {
         print(err);

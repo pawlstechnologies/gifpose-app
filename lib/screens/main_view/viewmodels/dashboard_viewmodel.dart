@@ -36,6 +36,8 @@ import 'package:giftpose/screens/onboarding/models/subscription_list_response.da
 import 'package:giftpose/screens/onboarding/models/current_subscription_response.dart';
 import 'package:giftpose/screens/onboarding/models/update_subscription_status_request.dart';
 import 'package:giftpose/screens/onboarding/models/update_subscription_status_response.dart';
+import 'package:giftpose/screens/onboarding/models/change_plan_request.dart';
+import 'package:giftpose/screens/onboarding/models/change_plan_response.dart';
 import 'package:giftpose/screens/onboarding/models/search_alert_category_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_predictions_request.dart';
 import 'package:giftpose/screens/onboarding/models/search_response.dart';
@@ -221,6 +223,8 @@ class DashboardViewmodel extends BaseViewmodel {
     } finally {
       _isLoadingUser = false;
       _updatePremiumStatusFromTestCase();
+      fetchCurrentSubscription();
+      fetchSubscriptionList();
       notifyListeners();
     }
   }
@@ -543,10 +547,12 @@ class DashboardViewmodel extends BaseViewmodel {
     getDeviceId().then((_) {
       fetchItemsNearMe();
       fetchNotification();
+      fetchUserByDeviceId();
+      fetchCurrentSubscription();
+      fetchSubscriptionList();
     });
     fetchAlertCategory();
     fetchReportList();
-    fetchUserByDeviceId();
   }
 
   final MainViewRepo mainViewRepo = serviceLocator<MainViewRepo>();
@@ -783,21 +789,37 @@ class DashboardViewmodel extends BaseViewmodel {
 
   Future<void> fetchItemsById({required String id}) async {
     try {
+      if (deviceId == null || deviceId!.isEmpty) {
+        String? deviceIdFromDb = await secureStorageService.read(
+          key: StorageKeys.deviceId,
+        );
+        deviceId = deviceIdFromDb;
+      }
+      if (deviceId == null || deviceId!.isEmpty) {
+        await getDeviceId();
+      }
+
       fetchItemsByIdMeResponse = NetworkDataResponse.loading("");
-      // await LoaderPage.show(navigatorKey.currentContext!);
+      if (navigatorKey.currentContext != null) {
+        LoaderPage.show(navigatorKey.currentContext!, isDismissible: true);
+      }
 
       final response = await mainViewRepo.fetchItemsById(
         deviceID: deviceId ?? "",
         id: id,
       );
 
-      // if (navigatorKey.currentContext!.mounted) {
-      //   Navigator.of(navigatorKey.currentContext!, rootNavigator: true).pop(); // Dismiss dialog
-      // }
-
+      LoaderPage.dismiss();
       fetchItemsByIdMeResponse = NetworkDataResponse.completed(response);
     } catch (e) {
+      LoaderPage.dismiss();
       fetchItemsByIdMeResponse = NetworkDataResponse.error(e.toString());
+      if (navigatorKey.currentContext != null) {
+        CustomToast.show(
+          context: navigatorKey.currentContext!,
+          message: e.toString(),
+        );
+      }
     }
   }
 
@@ -904,6 +926,12 @@ class DashboardViewmodel extends BaseViewmodel {
   Future<void> markItem({required String id}) async {
     try {
       if (deviceId == null || deviceId!.isEmpty) {
+        String? deviceIdFromDb = await secureStorageService.read(
+          key: StorageKeys.deviceId,
+        );
+        deviceId = deviceIdFromDb;
+      }
+      if (deviceId == null || deviceId!.isEmpty) {
         await getDeviceId();
       }
       markItemResponse = NetworkDataResponse.loading("");
@@ -911,7 +939,6 @@ class DashboardViewmodel extends BaseViewmodel {
 
       final response = await mainViewRepo.markItemTaken(
         hideItemRequest: HideItemRequest(deviceId: deviceId ?? ""),
-        deviceID: deviceId ?? "",
         id: id,
       );
 
@@ -1558,6 +1585,161 @@ class DashboardViewmodel extends BaseViewmodel {
       }
     }
     return null;
+  }
+
+  NetworkDataResponse<ChangePlanResponse> _changePlanResponse =
+      NetworkDataResponse.idle();
+
+  NetworkDataResponse<ChangePlanResponse> get changePlanResponse =>
+      _changePlanResponse;
+
+  set changePlanResponse(NetworkDataResponse<ChangePlanResponse> value) {
+    _changePlanResponse = value;
+    notifyListeners();
+  }
+
+  Future<ChangePlanResponse?> changeSubscriptionPlan({
+    required String plan,
+  }) async {
+    try {
+      print("🟡 STEP 1: Starting changeSubscriptionPlan to $plan");
+      changePlanResponse = NetworkDataResponse.loading("");
+      if (navigatorKey.currentContext != null) {
+        LoaderPage.show(navigatorKey.currentContext!, isDismissible: false);
+      }
+
+      final response = await mainViewRepo.changePlan(
+        changePlanRequest: ChangePlanRequest(plan: plan),
+      );
+
+      LoaderPage.dismiss();
+      print("🟢 STEP 2: Change plan API response received: ${response.toJson()}");
+
+      if (response.success == false) {
+        final errorMsg = response.message ?? "Failed to change subscription plan.";
+        changePlanResponse = NetworkDataResponse.error(errorMsg);
+        if (navigatorKey.currentContext != null) {
+          CustomToast.show(
+            context: navigatorKey.currentContext!,
+            message: errorMsg,
+          );
+        }
+        return response;
+      }
+
+      final clientSecret = response.data?.clientSecret ?? "";
+      print("🟢 STEP 3: Client Secret: $clientSecret");
+
+      if (clientSecret.isNotEmpty) {
+        print("🟡 STEP 4: Initializing Stripe Payment Sheet for Change Plan");
+        try {
+          await Stripe.instance.initPaymentSheet(
+            paymentSheetParameters: SetupPaymentSheetParameters(
+              paymentIntentClientSecret: clientSecret,
+              merchantDisplayName: 'GiftPose',
+              googlePay: const PaymentSheetGooglePay(
+                merchantCountryCode: 'GB',
+                testEnv: false,
+              ),
+            ),
+          );
+        } on StripeException catch (e) {
+          print("🔴 StripeException during initPaymentSheet: ${e.error.localizedMessage}");
+          changePlanResponse = NetworkDataResponse.error(
+            e.error.localizedMessage ?? e.toString(),
+          );
+          if (navigatorKey.currentContext != null) {
+            CustomToast.show(
+              context: navigatorKey.currentContext!,
+              message: e.error.localizedMessage ?? "Stripe initialization failed.",
+            );
+          }
+          return response;
+        } catch (e) {
+          print("🔴 Error during initPaymentSheet: $e");
+          changePlanResponse = NetworkDataResponse.error(e.toString());
+          if (navigatorKey.currentContext != null) {
+            CustomToast.show(
+              context: navigatorKey.currentContext!,
+              message: "Failed to load payment options.",
+            );
+          }
+          return response;
+        }
+
+        print("🟡 STEP 5: Presenting Stripe Payment Sheet");
+        try {
+          await Stripe.instance.presentPaymentSheet();
+          print("🟢 STEP 6: Payment Sheet completed successfully");
+          changePlanResponse = NetworkDataResponse.completed(response);
+          _currentSubscriptionPlan = plan;
+          await fetchCurrentSubscription();
+          await fetchSubscriptionList();
+          if (navigatorKey.currentContext != null) {
+            CustomToast.show(
+              context: navigatorKey.currentContext!,
+              message: response.message ?? "Subscription plan changed successfully!",
+            );
+          }
+          return response;
+        } on StripeException catch (e) {
+          print("🔴 StripeException during presentPaymentSheet: ${e.error.code}");
+          if (e.error.code == FailureCode.Canceled) {
+            print("User cancelled change plan payment");
+            changePlanResponse = NetworkDataResponse.idle();
+          } else {
+            changePlanResponse = NetworkDataResponse.error(
+              e.error.localizedMessage ?? e.toString(),
+            );
+            if (navigatorKey.currentContext != null) {
+              CustomToast.show(
+                context: navigatorKey.currentContext!,
+                message: e.error.localizedMessage ?? "Payment failed.",
+              );
+            }
+          }
+          return response;
+        } catch (e) {
+          print("🔴 Error during presentPaymentSheet: $e");
+          changePlanResponse = NetworkDataResponse.error(e.toString());
+          if (navigatorKey.currentContext != null) {
+            CustomToast.show(
+              context: navigatorKey.currentContext!,
+              message: "An unexpected error occurred during payment.",
+            );
+          }
+          return response;
+        }
+      } else {
+        // Plan changed without immediate clientSecret
+        changePlanResponse = NetworkDataResponse.completed(response);
+        _currentSubscriptionPlan = plan;
+        await fetchCurrentSubscription();
+        await fetchSubscriptionList();
+        if (navigatorKey.currentContext != null) {
+          CustomToast.show(
+            context: navigatorKey.currentContext!,
+            message: response.message ?? "Subscription plan changed successfully!",
+          );
+        }
+        return response;
+      }
+    } catch (e, s) {
+      LoaderPage.dismiss();
+      print("🔥 Error in changeSubscriptionPlan: $e\n$s");
+      String errorMsg = e.toString();
+      if (e is Future) {
+        errorMsg = "Connection issue. Please check your network and try again.";
+      }
+      changePlanResponse = NetworkDataResponse.error(errorMsg);
+      if (navigatorKey.currentContext != null) {
+        CustomToast.show(
+          context: navigatorKey.currentContext!,
+          message: errorMsg,
+        );
+      }
+      return null;
+    }
   }
 
   NetworkDataResponse<FetchAlertListResponse> _fetchAlertListResponse =

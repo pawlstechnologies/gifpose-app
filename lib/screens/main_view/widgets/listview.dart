@@ -288,25 +288,19 @@ class ListViewWidget extends StatelessWidget {
             // 4. Standard List Item Card Feed Row
             final data = items[dataIndex];
             return InkWell(
-              onTap: () {
+              onTap: () async {
                 HapticFeedback.heavyImpact();
-                dashVM.fetchItemsById(id: data.id).whenComplete(() {
-                  if (dashVM.fetchItemsByIdMeResponse.data?.success == true &&
-                      dashVM
-                          .fetchItemsByIdMeResponse
-                          .data!
-                          .data
-                          .imageUrls
-                          .isNotEmpty) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            DetailsPage(location: userLocation.city),
-                      ),
-                    );
-                  }
-                });
+                await dashVM.fetchItemsById(id: data.id);
+                if (context.mounted &&
+                    dashVM.fetchItemsByIdMeResponse.data?.success == true) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          DetailsPage(location: userLocation.city),
+                    ),
+                  );
+                }
               },
               child: CategoryListItem(
                 response: data,

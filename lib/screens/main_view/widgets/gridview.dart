@@ -227,19 +227,18 @@ class CategoryGrid extends StatelessWidget {
     FetchItemsNearMeData data,
   ) {
     return InkWell(
-      onTap: () {
+      onTap: () async {
         HapticFeedback.heavyImpact();
-        vm.fetchItemsById(id: data.id).whenComplete(() {
-          if (vm.fetchItemsByIdMeResponse.data?.success == true &&
-              vm.fetchItemsByIdMeResponse.data!.data.imageUrls.isNotEmpty) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DetailsPage(location: userLocation.city),
-              ),
-            );
-          }
-        });
+        await vm.fetchItemsById(id: data.id);
+        if (context.mounted &&
+            vm.fetchItemsByIdMeResponse.data?.success == true) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DetailsPage(location: userLocation.city),
+            ),
+          );
+        }
       },
       child: CategoryGridItem(response: data, userLocation: userLocation),
     );
