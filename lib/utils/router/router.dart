@@ -14,7 +14,6 @@ import 'package:giftpose/screens/main_view/views/settings_page/delete_account_pa
 import 'package:giftpose/screens/main_view/views/settings_page/billing_history_page.dart';
 import 'package:giftpose/utils/localization_provider.dart';
 
-
 import 'package:giftpose/screens/main_view/views/dashboard_view.dart';
 import 'package:giftpose/screens/main_view/views/notification_alert.dart';
 import 'package:giftpose/screens/main_view/views/notification_view.dart';
@@ -22,17 +21,28 @@ import 'package:giftpose/screens/main_view/views/settings_view.dart';
 import 'package:giftpose/screens/onboarding/views/consent_view.dart';
 import 'package:giftpose/screens/onboarding/views/onboarding_view.dart';
 import 'package:giftpose/screens/onboarding/views/postcode_view.dart';
+import 'package:giftpose/screens/requester_flow/views/post_an_item.dart';
+import 'package:giftpose/screens/requester_flow/views/request_posted_successfully.dart';
+import 'package:giftpose/screens/requester_flow/views/request_item_details.dart';
+import 'package:giftpose/screens/requester_flow/views/request_offers.dart';
+import 'package:giftpose/screens/donor_flow/views/donor_chat.dart';
+import 'package:giftpose/screens/donor_flow/views/donor_edit_category.dart';
+import 'package:giftpose/screens/donor_flow/views/donor_edit_location.dart';
+import 'package:giftpose/screens/donor_flow/views/donor_item_details.dart';
+import 'package:giftpose/screens/donor_flow/views/donor_post_item.dart';
+import 'package:giftpose/screens/donor_flow/views/donor_success.dart';
+import 'package:giftpose/screens/donor_flow/views/donor_delivery_status.dart';
+import 'package:giftpose/screens/donor_flow/views/interested_users.dart';
+import 'package:giftpose/screens/donor_flow/views/my_donations.dart';
+import 'package:giftpose/screens/donor_flow/views/requested_gift_details.dart';
 import 'package:giftpose/utils/router/app_routes.dart';
-import 'package:giftpose/utils/widgets/loader_page.dart';
-
-
 
 class Routers {
   static Route<dynamic> generateRoute(
-      RouteSettings settings, BuildContext context) {
+    RouteSettings settings,
+    BuildContext context,
+  ) {
     Widget routeWidget;
-    final args = settings.arguments;
-
     switch (settings.name) {
       case AppRoutes.splash:
         routeWidget = SplashScreen();
@@ -46,10 +56,10 @@ class Routers {
       case AppRoutes.postcodePage:
         routeWidget = PostcodeScreen();
         break;
-            case AppRoutes.notificationsPage:
+      case AppRoutes.notificationsPage:
         routeWidget = NotificationView();
         break;
-               case AppRoutes.notificationsAlert:
+      case AppRoutes.notificationsAlert:
         routeWidget = NotificationAlert();
         break;
       case AppRoutes.settingsPage:
@@ -58,47 +68,96 @@ class Routers {
       case AppRoutes.deleteAccountPage:
         routeWidget = const DeleteAccountPage();
         break;
-            case AppRoutes.dashboard:
-        routeWidget =  DashboardView();
+      case AppRoutes.requestItem:
+        routeWidget = const PostAnItemScreen();
         break;
-             case AppRoutes.createAccountPage:
+      case AppRoutes.requestPosted:
+        routeWidget = const RequestPostedSuccessfullyScreen();
+        break;
+      case AppRoutes.requestItemDetails:
+        routeWidget = const RequestItemDetailsScreen();
+        break;
+      case AppRoutes.editRequestItem:
+        routeWidget = const PostAnItemScreen(isEditing: true);
+        break;
+      case AppRoutes.requestOffers:
+        routeWidget = const RequestOffersScreen();
+        break;
+      case AppRoutes.donorPostItem:
+        routeWidget = const DonorPostItemScreen();
+        break;
+      case AppRoutes.donorPage:
+        routeWidget = const DonorPostItemScreen();
+        break;
+      case AppRoutes.donorPostedSuccess:
+        routeWidget = const DonorSuccessScreen();
+        break;
+      case AppRoutes.donorEditCategory:
+        routeWidget = const DonorEditCategoryScreen();
+        break;
+      case AppRoutes.donorEditLocation:
+        routeWidget = const DonorEditLocationScreen();
+        break;
+      case AppRoutes.donorMyDonations:
+        routeWidget = const MyDonationsScreen();
+        break;
+      case AppRoutes.donorItemDetails:
+        routeWidget = const DonorItemDetailsScreen();
+        break;
+      case AppRoutes.donorInterestedUsers:
+        routeWidget = const InterestedUsersScreen();
+        break;
+      case AppRoutes.donorChat:
+        routeWidget = const DonorChatScreen();
+        break;
+      case AppRoutes.donorRequestedGiftDetails:
+        routeWidget = const RequestedGiftDetailsScreen();
+        break;
+      case AppRoutes.donorOfferItem:
+        routeWidget = const DonorPostItemScreen(offeringRequestedItem: true);
+        break;
+      case AppRoutes.donorOfferSuccess:
+        routeWidget = const DonorSuccessScreen(offer: true);
+        break;
+      case AppRoutes.donorDeliveryStatus:
+        routeWidget = const DonorDeliveryStatusScreen();
+        break;
+      case AppRoutes.dashboard:
+        routeWidget = DashboardView();
+        break;
+      case AppRoutes.createAccountPage:
         routeWidget = CreateAccountScreen();
         break;
-             case AppRoutes.siginInPage:
+      case AppRoutes.siginInPage:
         routeWidget = SigininScreen();
         break;
 
-             case AppRoutes.verifyEmailScreen:
+      case AppRoutes.verifyEmailScreen:
         routeWidget = VerifyEmailScreen();
         break;
-             case AppRoutes.forgotPasswordScreen:
+      case AppRoutes.forgotPasswordScreen:
         routeWidget = ForgotPasswordScreen();
         break;
-             case AppRoutes.passwordChanged:
+      case AppRoutes.passwordChanged:
         routeWidget = PasswordChangedScreen();
         break;
-            case AppRoutes.resetPasswordScreen:
+      case AppRoutes.resetPasswordScreen:
         routeWidget = ResetPasswordScreen();
         break;
-            case AppRoutes.enterOtpScreen:
+      case AppRoutes.enterOtpScreen:
         routeWidget = EnterOtpScreen();
         break;
-            case AppRoutes.languagePage:
+      case AppRoutes.languagePage:
         routeWidget = LanguageView();
         break;
-                case AppRoutes.helpCenter:
+      case AppRoutes.helpCenter:
         routeWidget = HelpCenter();
         break;
-              case AppRoutes.billingHistory:
+      case AppRoutes.billingHistory:
         routeWidget = const BillingHistoryPage();
         break;
-        
-    
-                         case AppRoutes.settingsPage:
-        routeWidget = SettingsView();
-        break;
 
-                         case AppRoutes.aboutPage:
+      case AppRoutes.aboutPage:
         routeWidget = AboutPage();
         break;
 
@@ -120,13 +179,8 @@ class Routers {
       settings: settings,
       pageBuilder: (context, animation, secondaryAnimation) => child,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
+        return FadeTransition(opacity: animation, child: child);
       },
     );
   }
 }
-
-

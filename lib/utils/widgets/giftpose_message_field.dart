@@ -1,15 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:giftpose/gen/assets.gen.dart';
 import 'package:giftpose/screens/main_view/viewmodels/base_viewmodel.dart';
 import 'package:giftpose/utils/theme/giftpose_colors.dart';
 import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:provider/provider.dart';
-
-
 
 enum TextFieldType { date, text, dropdown, phone, country, email, password }
 
@@ -32,7 +28,7 @@ class GiftPoseMessageTextField extends StatefulWidget {
   final bool readOnly;
   final Color? textFieldColor;
   final Color? borderColor;
-   bool? isCumpolsory;
+  final bool? isCumpolsory;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   final double? textFieldBottomPadding;
@@ -43,9 +39,13 @@ class GiftPoseMessageTextField extends StatefulWidget {
   final AutovalidateMode autovalidateMode;
   final int? maxLength;
   final int? minLength; // Added minLength property
+  final double height;
+  final bool scaleHeightByWidth;
+  final double borderRadius;
+  final double hintFontSize;
+  final double fieldNameFontSize;
 
-
-   GiftPoseMessageTextField({
+  const GiftPoseMessageTextField({
     super.key,
     this.amountTextField = false,
     this.fieldName = "",
@@ -56,6 +56,11 @@ class GiftPoseMessageTextField extends StatefulWidget {
     this.selectedDate,
     this.maxLength,
     this.minLength, // Added minLength property
+    this.height = 140,
+    this.scaleHeightByWidth = false,
+    this.borderRadius = 6,
+    this.hintFontSize = 12,
+    this.fieldNameFontSize = 12,
     required this.controller,
     this.hintText,
     this.onTap,
@@ -74,29 +79,29 @@ class GiftPoseMessageTextField extends StatefulWidget {
     this.textFieldBottomPadding,
     this.focusNode,
     this.onEditingComplete,
-    this.enableInteractiveSelection = true, this.isSuccess = false,
+    this.enableInteractiveSelection = true,
+    this.isSuccess = false,
   });
 
   @override
-  State<GiftPoseMessageTextField> createState() => _GiftPoseMessageTextFieldState();
+  State<GiftPoseMessageTextField> createState() =>
+      _GiftPoseMessageTextFieldState();
 }
 
 class _GiftPoseMessageTextFieldState extends State<GiftPoseMessageTextField> {
-
-
   @override
   void initState() {
     super.initState();
     // Default to Nigeria
-   
-    // 
+
+    //
     // If controller is empty, set dial code
-    if ((widget.textFieldType == TextFieldType.country || widget.textFieldType == TextFieldType.phone) && widget.controller.text.isEmpty) {
-    // authVM.countryCodeCtrl.text= selectedCountry.dialCode;
+    if ((widget.textFieldType == TextFieldType.country ||
+            widget.textFieldType == TextFieldType.phone) &&
+        widget.controller.text.isEmpty) {
+      // authVM.countryCodeCtrl.text= selectedCountry.dialCode;
     }
   }
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +110,9 @@ class _GiftPoseMessageTextFieldState extends State<GiftPoseMessageTextField> {
     return Consumer<BaseViewmodel>(
       builder: (context, baseVM, child) {
         return Padding(
-          padding: EdgeInsets.only(bottom: widget.textFieldBottomPadding ?? 24.h),
+          padding: EdgeInsets.only(
+            bottom: widget.textFieldBottomPadding ?? 24.h,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -113,155 +120,188 @@ class _GiftPoseMessageTextFieldState extends State<GiftPoseMessageTextField> {
                   ? SizedBox.shrink()
                   : Padding(
                       padding: EdgeInsets.only(bottom: 10.w, left: 5.w),
-                      child:
-                      
-                        RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: '${widget.fieldName}',
-                  style: GiftPoseTextStyle.medium(
-                          color: Theme.of(context).textTheme.bodyLarge!.color,
-                          fontSize: 13,
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: widget.fieldName,
+                              style: GiftPoseTextStyle.medium(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge!.color,
+                                fontSize: widget.fieldNameFontSize,
+                              ),
+                            ),
+                            if (widget.isCumpolsory == true)
+                              TextSpan(
+                                text: ' *',
+                                style: GiftPoseTextStyle.medium(
+                                  color: GiftPoseColors.errorColor,
+                                  fontSize: 13,
+                                ),
+                              ),
+                          ],
                         ),
-                ),
-                if(widget.isCumpolsory =true)
-                TextSpan(
-                  text: ' *',
-                 style: GiftPoseTextStyle.medium(
-                          color: GiftPoseColors.errorColor,
-                          fontSize: 13,
-                        ),
-                ),
-               
-              ],
-            ),
-          ),
-                    
+                      ),
                     ),
-             
-         
-                ValueListenableBuilder(
-                  valueListenable: showPassword,
-                  builder: (BuildContext context, bool show, Widget? child) {
-                    return Container(
-                      height: 150,
-                      child: TextFormField(
-                        focusNode: widget.focusNode,
-                        autofocus: widget.isAutoFocus,
-                        maxLength: widget.maxLength,
-                        onEditingComplete: widget.onEditingComplete,
-                        enableInteractiveSelection: widget.enableInteractiveSelection,
-                        cursorHeight: 18.h,
-                        cursorColor: GiftPoseColors.primaryColor,
-                        style: GiftPoseTextStyle.medium(
-                          color: Theme.of(context).textTheme.bodyMedium!.color,
-                          fontSize: 12.sp,
+
+              ValueListenableBuilder(
+                valueListenable: showPassword,
+                builder: (BuildContext context, bool show, Widget? child) {
+                  return SizedBox(
+                    height: widget.scaleHeightByWidth
+                        ? widget.height.w
+                        : widget.height.h,
+                    child: TextFormField(
+                      focusNode: widget.focusNode,
+                      autofocus: widget.isAutoFocus,
+                      maxLength: widget.maxLength,
+                      onEditingComplete: widget.onEditingComplete,
+                      enableInteractiveSelection:
+                          widget.enableInteractiveSelection,
+                      cursorHeight: 18.h,
+                      cursorColor: GiftPoseColors.primaryColor,
+                      style: GiftPoseTextStyle.medium(
+                        color: Theme.of(context).textTheme.bodyMedium!.color,
+                        fontSize: 12.sp,
+                      ),
+                      initialValue: widget.initialValue,
+                      textCapitalization:
+                          widget.textFieldType == TextFieldType.email ||
+                              widget.textFieldType == TextFieldType.password ||
+                              widget.obscureText
+                          ? TextCapitalization.none
+                          : TextCapitalization.sentences,
+                      onChanged: widget.onChanged,
+                      autovalidateMode: widget.autovalidateMode,
+                      readOnly: widget.textFieldType == TextFieldType.dropdown
+                          ? true
+                          : widget.readOnly,
+                      inputFormatters: widget.formatters,
+                      controller: widget.controller,
+                      minLines: null,
+                      maxLines:
+                          null, // If this is null, there is no limit to the number of lines, and the text container will start with enough vertical space for one line and automatically grow to accommodate additional lines as they are entered.
+                      expands: true,
+                      validator: (value) {
+                        // Minimum length validation logic
+                        if (widget.minLength != null &&
+                            value != null &&
+                            value.length < widget.minLength!) {
+                          return 'Minimum length is [${widget.minLength} characters';
+                        }
+                        if (widget.validator != null) {
+                          return widget.validator!(value);
+                        }
+                        return null;
+                      },
+                      keyboardType: widget.inputType,
+                      obscureText: widget.obscureText && showPassword.value,
+                      onTap: widget.onTap,
+                      decoration: InputDecoration(
+                        counterText: "",
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(left: 14),
+                          child: widget.prefixIcon,
                         ),
-                        initialValue: widget.initialValue,
-                        textCapitalization: widget.textFieldType == TextFieldType.email || 
-                                            widget.textFieldType == TextFieldType.password ||
-                                            widget.obscureText
-                            ? TextCapitalization.none
-                            : TextCapitalization.sentences,
-                        onChanged: widget.onChanged,
-                        autovalidateMode: widget.autovalidateMode,
-                        readOnly: widget.textFieldType == TextFieldType.dropdown
-                            ? true
-                            : widget.readOnly,
-                        inputFormatters: widget.formatters,
-                        controller: widget.controller,
-                          minLines: null,
-        maxLines:
-            null, // If this is null, there is no limit to the number of lines, and the text container will start with enough vertical space for one line and automatically grow to accommodate additional lines as they are entered.
-        expands: true, 
-                        validator: (value) {
-                          // Minimum length validation logic
-                          if (widget.minLength != null && value != null && value.length < widget.minLength!) {
-                            return 'Minimum length is [${widget.minLength} characters';
-                          }
-                          if (widget.validator != null) return widget.validator!(value);
-                          return null;
-                        },
-                        keyboardType: widget.inputType,
-                        obscureText: widget.obscureText && showPassword.value,
-                        onTap: widget.onTap,
-                        decoration: InputDecoration(
-                          counterText: "",
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.only(left: 14),
-                            child: widget.prefixIcon,
+                        isCollapsed: true,
+                        fillColor:
+                            widget.textFieldColor ??
+                            Theme.of(context).cardColor,
+                        filled: true,
+                        prefixIconConstraints: BoxConstraints(
+                          maxHeight: 25.h,
+                          minHeight: 25.h,
+                          minWidth: 25.w,
+                        ),
+                        suffixIconConstraints: BoxConstraints(
+                          maxHeight: 25.h,
+                          minHeight: 25.h,
+                          minWidth: 25.w,
+                        ),
+                        suffixIcon: widget.obscureText == false
+                            ? Padding(
+                                padding: EdgeInsets.only(right: 14),
+                                child: widget.suffixIcon,
+                              )
+                            : GestureDetector(
+                                onTap: () {
+                                  showPassword.value = !showPassword.value;
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 15.w),
+                                  child: Icon(
+                                    show
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    size: 22.sp,
+                                    color: Color.fromARGB(255, 72, 74, 78),
+                                  ),
+                                ),
+                              ),
+                        hintText: widget.hintText ?? widget.fieldName,
+                        enabledBorder: outlineInputBorder.copyWith(
+                          borderRadius: BorderRadius.circular(
+                            widget.borderRadius.r,
                           ),
-                          isCollapsed: true,
-                          fillColor: widget.textFieldColor ?? Theme.of(context).cardColor,
-                          filled: true,
-                          prefixIconConstraints: BoxConstraints(
-                            maxHeight: 25.h,
-                            minHeight: 25.h,
-                            minWidth: 25.w,
+                          borderSide: BorderSide(
+                            color:
+                                widget.borderColor ??
+                                GiftPoseColors.borderColor,
                           ),
-                          suffixIconConstraints: BoxConstraints(
-                            maxHeight: 25.h,
-                            minHeight: 25.h,
-                            minWidth: 25.w,
+                        ),
+                        hintStyle: GiftPoseTextStyle.normal(
+                          fontWeight: FontWeight.w400,
+                          color: Theme.of(context).hintColor,
+                          fontSize: widget.hintFontSize,
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 14,
+                        ),
+                        border: outlineInputBorder.copyWith(
+                          borderRadius: BorderRadius.circular(
+                            widget.borderRadius.r,
                           ),
-                          suffixIcon: widget.obscureText == false
-                                  ? Padding(
-                                      padding: EdgeInsets.only(right: 14),
-                                      child: widget.suffixIcon)
-                                  : GestureDetector(
-                                      onTap: () {
-                                        showPassword.value = !showPassword.value;
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.only(right: 15.w),
-                                        child: Icon(
-                                          show ? Icons.visibility : Icons.visibility_off,
-                                          size: 22.sp,
-                                          color: Color.fromARGB(255, 72, 74, 78),
-                                        ),
-                                      ),
-                                    ),
-                          hintText: widget.hintText ?? widget.fieldName,
-                          enabledBorder: outlineInputBorder.copyWith(
-                            borderRadius: BorderRadius.circular(10.r),
-                            borderSide: BorderSide(
-                              color: widget.borderColor ?? GiftPoseColors.borderColor,
-                            ),
+                          borderSide: BorderSide(
+                            color:
+                                widget.borderColor ??
+                                GiftPoseColors.borderColor,
                           ),
-                          hintStyle: GiftPoseTextStyle.normal(
-                              fontWeight: FontWeight.w400,
-                              color: Theme.of(context).hintColor,
-                              fontSize: 14),
-                          contentPadding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 16.w),
-                          border: outlineInputBorder.copyWith(
-                            borderRadius: BorderRadius.circular(10.r),
-                            borderSide: BorderSide(
-                              color: widget.borderColor ?? GiftPoseColors.borderColor,
-                            ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                            widget.borderRadius.r,
                           ),
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.r),
-                            borderSide: BorderSide(color: GiftPoseColors.errorColor),
+                          borderSide: BorderSide(
+                            color: GiftPoseColors.errorColor,
                           ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.r),
-                            borderSide: BorderSide(color: GiftPoseColors.errorColor),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                            widget.borderRadius.r,
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.r),
-                            borderSide: BorderSide(
-                              color: widget.borderColor == Colors.transparent 
-                                  ? Colors.transparent 
-                                  : widget.borderColor ?? GiftPoseColors.primaryColor,
-                              width: 2.0,
-                            ),
+                          borderSide: BorderSide(
+                            color: GiftPoseColors.errorColor,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                            widget.borderRadius.r,
+                          ),
+                          borderSide: BorderSide(
+                            color: widget.borderColor == Colors.transparent
+                                ? Colors.transparent
+                                : widget.borderColor ??
+                                      GiftPoseColors.primaryColor,
+                            width: 2.0,
                           ),
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         );

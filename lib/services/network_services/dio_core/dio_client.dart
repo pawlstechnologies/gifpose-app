@@ -6,33 +6,43 @@ import 'package:giftpose/services/secure_storage/secure_storage.dart';
 import 'package:giftpose/utils/constants/storage_keys.dart';
 import 'package:giftpose/utils/locator.dart';
 
-
-
-class NetworkProvider{
-  Dio _getDioInstance(){
-    var dio = Dio(BaseOptions(
-      baseUrl: "https://api.giftpose.com/api/",
-      connectTimeout:const Duration(seconds: 60),
-      receiveTimeout:const Duration(seconds: 60),
-    ));
+class NetworkProvider {
+  Dio _getDioInstance() {
+    var dio = Dio(
+      BaseOptions(
+        baseUrl: "https://api.giftpose.com/api/",
+        connectTimeout: const Duration(seconds: 60),
+        receiveTimeout: const Duration(seconds: 60),
+      ),
+    );
     dio.interceptors.add(LoggerInterceptor());
     dio.interceptors.add(AuthorizationInterceptor());
-    dio.interceptors.add(LogInterceptor(responseBody: true,error: true,request: true,requestBody: true));
+    dio.interceptors.add(
+      LogInterceptor(
+        responseBody: true,
+        error: true,
+        request: true,
+        requestBody: true,
+      ),
+    );
     return dio;
   }
 
-  Future<Response?> call(
-        {required String path,
-        BuildContext? context,
-        required  RequestMethod method,
-        dynamic body=const {},
-        Map<String,dynamic> queryParams=const {}
-      })async{
+  Future<Response?> call({
+    required String path,
+    BuildContext? context,
+    required RequestMethod method,
+    dynamic body = const {},
+    Map<String, dynamic> queryParams = const {},
+  }) async {
     Response? response;
-    try{
-      switch(method){
+    try {
+      switch (method) {
         case RequestMethod.get:
-          response = await _getDioInstance().get(path, queryParameters: queryParams);
+          response = await _getDioInstance().get(
+            path,
+            queryParameters: queryParams,
+          );
           break;
         case RequestMethod.post:
           if (context != null) {
@@ -41,8 +51,11 @@ class NetworkProvider{
               currentFocus.unfocus();
             }
           }
-          response = await _getDioInstance()
-              .post(path, data: body, queryParameters: queryParams);
+          response = await _getDioInstance().post(
+            path,
+            data: body,
+            queryParameters: queryParams,
+          );
           break;
         case RequestMethod.patch:
           if (context != null) {
@@ -51,8 +64,11 @@ class NetworkProvider{
               currentFocus.unfocus();
             }
           }
-          response = await _getDioInstance()
-              .patch(path, data: body, queryParameters: queryParams);
+          response = await _getDioInstance().patch(
+            path,
+            data: body,
+            queryParameters: queryParams,
+          );
           break;
         case RequestMethod.put:
           if (context != null) {
@@ -61,8 +77,11 @@ class NetworkProvider{
               currentFocus.unfocus();
             }
           }
-          response = await _getDioInstance()
-              .put(path, data: body, queryParameters: queryParams);
+          response = await _getDioInstance().put(
+            path,
+            data: body,
+            queryParameters: queryParams,
+          );
           break;
         case RequestMethod.delete:
           if (context != null) {
@@ -71,39 +90,41 @@ class NetworkProvider{
               currentFocus.unfocus();
             }
           }
-          response = await _getDioInstance()
-              .delete(path, data: body, queryParameters: queryParams);
+          response = await _getDioInstance().delete(
+            path,
+            data: body,
+            queryParameters: queryParams,
+          );
           break;
       }
       return response;
-    }on DioException catch (error) {
-      return response?.data ??  Future.error(ApiError.fromDio(error));
+    } on DioException catch (error) {
+      return response?.data ?? Future.error(ApiError.fromDio(error));
     }
   }
 }
 
-
 class AuthorizationInterceptor extends Interceptor {
-
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async{
-   SecureStorageService secureStorageService =
+  void onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
+    SecureStorageService secureStorageService =
         serviceLocator<SecureStorageService>();
 
+    final token = await secureStorageService.read(key: StorageKeys.accessToken);
+    if (token != null && token.isNotEmpty) {
+      options.headers["Authorization"] = "Bearer $token";
+    }
 
-final token = await secureStorageService.read(key: StorageKeys.accessToken);
-if (token != null && token.isNotEmpty) {
-  options.headers["Authorization"] = "Bearer $token";
-}
-
-options.headers['Content-Type'] = 'application/json';
-options.headers["Accept"] = "application/json";
-  
-    options.headers['Content-Type'] = 'multipart/form-data';
     options.headers["Accept"] = "application/json";
-    options.headers["Content-Type"] = "application/json";
+    // Let Dio add the multipart boundary when the request contains FormData.
+    options.contentType = options.data is FormData
+        ? Headers.multipartFormDataContentType
+        : Headers.jsonContentType;
     options.headers["X-App-Name"] = "user";
-    super.onRequest(options, handler);
+    handler.next(options);
   }
 }
 

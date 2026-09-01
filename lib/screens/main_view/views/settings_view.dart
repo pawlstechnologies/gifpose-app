@@ -17,7 +17,6 @@ import 'package:giftpose/utils/theme/giftpose_text_style.dart';
 import 'package:giftpose/utils/theme/theme.dart';
 import 'package:giftpose/utils/widgets/Giftpose_basescafold.dart';
 import 'package:giftpose/utils/widgets/duration_slider.dart';
-import 'package:giftpose/utils/widgets/giftpose_button.dart';
 import 'package:giftpose/utils/widgets/giftpose_switch.dart';
 import 'package:giftpose/utils/widgets/premium_card.dart';
 import 'package:giftpose/utils/widgets/spacing.dart';
@@ -501,6 +500,84 @@ class _SettingsViewState extends State<SettingsView> {
                         ),
 
                   YMargin(16),
+                  Text(
+                    "Give & Request".tr(context),
+                    style: GiftPoseTextStyle.small(
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
+                    ),
+                  ),
+                  YMargin(10),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: Theme.of(context).dividerColor,
+                        width: 1,
+                      ),
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Column(
+                        children: [
+                          ListTile(
+                            onTap: () {
+                              HapticFeedback.heavyImpact();
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.requestItem,
+                              );
+                            },
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 10,
+                            ),
+                            leading: Icon(
+                              Icons.add_shopping_cart_outlined,
+                              color: GiftPoseColors.primaryColor,
+                            ),
+                            title: Text(
+                              "Request an Item".tr(context),
+                              style: GiftPoseTextStyle.small(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge?.color,
+                              ),
+                            ),
+                            trailing: Assets.icons.foward.svg(),
+                          ),
+                          Divider(color: Theme.of(context).dividerColor),
+                          ListTile(
+                            onTap: () {
+                              HapticFeedback.heavyImpact();
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.donorPostItem,
+                              );
+                            },
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 10,
+                            ),
+                            leading: Icon(
+                              Icons.volunteer_activism_outlined,
+                              color: GiftPoseColors.primaryColor,
+                            ),
+                            title: Text(
+                              "Donate an Item".tr(context),
+                              style: GiftPoseTextStyle.small(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge?.color,
+                              ),
+                            ),
+                            trailing: Assets.icons.foward.svg(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  YMargin(25),
                   Text(
                     "Location".tr(context),
 

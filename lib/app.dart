@@ -8,6 +8,8 @@ import 'package:giftpose/screens/main_view/viewmodels/dashboard_viewmodel.dart';
 import 'package:giftpose/screens/main_view/views/dashboard_view.dart';
 import 'package:giftpose/screens/onboarding/viewmodels/onboarding_viewmodel.dart';
 import 'package:giftpose/screens/onboarding/views/onboarding_view.dart';
+import 'package:giftpose/screens/requester_flow/viewmodels/requester_viewmodel.dart';
+import 'package:giftpose/screens/donor_flow/viewmodels/donor_viewmodel.dart';
 import 'package:giftpose/services/database/database_service.dart';
 import 'package:giftpose/services/secure_storage/secure_storage.dart';
 import 'package:giftpose/services/secure_storage/sp_database_manager.dart';
@@ -36,6 +38,7 @@ class _GifteposeAppState extends State<GifteposeApp> {
     isRegistered = serviceLocator<DatabaseService>().getIsRegistered() ?? false;
     super.initState();
   }
+
   final SecureStorageService secureStorageService =
       serviceLocator<SecureStorageService>();
   final SpDatabaseManager spDatabaseManager = SpDatabaseManager();
@@ -76,7 +79,9 @@ class _GifteposeAppState extends State<GifteposeApp> {
         ChangeNotifierProvider(create: (context) => OnboardingViewModel()),
         ChangeNotifierProvider(create: (context) => DashboardViewmodel()),
         ChangeNotifierProvider(create: (context) => LanguageProvider()),
-              ChangeNotifierProvider(create: (context) => AuthenticationViewModel()),
+        ChangeNotifierProvider(create: (context) => AuthenticationViewModel()),
+        ChangeNotifierProvider(create: (context) => RequesterViewmodel()),
+        ChangeNotifierProvider(create: (context) => DonorViewmodel()),
 
         //            ChangeNotifierProvider(
         //           create: (context) => OrdersViewModel(),
@@ -131,7 +136,7 @@ class _GifteposeAppState extends State<GifteposeApp> {
                   },
                   onGenerateRoute: (settings) =>
                       Routers.generateRoute(settings, context),
-                  home: isRegistered ? DashboardView()  : SplashScreen(),
+                  home: isRegistered ? DashboardView() : SplashScreen(),
                 );
               },
             );
